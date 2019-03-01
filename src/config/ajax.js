@@ -2,7 +2,7 @@
 import baseUrl from "./base";
 
 
-export default async function ajax(url = '', data = {}, type = 'GET', method = 'fetch'){
+export default async (url = '', data = {}, type = 'GET', method = 'fetch')=>{
   const res = await Ajax(url,data,type,method);
   console.log(res);
   if(res.success){
@@ -16,7 +16,7 @@ export default async function ajax(url = '', data = {}, type = 'GET', method = '
   }
 }
 
- async function Ajax(url = '', data = {}, type = 'GET', method = 'fetch')=>{
+ async function Ajax(url = '', data = {}, type = 'GET', method = 'fetch'){
   // 整理表单数据
    type = type.toUpperCase()
    url = baseUrl + url 
