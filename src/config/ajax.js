@@ -1,5 +1,8 @@
 
-async function Ajax(url = '', data = {}, type = 'GET', method = 'fetch'){
+import baseUrl from "./base";
+
+
+export default async (url = '', data = {}, type = 'GET', method = 'fetch')=>{
   // 整理表单数据
   type = type.toUpperCase()
    let sendData
@@ -18,7 +21,7 @@ async function Ajax(url = '', data = {}, type = 'GET', method = 'fetch'){
     Object.keys(data).forEach(key => {
       _data.push(key + '=' + data[key])
     })
-    url = url + '?' + _data.join('&')
+    url = baseUrl + url + '?' + _data.join('&')
   } else {
     //sendData = JSON.stringify(data)
     Object.keys(data).forEach(key => {
