@@ -2,10 +2,25 @@
 import baseUrl from "./base";
 
 
-export default async (url = '', data = {}, type = 'GET', method = 'fetch')=>{
+export default async function ajax(url = '', data = {}, type = 'GET', method = 'fetch'){
+  const res = await Ajax(url,data,type,method);
+  console.log(res);
+  if(res.success){
+    if(!res.body) return res.success;
+    if(Object.keys(res.body).length == 1)
+      return res.body[Object.keys(res.body)[0]];
+    return res.body;
+  }else{
+    fnToast(res.msg);
+    return false;
+  }
+}
+
+ async function Ajax(url = '', data = {}, type = 'GET', method = 'fetch')=>{
   // 整理表单数据
-  type = type.toUpperCase()
-   let sendData
+   type = type.toUpperCase()
+   url = baseUrl + url 
+   let sendData;
    let formData=new FormData();
 
   let param = {
@@ -21,7 +36,7 @@ export default async (url = '', data = {}, type = 'GET', method = 'fetch')=>{
     Object.keys(data).forEach(key => {
       _data.push(key + '=' + data[key])
     })
-    url = baseUrl + url + '?' + _data.join('&')
+    url =  url + '?' + _data.join('&')
   } else {
     //sendData = JSON.stringify(data)
     Object.keys(data).forEach(key => {
@@ -91,20 +106,6 @@ export default async (url = '', data = {}, type = 'GET', method = 'fetch')=>{
 
 }
 
-
-async function ajax(url = '', data = {}, type = 'GET', method = 'fetch'){
-      const res = await Ajax(url,data,type,method);
-      console.log(res);
-      if(res.success){
-        if(!res.body) return res.success;
-        if(Object.keys(res.body).length == 1)
-          return res.body[Object.keys(res.body)[0]];
-        return res.body;
-      }else{
-        fnToast(res.msg);
-        return false;
-      }
-}
 
 
 //根据地址查询经纬度
