@@ -58,7 +58,8 @@ import {login} from "../../utils/getData";
 export default {
 			data () {
 				return {
-					
+						phone: "",  //手机号码
+						passWord: "", //密码
 				}
 			},
 			computed: {  
@@ -72,7 +73,12 @@ export default {
 			},
 			methods: {
 				//登录
-				login(){
+				async login(){
+						let data = await login(this.phone, this.passWord);
+						console.log();
+						if(data){ 
+							
+						}
 
 				},
 			}
