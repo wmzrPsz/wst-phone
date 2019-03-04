@@ -1,5 +1,5 @@
 //let imgBaseUrl = process.env.API_ROOT; 
- const path = "";
+ let path = "";
 
 if (process.env.NODE_ENV == 'development') {
     path = 'http://47.105.70.4:8989/meiguotong/a/interface/';
@@ -11,5 +11,5 @@ if (process.env.NODE_ENV == 'development') {
 
 module.exports = {
 	path,
-	// imgBaseUrl
+    // imgBaseUrl
 }

@@ -37,11 +37,17 @@ export default new Router({
       }
     ]
     },
+    {
+      path: '/register',
+      name: 'register',
+      component: register,
+      meta:{'title': '注册'}
+    },
     // {
-    //   path: '/register',
-    //   name: 'register',
-    //   component: register,
-    //   meta:{'title': '注册'}
+    //   path: '/indehome',
+    //   name: 'indehome',
+    //   component: indehome,
+    //   meta:{'title': '首页'}
     // }
   ],
   scrollBehavior (to, from, savedPosition) {

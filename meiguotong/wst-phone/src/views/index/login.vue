@@ -45,7 +45,7 @@
 
           <li class="font-14 wanl">
             <i class="float_left">忘了密码</i>
-            <router-link to="/login/register">
+            <router-link to="/register">
               <i class="float_right">立即注册</i>
             </router-link>
           </li>
@@ -115,6 +115,7 @@ export default {
       let data = await login(this.phone, this.passWord);
       if (data) {
         this.addLogin(data);
+        this.$router.push("/indehome");
       }
     }
   }
