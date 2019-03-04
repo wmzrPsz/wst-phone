@@ -3,7 +3,6 @@ import App from './App.vue'
 import router from './router/router'
 import store from './vuex/store'
 import {Toast} from 'vant'
-import common from './utils/common'
  //生产环境提示，这里设置成了false
 Vue.config.productionTip = false
 
@@ -13,7 +12,7 @@ Vue.config.productionTip = false
 
  import "./style/inde.css";
 
- Vue.prototype.$common = common;
+
 
  router.beforeEach((to, from, next) => {
   console.log(to)
