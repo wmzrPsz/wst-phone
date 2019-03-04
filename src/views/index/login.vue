@@ -44,7 +44,9 @@
           </li>
 
           <li class="font-14 wanl">
+            <router-link to="/forget">
             <i class="float_left">忘了密码</i>
+            </router-link>
             <router-link to="/register">
               <i class="float_right">立即注册</i>
             </router-link>

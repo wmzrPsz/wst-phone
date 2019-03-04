@@ -69,7 +69,7 @@
               <img src="../../assets/img/A/sign_email_icon@2x.png">
             </i>
             <i class="color-e">
-              <input class="di_s_b_d float_left" type="text" placeholder="请输入注册邮箱号">
+              <input class="di_s_b_d float_left" type="text" placeholder="请输入注册邮箱号" v-model="email">
             </i>
           </li>
           <li class="border_b font-14">
@@ -77,10 +77,11 @@
               <img src="../../assets/img/A/sign_code_icon@2x.png">
             </i>
             <i class="color-e">
-              <input class="di_s_b_d sushou float_left" type="text" placeholder="请输入验证码">
+              <input class="di_s_b_d sushou float_left" type="text" placeholder="请输入验证码" v-model.trim="smsCode">
             </i>
             <i class="float_right sushou_a">
-              <button class="color background-c font-14">获取验证码</button>
+              <button v-show="sendAuthCode" class="color background-c font-14" @click="getAuthCode" v-if="sendAuthCode==1">获取验证码</button>
+              <button v-show="sendAuthCode" class="color background-c font-14" @click="getAuthCode" v-if="sendAuthCode==2">{{auth_time}}</button>
             </i>
           </li>
           <li class="border_b font-14">
@@ -88,7 +89,7 @@
               <img src="../../assets/img/A/ic_lock.png">
             </i>
             <i class="color-e">
-              <input class="di_s_b_d float_left" type="Password" placeholder="请设计你的密码">
+              <input class="di_s_b_d float_left" type="Password" placeholder="请设计你的密码" v-model.trim="passWord">
             </i>
           </li>
           <li class="font-12 wanl">
@@ -98,13 +99,14 @@
         </ul>
       </div>
       <button class="di_s_b_dengl color background-c font-16" @click="reg">注册</button>
-      <button class="di_s_b_dengl di_s_b_dengl_a color-c font-16">已有账号立即登陆</button>
+      <button class="di_s_b_dengl di_s_b_dengl_a color-c font-16" @click="long">已有账号立即登陆</button>
       <a class="font-12 color-b chuanj">创建商家用户></a>
     </div>
   </div>
 </template>
 <script>
-import { register } from "@/utils/getData";
+import { register } from "@/utils/getData";//注册
+import {sendSms} from "@/utils/getData";//邮箱短信
 import { isNull } from "@/utils/common";
 import { mapMutations} from "vuex";
 export default {
@@ -113,6 +115,7 @@ export default {
     return {
       type:1,
       mobile:'',
+      email:'',
       smsCode:'',
       passWord:'',
       area:'86',
@@ -124,6 +127,10 @@ export default {
      ...mapMutations(["addLogin"]),
       typeClick(index){
         this.type = index;
+      },
+      //立即登陆
+      long:function(){
+       this.$router.go("-1");
       },
       async reg(){
        //手机号码注册
@@ -139,7 +146,8 @@ export default {
       if(isNull(this.passWord)){
         this.$toast("请输入密码")
       }
-      let data = await register(this.type,this.mobile,this.smsCode,this.passWord,this.area);
+      this.email="";
+      let data = await register(this.type,this.mobile,this.email,this.smsCode,this.passWord,this.area);
       if (data) {
         this.$toast("注册成功")
         this.$router.go("-1");
@@ -147,7 +155,7 @@ export default {
      } 
      //邮箱注册
       if(this.type==2){
-			if(isNull(this.mobile)){
+			if(isNull(this.email)){
         this.$toast("请输入邮箱号码");
         return;
 			}
@@ -157,25 +165,26 @@ export default {
       }
       if(isNull(this.passWord)){
         this.$toast("请输入密码")
+        return;
       }
-      let data = await register(this.type,this.mobile,this.smsCode,this.passWord,this.area);
+      this.mobile='';
+      let data = await register(this.type,this.mobile,this.email,this.smsCode,this.passWord,this.area);
       if (data) {
-        this.reghp(data);
         this.$toast("注册成功")
-        this.$router.push("/login");
+        this.$router.go("-1");
       }
      } 
       },
       //点击获得验证码
-        getAuthCode:function () {
-        this.$http.get(sendSmsUrl).then(function (response) {
-          category:'type',
-         console.log("请求成功",response)
-
-         }, function (error) {
-         console.log("请求失败",error);
-        })
-      this.sendAuthCode = 2;
+        async getAuthCode(){
+        if(this.type==1){//获取短信
+       	if(isNull(this.mobile)){
+        this.$toast("请输入电话号码");
+        return;
+         }
+        this.email='';
+      let data = await sendSms(this.mobile,this.email,this.type);
+       this.sendAuthCode = 2;
      //设置倒计时秒
       this.auth_time = 60;
       var auth_timetimer = setInterval(()=>{
@@ -184,7 +193,27 @@ export default {
           this.sendAuthCode = 1;
           clearInterval(auth_timetimer);
         }
-      }, 1000);      
+      }, 1000); 
+        }  
+
+        if(this.type==2){//获取邮箱短信
+       	if(isNull(this.email)){
+        this.$toast("请输入邮箱号");
+        return;
+         }
+      this.mobile='';
+      let data = await sendSms(this.mobile,this.email,this.type);
+       this.sendAuthCode = 2;
+     //设置倒计时秒
+      this.auth_time = 60;
+      var auth_timetimer = setInterval(()=>{
+        this.auth_time--;
+        if(this.auth_time<=0){
+          this.sendAuthCode = 1;
+          clearInterval(auth_timetimer);
+        }
+      }, 1000); 
+        }  
     },
       
   },
