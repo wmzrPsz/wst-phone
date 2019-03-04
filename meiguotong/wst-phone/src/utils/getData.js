@@ -8,7 +8,7 @@ export const login = (phone, passWord) => ajax('/api/forlogin/login', {
                 passWord: md5(passWord)
 });
 //注册
-export const register = (type,mobile,area,smsCode,passWord) => ajax('/api/forlogin/registered', {
+export const register = (type,mobile,smsCode,passWord,area) => ajax('/api/forlogin/register', {
     createType:type,//
     mobile:mobile,//手机号码
     area:area,//区域

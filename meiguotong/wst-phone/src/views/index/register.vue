@@ -26,9 +26,9 @@
             </i>
             <i class="float_left sushou_b">
               <select class="color-b" v-model="area">
-                <option value="">+86</option>
-                <option value="+89">+89</option>
-                <option value="+88">+88</option>
+                <option value="86">+86</option>
+                <option value="89">+89</option>
+                <option value="88">+88</option>
               </select>
             </i>
             <i class="color-e">
@@ -115,7 +115,7 @@ export default {
       mobile:'',
       smsCode:'',
       passWord:'',
-      area:'+89',
+      area:'86',
       sendAuthCode:1,//获取验证码
       auth_time:'',//倒计时
     };
