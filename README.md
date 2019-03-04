@@ -1,28 +1,37 @@
-# wst
+<!--
+ * @Description:  In User Settings Edit
+ * @Author: 彭善智
+ * @LastEditors: 彭善智
+ * @Date: 2019-03-01 22:28:22
+ * @LastEditTime: 2019-03-02 12:30:24
+ -->
+
+# wst-phone
 
 ## Project setup
 ```
-yarn install
+
+npm install
 ```
 
 ### Compiles and hot-reloads for development
 ```
-yarn run serve
+npm run serve
 ```
 
 ### Compiles and minifies for production
 ```
-yarn run build
+npm run build
 ```
 
 ### Run your tests
 ```
-yarn run test
+npm run test
 ```
 
 ### Lints and fixes files
 ```
-yarn run lint
+npm run lint
 ```
 
 ### Customize configuration

@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../views/Home.vue'
 
- const home = r => require.ensure([], () => r(require('../views/Home')), 'home')
- const login = r => require.ensure([], () => r(require('../views/my/login')), 'login')
+const error = r => require.ensure([], () => r(require('../views/error/error')), 'error')
+const login = r => require.ensure([], () => r(require('../views/index/login')), 'login')
+const register = r => require.ensure([], () => r(require('../views/index/register')), 'register')
 
 Vue.use(Router)
 
@@ -11,26 +11,46 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    // {
+    //   path: '*',
+    //   component: error,
+    //   meta:{"title":404}
+    // },
     {
       path: '/',
       name: 'home',
-      component: home
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+      component: login,
+      // redirect: 'login',
+      // meta:{'title': '登录'}
     },
     {
       path: '/login',
       name: 'login',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: login
+      component: login,
+      meta:{'title': '登录'},
+      children: [
+        {
+        path: 'register',
+    //     name: 'register',
+        component: register
+     //   meta:{'title': '注册'}
+      }
+    ]
+    },
+    // {
+    //   path: '/register',
+    //   name: 'register',
+    //   component: register,
+    //   meta:{'title': '注册'}
+    // }
+  ],
+  scrollBehavior (to, from, savedPosition) {
+        console.log(to);
+        console.log(from);
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
     }
-  ]
+  },
 })

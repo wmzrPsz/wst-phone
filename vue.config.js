@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require("./src/config/base").path;  //路径你们改下
 
 module.exports = {
     // 项目部署的基础路径
@@ -31,6 +31,10 @@ module.exports = {
 
     // 是否为生产环境构建生成 source map？
     productionSourceMap: false,
+
+    configureWebpack: {
+        devtool: 'source-map'
+      },
 
     // 调整内部的 webpack 配置。
     // 查阅 https://github.com/vuejs/vue-docs-zh-cn/blob/master/vue-cli/webpack.md
@@ -65,26 +69,48 @@ module.exports = {
 
     // 配置 webpack-dev-server 行为。
     devServer: {
-        open: process.platform === 'darwin',
+  //      open: process.platform === 'darwin',
+  //      openPage: "",
         host: 'localhost',
-        port: 8080,
+        port: 8888,
         https: false,
-        hotOnly: false,
-        open:true,
-        // 查阅 https://github.com/vuejs/vue-docs-zh-cn/blob/master/vue-cli/cli-service.md#配置代理
-   //     proxy: 'http://localhost:8080', // string | Object
-        before: app => { }
+        hotOnly: false,  ////热更新（webpack已实现了，这里false即可）
+      //  open: true,  ////浏览器自动打开页面
+        historyApiFallback: true,  //当使用 HTML5 History API 时，任意的 404 响应都可能需要被替代为 index.html
+    //    proxy: {
+    //        "/interface": 'http://47.105.70.4:8989/meiguotong/a/interface',
+    //    } , // string | Object
+        // proxy: 'http://localhost:8081',
+        proxy: {
+            '/api': {
+          //    target: 'http://47.105.70.4:8989/meiguotong/a/interface',
+        //    target: 'http://localhost:8081/meiguotong/a/interface',
+           target: path,
+           //   target: process.env.API_ROOT,
+         //     target:     process.env.NODE_ENV === 'production' ? "http://47.105.70.4:8989/meiguotong/a/interface":"http://47.105.70.4:8989/meiguotong/a/interface";
+          //    target: path,
+              ws: true,  //如果要代理 websockets
+              changeOrigin: true,
+              pathRewrite:{
+                '^/api':'/'
+                }
+            },
+          },
+        before: app => {
+         app.proxy = "http://localhost:8081/meiguotong/a/interface";
+        }
     },
 
     configureWebpack: config => {
         if (process.env.NODE_ENV === 'production') {
             // 为生产环境修改配置...
-            if(process.env.npm_lifecycle_event === 'analyze'){
-                // config.plugins.push(
-                //     new BundleAnalyzerPlugin()
-                // );
-            }
-            
+            // if(process.env.npm_lifecycle_event === 'analyze'){
+            //     // config.plugins.push(
+            //     //     new BundleAnalyzerPlugin()
+            //     // );
+                
+            // }
+       //     config.devServer.proxy.target = process.env.API_ROOT;
         } else {
             // 为开发环境修改配置...
         }
