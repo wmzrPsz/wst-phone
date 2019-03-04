@@ -10,29 +10,29 @@
       <p class="font-20 hi">Hi，欢迎加入</p>
       <div class="hi_a font-16">
         <ul>
-          <li class="color-c souji">手机注册
-            <i class="hi_a_a background-c"></i>
+          <li @click="typeClick(1)" :class="[type==1?'color-c souji':'youxian']" >手机注册
+            <i class="hi_a_a background-c" v-if="type==1"></i>
           </li>
-          <li class="youxian">邮箱注册
-            <i class="hi_a_a background-c yinc_a"></i>
+          <li @click="typeClick(2)" :class="[type==2?'color-c souji':'youxian']" >邮箱注册
+            <i class="hi_a_a background-c" v-if="type==2"></i>
           </li>
         </ul>
       </div>
-      <div class="di_s_b di_s_b_y_a" style="margin-top:0.5rem!important">
-        <ul>
+      <div class="di_s_b di_s_b_y_a" style="margin-top:0.5rem!important" v-if="type==1">
+         <ul>
           <li class="border_b font-14">
             <i class="di_s_b_c float_left">
               <img src="../../assets/img/A/ic_sellphone.png">
             </i>
             <i class="float_left sushou_b">
-              <select class="color-b">
-                <option value>+86中国</option>
-                <option value>+86中国</option>
-                <option value>+86中国</option>
+              <select class="color-b" v-model="area">
+                <option value="">+86</option>
+                <option value="+89">+89</option>
+                <option value="+88">+88</option>
               </select>
             </i>
             <i class="color-e">
-              <input class="di_s_b_d sushou float_left" type="text" value="请输入手机号">
+              <input class="di_s_b_d sushou float_left" type="text" placeholder="请输入手机号" v-model.trim="mobile">
             </i>
           </li>
           <li class="border_b font-14">
@@ -40,10 +40,11 @@
               <img src="../../assets/img/A/sign_code_icon@2x.png">
             </i>
             <i class="color-e">
-              <input class="di_s_b_d sushou float_left" type="text" value="请输入验证码">
+              <input class="di_s_b_d sushou float_left" type="text" placeholder="请输入验证码" v-model.trim="smsCode">
             </i>
             <i class="float_right sushou_a">
-              <button class="color background-c font-14">获取验证码</button>
+              <button v-show="sendAuthCode" class="color background-c font-14" @click="getAuthCode" v-if="sendAuthCode==1">获取验证码</button>
+              <button v-show="sendAuthCode" class="color background-c font-14" @click="getAuthCode" v-if="sendAuthCode==2">{{auth_time}}</button>
             </i>
           </li>
           <li class="border_b font-14">
@@ -51,7 +52,7 @@
               <img src="../../assets/img/A/ic_lock.png">
             </i>
             <i class="color-e">
-              <input class="di_s_b_d float_left" type="text" value="请设计你的密码">
+              <input class="di_s_b_d float_left" type="Password" placeholder="请设计你的密码" v-model.trim="passWord">
             </i>
           </li>
           <li class="font-12 wanl">
@@ -61,14 +62,14 @@
         </ul>
       </div>
       <!--邮箱登陆-->
-      <div class="di_s_b di_s_b_y yinc" style="margin-top:0.5rem!important">
+      <div class="di_s_b di_s_b_y" style="margin-top:0.5rem!important" v-if="type==2">
         <ul>
           <li class="border_b font-14">
             <i class="di_s_b_c float_left">
               <img src="../../assets/img/A/sign_email_icon@2x.png">
             </i>
             <i class="color-e">
-              <input class="di_s_b_d float_left" type="text" value="请输入注册邮箱号">
+              <input class="di_s_b_d float_left" type="text" placeholder="请输入注册邮箱号">
             </i>
           </li>
           <li class="border_b font-14">
@@ -76,7 +77,7 @@
               <img src="../../assets/img/A/sign_code_icon@2x.png">
             </i>
             <i class="color-e">
-              <input class="di_s_b_d sushou float_left" type="text" value="请输入验证码">
+              <input class="di_s_b_d sushou float_left" type="text" placeholder="请输入验证码">
             </i>
             <i class="float_right sushou_a">
               <button class="color background-c font-14">获取验证码</button>
@@ -87,7 +88,7 @@
               <img src="../../assets/img/A/ic_lock.png">
             </i>
             <i class="color-e">
-              <input class="di_s_b_d float_left" type="text" value="请设计你的密码">
+              <input class="di_s_b_d float_left" type="Password" placeholder="请设计你的密码">
             </i>
           </li>
           <li class="font-12 wanl">
@@ -96,22 +97,104 @@
           </li>
         </ul>
       </div>
-      <button class="di_s_b_dengl color background-c font-16">注册</button>
+      <button class="di_s_b_dengl color background-c font-16" @click="reg">注册</button>
       <button class="di_s_b_dengl di_s_b_dengl_a color-c font-16">已有账号立即登陆</button>
       <a class="font-12 color-b chuanj">创建商家用户></a>
     </div>
   </div>
 </template>
 <script>
+import { register } from "@/utils/getData";
+import { isNull } from "@/utils/common";
+import { mapMutations} from "vuex";
 export default {
   name: "register",
   data() {
-    return {};
+    return {
+      type:1,
+      mobile:'',
+      smsCode:'',
+      passWord:'',
+      area:'+89',
+      sendAuthCode:1,//获取验证码
+      auth_time:'',//倒计时
+    };
   },
   methods: {
+     ...mapMutations(["addLogin"]),
+      typeClick(index){
+        this.type = index;
+      },
+      async reg(){
+       //手机号码注册
+       if(this.type==1){
+			if(isNull(this.mobile)){
+        this.$toast("请输入电话号码");
+        return;
+			}
+			if(isNull(this.smsCode)){
+        this.$toast("请输入验证码");
+        return;
+      }
+      if(isNull(this.passWord)){
+        this.$toast("请输入密码")
+      }
+      let data = await register(this.type,this.mobile,this.smsCode,this.passWord,this.area);
+      if (data) {
+        this.$toast("注册成功")
+        this.$router.go("-1");
+      }
+     } 
+     //邮箱注册
+      if(this.type==2){
+			if(isNull(this.mobile)){
+        this.$toast("请输入邮箱号码");
+        return;
+			}
+			if(isNull(this.smsCode)){
+        this.$toast("请输入验证码");
+        return;
+      }
+      if(isNull(this.passWord)){
+        this.$toast("请输入密码")
+      }
+      let data = await register(this.type,this.mobile,this.smsCode,this.passWord,this.area);
+      if (data) {
+        this.reghp(data);
+        this.$toast("注册成功")
+        this.$router.push("/login");
+      }
+     } 
+      },
+      //点击获得验证码
+        getAuthCode:function () {
+        this.$http.get(sendSmsUrl).then(function (response) {
+          category:'type',
+         console.log("请求成功",response)
 
+         }, function (error) {
+         console.log("请求失败",error);
+        })
+      this.sendAuthCode = 2;
+     //设置倒计时秒
+      this.auth_time = 60;
+      var auth_timetimer = setInterval(()=>{
+        this.auth_time--;
+        if(this.auth_time<=0){
+          this.sendAuthCode = 1;
+          clearInterval(auth_timetimer);
+        }
+      }, 1000);      
+    },
+      
   },
   
 };
+
 </script>
+
+<style lang="less" scoped>
+
+</style>
+
 
