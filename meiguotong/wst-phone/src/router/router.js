@@ -4,6 +4,7 @@ import Router from 'vue-router'
 const error = r => require.ensure([], () => r(require('../views/error/error')), 'error')
 const login = r => require.ensure([], () => r(require('../views/index/login')), 'login')
 const register = r => require.ensure([], () => r(require('../views/index/register')), 'register')
+const forget = r => require.ensure([], () => r(require('../views/index/forget')), 'forget')
 
 Vue.use(Router)
 
@@ -11,11 +12,11 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
-    // {
-    //   path: '*',
-    //   component: error,
-    //   meta:{"title":404}
-    // },
+    {
+      path: '*',
+      component: error,
+      meta:{"title":404}
+    },
     {
       path: '/',
       name: 'home',
@@ -28,14 +29,6 @@ export default new Router({
       name: 'login',
       component: login,
       meta:{'title': '登录'},
-      children: [
-        {
-        path: 'register',
-    //     name: 'register',
-        component: register
-     //   meta:{'title': '注册'}
-      }
-    ]
     },
     {
       path: '/register',
@@ -43,12 +36,12 @@ export default new Router({
       component: register,
       meta:{'title': '注册'}
     },
-    // {
-    //   path: '/indehome',
-    //   name: 'indehome',
-    //   component: indehome,
-    //   meta:{'title': '首页'}
-    // }
+    {
+      path: '/forget',
+      name: 'forget',
+      component: forget,
+      meta:{'title': '忘记密码'}
+    },
   ],
   scrollBehavior (to, from, savedPosition) {
         console.log(to);
