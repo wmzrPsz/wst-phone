@@ -603,16 +603,17 @@ select{
 	width: 4.5rem!important;
 }
 .sushou_b{
-	margin-top: 0.4rem;
+	margin-top: 0.6rem;
 	border-right: 1px solid gainsboro;
+	padding-right: 0.3rem;
 }
 .sushou_a button{
 	text-align: center;
 	border-radius: 50px;
 	width:4.5rem;
 	line-height:1.7rem;
-	margin-top: 0.1rem;
-	margin-right: 0.1rem;
+	margin-top: 0.15rem;
+	margin-right: 0.2rem;
 }
 
 .di_s_b_dengl_a{
@@ -971,8 +972,10 @@ select{
 }
 .baoc_jia{
 	width: 100%;
-    height: 88.5px;
-    background-size: 100% 100%;
+	height: 88.5px;
+	/* background-image:url('../../assets/img/B/1.png'); */
+	background-size: 100% 100%;
+	
 }
 .baoc_jia p{
 	color:rgba(255,255,255,1);

@@ -1,7 +1,7 @@
 <template>
   <div class="register">
     <div class="her_a font-20 background-a">
-      <i class="her_a_left float_left">
+      <i class="her_a_left float_left" onclick="window.history.go(-1)">
         <img src="../../assets/img/A/back_icon@2x.png">
       </i>
       <i class="her_a_zong color float_zhong">注册</i>
@@ -56,13 +56,11 @@
             </i>
             <i class="float_right sushou_a">
               <button
-                v-show="sendAuthCode"
                 class="color background-c font-14"
                 @click="getAuthCode"
                 v-if="sendAuthCode==1"
               >获取验证码</button>
               <button
-                v-show="sendAuthCode"
                 class="color background-c font-14"
                 @click="getAuthCode"
                 v-if="sendAuthCode==2"
@@ -113,17 +111,15 @@
             </i>
             <i class="float_right sushou_a">
               <button
-                v-show="sendAuthCode"
                 class="color background-c font-14"
                 @click="getAuthCode"
-                v-if="sendAuthCode==1"
+                v-if="sendAuthCode_a==1"
               >获取验证码</button>
               <button
-                v-show="sendAuthCode"
                 class="color background-c font-14"
                 @click="getAuthCode"
-                v-if="sendAuthCode==2"
-              >{{auth_time}}</button>
+                v-if="sendAuthCode_a==2"
+              >{{auth_time_a}}</button>
             </i>
           </li>
           <li class="border_b font-14">
@@ -166,8 +162,10 @@ export default {
       smsCode: "",
       passWord: "",
       area: "86",
+      sendAuthCode_a:1,
       sendAuthCode: 1, //获取验证码
-      auth_time: "" //倒计时
+      auth_time: "", //倒计时
+      auth_time_a:''
     };
   },
   methods: {
@@ -245,7 +243,8 @@ export default {
           return;
         }
         this.email = "";
-        let data = await sendSms(this.mobile, this.email, this.type);
+        let data = await sendSms(this.mobile, this.email, this.type,this.area);
+        if(data){
         this.sendAuthCode = 2;
         //设置倒计时秒
         this.auth_time = 60;
@@ -256,6 +255,7 @@ export default {
             clearInterval(auth_timetimer);
           }
         }, 1000);
+        }
       }
       if (this.type == 2) {
         //获取邮箱短信
@@ -264,18 +264,20 @@ export default {
           return;
         }
         this.mobile = "";
-        let data = await sendSms(this.mobile, this.email, this.type);
-        
-        this.sendAuthCode = 2;
+        this.area = "";
+        let data = await sendSms(this.mobile, this.email, this.type,this.area);
+        if(data){
+        this.sendAuthCode_a = 2;
         //设置倒计时秒
-        this.auth_time = 60;
+        this.auth_time_a = 60;
         var auth_timetimer = setInterval(() => {
-          this.auth_time--;
-          if (this.auth_time <= 0) {
-            this.sendAuthCode = 1;
+          this.auth_time_a--;
+          if (this.auth_time_a <= 0) {
+            this.sendAuthCode_a = 1;
             clearInterval(auth_timetimer);
           }
         }, 1000);
+        }
       }
     }
   }

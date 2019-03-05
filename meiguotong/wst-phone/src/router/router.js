@@ -5,7 +5,7 @@ const error = r => require.ensure([], () => r(require('../views/error/error')), 
 const login = r => require.ensure([], () => r(require('../views/index/login')), 'login')
 const register = r => require.ensure([], () => r(require('../views/index/register')), 'register')
 const forget = r => require.ensure([], () => r(require('../views/index/forget')), 'forget')
-
+const indehome = r => require.ensure([], () => r(require('../views/index/indehome')), 'indehome')
 Vue.use(Router)
 
 export default new Router({
@@ -41,6 +41,12 @@ export default new Router({
       name: 'forget',
       component: forget,
       meta:{'title': '忘记密码'}
+    },
+    {
+      path: '/indehome',
+      name: 'indehome',
+      component: indehome,
+      meta:{'title': '首页'}
     },
   ],
   scrollBehavior (to, from, savedPosition) {
