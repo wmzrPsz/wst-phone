@@ -32,11 +32,12 @@ export const sendSms = (mobile,email,type,area)=> ajax('/api/forlogin/sendSms',{
     area:area,
 });
 //找回密码
-export const fordet = (type,moib,smsCo,password)=> ajax('api/forlogin/passFind',{
+export const fordet = (type,moib,smsCo,passWord)=> ajax('api/forlogin/updatePassword',{
     findType:type,//判断1是手机2是邮箱
-    moible:moib,//账号
-    email:moib,
+    mobile:moib,//账号
     smsCode:smsCo,//验证码
-    passWord: md5(passWord),
+    category:3,
+    source:1,
+    newPassword: md5(passWord),
 });
 //首页
