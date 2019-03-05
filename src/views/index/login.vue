@@ -117,7 +117,7 @@ export default {
       let data = await login(this.phone, this.passWord);
       if (data) {
         this.addLogin(data);
-        this.$router.push("/indehome");
+        this.$router.push("/indexher");
       }
     }
   }
