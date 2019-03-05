@@ -16,10 +16,10 @@
 //     return true;
 // }
 
-// //判断手机号是否正确
-// function isPoneAvailable(str) {
-//      return !(/^[1][3,4,5,7,8][0-9]{9}$/.test(str));
-// }
+//判断手机号是否正确
+export const isPoneAvailable= (str)=> {
+     return !(/^[1][3,4,5,7,8][0-9]{9}$/.test(str));
+}
 
 // //判断是否为空
 export const isNull = (str)=> {
