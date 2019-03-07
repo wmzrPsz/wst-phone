@@ -427,8 +427,9 @@ select{
 	margin-top: 1rem;
 }
 .b_xianm{
-	width: 100%;
+	width:95%;
 	overflow:hidden;
+	margin: auto;
 }
 .b_xianm_jia{
 	text-align: left;
@@ -450,8 +451,12 @@ select{
   margin-right: 0.5rem;
   margin-bottom: 0.5rem;
   border-radius: 8px;
+  background-size: 100% 100%;
+ float: left;
 }
-
+.b_xianm_b_jiadian{
+	background-image: url(../assets/img/C/ddwjlb_2box@2x.png);
+}
 .jg_a li{
 	text-align: center;
   width:30%;
@@ -603,7 +608,7 @@ select{
     margin-left: -0.75rem;
 }
 .sushou{
-	width: 4.5rem!important;
+	width:44%!important;
 }
 .sushou_b{
 	margin-top: 0.6rem;
@@ -751,11 +756,17 @@ select{
 	height:5px;
 	margin-left: 0.2rem;
 }
+.dingjia_a_ajia{
+	background-color:white;
+	width: 100%;
+	overflow: hidden;
+	padding-bottom: 0.5rem;
+}
 .sou_her_www{
 	overflow:hidden;
-	background-color:white;
 	padding-top: 0.5rem;
-	padding-bottom: 0.5rem;
+	width: 90%;
+	margin: auto;
 }
 .sou_her_www li{
 	width: 25%;
@@ -825,6 +836,12 @@ select{
 .ze_x_ril_b{
   overflow: hidden;
   margin-bottom: 0.2rem;
+  text-align: left;
+  clear: both;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap; 
+	margin-top: -0.3rem;
 }
 .ze_x_ril_c{
 	clear: both;
@@ -841,10 +858,15 @@ select{
 }
 
 .ong_z{
-	position: fixed;
+	position: relative;
 	z-index:9999;
 	background-color:white!important;
 	padding-bottom: 0.5rem;
+	widows: 95%;
+	margin: auto;
+	max-height:20rem;
+	overflow: hidden;
+	overflow-y:visible
 }
 
 .jg_c{
@@ -4928,4 +4950,18 @@ select{
 .weibu_a i img{
 	width: 100%;
 	height: 100%;
+}
+.ze_x_ril_jia{
+	text-align: left;
+	clear: both;
+	overflow:hidden;
+	text-overflow:ellipsis;
+    white-space:nowrap; 
+}
+.sou_her_jia{
+	height:4rem!important;
+}
+.shaixuang{
+	overflow: hidden;
+	border-bottom: 1px solid #F5F5F5;
 }

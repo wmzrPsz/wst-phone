@@ -41,3 +41,25 @@ export const fordet = (type,moib,smsCo,passWord)=> ajax('api/forlogin/updatePass
     newPassword: md5(passWord),
 });
 //首页
+
+//绑定手机或邮箱
+export const bind = (type,mobile,email,smsCode,passWord,area,) => ajax('/api/forlogin/bindNew', {
+    createType:type,//
+    phone:mobile,//手机号码
+    email:email,//邮箱号码
+    area:area,//区域
+    smsCode:smsCode,//验证码
+    version:1,//写死1普通用户2旅游社
+    passWord: md5(passWord),
+    category: 1,
+    source:3,
+});
+//常规路线搜索接口
+export const seledin = (m,day,srtype) => ajax('/api/route/selectRoute', {
+    date:m,
+    day:day,//天数
+    orderByType:srtype,//1.销量2.价格降序3.价格升序4好评
+    languageid:1,//语言
+    pageSize: 10,
+    pageNo: 1
+});

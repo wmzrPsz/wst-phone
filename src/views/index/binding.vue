@@ -1,10 +1,10 @@
 <template>
-  <div class="register">
+  <div class="binding">
     <div class="her_a font-20 background-a">
       <i class="her_a_left float_left" onclick="window.history.go(-1)">
         <img src="../../assets/img/A/back_icon@2x.png">
       </i>
-      <i class="her_a_zong color float_zhong">注册</i>
+      <i class="her_a_zong color float_zhong">绑定</i>
     </div>
     <div class="dingjia">
       <p class="font-20 hi">Hi，欢迎加入</p>
@@ -141,21 +141,16 @@
           </li>
         </ul>
       </div>
-      <button class="di_s_b_dengl color background-c font-16" @click="reg">注册</button>
-      <button class="di_s_b_dengl di_s_b_dengl_a color-c font-16" @click="long">已有账号立即登陆</button>
-       <router-link to="/register_business">
-      <a class="font-12 color-b chuanj">创建商家用户></a>
-       </router-link>
+      <button class="di_s_b_dengl color background-c font-16" @click="reg">绑定</button>
     </div>
   </div>
 </template>
 <script>
-import { register } from "@/utils/getData"; //注册
+import { bind } from "@/utils/getData"; //绑定
 import { sendSms } from "@/utils/getData"; //邮箱短信
 import { isNull } from "@/utils/common";
-import { mapMutations } from "vuex";
 export default {
-  name: "register",
+  name: "binding",
   data() {
     return {
       type: 1,
@@ -164,23 +159,18 @@ export default {
       smsCode: "",
       passWord: "",
       area: "86",
-      sendAuthCode_a:1,
+      sendAuthCode_a: 1,
       sendAuthCode: 1, //获取验证码
       auth_time: "", //倒计时
-      auth_time_a:''
+      auth_time_a: ""
     };
   },
   methods: {
-    ...mapMutations(["addLogin"]),
     typeClick(index) {
       this.type = index;
     },
-    //立即登陆
-    long: function() {
-      this.$router.go("-1");
-    },
     async reg() {
-      //手机号码注册
+      //手机号码绑定
       if (this.type == 1) {
         if (isNull(this.mobile)) {
           this.$toast("请输入电话号码");
@@ -192,9 +182,10 @@ export default {
         }
         if (isNull(this.passWord)) {
           this.$toast("请输入密码");
+          return;
         }
         this.email = "";
-        let data = await register(
+        let data = await bind(
           this.type,
           this.mobile,
           this.email,
@@ -203,40 +194,12 @@ export default {
           this.area
         );
         if (data) {
-          this.$toast("注册成功");
-          this.$router.go("-1");
-        }
-      }
-      //邮箱注册
-      if (this.type == 2) {
-        if (isNull(this.email)) {
-          this.$toast("请输入邮箱号码");
-          return;
-        }
-        if (isNull(this.smsCode)) {
-          this.$toast("请输入验证码");
-          return;
-        }
-        if (isNull(this.passWord)) {
-          this.$toast("请输入密码");
-          return;
-        }
-        this.mobile = "";
-        let data = await register(
-          this.type,
-          this.mobile,
-          this.email,
-          this.smsCode,
-          this.passWord,
-          this.area
-        );
-        if (data) {
-          this.$toast("注册成功");
-          this.$router.go("-1");
+          this.$toast("绑定成功");
+          // this.$router.go("-1");
         }
       }
     },
-    //点击获得验证码
+      //点击获得验证码
     async getAuthCode() {
       if (this.type == 1) {
         //获取短信
@@ -285,8 +248,3 @@ export default {
   }
 };
 </script>
-
-<style lang="less" scoped>
-</style>
-
-

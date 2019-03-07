@@ -19,12 +19,14 @@
         class="baoc_jia"
       >
         <p>开启你的旅行</p>
+        <router-link to="/sousuo">
         <div class="baoc_sou">
           <i>
             <img src="../../assets/img/A/xpjcs_sea_icon.png">
           </i>
           <input type="text" placeholder="搜索旅行地/酒店/旅游/景点门票/交通" name>
         </div>
+        </router-link>
       </div>
     </div>
     <!--头部导航栏-->
