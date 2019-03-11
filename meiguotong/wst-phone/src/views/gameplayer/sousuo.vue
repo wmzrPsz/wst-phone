@@ -358,6 +358,19 @@ export default {
       sypind: ""
     };
   },
+  //计算属性
+  computed:{
+    //获取选择的日期
+    date(){
+      let lists = [];
+        for (const list of this.dataList) {
+            if(list.flag){
+              lists.push(list);
+            }
+        }
+      return lists;
+    },
+  },
   mounted() {
     this.LopTime(); //获取当前一年的月份和天数
     this.routine(); //一进去默认常规没有筛选数据
