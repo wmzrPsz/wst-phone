@@ -104,7 +104,12 @@
 
           <div class="b_xianm">
             <ul class="font-12 b_xianm_b color-b">
-              <li v-for="(m,index) in dataArr" @click="daytyp(m)" :class="{b_xianm_b_jiadian:arr.includes(m)}" :key="index">{{m}}月</li>
+              <li
+                v-for="(list, index) in dataList"
+                :key="index"
+                :class="list.flag?'b_xianm_b_jiadian':''"
+                @click.stop="monthClick(index)"
+              >{{list.month}}月</li>
             </ul>
           </div>
           <button
@@ -125,7 +130,7 @@
 
           <div class="b_xianm">
             <ul class="font-12 b_xianm_b color-b">
-              <li class="float_left" v-for="(day,index) in 12" :key="index" :class="{b_xianm_b_jiadian:sypind==day}" @click="datmeter(day)">{{day}}天</li>
+              <li class="float_left">1天</li>
             </ul>
           </div>
           <button
@@ -345,19 +350,18 @@ export default {
     return {
       type: "", //1日期，2行程，3价格，4全部，
       srtype: 1, //1综合，2销量，3降价格，4升价格
-      dataArr: [],
-      arr : [],//选月份；
-      steindy:'',//确定筛选
-      styser:[],//
-      imgtep:[],
-      m:'',
-      day:'',//天
-      sypind:'',
+      styser: [], //
+      imgtep: [],
+      dataList: [], //日期
+      ttpt: "",
+      day: "", //天
+      sypind: ""
     };
   },
   mounted() {
-    this.LopTime();
-    this.routine();//一进去默认常规没有筛选数据
+    this.LopTime(); //获取当前一年的月份和天数
+    this.routine(); //一进去默认常规没有筛选数据
+    this.LopTime_list(); //12个月循环
   },
   methods: {
     teypex(index) {
@@ -367,64 +371,77 @@ export default {
         this.type = index;
       }
     },
+    //销售量和价格的切换
     sertey(index) {
       this.srtype = index;
-       this.routine();
+      this.routine();
     },
-    LopTime() {
-      var dataArr = [];
-      var data = new Date();
-      data.setMonth(data.getMonth()); //获取到当前月份,设置月份
-      for (var i = 0; i < 12; i++) {
-        data.setMonth(data.getMonth() + 1); //每次循环一次 月份值减1
-        var m = data.getMonth();
-        if (m == 0) {
-          m = 12;
+    //月份点击
+    monthClick(index) {
+      this.dataList[index].flag = !this.dataList[index].flag;
+      if (this.dataList) return; //多选 当datalist[index].flag=true//为选中月分
+    },
+    queding(index) {
+      this.ttpt = index;
+      //点击月份确定
+      if (this.ttpt == 1) {
+         let selectate = [];
+        for (var i=0; i<12 ;i++) {
+          let map = {};
+          if (this.dataList[i].flag==true) {
+            this.$set(map, "year", dataList.year);
+            this.$set(map, "month", dataList.month);
+            this.$set(map, "days", dataList.days);
+          }
         }
-        dataArr.push(m);
-        this.dataArr = dataArr;
+         this.selectate.push(map);
+         this.dataList = selectate;
+         this.routine();
       }
-      console.log(dataArr);
+      //////
     },
-    //点击选中月份
-    daytyp(m) {
-     if(this.arr.includes(m)){
-        this.arr=this.arr.filter(function (ele){return ele != m;});
-        console.log("取消选中月份"+m);
-			}else{
-        this.arr.push(m);
-        console.log("选中月数"+m);
-			}
+    LopTime(year = new Date().getFullYear(), month = new Date().getMonth()) {
+      //计算这个月多少天
+      let day = new Date(year, month, 0).getDate(); //当月总天数
+      console.log("这个月共" + day + "天");
+      return day;
     },
-    //点击确定筛选
-    async queding(index) {
-      this.type = 0;
-      this.steindy = index;
-      //点击月份的确定
-      if(this.steindy==1){
-        this.srtype=1;
-        this.routine();
-         if (data) {
-           console.log("筛选成功");
+    LopTime_list() {
+      let currentDate = new Date();
+      let year = currentDate.getFullYear(); //年
+      let month = currentDate.getMonth() + 1; //月
+      let list = []; //创建要传的数组
+      //开始循环12个月
+      for (let i = 0; i < 12; i++) {
+        if (month > 12) {
+          month = 1; //1月
+          year++; //加年
+        }
+        //  //把年月set进去map{}字符窜
+        let map = {}; //创建
+        this.$set(map, "year", year);
+        this.$set(map, "month", month);
+        this.$set(map, "flag", false);
+        let day = this.LopTime(year, month);
+        let days = [];
+        for (let k = 1; k <= day; k++) {
+          //这个月有多少天循环多少
+          days.push(k);
+        }
+        this.$set(map, "days", days.toString());
+        list.push(map); //List[{year,month,{day}},{}]
+        month++; //每循环一次加一月
       }
-      }
-      //点击天数的确定
-      if(this.steindy==2){
-
-      }
-      
+      console.log(list);
+      this.dataList = list;
     },
-    //点击选中天数
-    datmeter(day) {
-   this.$toast(day);
-   
-    },
-    async routine(){
-     let data = await seledin(this.m,this.day,this.srtype);
-     if(data){
-     this.styser =data.list;
-     this.imgtep =data.list[0].carImg.split(",");
-     }
+    ////////////////
+    async routine() {
+      let data = await seledin(this.dataList, this.day, this.srtype);
+      if (data) {
+        this.styser = data.list;
+        this.imgtep = data.list[0].carImg.split(",");
+      }
     }
   }
 };
