@@ -55,14 +55,20 @@ export const bind = (type,mobile,email,smsCode,passWord,area,) => ajax('/api/for
     source:3,
 });
 //常规路线搜索接口
-export const seledin = (date,daysty,srtype,minPrice,maxPrice) => ajax('/api/route/selectRoute', {
+export const seledin = (date,daysty,srtype,minPrice,maxPrice,name,scenicSpotid) => ajax('/api/route/selectRoute', {
     date:date,//日期
     day:daysty,//天数
     minPrice:minPrice,//最小价格
     maxPrice:maxPrice,//最大价格
     orderByType:srtype,//1.销量2.价格降序3.价格升序4好评
+    name:name,//景点
+    scenicSpotid:scenicSpotid,//景点Id
     languageid:1,//语言
-    pageSize: 10,
     pageNo: 1,
 
 },'post');
+//获取途径 景点
+export const  getScenicByCity = () => ajax('/api/common/getScenicByCity',{
+    languageid:1,//语言
+    cityid:1,//城市ID
+});
