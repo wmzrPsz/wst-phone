@@ -10,6 +10,7 @@
   "dependencies": {
     "jquery": "^3.3.1",
     "js-md5": "^0.7.3",
+    "mescroll.js": "^1.4.1",
     "vant": "^1.6.7",
     "vue": "^2.6.6",
     "vue-router": "^3.0.1",
