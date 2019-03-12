@@ -153,20 +153,20 @@
                 :class="listpr.flag?'b_xianm_b_jiadian':''"
                 @click.stop="contentClick(index)"
               >{{listpr.content}}</li>
-              <samp class="jg_c">
-                <li class="float_left">
-                  <input type="number" placeholder="输入最小值">
+              <div class="jg_c">
+                <li class="float_left" :class="minpak==1?'b_xianm_b_jiadian':''">
+                  <input @click="prmClick(1)" type="number" placeholder="最小价格" v-model.number="minPrice">
                 </li>
-                <li class="float_left">
-                  <input type="number" placeholder="请输入最大值">
+                <li class="float_left" :class="maxpak==1?'b_xianm_b_jiadian':''">
+                  <input @click="prmClick(2)" type="number" placeholder="最大价格" v-model.number="maxPrice">
                 </li>
-              </samp>
+              </div>
             </ul>
           </div>
           <button
             class="di_s_b_dengl color background-d font-16"
             style="margin-top: 1.5rem; margin-bottom:0.5rem;"
-            @click="queding(4)"
+            @click="queding(1)"
           >确定</button>
         </div>
         <!--全部筛选-->
@@ -180,18 +180,12 @@
 
           <div class="b_xianm">
             <ul class="font-12 b_xianm_b color-b">
-              <li class="float_left">1月</li>
-              <li class="float_left">2月</li>
-              <li class="float_left">3月</li>
-              <li class="float_left">4月</li>
-              <li class="float_left">5月</li>
-              <li class="float_left">6月</li>
-              <li class="float_left">7月</li>
-              <li class="float_left">8月</li>
-              <li class="float_left">9月</li>
-              <li class="float_left">10月</li>
-              <li class="float_left">11月</li>
-              <li class="float_left">12月</li>
+              <li
+                v-for="(list, index) in dataList"
+                :key="index"
+                :class="list.flag?'b_xianm_b_jiadian':''"
+                @click.stop="monthClick(index)"
+              >{{list.month}}月</li>
             </ul>
           </div>
 
@@ -202,20 +196,14 @@
             <i class="font-16 b_xianm_c">行程天数</i>
           </div>
 
-          <div class="b_xianm">
+           <div class="b_xianm">
             <ul class="font-12 b_xianm_b color-b">
-              <li class="float_left">1天</li>
-              <li class="float_left">2天</li>
-              <li class="float_left">3天</li>
-              <li class="float_left">4天</li>
-              <li class="float_left">5天</li>
-              <li class="float_left">6天</li>
-              <li class="float_left">7天</li>
-              <li class="float_left">8天</li>
-              <li class="float_left">9天</li>
-              <li class="float_left">10天</li>
-              <li class="float_left">11天</li>
-              <li class="float_left">12天</li>
+              <li
+                v-for="(listday,index) in daylist"
+                :key="index"
+                :class="listday.flag?'b_xianm_b_jiadian':''"
+                @click.stop="dayClick(index)"
+              >{{listday.day | dayFilter}}</li>
             </ul>
           </div>
 
@@ -226,24 +214,23 @@
             <i class="font-16 b_xianm_c">价格预算</i>
           </div>
 
-          <div class="b_xianm" style="margin-top: 0.5rem">
+         <div class="b_xianm" style="margin-top: 0.5rem">
             <ul class="font-12 jg_a color-b">
-              <li class="float_left">0-99</li>
-              <li class="float_left">1000-2999</li>
-              <li class="float_left">3000-4999</li>
-              <li class="float_left">5000-6999</li>
-
-              <samp class="jg_c">
-                <li class="float_left">
-                  <input type="number" placeholder="请输入数值">
+              <li
+                class="float_left"
+                v-for="(listpr,index) in priceList"
+                :key="index"
+                :class="listpr.flag?'b_xianm_b_jiadian':''"
+                @click.stop="contentClick(index)"
+              >{{listpr.content}}</li>
+              <div class="jg_c">
+                <li class="float_left" :class="minpak==1?'b_xianm_b_jiadian':''">
+                  <input @click="prmClick(1)" type="number" placeholder="最小价格" v-model.number="minPrice">
                 </li>
-                <li class="float_left">
-                  <input type="number" placeholder="请输入数值">
+                <li class="float_left" :class="maxpak==1?'b_xianm_b_jiadian':''">
+                  <input @click="prmClick(2)" type="number" placeholder="最大价格" v-model.number="maxPrice">
                 </li>
-                <li class="float_left" style="margin-right: 0px!important">
-                  <input type="number" placeholder="请输入数值">
-                </li>
-              </samp>
+              </div>
             </ul>
           </div>
 
@@ -312,7 +299,7 @@
         <div class="ze_x_a" v-for="(sert,index) in styser" :key="index">
           <div style="overflow:hidden;">
             <div class="float_left ze_x_le">
-              <img :src="imgtep[1]">
+              <img :src="sert.carImg">
             </div>
             <div class="float_left ze_x_ril">
               <div class="font-14 ze_x_ril_jia">{{sert.title}}</div>
@@ -350,7 +337,11 @@ export default {
       imgtep: [], //列表图片
       dataList: [], //日期
       day: "", //日期的天
-      daylist: [], //行程的天数
+      daylist: [], //行程的天
+      minPrice:'',
+      maxPrice:'',
+      minpak:2,
+      maxpak:2
     };
   },
   //计算属性
@@ -377,18 +368,6 @@ export default {
       console.log(lists)
       return lists;
     },
-    //获取价格
-    priceity(){
-      let map = {};
-      for (const listpr of this.priceList) {
-        if (listpr.flag) {
-         this.$set(map, "minPrice",listpr.minPrice);
-         this.$set(map,"maxPrice",listpr.maxPrice);
-        }
-      }
-      console.log(map);
-      return map;
-    }
   },
   mounted() {
     this.LopTime(); //获取当前一年的月份和天数
@@ -482,9 +461,18 @@ export default {
       this.priceList.map(elem => {
         elem.flag = false;
       });
+      this.minpak=2;
+      this.maxpak=2;
       this.priceList[index].flag = !this.priceList[index].flag;
-      this.routine();
-      console.log(index);
+      // this.minPrice=priceList[index].minPrice;
+      for (const listpr of this.priceList) {
+          if(listpr.flag){
+             this.minPrice=listpr.minPrice;//最小价格
+             this.maxPrice=listpr.maxPrice;//最大价格
+          }
+        }
+        console.log("最小价格"+this.minPrice+"最大价格"+this.maxPrice);
+       this.routine();
     },
     //价格选择初始化
     priceInit() {
@@ -518,11 +506,30 @@ export default {
       }
       console.log(this.priceList);
     },
+    //点击输入价格
+    prmClick(index){
+    if(index==1){
+     this.minpak=1;
+    }
+    if(index==2){
+      this.maxpak=1;
+    }
+     for (const listpr of this.priceList) {
+      this.$set(listpr,"flag",false);
+    }
+    },
+    queding(index){
+    if(index==1){
+      this.routine();
+    }
+    },
     async routine() {
       let data = await seledin(
         JSON.stringify(this.date),
         this.daysty,
         this.srtype,
+        this.minPrice,//小价格
+        this.maxPrice,//大价格
       );
       if (data) {
         this.styser = data.list;
