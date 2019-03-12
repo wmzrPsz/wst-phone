@@ -1,7 +1,7 @@
 <template>
   <div class="index" style="background-color:#F5F5F5">
     <div class="dingjia_b">
-      <div class="sou_her background-a sou_her_jia">
+      <div class="sou_her background-a sou_her_jia" style="clear:both">
         <ul class="sou_her_a">
           <li class="float_left font-16">
             <button class="color-f" style="margin-top: 0.3rem;">取消</button>
@@ -288,9 +288,7 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="dingjia_a">
       <div class="dingjia_a_ajia">
         <ul class="sou_her_www font-14">
           <li @click="sertey(1)" :class="[srtype==1?'sou_her_www_a':'']">
@@ -318,6 +316,11 @@
         </ul>
       </div>
 
+    </div>
+
+    <div class="dingjia_a">
+
+<mescroll-vue ref="mescroll" :up="mescrollUp" @init="mescrollInit">
       <div class="ze_x">
         <div class="ze_x_a" v-for="(sert,index) in styser" :key="index">
           <div style="overflow:hidden;">
@@ -345,9 +348,21 @@
           </div>
         </div>
       </div>
+
+</mescroll-vue>
+
     </div>
   </div>
 </template>
+<style lang="less" scoped>
+  .mescroll {
+    position: fixed;
+    top: 9rem;
+    bottom: 0;
+    height: auto;
+  }
+</style>
+
 <script>
 import { seledin,getScenicByCity } from "@/utils/getData"
 import MescrollVue from 'mescroll.js/mescroll.vue'
@@ -366,15 +381,17 @@ export default {
       maxPrice: "",
       minpak: 2,
       maxpak: 2,
+
       mescroll: null, // mescroll实例对象
       mescrollUp: { // 上拉加载的配置.
-        callback: this.upCallback,   //回调
+        callback: this.routine,   //回调
 				toTop: {
 					//回到顶部按钮
 					src: "./static/mescroll/mescroll-totop.png", //图片路径,默认null,支持网络图
 					offset: 1000 //列表滚动1000px才显示回到顶部按钮
 				},
       }
+      
     };
   },
   components: {
@@ -390,7 +407,6 @@ export default {
           lists.push(list);
         }
       }
-      console.log(lists);
       return lists;
     },
     //获取天数
@@ -401,7 +417,6 @@ export default {
           lists.push(listday.day);
         }
       }
-      console.log(lists);
       return lists;
     }
   },
@@ -418,7 +433,6 @@ export default {
   },
   created() {
     this.LopTime(); //获取当前一年的月份和天数
-    this.routine(); //一进去默认常规没有筛选数据
     this.LopTime_list(); //12个月循环
     this.dayListInit(); //天数初始化
     this.priceInit(); //价格初始化
@@ -446,13 +460,13 @@ export default {
     //销售量和价格的切换
     sertey(index) {
       this.srtype = index;
-      this.routine();
+      this.mescroll.resetUpScroll();
     },
     //月份点击
     monthClick(index) {
       this.dataList[index].flag = !this.dataList[index].flag;
       if (this.dataList); //多选 当datalist[index].flag=true//为选中月分
-      this.routine();
+      this.mescroll.resetUpScroll();
       return;
     },
     LopTime(year = new Date().getFullYear(), month = new Date().getMonth()) {
@@ -505,7 +519,7 @@ export default {
     dayClick(index) {
       this.daylist[index].flag = !this.daylist[index].flag;
       if (this.daylist); //多选 daylist[index].flag=true//为选中天数
-      this.routine();
+      this.mescroll.resetUpScroll();
       return;
     },
     //点击价格的选中
@@ -524,7 +538,7 @@ export default {
         }
       }
       console.log("最小价格" + this.minPrice + "最大价格" + this.maxPrice);
-      this.routine();
+      this.mescroll.resetUpScroll();
     },
     //价格选择初始化
     priceInit() {
@@ -572,11 +586,11 @@ export default {
     },
     queding(index) {
       if (index == 1) {
-        this.routine();
+        this.mescroll.resetUpScroll();
         this.type = 0;
       }
     },
-    async routine() {
+    async routine(page, mescroll) {
       let data = await seledin(
         JSON.stringify(this.date),
         this.daysty,
@@ -587,12 +601,23 @@ export default {
         this.scenicSpotid,//景点ID
       );
       if (data) {
-        this.styser = data.list;
+        // 如果是第一页需手动制空列表
+        if (page.num === 1) this.styser = []
+        // 把请求到的数据添加到列表
+        this.styser = [...this.styser,...data.list];
         for (const list of this.styser) {
           if (list.carImg) {
             this.$set(list, "carImg", list.carImg.split(",")[0]);
           }
         }
+        // 数据渲染成功后,隐藏下拉刷新的状态
+        this.$nextTick(() => {
+          mescroll.endSuccess(data.list.length)
+        })
+
+      }else{
+         // 联网异常,隐藏上拉和下拉的加载进度
+         mescroll.endErr()
       }
     },
     async scenic() {
@@ -610,7 +635,7 @@ export default {
     },
     sceClick(index){
       this.scejing[index].flag = !this.scejing[index].flag;
-      this.routine();
+      this.mescroll.resetUpScroll();
     }
   }
 };
