@@ -3,7 +3,7 @@
  * @Author: 彭善智
  * @LastEditors: 彭善智
  * @Date: 2019-03-01 22:48:18
- * @LastEditTime: 2019-03-04 00:24:22
+ * @LastEditTime: 2019-03-12 20:38:56
  */
 import {Toast} from 'vant';
 import store from '../vuex/store'
@@ -37,6 +37,8 @@ export default async (url = '', data = {}, type = 'GET', method = 'fetch')=>{
     key: store.state.key,
     time: store.state.time,
     type: store.state.type,
+    languageid: store.state.languageid,
+    currencyid: store.state.currencyid,
   };
   
   data = Object.assign(data,param);
