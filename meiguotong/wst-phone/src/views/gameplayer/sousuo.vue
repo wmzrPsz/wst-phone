@@ -155,10 +155,20 @@
               >{{listpr.content}}</li>
               <div class="jg_c">
                 <li class="float_left" :class="minpak==1?'b_xianm_b_jiadian':''">
-                  <input @click="prmClick(1)" type="number" placeholder="最小价格" v-model.number="minPrice">
+                  <input
+                    @click="prmClick(1)"
+                    type="number"
+                    placeholder="最小价格"
+                    v-model.number="minPrice"
+                  >
                 </li>
                 <li class="float_left" :class="maxpak==1?'b_xianm_b_jiadian':''">
-                  <input @click="prmClick(2)" type="number" placeholder="最大价格" v-model.number="maxPrice">
+                  <input
+                    @click="prmClick(2)"
+                    type="number"
+                    placeholder="最大价格"
+                    v-model.number="maxPrice"
+                  >
                 </li>
               </div>
             </ul>
@@ -196,7 +206,7 @@
             <i class="font-16 b_xianm_c">行程天数</i>
           </div>
 
-           <div class="b_xianm">
+          <div class="b_xianm">
             <ul class="font-12 b_xianm_b color-b">
               <li
                 v-for="(listday,index) in daylist"
@@ -214,7 +224,7 @@
             <i class="font-16 b_xianm_c">价格预算</i>
           </div>
 
-         <div class="b_xianm" style="margin-top: 0.5rem">
+          <div class="b_xianm" style="margin-top: 0.5rem">
             <ul class="font-12 jg_a color-b">
               <li
                 class="float_left"
@@ -225,10 +235,20 @@
               >{{listpr.content}}</li>
               <div class="jg_c">
                 <li class="float_left" :class="minpak==1?'b_xianm_b_jiadian':''">
-                  <input @click="prmClick(1)" type="number" placeholder="最小价格" v-model.number="minPrice">
+                  <input
+                    @click="prmClick(1)"
+                    type="number"
+                    placeholder="最小价格"
+                    v-model.number="minPrice"
+                  >
                 </li>
                 <li class="float_left" :class="maxpak==1?'b_xianm_b_jiadian':''">
-                  <input @click="prmClick(2)" type="number" placeholder="最大价格" v-model.number="maxPrice">
+                  <input
+                    @click="prmClick(2)"
+                    type="number"
+                    placeholder="最大价格"
+                    v-model.number="maxPrice"
+                  >
                 </li>
               </div>
             </ul>
@@ -243,10 +263,13 @@
 
           <div class="b_xianm" style="margin-top: 0.5rem">
             <ul class="font-12 jg_a color-b">
-              <li class="float_left">休士顿火箭球馆</li>
-              <li class="float_left">休士顿火箭球馆</li>
-              <li class="float_left">休士顿火箭球馆</li>
-              <li class="float_left">休士顿火箭球馆</li>
+              <li
+                class="float_left"
+                v-for="(list,index) in scejing"
+                :key="index"
+                :class="list.flag?'b_xianm_b_jiadian':''"
+                @click="sceClick(index)"
+              >{{list.name}}</li>
             </ul>
           </div>
 
@@ -327,6 +350,7 @@
 </template>
 <script>
 import { seledin } from "@/utils/getData";
+import { getScenicByCity } from "@/utils/getData";
 export default {
   name: "index",
   data() {
@@ -338,10 +362,10 @@ export default {
       dataList: [], //日期
       day: "", //日期的天
       daylist: [], //行程的天
-      minPrice:'',
-      maxPrice:'',
-      minpak:2,
-      maxpak:2
+      minPrice: "",
+      maxPrice: "",
+      minpak: 2,
+      maxpak: 2
     };
   },
   //计算属性
@@ -365,16 +389,17 @@ export default {
           lists.push(listday.day);
         }
       }
-      console.log(lists)
+      console.log(lists);
       return lists;
-    },
+    }
   },
   mounted() {
     this.LopTime(); //获取当前一年的月份和天数
     this.routine(); //一进去默认常规没有筛选数据
     this.LopTime_list(); //12个月循环
     this.dayListInit(); //天数初始化
-    this.priceInit();
+    this.priceInit(); //价格初始化
+    this.scenic(); //获取途径景点
   },
   filters: {
     dayFilter: function(value) {
@@ -461,18 +486,18 @@ export default {
       this.priceList.map(elem => {
         elem.flag = false;
       });
-      this.minpak=2;
-      this.maxpak=2;
+      this.minpak = 2;
+      this.maxpak = 2;
       this.priceList[index].flag = !this.priceList[index].flag;
       // this.minPrice=priceList[index].minPrice;
       for (const listpr of this.priceList) {
-          if(listpr.flag){
-             this.minPrice=listpr.minPrice;//最小价格
-             this.maxPrice=listpr.maxPrice;//最大价格
-          }
+        if (listpr.flag) {
+          this.minPrice = listpr.minPrice; //最小价格
+          this.maxPrice = listpr.maxPrice; //最大价格
         }
-        console.log("最小价格"+this.minPrice+"最大价格"+this.maxPrice);
-       this.routine();
+      }
+      console.log("最小价格" + this.minPrice + "最大价格" + this.maxPrice);
+      this.routine();
     },
     //价格选择初始化
     priceInit() {
@@ -507,38 +532,58 @@ export default {
       console.log(this.priceList);
     },
     //点击输入价格
-    prmClick(index){
-    if(index==1){
-     this.minpak=1;
-    }
-    if(index==2){
-      this.maxpak=1;
-    }
-     for (const listpr of this.priceList) {
-      this.$set(listpr,"flag",false);
-    }
+    prmClick(index) {
+      if (index == 1) {
+        this.minpak = 1;
+      }
+      if (index == 2) {
+        this.maxpak = 1;
+      }
+      for (const listpr of this.priceList) {
+        this.$set(listpr, "flag", false);
+      }
     },
-    queding(index){
-    if(index==1){
-      this.routine();
-    }
+    queding(index) {
+      if (index == 1) {
+        this.routine();
+        this.type = 0;
+      }
     },
     async routine() {
       let data = await seledin(
         JSON.stringify(this.date),
         this.daysty,
         this.srtype,
-        this.minPrice,//小价格
-        this.maxPrice,//大价格
+        this.minPrice, //小价格
+        this.maxPrice, //大价格
+        this.name,//景点
+        this.scenicSpotid,//景点ID
       );
       if (data) {
         this.styser = data.list;
         for (const list of this.styser) {
-          if(list.carImg){
-            this.$set(list,"carImg",list.carImg.split(',')[0])
+          if (list.carImg) {
+            this.$set(list, "carImg", list.carImg.split(",")[0]);
           }
         }
       }
+    },
+    async scenic() {
+      let data = await getScenicByCity();
+      if (data) {
+        this.scejing = data;
+        for(const list of this.scejing){
+          this.$set(list,"flag",false);
+          if(list.flag){
+            this.name=list.name;
+            this.scenicSpotid=list.scenicSpotid;
+          }
+        }
+      }
+    },
+    sceClick(index){
+      this.scejing[index].flag = !this.scejing[index].flag;
+      this.routine();
     }
   }
 };
