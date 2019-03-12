@@ -13,6 +13,8 @@ export default new Vuex.Store({
       key: "",
       time: "",
       type:1,  //1.游客 2.会员
+      languageid: 1, //语言ID
+      currencyid: 1,  //货币ID
   },
   getters: {
 
