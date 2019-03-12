@@ -75,7 +75,7 @@ module.exports = {
         port: 8888,
         https: false,
         hotOnly: false,  ////热更新（webpack已实现了，这里false即可）
-      //  open: true,  ////浏览器自动打开页面
+        open: false,  ////浏览器自动打开页面
         historyApiFallback: true,  //当使用 HTML5 History API 时，任意的 404 响应都可能需要被替代为 index.html
     //    proxy: {
     //        "/interface": 'http://47.105.70.4:8989/meiguotong/a/interface',
