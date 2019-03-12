@@ -3,21 +3,23 @@ import App from './App.vue'
 import router from './router/router'
 import store from './vuex/store'
 import {Toast} from 'vant'
+import "./style/inde.css";
  //生产环境提示，这里设置成了false
 Vue.config.productionTip = false
 
-
  Vue.use(Toast);
-
-
- import "./style/inde.css";
-
-
 
  router.beforeEach((to, from, next) => {
   console.log(to)
   console.log(from)
   next();
+})
+
+
+import * as custom from './filters/custom'
+
+Object.keys(custom).forEach(key => {
+  Vue.filter(key, custom[key])
 })
 
 
