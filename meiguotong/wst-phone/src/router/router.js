@@ -73,14 +73,5 @@ export default new Router({
       component: sousuo,
       meta:{'title': '搜索'}
     },
-  ],
-  scrollBehavior (to, from, savedPosition) {
-        console.log(to);
-        console.log(from);
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      return { x: 0, y: 0 }
-    }
-  },
+  ]
 })

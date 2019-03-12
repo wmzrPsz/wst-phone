@@ -349,8 +349,8 @@
   </div>
 </template>
 <script>
-import { seledin } from "@/utils/getData";
-import { getScenicByCity } from "@/utils/getData";
+import { seledin,getScenicByCity } from "@/utils/getData"
+import MescrollVue from 'mescroll.js/mescroll.vue'
 export default {
   name: "index",
   data() {
@@ -365,8 +365,20 @@ export default {
       minPrice: "",
       maxPrice: "",
       minpak: 2,
-      maxpak: 2
+      maxpak: 2,
+      mescroll: null, // mescroll实例对象
+      mescrollUp: { // 上拉加载的配置.
+        callback: this.upCallback,   //回调
+				toTop: {
+					//回到顶部按钮
+					src: "./static/mescroll/mescroll-totop.png", //图片路径,默认null,支持网络图
+					offset: 1000 //列表滚动1000px才显示回到顶部按钮
+				},
+      }
     };
+  },
+  components: {
+    MescrollVue // 注册mescroll组件
   },
   //计算属性
   computed: {
@@ -393,7 +405,18 @@ export default {
       return lists;
     }
   },
-  mounted() {
+  beforeRouteEnter (to, from, next) { // 如果没有配置回到顶部按钮或isBounce,则beforeRouteEnter不用写
+    next(vm => {
+        // 找到当前mescroll的ref,调用子组件mescroll-vue的beforeRouteEnter方法
+      vm.$refs.mescroll && vm.$refs.mescroll.beforeRouteEnter() // 进入路由时,滚动到原来的列表位置,恢复回到顶部按钮和isBounce的配置
+    })
+  },
+  beforeRouteLeave (to, from, next) { // 如果没有配置回到顶部按钮或isBounce,则beforeRouteLeave不用写
+      // 找到当前mescroll的ref,调用子组件mescroll-vue的beforeRouteLeave方法
+    this.$refs.mescroll && this.$refs.mescroll.beforeRouteLeave() // 退出路由时,记录列表滚动的位置,隐藏回到顶部按钮和isBounce的配置
+    next()
+  },
+  created() {
     this.LopTime(); //获取当前一年的月份和天数
     this.routine(); //一进去默认常规没有筛选数据
     this.LopTime_list(); //12个月循环
@@ -409,6 +432,10 @@ export default {
     }
   },
   methods: {
+    // mescroll组件初始化的回调,可获取到mescroll对象
+    mescrollInit (mescroll) {
+      this.mescroll = mescroll  // 如果this.mescroll对象没有使用到,则mescrollInit可以不用配置
+    },
     teypex(index) {
       if (this.type != 0 && this.type == index) {
         this.type = "";
