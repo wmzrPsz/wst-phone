@@ -112,11 +112,6 @@
               >{{list.month}}月</li>
             </ul>
           </div>
-          <button
-            class="di_s_b_dengl color background-d font-16"
-            style="margin-top: 1.5rem; margin-bottom:0.5rem;"
-            @click="queding(1)"
-          >确定</button>
         </div>
 
         <!--行程天数-->
@@ -130,14 +125,14 @@
 
           <div class="b_xianm">
             <ul class="font-12 b_xianm_b color-b">
-              <li class="float_left">1天</li>
+              <li
+                v-for="(listday,index) in daylist"
+                :key="index"
+                :class="listday.flag?'b_xianm_b_jiadian':''"
+                @click.stop="dayClick(index)"
+              >{{listday.day | dayFilter}}</li>
             </ul>
           </div>
-          <button
-            class="di_s_b_dengl color background-d font-16"
-            style="margin-top: 1.5rem; margin-bottom:0.5rem;"
-            @click="queding(2)"
-          >确定</button>
         </div>
 
         <!--价格预算-->
@@ -151,29 +146,27 @@
 
           <div class="b_xianm" style="margin-top: 0.5rem">
             <ul class="font-12 jg_a color-b">
-              <li class="float_left">0-99</li>
-              <li class="float_left">1000-2999</li>
-              <li class="float_left">3000-4999</li>
-              <li class="float_left">5000-6999</li>
-
+              <li
+                class="float_left"
+                v-for="(listpr,index) in priceList"
+                :key="index"
+                :class="listpr.flag?'b_xianm_b_jiadian':''"
+                @click.stop="contentClick(index)"
+              >{{listpr.content}}</li>
               <samp class="jg_c">
                 <li class="float_left">
-                  <input type="number" placeholder="请输入数值">
+                  <input type="number" placeholder="输入最小值">
                 </li>
                 <li class="float_left">
-                  <input type="number" placeholder="请输入数值">
-                </li>
-                <li class="float_left" style="margin-right: 0px!important">
-                  <input type="number" placeholder="请输入数值">
+                  <input type="number" placeholder="请输入最大值">
                 </li>
               </samp>
             </ul>
           </div>
-
           <button
             class="di_s_b_dengl color background-d font-16"
             style="margin-top: 1.5rem; margin-bottom:0.5rem;"
-            @click="queding(3)"
+            @click="queding(4)"
           >确定</button>
         </div>
         <!--全部筛选-->
@@ -273,12 +266,15 @@
           <button
             class="di_s_b_dengl color background-d font-16"
             style="margin-top: 1.5rem; margin-bottom:0.5rem;"
-            @click="queding(4)"
+            @click="queding(2)"
           >确定</button>
 
           <div class="di_s_b_dengl_chonz font-16">
             <button class="float_left di_s_b_dengl_chonz_a color-d">重置</button>
-            <button class="float_right di_s_b_dengl_chonz_b border_b color-b" @click="queding(5)">取消</button>
+            <button
+              class="float_right di_s_b_dengl_chonz_b border_b color-b"
+              @click="queding(index)"
+            >取消</button>
           </div>
         </div>
       </div>
@@ -350,31 +346,63 @@ export default {
     return {
       type: "", //1日期，2行程，3价格，4全部，
       srtype: 1, //1综合，2销量，3降价格，4升价格
-      styser: [], //
-      imgtep: [],
+      styser: [], //列表数据
+      imgtep: [], //列表图片
       dataList: [], //日期
-      ttpt: "",
-      day: "", //天
-      sypind: ""
+      day: "", //日期的天
+      daylist: [], //行程的天数
     };
   },
   //计算属性
-  computed:{
+  computed: {
     //获取选择的日期
-    date(){
+    date() {
       let lists = [];
-        for (const list of this.dataList) {
-            if(list.flag){
-              lists.push(list);
-            }
+      for (const list of this.dataList) {
+        if (list.flag) {
+          lists.push(list);
         }
+      }
+      console.log(lists);
       return lists;
     },
+    //获取天数
+    daysty() {
+      let lists = [];
+      for (const listday of this.daylist) {
+        if (listday.flag) {
+          lists.push(listday.day);
+        }
+      }
+      console.log(lists)
+      return lists;
+    },
+    //获取价格
+    priceity(){
+      let map = {};
+      for (const listpr of this.priceList) {
+        if (listpr.flag) {
+         this.$set(map, "minPrice",listpr.minPrice);
+         this.$set(map,"maxPrice",listpr.maxPrice);
+        }
+      }
+      console.log(map);
+      return map;
+    }
   },
   mounted() {
     this.LopTime(); //获取当前一年的月份和天数
     this.routine(); //一进去默认常规没有筛选数据
     this.LopTime_list(); //12个月循环
+    this.dayListInit(); //天数初始化
+    this.priceInit();
+  },
+  filters: {
+    dayFilter: function(value) {
+      if (!value) return;
+      if (parseInt(value) < 15) return `${value}天`;
+      return "15天及以上";
+    }
   },
   methods: {
     teypex(index) {
@@ -392,26 +420,9 @@ export default {
     //月份点击
     monthClick(index) {
       this.dataList[index].flag = !this.dataList[index].flag;
-      if (this.dataList) return; //多选 当datalist[index].flag=true//为选中月分
-    },
-    queding(index) {
-      this.ttpt = index;
-      //点击月份确定
-      if (this.ttpt == 1) {
-         let selectate = [];
-        for (var i=0; i<12 ;i++) {
-          let map = {};
-          if (this.dataList[i].flag==true) {
-            this.$set(map, "year", dataList.year);
-            this.$set(map, "month", dataList.month);
-            this.$set(map, "days", dataList.days);
-          }
-        }
-         this.selectate.push(map);
-         this.dataList = selectate;
-         this.routine();
-      }
-      //////
+      if (this.dataList); //多选 当datalist[index].flag=true//为选中月分
+      this.routine();
+      return;
     },
     LopTime(year = new Date().getFullYear(), month = new Date().getMonth()) {
       //计算这个月多少天
@@ -448,9 +459,71 @@ export default {
       console.log(list);
       this.dataList = list;
     },
-    ////////////////
+    //天数循环
+    dayListInit() {
+      let dayst = [];
+      for (let k = 2; k <= 15; k++) {
+        var map = {};
+        this.$set(map, "day", k);
+        this.$set(map, "flag", false);
+        dayst.push(map);
+      }
+      console.log(dayst);
+      this.daylist = dayst;
+    },
+    dayClick(index) {
+      this.daylist[index].flag = !this.daylist[index].flag;
+      if (this.daylist); //多选 daylist[index].flag=true//为选中天数
+      this.routine();
+      return;
+    },
+    //点击价格的选中
+    contentClick(index) {
+      this.priceList.map(elem => {
+        elem.flag = false;
+      });
+      this.priceList[index].flag = !this.priceList[index].flag;
+      this.routine();
+      console.log(index);
+    },
+    //价格选择初始化
+    priceInit() {
+      this.priceList = [];
+      for (let k = 0; k < 4; k++) {
+        let map = {};
+        if (k == 0) {
+          this.$set(map, "minPrice", 0);
+          this.$set(map, "maxPrice", 999);
+          this.$set(map, "content", "0-999");
+          this.$set(map, "flag", false);
+        }
+        if (k == 1) {
+          this.$set(map, "minPrice", 1000);
+          this.$set(map, "maxPrice", 2999);
+          this.$set(map, "content", "1000-2999");
+          this.$set(map, "flag", false);
+        }
+        if (k == 2) {
+          this.$set(map, "minPrice", 3000);
+          this.$set(map, "maxPrice", 4999);
+          this.$set(map, "content", "3000-4999");
+          this.$set(map, "flag", false);
+        }
+        if (k == 3) {
+          this.$set(map, "minPrice", 5000);
+          this.$set(map, "content", "5000以上");
+          this.$set(map, "flag", false);
+        }
+        this.priceList.push(map);
+      }
+      console.log(this.priceList);
+    },
     async routine() {
-      let data = await seledin(this.dataList, this.day, this.srtype);
+      let data = await seledin(
+        JSON.stringify(this.date),
+        this.daysty,
+        this.srtype,
+      );
       if (data) {
         this.styser = data.list;
         this.imgtep = data.list[0].carImg.split(",");
