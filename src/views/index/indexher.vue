@@ -12,8 +12,8 @@
         <img src="../../assets/img/A/head_car_icon@2x.png">
       </i>
     </div>
-
-    <div class="dingjia">
+    <ezHeader></ezHeader>
+    <!-- <div class="dingjia">
       <div
         :style="{backgroundImage:'url(http://img17.3lian.com/d/file/201702/14/3d1d78481dbe5db4802f4b1eb548f365.jpg)'}"
         class="baoc_jia"
@@ -28,7 +28,8 @@
         </div>
         </router-link>
       </div>
-    </div>
+    </div> -->
+    
     <!--头部导航栏-->
     <div class="daohan">
       <ul>
@@ -1164,10 +1165,16 @@
 </template>
 
 <script>
+
+import ezHeader from '@/components/header.vue'
+
 export default {
   name: "indexher",
   data() {
     return {};
+  },
+  components:{
+    ezHeader
   },
   methods: {}
 };
