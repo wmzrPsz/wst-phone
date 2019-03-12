@@ -526,7 +526,11 @@ export default {
       );
       if (data) {
         this.styser = data.list;
-        this.imgtep = data.list[0].carImg.split(",");
+        for (const list of this.styser) {
+          if(list.carImg){
+            this.$set(list,"carImg",list.carImg.split(',')[0])
+          }
+        }
       }
     }
   }
