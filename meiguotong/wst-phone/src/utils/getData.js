@@ -63,12 +63,10 @@ export const seledin = (date,daysty,srtype,minPrice,maxPrice,name,scenicSpotid) 
     orderByType:srtype,//1.销量2.价格降序3.价格升序4好评
     name:name,//景点
     scenicSpotid:scenicSpotid,//景点Id
-    languageid:1,//语言
     pageNo: 1,
 
 },'post');
 //获取途径 景点
 export const  getScenicByCity = () => ajax('/api/common/getScenicByCity',{
-    languageid:1,//语言
     cityid:1,//城市ID
 });
