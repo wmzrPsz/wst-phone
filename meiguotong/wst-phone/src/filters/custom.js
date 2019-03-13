@@ -3,17 +3,17 @@
  * @Author: 彭善智
  * @LastEditors: 彭善智
  * @Date: 2019-03-12 22:51:19
- * @LastEditTime: 2019-03-13 10:20:37
+ * @LastEditTime: 2019-03-13 12:21:21
  */
 
 //性别过滤器
-export let sexVc = value => {
+export const sexVc = value => {
     if (!value) return '';
     if(value == 1 ) return "男"; return "女";
 }
 
 //证件类型过滤器
-export let certTypeVc = value => {
+export const certTypeVc = value => {
     if (!value) return '';
     let content = "";
     switch (value) {
@@ -25,7 +25,7 @@ export let certTypeVc = value => {
 }
 
 //导游类型过滤器
-export let guideTypeVc = value => {
+export const guideTypeVc = value => {
     if (!value) return '';
     let content = "";
     switch (parseInt(value)) {
@@ -39,7 +39,7 @@ export let guideTypeVc = value => {
 }
 
 //车辆等级过滤器
-export let carLevelVc = value => {
+export const carLevelVc = value => {
     if (!value) return '';
     let content = "";
     switch (parseInt(value)) {
@@ -52,18 +52,18 @@ export let carLevelVc = value => {
 }
 
 //截取逗号拼接的第n个
-export let splitVc = (value,index) => {
+export const splitVc = (value,index) => {
     if(!value) return "";  
     return value.split(",")[index];
 }
 
 //星级转化百分比
-export let perVc = value => {
+export const perVc = value => {
     if(!value) return''; return parseInt(value/5*100);
 }
 
 //分钟转小时分钟
-export let dayDateByHour = minute => {
+export const dayDateByHour = minute => {
     if(!minute) return "";
     return `${minute/60 >> 0}小时${minute%60 > 0 ? minute%60 +"分钟":""}`;
 }

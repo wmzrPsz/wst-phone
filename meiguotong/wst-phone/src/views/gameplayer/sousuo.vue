@@ -472,7 +472,6 @@ export default {
     LopTime(year = new Date().getFullYear(), month = new Date().getMonth()) {
       //计算这个月多少天
       let day = new Date(year, month, 0).getDate(); //当月总天数
-      console.log("这个月共" + day + "天");
       return day;
     },
     LopTime_list() {
@@ -593,11 +592,11 @@ export default {
     async routine(page, mescroll) {
       let data = await seledin(
         JSON.stringify(this.date),
-        this.daysty,
+        this.daysty.toString(),
         this.srtype,
         this.minPrice, //小价格
         this.maxPrice, //大价格
-        JSON.stringify(this.scenicSpotid),//景点ID
+        this.scenicSpotid.toString(),//景点ID
         page.num,
       );
       if (data) {
