@@ -31,6 +31,16 @@ export default new Vuex.Store({
       [state.uid, state.key, state.time, state.type] = ['','','',1];
       console.log(state.uid,state.key,state.time);
     },
+    //语言改变
+    changeLanguage(state, languageid){
+      state.languageid = languageid;
+      console.log(state.languageid );
+    },
+    //货币改变
+    changeCurrency(state, currencyid){
+      state.currencyid = currencyid;
+      console.log(state.currencyid );
+    },
   },
   actions: {
 
