@@ -1,3 +1,10 @@
+/*
+ * @Description:  全局过滤器
+ * @Author: 彭善智
+ * @LastEditors: 彭善智
+ * @Date: 2019-03-12 22:51:19
+ * @LastEditTime: 2019-03-13 10:20:37
+ */
 
 //性别过滤器
 export let sexVc = value => {
@@ -16,7 +23,6 @@ export let certTypeVc = value => {
     }
     return content;
 }
-
 
 //导游类型过滤器
 export let guideTypeVc = value => {
