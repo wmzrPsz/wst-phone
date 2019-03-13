@@ -387,11 +387,10 @@ export default {
         callback: this.routine,   //回调
 				toTop: {
 					//回到顶部按钮
-					src: "./static/mescroll/mescroll-totop.png", //图片路径,默认null,支持网络图
+					src: "../../assets/img/mescroll/mescroll-totop.png", //图片路径,默认null,支持网络图
 					offset: 1000 //列表滚动1000px才显示回到顶部按钮
 				},
       }
-      
     };
   },
   components: {
