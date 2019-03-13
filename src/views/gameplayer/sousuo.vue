@@ -598,6 +598,7 @@ export default {
         this.maxPrice, //大价格
         this.name,//景点
         this.scenicSpotid,//景点ID
+        page.num,
       );
       if (data) {
         // 如果是第一页需手动制空列表
