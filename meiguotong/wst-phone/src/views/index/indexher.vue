@@ -1,19 +1,9 @@
 <template>
   <div class="indexher">
     <!-- 头部 -->
-    <div class="her_a font-20 background-a">
-      <i class="her_a_left float_left">
-        <img src="../../assets/img/A/head_fenlei_icon@2x.png">
-      </i>
-      <i class="he_t_baoc color">
-        <img src="../../assets/img/A/head_logo_icon@2x.png">
-      </i>
-      <i class="her_a_rigth float_right">
-        <img src="../../assets/img/A/head_car_icon@2x.png">
-      </i>
-    </div>
+
     <ezHeader></ezHeader>
-    <!-- <div class="dingjia">
+    <div class="dingjia">
       <div
         :style="{backgroundImage:'url(http://img17.3lian.com/d/file/201702/14/3d1d78481dbe5db4802f4b1eb548f365.jpg)'}"
         class="baoc_jia"
@@ -28,7 +18,7 @@
         </div>
         </router-link>
       </div>
-    </div> -->
+    </div>
     
     <!--头部导航栏-->
     <div class="daohan">

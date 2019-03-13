@@ -1,13 +1,15 @@
 <template>
   <div class="ez-header">
-    <div class="dingjia">
-      <div class="baoc_jia">
-        <p >开启你的旅行</p>
-        <div class="baoc_sou">
-          <i><img src="../assets/img/A/xpjcs_sea_icon.png"></i>
-          <input type="text" placeholder="搜索旅行地/酒店/旅游/景点门票/交通" name="">
-        </div>
-      </div>
+    <div class="her_a font-20 background-a">
+      <i class="her_a_left float_left">
+        <img src="../assets/img/A/head_fenlei_icon@2x.png">
+      </i>
+      <i class="he_t_baoc color">
+        <img src="../assets/img/A/head_logo_icon@2x.png">
+      </i>
+      <i class="her_a_rigth float_right">
+        <img src="../assets/img/A/head_car_icon@2x.png">
+      </i>
     </div>
   </div>
 </template>
@@ -22,7 +24,5 @@ export default {
 </script>
 
 <style scoped lang="less">
-  .baoc_jia{
-    background-image: url('../assets/img/B/1.png')
-  }
+
 </style>

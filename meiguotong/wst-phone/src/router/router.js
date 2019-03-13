@@ -24,10 +24,10 @@ export default new Router({
     },
     {
       path: '/',
-      name: 'home',
-      component: login,
+      name: 'indexher',
+      component: indexher,
       // redirect: 'login',
-      // meta:{'title': '登录'}
+       meta:{'title': '首页'}
     },
     {
       path: '/login',
