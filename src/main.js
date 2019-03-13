@@ -2,12 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/router'
 import store from './vuex/store'
-import {Toast} from 'vant'
+import {Toast,Popup } from 'vant'
 import "./style/inde.css";
  //生产环境提示，这里设置成了false
 Vue.config.productionTip = false
 
- Vue.use(Toast);
+ Vue.use(Toast).use(Popup);
+
 
  router.beforeEach((to, from, next) => {
   console.log(to)
