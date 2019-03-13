@@ -330,8 +330,7 @@
             <div class="float_left ze_x_ril">
               <div class="font-14 ze_x_ril_jia">{{sert.title}}</div>
               <ul class="font-12 ze_x_ril_a color-b">
-                <li>限时特卖</li>
-                <li>限时特卖</li>
+                <li v-for="(tag, index) in sert.tagContent.split(',')" :key="index">{{tag}}</li>
               </ul>
               <div class="font-12 ze_x_ril_b color-c">{{sert.subtitle}}</div>
             </div>
@@ -357,6 +356,7 @@
 <style lang="less" scoped>
   .mescroll {
     position: fixed;
+    z-index:-1;
     top: 9rem;
     bottom: 0;
     height: auto;
@@ -381,6 +381,7 @@ export default {
       maxPrice: "",
       minpak: 2,
       maxpak: 2,
+      scenicSpotid:[],
 
       mescroll: null, // mescroll实例对象
       mescrollUp: { // 上拉加载的配置.
@@ -417,7 +418,7 @@ export default {
         }
       }
       return lists;
-    }
+    },
   },
   beforeRouteEnter (to, from, next) { // 如果没有配置回到顶部按钮或isBounce,则beforeRouteEnter不用写
     next(vm => {
@@ -596,8 +597,7 @@ export default {
         this.srtype,
         this.minPrice, //小价格
         this.maxPrice, //大价格
-        this.name,//景点
-        this.scenicSpotid,//景点ID
+        JSON.stringify(this.scenicSpotid),//景点ID
         page.num,
       );
       if (data) {
@@ -626,15 +626,17 @@ export default {
         this.scejing = data;
         for(const list of this.scejing){
           this.$set(list,"flag",false);
-          if(list.flag){
-            this.name=list.name;
-            this.scenicSpotid=list.scenicSpotid;
-          }
         }
       }
     },
     sceClick(index){
+       this.scenicSpotid=[];
       this.scejing[index].flag = !this.scejing[index].flag;
+       for (const list of this.scejing) {
+        if (list.flag) {
+          this.scenicSpotid.push(list.scenicSpotid); //id
+        }
+       }
       this.mescroll.resetUpScroll();
     }
   }

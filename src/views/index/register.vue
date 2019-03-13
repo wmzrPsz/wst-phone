@@ -153,7 +153,7 @@
 import { register } from "@/utils/getData"; //注册
 import { sendSms } from "@/utils/getData"; //邮箱短信
 import { isNull } from "@/utils/common";
-import { mapMutations } from "vuex";
+import { mapMutations } from "@/utils/config";
 export default {
   name: "register",
   data() {

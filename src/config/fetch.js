@@ -13,7 +13,6 @@ import store from '../vuex/store'
 export default async (url = '', data = {}, type = 'GET', method = 'fetch')=>{
   const res = await Ajax(url,data,type,method);
   console.log(res);
-  console.log(store.state.uid);
   if(res.success){
     if(!res.body) return res.success;
     if(Object.keys(res.body).length == 1)
@@ -42,20 +41,19 @@ export default async (url = '', data = {}, type = 'GET', method = 'fetch')=>{
   };
   
   data = Object.assign(data,param);
-
+  console.log(data);
   if (type == 'GET') {
     let _data = []
     Object.keys(data).forEach(key => {
       _data.push(key + '=' + data[key])
     })
     url =  url + '?' + _data.join('&');
-    console.log(data);
   } else {
     //sendData = JSON.stringify(data)
     Object.keys(data).forEach(key => {
       formData.append(key,data[key]);
     })
-    console.log(formData);
+
   }
 
 

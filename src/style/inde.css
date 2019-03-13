@@ -762,6 +762,8 @@ select{
 	width: 100%;
 	overflow: hidden;
 	padding-bottom: 0.5rem;
+	position: fixed;
+	top:7rem;
 }
 .sou_her_www{
 	overflow:hidden;
