@@ -9,7 +9,7 @@
             <i class="a_btou">
               <img :src="getProtsty.defaultPhoto">
             </i>
-            <i class="denlu_jia">登陆/组册</i>
+            <i class="denlu_jia" >登陆/组册</i>
           </li>
           <li class="float_right a_bdengl_righ" onclick="window.history.go(-1)">
             <img src="../../assets/img/A/home_tanchu_close_icon@2x.png">
@@ -101,7 +101,6 @@
         show-toolbar
         title="语言"
         :visible-item-count="3"
-		:defaultIndex="3"
         :columns="columns"
         @cancel="show=false"
         @confirm="onConfirm"
@@ -113,7 +112,6 @@
         show-toolbar
         title="货币"
         :visible-item-count="3"
-		:defaultIndex="currencyid"
         :columns="huobityp"
         @cancel="showl=false"
         @confirm="onConfirma"
@@ -220,4 +218,3 @@ export default {
   }
 };
 </script>
-
