@@ -64,6 +64,16 @@ export const seledin = (date,daysty,srtype,minPrice,maxPrice,scenicSpotid, pageN
     scenic:scenicSpotid,//景点Id
     pageNo: pageNo,
 },'post');
+//当地参团搜索接口
+export const selectttpy = (date,daysty,srtype,minPrice,maxPrice,scenicSpotid, pageNo) => ajax('/api/route/selectCityRoute', {
+    date:date,//日期
+    day:daysty,//天数
+    minPrice:minPrice,//最小价格
+    maxPrice:maxPrice,//最大价格
+    orderByType:srtype,//1.销量2.价格降序3.价格升序4好评
+    scenic:scenicSpotid,//景点Id
+    pageNo: pageNo,
+},'post');
 //获取途径 景点
 export const  getScenicByCity = () => ajax('/api/common/getScenicByCity',{
     cityid:1,//城市ID
