@@ -121,6 +121,7 @@
 </template>
 <script>
 import ezHeader from "@/components/header.vue";
+import { mapState, mapMutations } from "vuex";
 import {
   HotCityList,
   getLanguage,
@@ -136,13 +137,23 @@ export default {
       getProtsty: {}, //基本参数，默认头像，网页图标
       show: false,
       showl: false,
-      yutye: "", //语言
       columns: [], //语言数组
       yuyan: [], //获取接口语言数组
       huobi: [], //货币
-	  huobityp: [],
-	  huodiyt:'',
+      huobityp: [],
+      huodiyt:'',
     };
+  },
+  computed: {
+    ...mapState(["languageid","currencyid"]),
+    //语言名称
+    yutye(){
+      for (const list of this.yuyan) {
+        if(list.languageid == this.languageid){
+          return list.content;
+        }
+      }
+    }
   },
   created() {
     this.HotCitysty(); //热门城市
@@ -154,10 +165,11 @@ export default {
     ezHeader
   },
   methods: {
+     ...mapMutations(["changeLanguage", "changeCurrency"]),
     onConfirm(value, index) {
       this.$toast(`当前值：${value}, 当前索引：${index}`);
-      this.yutye = value;
       this.show = false;
+      this.changeLanguage(this.yuyan[index].languageid);
 	},
     onCancel() {
       this.$toast("取消");

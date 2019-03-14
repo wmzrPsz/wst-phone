@@ -71,10 +71,10 @@ module.exports = {
     devServer: {
   //      open: process.platform === 'darwin',
   //      openPage: "",
-        host: 'localhost',
+        // host: 'localhost',
         port: 8888,
-        https: false,
-        hotOnly: false,  ////热更新（webpack已实现了，这里false即可）
+        // https: false,
+       hotOnly: false,  ////热更新（webpack已实现了，这里false即可）
         open: false,  ////浏览器自动打开页面
         historyApiFallback: true,  //当使用 HTML5 History API 时，任意的 404 响应都可能需要被替代为 index.html
     //    proxy: {
