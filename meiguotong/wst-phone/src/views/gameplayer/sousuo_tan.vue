@@ -9,7 +9,7 @@
             <i class="a_btou">
               <img :src="getProtsty.defaultPhoto">
             </i>
-            <i class="denlu_jia" >登陆/组册</i>
+            <i class="denlu_jia">登陆/组册</i>
           </li>
           <li class="float_right a_bdengl_righ" onclick="window.history.go(-1)">
             <img src="../../assets/img/A/home_tanchu_close_icon@2x.png">
@@ -26,7 +26,7 @@
 
       <div class="b_xianm">
         <ul class="font-12 b_xianm_b color-b">
-          <li class="float_left">包车租车</li>
+          <li class="float_left" v-for="(list,index) in gettp" :key="index">{{list.name}}</li>
         </ul>
       </div>
 
@@ -47,7 +47,7 @@
         <div class="b_xianm dianh_a_a border_d">
           <div class="float_left">
             <i class="rex">
-              <img src="../../assets/img/A/home_24h_icon@2x.png">
+              <img :src="getProtsty.img">
             </i>
             <br>
             <i class="font-12 float_left">服务热线</i>
@@ -58,14 +58,14 @@
                 <i class="dianh">
                   <img src="../../assets/img/A/home_phone_icon@2x.png">
                 </i>
-                <i>617-651-8888</i>
+                <i>{{getProtsty.phone}}</i>
                 <i>(美国)</i>
               </li>
               <li>
                 <i class="dianh">
                   <img src="../../assets/img/A/home_phone_icon@2x.png">
                 </i>
-                <i>617-651-8888</i>
+                <i>{{getProtsty.phone}}</i>
                 <i>(美国)</i>
               </li>
             </ul>
@@ -126,7 +126,8 @@ import {
   HotCityList,
   getLanguage,
   getProtocol,
-  getCurrency
+  getCurrency,
+  getComNavigation
 } from "@/utils/getData";
 
 export default {
@@ -141,22 +142,23 @@ export default {
       yuyan: [], //获取接口语言数组
       huobi: [], //货币
       huobityp: [],
+      gettp: [] //获取首页
     };
   },
   computed: {
-    ...mapState(["languageid","currencyid"]),
+    ...mapState(["languageid", "currencyid"]),
     //语言名称
-    yutye(){
+    yutye() {
       for (const list of this.yuyan) {
-        if(list.languageid == this.languageid){
+        if (list.languageid == this.languageid) {
           return list.content;
         }
       }
-	},
-	  //货币名称
-    huodiyt(){
+    },
+    //货币名称
+    huodiyt() {
       for (const list of this.huobi) {
-        if(list.currencyid == this.currencyid){
+        if (list.currencyid == this.currencyid) {
           return list.currency;
         }
       }
@@ -167,24 +169,37 @@ export default {
     this.getLangsty(); //获取语言
     this.getProtocol(); //获取基本参数
     this.getCurtyp(); //获取货币
+    this.getComNttyp();
   },
   components: {
     ezHeader
   },
   methods: {
-     ...mapMutations(["changeLanguage", "changeCurrency"]),
+    ...mapMutations(["changeLanguage", "changeCurrency"]),
     onConfirm(value, index) {
       this.show = false;
       this.changeLanguage(this.yuyan[index].languageid);
-	},
-	 onConfirma(value, index) {
-	  this.showl = false;
-	   this.changeCurrency(this.huobi[index].currencyid);
-	},
+      this.HotCitysty(); //热门城市
+      this.getProtocol(); //获取基本参数
+      this.getComNttyp();
+    },
+    onConfirma(value, index) {
+      this.showl = false;
+      this.changeCurrency(this.huobi[index].currencyid);
+      this.HotCitysty(); //热门城市
+      this.getProtocol(); //获取基本参数
+      this.getComNttyp();
+    },
     async HotCitysty() {
       let data = await HotCityList();
       if (data) {
         this.hotlist = data;
+      }
+    },
+    async getComNttyp() {
+      let data = await getComNavigation();
+      if (data) {
+        this.gettp = data;
       }
     },
     //获取语言
