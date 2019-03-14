@@ -68,6 +68,9 @@ export const seledin = (date,daysty,srtype,minPrice,maxPrice,scenicSpotid, pageN
 export const  getScenicByCity = () => ajax('/api/common/getScenicByCity',{
     cityid:1,//城市ID
 });
+//获取首页导航栏
+export const getComNavigation = () =>ajax('/api/common/getComNavigation',{
+})
 //获取热门城市
 export const HotCityList = () =>ajax('/api/common/getHotCity',{
 })

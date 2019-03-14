@@ -481,7 +481,7 @@ select{
 	overflow:hidden;
 }
 .rex img{
-	width: 30px;
+	width:40px;
 	display: block;
 	margin-top:0.5rem;
 	float:left;
@@ -873,7 +873,7 @@ select{
     z-index:99999;
 	background-color:white!important;
 	padding-bottom: 0.5rem;
-	widows: 95%;
+	width:100%;
 	margin: auto;
 	max-height:20rem;
 	overflow: hidden;
