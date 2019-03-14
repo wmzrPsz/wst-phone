@@ -3,7 +3,8 @@
     <div class="dingjia_b">
       <div class="sou_her background-a sou_her_jia" style="clear:both">
         <ul class="sou_her_a">
-          <li class="float_left font-16">
+          <li class="float_left font-16" onclick="window.history.go(-1)">
+
             <button class="color-f" style="margin-top: 0.3rem;">取消</button>
           </li>
           <li class="sou_her_b">
@@ -176,7 +177,7 @@
           <button
             class="di_s_b_dengl color background-d font-16"
             style="margin-top: 1.5rem; margin-bottom:0.5rem;"
-            @click="queding(1)"
+            @click="queding()"
           >确定</button>
         </div>
         <!--全部筛选-->
@@ -276,14 +277,14 @@
           <button
             class="di_s_b_dengl color background-d font-16"
             style="margin-top: 1.5rem; margin-bottom:0.5rem;"
-            @click="queding(2)"
+            @click="queding()"
           >确定</button>
 
           <div class="di_s_b_dengl_chonz font-16">
-            <button class="float_left di_s_b_dengl_chonz_a color-d">重置</button>
+            <button class="float_left di_s_b_dengl_chonz_a color-d" @click="reset()">重置</button>
             <button
               class="float_right di_s_b_dengl_chonz_b border_b color-b"
-              @click="queding(index)"
+              @click="queding()"
             >取消</button>
           </div>
         </div>
@@ -355,7 +356,7 @@
 </template>
 <style lang="less" scoped>
   .mescroll {
-    position: fixed;
+    position:fixed;
     z-index:-1;
     top: 9rem;
     bottom: 0;
@@ -583,11 +584,9 @@ export default {
         this.$set(listpr, "flag", false);
       }
     },
-    queding(index) {
-      if (index == 1) {
+    queding() {
         this.mescroll.resetUpScroll();
         this.type = 0;
-      }
     },
     async routine(page, mescroll) {
       let data = await seledin(

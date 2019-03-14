@@ -68,3 +68,15 @@ export const seledin = (date,daysty,srtype,minPrice,maxPrice,scenicSpotid, pageN
 export const  getScenicByCity = () => ajax('/api/common/getScenicByCity',{
     cityid:1,//城市ID
 });
+//获取热门城市
+export const HotCityList = () =>ajax('/api/common/getHotCity',{
+})
+//获取语言
+export const getLanguage = () =>ajax('/api/common/getLanguage',{
+})
+//获取货币
+export const getCurrency = () =>ajax('/api/common/getCurrency',{
+})
+//获取基本参数
+export const getProtocol = () =>ajax('/api/common/getProtocol',{
+})
