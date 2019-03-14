@@ -26,7 +26,7 @@ export default new Router({
     },
     {
       path: '/',
-      name: 'indexher',
+      name: 'root',
       component: indexher,
       //  redirect: 'login',
        meta:{'title': '首页'}
