@@ -4,7 +4,6 @@
       <div class="sou_her background-a sou_her_jia" style="clear:both">
         <ul class="sou_her_a">
           <li class="float_left font-16" onclick="window.history.go(-1)">
-
             <button class="color-f" style="margin-top: 0.3rem;">取消</button>
           </li>
           <li class="sou_her_b">
@@ -22,12 +21,12 @@
 
         <ul class="sou_her_q color font-12">
           <li>
-            <i class="color-g">常规旅行</i>
-            <i class="sou_her_q_a"></i>
+            <i @click="typclick(1)" :class="[slityp==1?'color-g':'']">常规旅行</i>
+            <i :class="[slityp==1?'sou_her_q_a':'']"></i>
           </li>
           <li>
-            <i>当地参团</i>
-            <i></i>
+            <i @click="typclick(2)" :class="[slityp==2?'color-g':'']">当地参团</i>
+            <i :class="[slityp==2?'sou_her_q_a':'']"></i>
           </li>
           <li>
             <i>当地玩家</i>
@@ -282,10 +281,7 @@
 
           <div class="di_s_b_dengl_chonz font-16">
             <button class="float_left di_s_b_dengl_chonz_a color-d" @click="reset()">重置</button>
-            <button
-              class="float_right di_s_b_dengl_chonz_b border_b color-b"
-              @click="queding()"
-            >取消</button>
+            <button class="float_right di_s_b_dengl_chonz_b border_b color-b" @click="queding()">取消</button>
           </div>
         </div>
       </div>
@@ -316,57 +312,53 @@
           </li>
         </ul>
       </div>
-
     </div>
 
     <div class="dingjia_a">
-
-<mescroll-vue ref="mescroll" :up="mescrollUp" @init="mescrollInit">
-      <div class="ze_x">
-        <div class="ze_x_a" v-for="(sert,index) in styser" :key="index">
-          <div style="overflow:hidden;">
-            <div class="float_left ze_x_le">
-              <img :src="sert.carImg">
+      <mescroll-vue ref="mescroll" :up="mescrollUp" @init="mescrollInit">
+        <div class="ze_x">
+          <div class="ze_x_a" v-for="(sert,index) in styser" :key="index">
+            <div style="overflow:hidden;">
+              <div class="float_left ze_x_le">
+                <img :src="sert.carImg">
+              </div>
+              <div class="float_left ze_x_ril">
+                <div class="font-14 ze_x_ril_jia">{{sert.title}}</div>
+                <ul class="font-12 ze_x_ril_a color-b">
+                  <li v-for="(tag, index) in sert.tagContent.split(',')" :key="index">{{tag}}</li>
+                </ul>
+                <div class="font-12 ze_x_ril_b color-c">{{sert.subtitle}}</div>
+              </div>
             </div>
-            <div class="float_left ze_x_ril">
-              <div class="font-14 ze_x_ril_jia">{{sert.title}}</div>
-              <ul class="font-12 ze_x_ril_a color-b">
-                <li v-for="(tag, index) in sert.tagContent.split(',')" :key="index">{{tag}}</li>
+            <div class="font-12 color-b ze_x_ril_c">{{sert.infor}}</div>
+            <div>
+              <ul class="ze_x_ril_d float_right">
+                <li class="font-14">
+                  <i class="color-h">￥{{sert.price}}</i>
+                  <i>/元起</i>
+                </li>
+                <li class="font-12">{{sert.commentNum}}条评论</li>
               </ul>
-              <div class="font-12 ze_x_ril_b color-c">{{sert.subtitle}}</div>
             </div>
-          </div>
-          <div class="font-12 color-b ze_x_ril_c">{{sert.infor}}</div>
-          <div>
-            <ul class="ze_x_ril_d float_right">
-              <li class="font-14">
-                <i class="color-h">￥{{sert.price}}</i>
-                <i>/元起</i>
-              </li>
-              <li class="font-12">{{sert.commentNum}}条评论</li>
-            </ul>
           </div>
         </div>
-      </div>
-
-</mescroll-vue>
-
+      </mescroll-vue>
     </div>
   </div>
 </template>
 <style lang="less" scoped>
-  .mescroll {
-    position:fixed;
-    z-index:-1;
-    top: 9rem;
-    bottom: 0;
-    height: auto;
-  }
+.mescroll {
+  position: fixed;
+  z-index: -1;
+  top: 9rem;
+  bottom: 0;
+  height: auto;
+}
 </style>
 
 <script>
-import { seledin,getScenicByCity } from "@/utils/getData"
-import MescrollVue from 'mescroll.js/mescroll.vue'
+import { seledin, getScenicByCity, selectttpy } from "@/utils/getData";
+import MescrollVue from "mescroll.js/mescroll.vue";
 export default {
   name: "index",
   data() {
@@ -382,16 +374,18 @@ export default {
       maxPrice: "",
       minpak: 2,
       maxpak: 2,
-      scenicSpotid:[],
+      scenicSpotid: [],
+      slityp: "1", //1默认常规旅行，2当地参团
 
       mescroll: null, // mescroll实例对象
-      mescrollUp: { // 上拉加载的配置.
-        callback: this.routine,   //回调
-				toTop: {
-					//回到顶部按钮
-					src: "../../assets/img/mescroll/mescroll-totop.png", //图片路径,默认null,支持网络图
-					offset: 1000 //列表滚动1000px才显示回到顶部按钮
-				},
+      mescrollUp: {
+        // 上拉加载的配置.
+        callback: this.routine, //回调
+        toTop: {
+          //回到顶部按钮
+          src: "../../assets/img/mescroll/mescroll-totop.png", //图片路径,默认null,支持网络图
+          offset: 1000 //列表滚动1000px才显示回到顶部按钮
+        }
       }
     };
   },
@@ -419,18 +413,20 @@ export default {
         }
       }
       return lists;
-    },
+    }
   },
-  beforeRouteEnter (to, from, next) { // 如果没有配置回到顶部按钮或isBounce,则beforeRouteEnter不用写
+  beforeRouteEnter(to, from, next) {
+    // 如果没有配置回到顶部按钮或isBounce,则beforeRouteEnter不用写
     next(vm => {
-        // 找到当前mescroll的ref,调用子组件mescroll-vue的beforeRouteEnter方法
-      vm.$refs.mescroll && vm.$refs.mescroll.beforeRouteEnter() // 进入路由时,滚动到原来的列表位置,恢复回到顶部按钮和isBounce的配置
-    })
+      // 找到当前mescroll的ref,调用子组件mescroll-vue的beforeRouteEnter方法
+      vm.$refs.mescroll && vm.$refs.mescroll.beforeRouteEnter(); // 进入路由时,滚动到原来的列表位置,恢复回到顶部按钮和isBounce的配置
+    });
   },
-  beforeRouteLeave (to, from, next) { // 如果没有配置回到顶部按钮或isBounce,则beforeRouteLeave不用写
-      // 找到当前mescroll的ref,调用子组件mescroll-vue的beforeRouteLeave方法
-    this.$refs.mescroll && this.$refs.mescroll.beforeRouteLeave() // 退出路由时,记录列表滚动的位置,隐藏回到顶部按钮和isBounce的配置
-    next()
+  beforeRouteLeave(to, from, next) {
+    // 如果没有配置回到顶部按钮或isBounce,则beforeRouteLeave不用写
+    // 找到当前mescroll的ref,调用子组件mescroll-vue的beforeRouteLeave方法
+    this.$refs.mescroll && this.$refs.mescroll.beforeRouteLeave(); // 退出路由时,记录列表滚动的位置,隐藏回到顶部按钮和isBounce的配置
+    next();
   },
   created() {
     this.LopTime(); //获取当前一年的月份和天数
@@ -448,8 +444,8 @@ export default {
   },
   methods: {
     // mescroll组件初始化的回调,可获取到mescroll对象
-    mescrollInit (mescroll) {
-      this.mescroll = mescroll  // 如果this.mescroll对象没有使用到,则mescrollInit可以不用配置
+    mescrollInit(mescroll) {
+      this.mescroll = mescroll; // 如果this.mescroll对象没有使用到,则mescrollInit可以不用配置
     },
     teypex(index) {
       if (this.type != 0 && this.type == index) {
@@ -585,24 +581,37 @@ export default {
       }
     },
     queding() {
-        this.mescroll.resetUpScroll();
-        this.type = 0;
+      this.mescroll.resetUpScroll();
+      this.type = 0;
+    },
+    //点击切换
+    typclick(index) {
+      this.slityp = index;
+      this.mescroll.resetUpScroll();
     },
     async routine(page, mescroll) {
-      let data = await seledin(
-        JSON.stringify(this.date),
-        this.daysty.toString(),
-        this.srtype,
-        this.minPrice, //小价格
-        this.maxPrice, //大价格
-        this.scenicSpotid.toString(),//景点ID
-        page.num,
-      );
+      //常规路线
+      if (this.slityp==1) {
+        this.weiz=seledin;
+      }
+       //当地参团
+      if (this.slityp==2) {
+        this.weiz=selectttpy;
+      }
+      let data = await this.weiz(
+          JSON.stringify(this.date),
+          this.daysty.toString(),
+          this.srtype,
+          this.minPrice, //小价格
+          this.maxPrice, //大价格
+          this.scenicSpotid.toString(), //景点ID
+          page.num
+        );
       if (data) {
         // 如果是第一页需手动制空列表
-        if (page.num === 1) this.styser = []
+        if (page.num === 1) this.styser = [];
         // 把请求到的数据添加到列表
-        this.styser = [...this.styser,...data.list];
+        this.styser = [...this.styser, ...data.list];
         for (const list of this.styser) {
           if (list.carImg) {
             this.$set(list, "carImg", list.carImg.split(",")[0]);
@@ -610,31 +619,30 @@ export default {
         }
         // 数据渲染成功后,隐藏下拉刷新的状态
         this.$nextTick(() => {
-          mescroll.endSuccess(data.list.length)
-        })
-
-      }else{
-         // 联网异常,隐藏上拉和下拉的加载进度
-         mescroll.endErr()
+          mescroll.endSuccess(data.list.length);
+        });
+      } else {
+        // 联网异常,隐藏上拉和下拉的加载进度
+        mescroll.endErr();
       }
     },
     async scenic() {
       let data = await getScenicByCity();
       if (data) {
         this.scejing = data;
-        for(const list of this.scejing){
-          this.$set(list,"flag",false);
+        for (const list of this.scejing) {
+          this.$set(list, "flag", false);
         }
       }
     },
-    sceClick(index){
-       this.scenicSpotid=[];
+    sceClick(index) {
+      this.scenicSpotid = [];
       this.scejing[index].flag = !this.scejing[index].flag;
-       for (const list of this.scejing) {
+      for (const list of this.scejing) {
         if (list.flag) {
           this.scenicSpotid.push(list.scenicSpotid); //id
         }
-       }
+      }
       this.mescroll.resetUpScroll();
     }
   }
