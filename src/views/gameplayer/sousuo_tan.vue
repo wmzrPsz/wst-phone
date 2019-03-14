@@ -86,7 +86,7 @@
             <li class="border_d huan_b">
               <i class="float_left">{{huodiyt}}</i>
               <i class="float_right" @click="showl = true">
-                切换金钱
+                切换货币
                 <i class="huan_a">
                   <img src="../../assets/img/A/more_icon@2x.png">
                 </i>
@@ -101,8 +101,9 @@
         show-toolbar
         title="语言"
         :visible-item-count="3"
+		:defaultIndex="3"
         :columns="columns"
-        @cancel="onCancel"
+        @cancel="show=false"
         @confirm="onConfirm"
       />
     </van-popup>
@@ -112,9 +113,10 @@
         show-toolbar
         title="货币"
         :visible-item-count="3"
+		:defaultIndex="currencyid"
         :columns="huobityp"
         @cancel="showl=false"
-        @onConfirm="showl=false"
+        @confirm="onConfirma"
       />
     </van-popup>
   </div>
@@ -141,7 +143,6 @@ export default {
       yuyan: [], //获取接口语言数组
       huobi: [], //货币
       huobityp: [],
-      huodiyt:'',
     };
   },
   computed: {
@@ -151,6 +152,14 @@ export default {
       for (const list of this.yuyan) {
         if(list.languageid == this.languageid){
           return list.content;
+        }
+      }
+	},
+	  //货币名称
+    huodiyt(){
+      for (const list of this.huobi) {
+        if(list.currencyid == this.currencyid){
+          return list.currency;
         }
       }
     }
@@ -167,14 +176,13 @@ export default {
   methods: {
      ...mapMutations(["changeLanguage", "changeCurrency"]),
     onConfirm(value, index) {
-      this.$toast(`当前值：${value}, 当前索引：${index}`);
       this.show = false;
       this.changeLanguage(this.yuyan[index].languageid);
 	},
-    onCancel() {
-      this.$toast("取消");
-      this.show = false;
-    },
+	 onConfirma(value, index) {
+	  this.showl = false;
+	   this.changeCurrency(this.huobi[index].currencyid);
+	},
     async HotCitysty() {
       let data = await HotCityList();
       if (data) {
