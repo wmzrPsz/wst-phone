@@ -419,12 +419,14 @@ select{
 	width: 60px;
 	height: 60px;
     border-radius: 50px;
-    overflow:hidden;
+	overflow:hidden;
+	float: left;
 }
 .a_bdengl_righ img{
 	width: 25px;
 	height: 25px;
 	margin-top: 1rem;
+	margin-left: 0.5rem;
 }
 .b_xianm{
 	width:95%;
@@ -493,6 +495,13 @@ select{
 }
 .dianh_a_a{
 	margin-top:0.8rem;
+	margin-bottom: 1rem;
+}
+.dian_jia_a{
+	overflow: hidden;
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
 }
 .dianh_a{
 	margin-top: 0.5rem;
@@ -861,8 +870,8 @@ select{
 }
 
 .ong_z{
-	position: relative;
-	z-index:9999;
+	position:fixed;
+    z-index:99999;
 	background-color:white!important;
 	padding-bottom: 0.5rem;
 	widows: 95%;
@@ -4965,6 +4974,25 @@ select{
 	height:4rem!important;
 }
 .shaixuang{
-	overflow: hidden;
 	border-bottom: 1px solid #F5F5F5;
+}
+.denlu_jia{
+  display: block;
+  margin-top: 1rem;
+  float: left;
+  margin-left: 1rem;
+}
+.typeface{
+	overflow: hidden;
+	width: 9rem;
+	height: 6rem;
+	background-color: white;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-left: -4.5rem;
+	margin-top: -3rem;
+	border:1px solid saddlebrown;
+	border-radius: 8px;
+	
 }

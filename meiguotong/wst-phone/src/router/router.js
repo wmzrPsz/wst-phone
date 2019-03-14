@@ -11,6 +11,8 @@ const binding = r => require.ensure([], () => r(require('../views/index/binding'
 
 //当地玩家
 const sousuo = r => require.ensure([], () => r(require('../views/gameplayer/sousuo')),'sousuo')//搜索当地玩家
+//首页（弹出）
+const sousuo_tan = r => require.ensure([], () => r(require('../views/gameplayer/sousuo_tan')),'sousuo_tan')//首页（弹出）
 Vue.use(Router)
 
 export default new Router({
@@ -26,7 +28,7 @@ export default new Router({
       path: '/',
       name: 'indexher',
       component: indexher,
-      // redirect: 'login',
+      //  redirect: 'login',
        meta:{'title': '首页'}
     },
     {
@@ -66,12 +68,18 @@ export default new Router({
       meta:{'title': '绑定'}
     },
 //当地玩家
-
     {
       path: '/sousuo',
       name: 'sousuo',
       component: sousuo,
       meta:{'title': '搜索'}
+    },
+    //首页（弹出）
+    {
+      path: '/sousuo_tan',
+      name: 'sousuo_tan',
+      component: sousuo_tan,
+      meta:{'title': '首页(弹出)'}
     },
   ]
 })

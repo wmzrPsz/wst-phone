@@ -28,9 +28,7 @@
             </i>
             <i class="float_left sushou_b">
               <select class="color-b" v-model="area">
-                <option value="86">+86</option>
-                <option value="89">+89</option>
-                <option value="88">+88</option>
+                <option v-for="(list,index) in quyustye" :key="index">+{{list.id}}{{list.name}}</option>
               </select>
             </i>
             <i class="color-e">
@@ -153,7 +151,7 @@
 import { register } from "@/utils/getData"; //注册
 import { sendSms } from "@/utils/getData"; //邮箱短信
 import { isNull } from "@/utils/common";
-import { mapMutations } from "@/utils/config";
+import { areaSelectList } from "@/utils/config";
 export default {
   name: "register",
   data() {
@@ -163,15 +161,26 @@ export default {
       email: "",
       smsCode: "",
       passWord: "",
-      area: "86",
+      area:"+89",
       sendAuthCode_a:1,
       sendAuthCode: 1, //获取验证码
       auth_time: "", //倒计时
-      auth_time_a:''
+      auth_time_a:'',
+      quyustye:[]//手机好吗区域
     };
   },
+  created() {
+   this.quyu();
+  },
   methods: {
-    ...mapMutations(["addLogin"]),
+    //拿区域
+    async quyu(){
+     let data = await areaSelectList();
+     if(data){
+       this.quyustye=data;//区域
+       console.log(data);
+     }
+    },
     typeClick(index) {
       this.type = index;
     },
@@ -285,8 +294,5 @@ export default {
   }
 };
 </script>
-
-<style lang="less" scoped>
-</style>
 
 

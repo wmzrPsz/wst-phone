@@ -1,9 +1,11 @@
 <template>
   <div class="ez-header">
     <div class="her_a font-20 background-a">
+       <router-link to="/sousuo_tan">
       <i class="her_a_left float_left">
         <img src="../assets/img/A/head_fenlei_icon@2x.png">
       </i>
+       </router-link>
       <i class="he_t_baoc color">
         <img src="../assets/img/A/head_logo_icon@2x.png">
       </i>
