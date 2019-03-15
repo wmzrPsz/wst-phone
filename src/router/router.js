@@ -11,6 +11,10 @@ const binding = r => require.ensure([], () => r(require('../views/index/binding'
 
 //当地玩家
 const sousuo = r => require.ensure([], () => r(require('../views/gameplayer/sousuo')),'sousuo')//搜索当地玩家
+//当地参团
+const delegation = r => require.ensure([], () => r(require('../views/gameplayer/delegation')),'delegation')//当地参团
+//当地玩家
+const game = r => require.ensure([], () => r(require('../views/gameplayer/game')),'game')//当地玩家
 //首页（弹出）
 const sousuo_tan = r => require.ensure([], () => r(require('../views/gameplayer/sousuo_tan')),'sousuo_tan')//首页（弹出）
 Vue.use(Router)
@@ -81,5 +85,19 @@ export default new Router({
       component: sousuo_tan,
       meta:{'title': '首页(弹出)'}
     },
+    //delegation搜索当地参团
+    {
+      path: '/delegation',
+      name: 'delegation',
+      component: delegation,
+      meta:{'title': '搜索当地参团'}
+    },
+      //搜索当地玩家
+      {
+        path: '/game',
+        name: 'game',
+        component: game,
+        meta:{'title': '搜索当地玩家'}
+      },
   ]
 })

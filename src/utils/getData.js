@@ -54,18 +54,34 @@ export const bind = (type,mobile,email,smsCode,passWord,area,) => ajax('/api/for
     category: 1,
     source:3,
 });
+//获取自定标签
+export const zhiding =(routeType) => ajax('/api/common/getLabel',{
+    routeType:routeType,
+})
 //常规路线搜索接口
-export const seledin = (date,daysty,srtype,minPrice,maxPrice,scenicSpotid, pageNo) => ajax('/api/route/selectRoute', {
+export const seledin = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSpotid, pageNo) => ajax('/api/route/selectRoute', {
     date:date,//日期
     day:daysty,//天数
     minPrice:minPrice,//最小价格
     maxPrice:maxPrice,//最大价格
     orderByType:srtype,//1.销量2.价格降序3.价格升序4好评
     scenic:scenicSpotid,//景点Id
+    labelAttrid:tagContent,//属性
     pageNo: pageNo,
 },'post');
 //当地参团搜索接口
-export const selectttpy = (date,daysty,srtype,minPrice,maxPrice,scenicSpotid, pageNo) => ajax('/api/route/selectCityRoute', {
+export const selectttpy = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSpotid, pageNo) => ajax('/api/route/selectCityRoute', {
+    date:date,//日期
+    day:daysty,//天数
+    minPrice:minPrice,//最小价格
+    maxPrice:maxPrice,//最大价格
+    orderByType:srtype,//1.销量2.价格降序3.价格升序4好评
+    scenic:scenicSpotid,//景点Id
+    labelAttrid:tagContent,//属性
+    pageNo: pageNo,
+},'post');
+//景点
+export const selectScenicList = (date,daysty,srtype,minPrice,maxPrice,scenicSpotid, pageNo) => ajax('/api/scenic/selectScenicList', {
     date:date,//日期
     day:daysty,//天数
     minPrice:minPrice,//最小价格

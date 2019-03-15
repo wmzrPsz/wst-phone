@@ -20,16 +20,16 @@
         </ul>
 
         <ul class="sou_her_q color font-12">
+          <router-link to="/sousuo">
           <li>
-            <i class="color-g">常规旅行</i>
-            <i class="sou_her_q_a"></i>
-          </li>
-          <router-link to="/delegation">
-          <li>
-            <i class="color">当地参团</i>
-            <i ></i>
+            <i class="color">常规旅行</i>
+            <i></i>
           </li>
           </router-link>
+          <li>
+            <i class="color-g">当地参团</i>
+            <i  class="sou_her_q_a"></i>
+          </li>
           <li>
             <i >当地玩家</i>
             <i></i>
@@ -255,25 +255,6 @@
               </div>
             </ul>
           </div>
-
-          <div class="b_xianm bus">
-            <i class="b_xianm_a">
-              <img src="../../assets/img/A/home_tanchu_circle_icon@2x.png">
-            </i>
-            <i class="font-16 b_xianm_c">途径景点</i>
-          </div>
-
-          <div class="b_xianm" style="margin-top: 0.5rem">
-            <ul class="font-12 jg_a color-b">
-              <li
-                class="float_left"
-                v-for="(list,index) in scejing"
-                :key="index"
-                :class="list.flag?'b_xianm_b_jiadian':''"
-                @click="sceClick(index)"
-              >{{list.name}}</li>
-            </ul>
-          </div>
           <div v-for="(list,index1) in getLtyp" :key="index1">
            <div class="b_xianm bus">
             <i class="b_xianm_a">
@@ -353,6 +334,7 @@
             </div>
             <div class="font-12 color-b ze_x_ril_c">{{sert.infor}}</div>
             <div>
+              <div class="float_left font-12 group_d color-h"><i><img src="../../assets/img/B/bczc_adress_icon@2x.png"></i>{{sert.endCityContent}}</div>
               <ul class="ze_x_ril_d float_right">
                 <li class="font-14">
                   <i class="color-h">￥{{sert.price}}</i>
@@ -378,7 +360,7 @@
 </style>
 
 <script>
-import { seledin, getScenicByCity,zhiding} from "@/utils/getData";
+import { selectttpy,zhiding} from "@/utils/getData";
 import MescrollVue from "mescroll.js/mescroll.vue";
 export default {
   name: "index",
@@ -397,7 +379,7 @@ export default {
       maxpak: 2,
       scenicSpotid: [],
       getLtyp:[],//自定标签
-      routeType:1,//自定标签1常规路线
+      routeType:2,//自定标签1常规路线,2当地
      tagContent:[],
 
       mescroll: null, // mescroll实例对象
@@ -456,7 +438,6 @@ export default {
     this.LopTime_list(); //12个月循环
     this.dayListInit(); //天数初始化
     this.priceInit(); //价格初始化
-    this.scenic(); //获取途径景点
     this.getLabeltyp();//自定标签
   },
   filters: {
@@ -609,7 +590,7 @@ export default {
       this.type = 0;
     },
     async routine(page, mescroll) {
-      let data = await seledin(
+      let data = await selectttpy(
         JSON.stringify(this.date),
        this.tagContent.toString(),
         this.daysty.toString(),
@@ -642,15 +623,6 @@ export default {
         mescroll.endErr();
       }
     },
-    async scenic() {
-      let data = await getScenicByCity();
-      if (data) {
-        this.scejing = data;
-        for (const list of this.scejing) {
-          this.$set(list, "flag", false);
-        }
-      }
-    },
     //自定标签
      async getLabeltyp() {
       let data = await zhiding(this.routeType);
@@ -664,16 +636,6 @@ export default {
        }
        console.log(this.getLtyp);
       }
-    },
-    sceClick(index) {
-      this.scenicSpotid = [];
-      this.scejing[index].flag = !this.scejing[index].flag;
-      for (const list of this.scejing) {
-        if (list.flag) {
-          this.scenicSpotid.push(list.scenicSpotid); //id
-        }
-      }
-      this.mescroll.resetUpScroll();
     },
     lableClick(index1,index2){
     this.getLtyp[index1].comTagList[index2].flag = !this.getLtyp[index1].comTagList[index2].flag;
@@ -700,10 +662,6 @@ export default {
      }
      //价格重置
      for (const list of this.priceList) {
-     list.flag=false;
-     }
-     //途经景点重置
-     for (const list of this.scejing) {
      list.flag=false;
      }
       //属性重置
