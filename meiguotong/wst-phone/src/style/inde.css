@@ -927,15 +927,16 @@ select{
 	width: 100%;
 }
 .wanjia_a{
-	width: 47%;
+	width: 48%;
 	overflow:hidden;
-	margin-right:6%;
+	float: left;
 	margin-top: 0.5rem;
 	padding-bottom: 0.5rem;
 }
 .wanjia_a:nth-child(2n),
 .wanjia_a:last-child {
   margin-right: 0px;
+  float:right!important;
 }
 .wanjia_c{
 	width:2.5rem;
@@ -3378,7 +3379,7 @@ select{
 }
 .group_d{
 	overflow: hidden;
-	margin-top: 0.2rem;
+	margin-top: 0.4rem;
 }
 .group_d i{
 	display: block;
@@ -4994,4 +4995,9 @@ select{
 	border:1px solid saddlebrown;
 	border-radius: 8px;
 	
+}
+.wanjia_jia{
+	width: 90%;
+	overflow: hidden;
+	margin: auto;
 }
