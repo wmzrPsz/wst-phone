@@ -21,27 +21,27 @@
 
         <ul class="sou_her_q color font-12">
           <router-link to="/sousuo">
-          <li>
-            <i class="color">常规旅行</i>
-            <i></i>
-          </li>
+            <li>
+              <i class="color">常规旅行</i>
+              <i></i>
+            </li>
           </router-link>
-          <li>
-            <i class="color-g">当地参团</i>
-            <i  class="sou_her_q_a"></i>
-          </li>
+          <router-link to="/delegation">
+            <li>
+              <i class="color">当地参团</i>
+              <i></i>
+            </li>
+          </router-link>
           <router-link to="/game">
-          <li>
-            <i class="color">当地玩家</i>
-            <i></i>
-          </li>
+            <li>
+              <i class="color">当地玩家</i>
+              <i></i>
+            </li>
           </router-link>
-         <router-link to="/Tanker">
           <li>
-            <i class="color">油轮</i>
-            <i></i>
+            <i class="color-g">油轮</i>
+            <i class="sou_her_q_a"></i>
           </li>
-          </router-link>
           <li>
             <i>景点</i>
             <i></i>
@@ -259,25 +259,63 @@
               </div>
             </ul>
           </div>
+          <!--出发城市-->
+          <div>
+            <div class="b_xianm bus">
+              <i class="b_xianm_a">
+                <img src="../../assets/img/A/home_tanchu_circle_icon@2x.png">
+              </i>
+              <i class="font-16 b_xianm_c">出发城市</i>
+            </div>
+            <div class="b_xianm">
+              <ul class="font-12 b_xianm_b color-b">
+                <li
+                  v-for="(list,index) in cstyle"
+                  :key="index"
+                  :class="list.flag?'b_xianm_b_jiadian':''"
+                  @click.stop="chensClick(index)"
+                >{{list.cityName}}</li>
+              </ul>
+            </div>
+          </div>
+           <!--油轮航线-->
+          <div>
+            <div class="b_xianm bus">
+              <i class="b_xianm_a">
+                <img src="../../assets/img/A/home_tanchu_circle_icon@2x.png">
+              </i>
+              <i class="font-16 b_xianm_c">邮轮航线</i>
+            </div>
+            <div class="b_xianm">
+              <ul class="font-12 b_xianm_b color-b">
+                <li
+                  v-for="(list,index) in hangxiatyp"
+                  :key="index"
+                  :class="list.flag?'b_xianm_b_jiadian':''"
+                  @click.stop="hanxianClick(index)"
+                >{{list.name}}</li>
+              </ul>
+            </div>
+          </div>
           <div v-for="(list,index1) in getLtyp" :key="index1">
-           <div class="b_xianm bus">
-            <i class="b_xianm_a">
-              <img src="../../assets/img/A/home_tanchu_circle_icon@2x.png">
-            </i>
-            <i class="font-16 b_xianm_c">{{list.content}}</i>
-          </div>
+            <div class="b_xianm bus">
+              <i class="b_xianm_a">
+                <img src="../../assets/img/A/home_tanchu_circle_icon@2x.png">
+              </i>
+              <i class="font-16 b_xianm_c">{{list.content}}</i>
+            </div>
 
-          <div class="b_xianm" style="margin-top: 0.5rem">
-            <ul class="font-12 jg_a color-b">
-              <li
-                class="float_left"
-                v-for="(item,index2) in list.comTagList"
-                :key="index2"
-                 @click.stop="lableClick(index1,index2)"
-                :class="item.flag?'b_xianm_b_jiadian':''"
-              >{{item.content}}</li>
-            </ul>
-          </div>
+            <div class="b_xianm" style="margin-top: 0.5rem">
+              <ul class="font-12 jg_a color-b">
+                <li
+                  class="float_left"
+                  v-for="(item,index2) in list.comTagList"
+                  :key="index2"
+                  @click.stop="lableClick(index1,index2)"
+                  :class="item.flag?'b_xianm_b_jiadian':''"
+                >{{item.content}}</li>
+              </ul>
+            </div>
           </div>
           <button
             class="di_s_b_dengl color background-d font-16"
@@ -338,7 +376,12 @@
             </div>
             <div class="font-12 color-b ze_x_ril_c">{{sert.infor}}</div>
             <div>
-              <div class="float_left font-12 group_d color-h"><i><img src="../../assets/img/B/bczc_adress_icon@2x.png"></i>{{sert.endCityContent}}</div>
+              <div class="float_left font-12 group_d color-h">
+                <i>
+                  <img src="../../assets/img/B/bczc_adress_icon@2x.png">
+                </i>
+                {{sert.endCityContent}}
+              </div>
               <ul class="ze_x_ril_d float_right">
                 <li class="font-14">
                   <i class="color-h">￥{{sert.price}}</i>
@@ -364,7 +407,7 @@
 </style>
 
 <script>
-import { selectttpy,zhiding} from "@/utils/getData";
+import { youlun, zhiding, chengshi,gankou} from "@/utils/getData";
 import MescrollVue from "mescroll.js/mescroll.vue";
 export default {
   name: "index",
@@ -382,9 +425,11 @@ export default {
       minpak: 2,
       maxpak: 2,
       scenicSpotid: [],
-      getLtyp:[],//自定标签
-      routeType:2,//自定标签1常规路线,2当地
-     tagContent:[],
+      getLtyp: [], //自定标签
+      routeType: 3, //自定标签1常规路线,2当地,3油轮
+      tagContent: [],
+      cstyle: [], //出发城市列表
+      hangxiatyp:[],//油轮航线
 
       mescroll: null, // mescroll实例对象
       mescrollUp: {
@@ -422,7 +467,27 @@ export default {
         }
       }
       return lists;
-    }
+    },
+    //获取出发城市
+    startCity(){
+     let lists=[];
+     for(const list of this.cstyle){
+       if(list.flag){
+         lists.push(list.cityid)
+       }
+     }
+     return lists;
+    },
+    //获取航线ID
+    hangxianty(){
+     let lists =[];
+     for (const list of this.hangxiatyp) {
+       if(list.flag){
+         lists.push(list.id);
+       }
+     }
+     return lists;
+    },
   },
   beforeRouteEnter(to, from, next) {
     // 如果没有配置回到顶部按钮或isBounce,则beforeRouteEnter不用写
@@ -442,7 +507,9 @@ export default {
     this.LopTime_list(); //12个月循环
     this.dayListInit(); //天数初始化
     this.priceInit(); //价格初始化
-    this.getLabeltyp();//自定标签
+    this.getLabeltyp(); //自定标签
+    this.chufa(); //出发城市
+    this.gankoutylp();//油轮航线
   },
   filters: {
     dayFilter: function(value) {
@@ -594,14 +661,16 @@ export default {
       this.type = 0;
     },
     async routine(page, mescroll) {
-      let data = await selectttpy(
+      let data = await youlun(
         JSON.stringify(this.date),
-       this.tagContent.toString(),
+        this.tagContent.toString(),
         this.daysty.toString(),
         this.srtype,
         this.minPrice, //小价格
         this.maxPrice, //大价格
         this.scenicSpotid.toString(), //景点ID
+        this.startCity.toString(),//出发城市ID
+        this.hangxianty.toString(),//航线ID
         page.num
       );
       if (data) {
@@ -627,53 +696,92 @@ export default {
         mescroll.endErr();
       }
     },
-    //自定标签
-     async getLabeltyp() {
-      let data = await zhiding(this.routeType);
+    //出发城市
+    async chufa() {
+      let data = await chengshi();
       if (data) {
-       this.getLtyp=data;
-       for(const list of this.getLtyp){
-          this.$set(list, "flag", false);
-           for(const item of list.comTagList){
-             this.$set(item, "flag", false);
-          }
-       }
-       console.log(this.getLtyp);
+        this.cstyle = data;
+        for(const list of this.cstyle){
+          this.$set(list,"flag",false);
+        }
       }
     },
-    lableClick(index1,index2){
-    this.getLtyp[index1].comTagList[index2].flag = !this.getLtyp[index1].comTagList[index2].flag;
-     this.tagContent=[];
-    for(const list of this.getLtyp){
-           for(const item of list.comTagList){
-            if(item.flag){
-               this.tagContent.push(item.tagid); //id
-            }
+    //点击选中出发城市
+    chensClick(index){
+     this.cstyle[index].flag =! this.cstyle[index].flag;
+      this.mescroll.resetUpScroll();
+    },
+    //油轮航线
+    async gankoutylp(){
+      let data = await gankou();
+      if(data){
+       this.hangxiatyp=data;
+        for(const list of this.hangxiatyp){
+          this.$set(list,"flag",false);
+        }
+      }
+    },
+    //点击航线
+    hanxianClick(index){
+    this.hangxiatyp[index].flag =! this.hangxiatyp[index].flag;
+      this.mescroll.resetUpScroll();
+    },
+    //自定标签
+    async getLabeltyp() {
+      let data = await zhiding(this.routeType);
+      if (data) {
+        this.getLtyp = data;
+        for (const list of this.getLtyp) {
+          this.$set(list, "flag", false);
+          for (const item of list.comTagList) {
+            this.$set(item, "flag", false);
           }
-       }
-        console.log(this.tagContent);
-        this.mescroll.resetUpScroll();
+        }
+        console.log(this.getLtyp);
+      }
+    },
+    lableClick(index1, index2) {
+      this.getLtyp[index1].comTagList[index2].flag = !this.getLtyp[index1]
+        .comTagList[index2].flag;
+      this.tagContent = [];
+      for (const list of this.getLtyp) {
+        for (const item of list.comTagList) {
+          if (item.flag) {
+            this.tagContent.push(item.tagid); //id
+          }
+        }
+      }
+      console.log(this.tagContent);
+      this.mescroll.resetUpScroll();
     },
     //重置
-    reset(){
+    reset() {
       //月份重置
       for (const list of this.dataList) {
-     list.flag=false;
-     }
-     //天数重置
-     for (const list of this.daylist) {
-     list.flag=false;
-     }
-     //价格重置
-     for (const list of this.priceList) {
-     list.flag=false;
-     }
+        list.flag = false;
+      }
+      //天数重置
+      for (const list of this.daylist) {
+        list.flag = false;
+      }
+      //价格重置
+      for (const list of this.priceList) {
+        list.flag = false;
+      }
       //属性重置
-     for (const list of this.getLtyp) {
-       for (const item of list.comTagList) {
-     item.flag=false;
-       }
-     }
+      for (const list of this.getLtyp) {
+        for (const item of list.comTagList) {
+          item.flag = false;
+        }
+      }
+       //出发城市
+      for (const list of this.cstyle) {
+        list.flag = false;
+      }
+       //出发航线
+      for (const list of this.hangxiatyp) {
+        list.flag = false;
+      }
       this.mescroll.resetUpScroll();
     }
   }

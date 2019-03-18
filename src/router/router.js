@@ -15,6 +15,8 @@ const sousuo = r => require.ensure([], () => r(require('../views/gameplayer/sous
 const delegation = r => require.ensure([], () => r(require('../views/gameplayer/delegation')),'delegation')//当地参团
 //当地玩家
 const game = r => require.ensure([], () => r(require('../views/gameplayer/game')),'game')//当地玩家
+//油轮
+const Tanker = r => require.ensure([], () => r(require('../views/gameplayer/Tanker')),'Tanker')//油轮
 //首页（弹出）
 const sousuo_tan = r => require.ensure([], () => r(require('../views/gameplayer/sousuo_tan')),'sousuo_tan')//首页（弹出）
 Vue.use(Router)
@@ -99,5 +101,12 @@ export default new Router({
         component: game,
         meta:{'title': '搜索当地玩家'}
       },
+        //搜索油轮
+        {
+          path: '/Tanker',
+          name: 'Tanker',
+          component: Tanker,
+          meta:{'title': '搜索油轮'}
+        },
   ]
 })

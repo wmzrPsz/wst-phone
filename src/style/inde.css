@@ -453,7 +453,9 @@ select{
   margin-bottom: 0.5rem;
   border-radius: 8px;
   background-size: 100% 100%;
+  height: 1.5rem;
  float: left;
+ overflow: hidden;
 }
 .b_xianm_b_jiadian{
 	background-image: url(../assets/img/C/ddwjlb_2box@2x.png);
@@ -932,11 +934,11 @@ select{
 	float: left;
 	margin-top: 0.5rem;
 	padding-bottom: 0.5rem;
+	margin-right:2.6%;
 }
 .wanjia_a:nth-child(2n),
 .wanjia_a:last-child {
   margin-right: 0px;
-  float:right!important;
 }
 .wanjia_c{
 	width:2.5rem;
