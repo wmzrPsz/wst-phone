@@ -30,14 +30,18 @@
             <i ></i>
           </li>
           </router-link>
+          <router-link to="/game">
           <li>
-            <i >当地玩家</i>
+            <i class="color">当地玩家</i>
             <i></i>
           </li>
+          </router-link>
+          <router-link to="/Tanker">
           <li>
-            <i>油轮</i>
+            <i class="color">油轮</i>
             <i></i>
           </li>
+          </router-link>
           <li>
             <i>景点</i>
             <i></i>

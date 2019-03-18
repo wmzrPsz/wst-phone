@@ -90,6 +90,37 @@ export const selectScenicList = (date,daysty,srtype,minPrice,maxPrice,scenicSpot
     scenic:scenicSpotid,//景点Id
     pageNo: pageNo,
 },'post');
+//当地玩家
+export const wanjia = (guideAge,guideSex,shuxin,minPrice,maxPrice,srtype,pageNo) => ajax('/api/guide/guideScreen',{
+    guideAge:guideAge,//年龄
+    guideSex:guideSex,//性别
+    minPrice:minPrice,//低价
+    maxPrice:maxPrice,//高价
+    tagId:shuxin,//制订标签属性
+    orderByType:srtype,//1.销量2.价格降序3.价格升序4好评
+    pageNo: pageNo,
+});
+//油轮接口
+export const youlun = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSpotid,startCity,hangxianty,pageNo) => ajax('/api/cruise/cruiseScreen', {
+    date:date,//日期
+    day:daysty,//天数
+    minPrice:minPrice,//最小价格
+    maxPrice:maxPrice,//最大价格
+    orderByType:srtype,//1.销量2.价格降序3.价格升序4好评
+    scenic:scenicSpotid,//景点Id
+    labelAttrid:tagContent,//属性
+    startCity:startCity,//出发城市ID
+    route:hangxianty,//航线ID
+    pageNo: pageNo,
+},'post');
+//获取邮轮航线接口
+export const gankou = () => ajax('/api/cruise/getCourse',{
+
+});
+//根据语言获取出发城市接口
+export const chengshi = () => ajax('/api/common/getCityList',{
+
+});
 //获取途径 景点
 export const  getScenicByCity = () => ajax('/api/common/getScenicByCity',{
     cityid:1,//城市ID
