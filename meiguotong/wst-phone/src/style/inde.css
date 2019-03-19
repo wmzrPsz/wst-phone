@@ -219,7 +219,6 @@ select{
 .dingjia_b{
 	overflow: hidden;
 	width: 100%;
-	position: fixed;
 	top: 0px;
 }
 
@@ -774,6 +773,7 @@ select{
 	padding-bottom: 0.5rem;
 	position: fixed;
 	top:7rem;
+	border-bottom: 3px solid #F5F5F5;
 }
 .sou_her_www{
 	overflow:hidden;
@@ -811,9 +811,11 @@ select{
 .ze_x_le{
 	width:30%;
 	margin-right: 0.5rem;
+	height: 3.3rem;
 }
 .ze_x_le img{
 	width: 100%;
+	height: 100%;
 }
 .ze_x_le_a{
 	margin:0px;
@@ -821,6 +823,7 @@ select{
 	 display: -webkit-box;
    -webkit-line-clamp:2;
    -webkit-box-orient: vertical;
+   text-align: left;
 }
 .ze_x_ril{
 	width: 65%;
@@ -872,7 +875,7 @@ select{
 
 .ong_z{
 	position:fixed;
-    z-index:99999;
+    z-index:999;
 	background-color:white!important;
 	padding-bottom: 0.5rem;
 	width:100%;
@@ -1782,7 +1785,7 @@ select{
     top: 30%;
     left: 0;
     background: #000;
-    z-index: 9000;
+    z-index: 99;
     opacity: 0.4;
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="index" style="background-color:#F5F5F5">
+  <div class="index" style="background-color: white;">
     <div class="dingjia_b">
       <div class="sou_her background-a sou_her_jia" style="clear:both">
         <ul class="sou_her_a">
@@ -38,14 +38,16 @@
           </router-link>
          <router-link to="/Tanker">
           <li>
-            <i class="color">油轮</i>
+            <i class="color">邮轮</i>
             <i></i>
           </li>
           </router-link>
+          <router-link to="/Scenicspot">
           <li>
-            <i>景点</i>
+            <i class="color">景点</i>
             <i></i>
           </li>
+          </router-link>
         </ul>
       </div>
       <div class="brijtan_b" v-if="type!=0"></div>
@@ -356,8 +358,8 @@
 <style lang="less" scoped>
 .mescroll {
   position: fixed;
-  z-index: -1;
-  top: 9rem;
+  z-index:9;
+  top:9.2rem;
   bottom: 0;
   height: auto;
 }
