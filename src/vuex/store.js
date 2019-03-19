@@ -15,6 +15,7 @@ export default new Vuex.Store({
       type:1,  //1.游客 2.会员
       languageid: 1, //语言ID
       currencyid: 1,  //货币ID
+      pageSize: 2,  //页数
   },
   getters: {
 
