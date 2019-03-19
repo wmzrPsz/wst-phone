@@ -125,14 +125,14 @@
       </div>
 
       <div class="dingjia_a_ajia">
-        <ul class="sou_her_www font-14">
+          <ul class="sou_her_www font-14">
+          <li @click="sertey(0)" :class="[srtype==0?'sou_her_www_a':'']">
+            <button>综合</button>
+          </li>
           <li @click="sertey(1)" :class="[srtype==1?'sou_her_www_a':'']">
             <button>销量</button>
           </li>
-          <li @click="sertey(4)" :class="[srtype==4?'sou_her_www_a':'']">
-            <button>好评</button>
-          </li>
-          <li @click="sertey(2)" :class="[srtype==2?'sou_her_www_a':'']">
+          <li @click="sertey(2)" v-if="styjiag==1" :class="[srtype==3?'sou_her_www_a':'']">
             <i>价格</i>
             <span class="s_a">
               <i class="sou_her_w_a_a">
@@ -140,13 +140,16 @@
               </i>
             </span>
           </li>
-          <li @click="sertey(3)" :class="[srtype==3?'sou_her_www_a':'']">
+          <li @click="sertey(3)"  v-if="styjiag==2" :class="[srtype==2?'sou_her_www_a':'']">
             <i>价格</i>
             <span class="s_a">
               <i class="sou_her_w_a_a">
                 <img src="../../assets/img/A/cglv_jiageopen_icon - 1.png">
               </i>
             </span>
+          </li>
+          <li @click="sertey(4)" :class="[srtype==4?'sou_her_www_a':'']">
+            <button>好评</button>
           </li>
         </ul>
       </div>
@@ -206,13 +209,14 @@ export default {
   data() {
     return {
       type: "", //1日期，2行程，3价格，4全部，
-      srtype: 1, //1综合，2销量，3降价格，4升价格
+      srtype:"", //1综合，2销量，3降价格，4升价格
       routeType: 4, //自定标签1常规路线,2当地,4景点
       jdcstyle: [], //城市景点出发城市Id
       getLtyp: [], //自定标签
       styser: [], //列表数据
       cityid:"",//传出发城市ID
       tagContent:[],//属性ID
+       styjiag:1,//开始1显示降价格，2显示升价格
 
       mescroll: null, // mescroll实例对象
       mescrollUp: {
@@ -266,6 +270,12 @@ export default {
     sertey(index) {
       this.srtype = index;
       this.mescroll.resetUpScroll();
+      if(this.srtype==2){
+        this.styjiag=2;
+      }
+      if(this.srtype==3){
+        this.styjiag=1;
+      }
     },
     queding() {
       this.mescroll.resetUpScroll();
@@ -309,15 +319,18 @@ export default {
     },
     //点击出发城市
     hanxianClick(index) {
-       this.jdcstyle.map(elem => {
+      if(this.jdcstyle[index].flag==false){
+        this.jdcstyle.map(elem => {
         elem.flag = false;
       });
-      this.jdcstyle[index].flag = !this.jdcstyle[index].flag;
-      for(const list of this.jdcstyle){
-       if(list.flag){
-         this.cityid=list.cityid;
-       }
       }
+      this.jdcstyle[index].flag = !this.jdcstyle[index].flag;
+       if(this.jdcstyle[index].flag==true){
+        this.cityid=this.jdcstyle[index].cityid;
+       }
+       if(this.jdcstyle[index].flag==false){
+         this.cityid="";
+       }
       this.mescroll.resetUpScroll();
     },
     //自定标签
