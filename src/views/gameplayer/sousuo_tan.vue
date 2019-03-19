@@ -9,7 +9,9 @@
             <i class="a_btou">
               <img :src="getProtsty.defaultPhoto">
             </i>
+            <router-link to="/login">
             <i class="denlu_jia">登陆/组册</i>
+            </router-link>
           </li>
           <li class="float_right a_bdengl_righ" onclick="window.history.go(-1)">
             <img src="../../assets/img/A/home_tanchu_close_icon@2x.png">
@@ -129,6 +131,7 @@ import {
   getCurrency,
   getComNavigation
 } from "@/utils/getData";
+import {fnIsLogin} from "@/utils/common";//判断有无登陆方法
 
 export default {
   name: "index",
@@ -170,6 +173,7 @@ export default {
     this.getProtocol(); //获取基本参数
     this.getCurtyp(); //获取货币
     this.getComNttyp();
+    this.fnIsLogin();
   },
   components: {
     ezHeader
@@ -228,6 +232,15 @@ export default {
       let data = await getProtocol();
       if (data) {
         this.getProtsty = data;
+      }
+    },
+   //登陆
+    async fnIsLogin() {
+      let data = await fnIsLogin();
+      if (data) {
+       console.log("已登陆--------------")
+      }else{
+         console.log("没登陆"+data)
       }
     }
   }

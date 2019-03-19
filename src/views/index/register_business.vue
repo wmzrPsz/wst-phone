@@ -1,7 +1,7 @@
 <template>
   <div class="register_business">
     <div class="her_a font-20 background-a">
-      <i class="her_a_left float_left">
+      <i class="her_a_left float_left"  onclick="window.history.go(-1)">
         <img src="../../assets/img/A/back_icon@2x.png">
       </i>
       <i class="her_a_zong color float_zhong">创建商家账号</i>

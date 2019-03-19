@@ -251,6 +251,9 @@ export default {
       mescrollUp: {
         // 上拉加载的配置.
         callback: this.gamewanjia, //回调
+        	page: {
+					size: this.$store.state.pageSize, //每页数据条数
+        },
         toTop: {
           //回到顶部按钮
           src: "../../assets/img/mescroll/mescroll-totop.png", //图片路径,默认null,支持网络图
@@ -339,17 +342,24 @@ export default {
     },
     //点击价格选择
     contentClick(index) {
-      this.priceList.map(elem => {
+
+      this.minpak = 2;
+      this.maxpak = 2;
+      if(this.priceList[index].flag==false){
+        this.priceList.map(elem => {
         elem.flag = false;
       });
-      this.priceList[index].flag = !this.priceList[index].flag;
-      //选中价格
-       for (const list of this.priceList) {
-        if (list.flag) {
-          this.minPrice = list.minPrice; //最小价格
-          this.maxPrice = list.maxPrice; //最大价格
-        }
       }
+       this.priceList[index].flag = !this.priceList[index].flag;
+      // this.minPrice=priceList[index].minPrice;
+        if (this.priceList[index].flag==true) {
+          this.minPrice = this.priceList[index].minPrice; //最小价格
+          this.maxPrice = this.priceList[index].maxPrice; //最大价格
+        }
+        if (this.priceList[index].flag==false) {
+          this.minPrice="";
+           this.maxPrice ="";
+        }
       this.mescroll.resetUpScroll();
     },
     //年龄初始化
@@ -416,6 +426,7 @@ export default {
         let map = {};
         if (k == 0) {
           this.$set(map, "minPrice", 0);
+           this.$set(map, "maxPrice","");
           this.$set(map, "content", "不限");
           this.$set(map, "flag", false);
         }
@@ -439,6 +450,7 @@ export default {
         }
         if (k == 4) {
           this.$set(map, "minPrice", 350);
+           this.$set(map, "maxPrice","");
           this.$set(map, "content", "350以上/天");
           this.$set(map, "flag", false);
         }

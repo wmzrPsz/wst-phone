@@ -21,32 +21,32 @@
 
         <ul class="sou_her_q color font-12">
           <router-link to="/sousuo">
-          <li>
-            <i class="color">常规旅行</i>
-            <i></i>
-          </li>
+            <li>
+              <i class="color">常规旅行</i>
+              <i></i>
+            </li>
           </router-link>
           <li>
             <i class="color-g">当地参团</i>
-            <i  class="sou_her_q_a"></i>
+            <i class="sou_her_q_a"></i>
           </li>
           <router-link to="/game">
-          <li>
-            <i class="color">当地玩家</i>
-            <i></i>
-          </li>
+            <li>
+              <i class="color">当地玩家</i>
+              <i></i>
+            </li>
           </router-link>
-         <router-link to="/Tanker">
-          <li>
-            <i class="color">邮轮</i>
-            <i></i>
-          </li>
+          <router-link to="/Tanker">
+            <li>
+              <i class="color">邮轮</i>
+              <i></i>
+            </li>
           </router-link>
           <router-link to="/Scenicspot">
-          <li>
-            <i class="color">景点</i>
-            <i></i>
-          </li>
+            <li>
+              <i class="color">景点</i>
+              <i></i>
+            </li>
           </router-link>
         </ul>
       </div>
@@ -262,24 +262,24 @@
             </ul>
           </div>
           <div v-for="(list,index1) in getLtyp" :key="index1">
-           <div class="b_xianm bus">
-            <i class="b_xianm_a">
-              <img src="../../assets/img/A/home_tanchu_circle_icon@2x.png">
-            </i>
-            <i class="font-16 b_xianm_c">{{list.content}}</i>
-          </div>
+            <div class="b_xianm bus">
+              <i class="b_xianm_a">
+                <img src="../../assets/img/A/home_tanchu_circle_icon@2x.png">
+              </i>
+              <i class="font-16 b_xianm_c">{{list.content}}</i>
+            </div>
 
-          <div class="b_xianm" style="margin-top: 0.5rem">
-            <ul class="font-12 jg_a color-b">
-              <li
-                class="float_left"
-                v-for="(item,index2) in list.comTagList"
-                :key="index2"
-                 @click.stop="lableClick(index1,index2)"
-                :class="item.flag?'b_xianm_b_jiadian':''"
-              >{{item.content}}</li>
-            </ul>
-          </div>
+            <div class="b_xianm" style="margin-top: 0.5rem">
+              <ul class="font-12 jg_a color-b">
+                <li
+                  class="float_left"
+                  v-for="(item,index2) in list.comTagList"
+                  :key="index2"
+                  @click.stop="lableClick(index1,index2)"
+                  :class="item.flag?'b_xianm_b_jiadian':''"
+                >{{item.content}}</li>
+              </ul>
+            </div>
           </div>
           <button
             class="di_s_b_dengl color background-d font-16"
@@ -295,14 +295,14 @@
       </div>
 
       <div class="dingjia_a_ajia">
-        <ul class="sou_her_www font-14">
+       <ul class="sou_her_www font-14">
+          <li @click="sertey(0)" :class="[srtype==0?'sou_her_www_a':'']">
+            <button>综合</button>
+          </li>
           <li @click="sertey(1)" :class="[srtype==1?'sou_her_www_a':'']">
             <button>销量</button>
           </li>
-          <li @click="sertey(4)" :class="[srtype==4?'sou_her_www_a':'']">
-            <button>好评</button>
-          </li>
-          <li @click="sertey(2)" :class="[srtype==2?'sou_her_www_a':'']">
+          <li @click="sertey(2)" v-if="styjiag==1" :class="[srtype==3?'sou_her_www_a':'']">
             <i>价格</i>
             <span class="s_a">
               <i class="sou_her_w_a_a">
@@ -310,13 +310,16 @@
               </i>
             </span>
           </li>
-          <li @click="sertey(3)" :class="[srtype==3?'sou_her_www_a':'']">
+          <li @click="sertey(3)"  v-if="styjiag==2" :class="[srtype==2?'sou_her_www_a':'']">
             <i>价格</i>
             <span class="s_a">
               <i class="sou_her_w_a_a">
                 <img src="../../assets/img/A/cglv_jiageopen_icon - 1.png">
               </i>
             </span>
+          </li>
+          <li @click="sertey(4)" :class="[srtype==4?'sou_her_www_a':'']">
+            <button>好评</button>
           </li>
         </ul>
       </div>
@@ -340,7 +343,12 @@
             </div>
             <div class="font-12 color-b ze_x_ril_c">{{sert.infor}}</div>
             <div>
-              <div class="float_left font-12 group_d color-h"><i><img src="../../assets/img/B/bczc_adress_icon@2x.png"></i>{{sert.endCityContent}}</div>
+              <div class="float_left font-12 group_d color-h">
+                <i>
+                  <img src="../../assets/img/B/bczc_adress_icon@2x.png">
+                </i>
+                {{sert.endCityContent}}
+              </div>
               <ul class="ze_x_ril_d float_right">
                 <li class="font-14">
                   <i class="color-h">￥{{sert.price}}</i>
@@ -358,22 +366,22 @@
 <style lang="less" scoped>
 .mescroll {
   position: fixed;
-  z-index:9;
-  top:9.2rem;
+  z-index: 9;
+  top: 9.2rem;
   bottom: 0;
   height: auto;
 }
 </style>
 
 <script>
-import { selectttpy,zhiding} from "@/utils/getData";
+import { selectttpy, zhiding } from "@/utils/getData";
 import MescrollVue from "mescroll.js/mescroll.vue";
 export default {
   name: "index",
   data() {
     return {
       type: "", //1日期，2行程，3价格，4全部，
-      srtype: 1, //1综合，2销量，3降价格，4升价格
+      srtype: "", //1综合，2销量，3降价格，4升价格
       styser: [], //列表数据
       imgtep: [], //列表图片
       dataList: [], //日期
@@ -384,14 +392,18 @@ export default {
       minpak: 2,
       maxpak: 2,
       scenicSpotid: [],
-      getLtyp:[],//自定标签
-      routeType:2,//自定标签1常规路线,2当地
-     tagContent:[],
+      getLtyp: [], //自定标签
+      routeType: 2, //自定标签1常规路线,2当地
+      tagContent: [],
+       styjiag:1,//开始1显示降价格，2显示升价格
 
       mescroll: null, // mescroll实例对象
       mescrollUp: {
         // 上拉加载的配置.
         callback: this.routine, //回调
+        page: {
+          size: this.$store.state.pageSize //每页数据条数
+        },
         toTop: {
           //回到顶部按钮
           src: "../../assets/img/mescroll/mescroll-totop.png", //图片路径,默认null,支持网络图
@@ -444,7 +456,7 @@ export default {
     this.LopTime_list(); //12个月循环
     this.dayListInit(); //天数初始化
     this.priceInit(); //价格初始化
-    this.getLabeltyp();//自定标签
+    this.getLabeltyp(); //自定标签
   },
   filters: {
     dayFilter: function(value) {
@@ -465,10 +477,16 @@ export default {
         this.type = index;
       }
     },
-    //销售量和价格的切换
+     //销售量和价格的切换
     sertey(index) {
       this.srtype = index;
       this.mescroll.resetUpScroll();
+      if(this.srtype==2){
+        this.styjiag=2;
+      }
+      if(this.srtype==3){
+        this.styjiag=1;
+      }
     },
     //月份点击
     monthClick(index) {
@@ -531,19 +549,24 @@ export default {
     },
     //点击价格的选中
     contentClick(index) {
-      this.priceList.map(elem => {
-        elem.flag = false;
-      });
+
       this.minpak = 2;
       this.maxpak = 2;
-      this.priceList[index].flag = !this.priceList[index].flag;
-      // this.minPrice=priceList[index].minPrice;
-      for (const listpr of this.priceList) {
-        if (listpr.flag) {
-          this.minPrice = listpr.minPrice; //最小价格
-          this.maxPrice = listpr.maxPrice; //最大价格
-        }
+      if(this.priceList[index].flag==false){
+        this.priceList.map(elem => {
+        elem.flag = false;
+      });
       }
+       this.priceList[index].flag = !this.priceList[index].flag;
+      // this.minPrice=priceList[index].minPrice;
+        if (this.priceList[index].flag==true) {
+          this.minPrice = this.priceList[index].minPrice; //最小价格
+          this.maxPrice = this.priceList[index].maxPrice; //最大价格
+        }
+        if (this.priceList[index].flag==false) {
+          this.minPrice="";
+           this.maxPrice ="";
+        }
       console.log("最小价格" + this.minPrice + "最大价格" + this.maxPrice);
       this.mescroll.resetUpScroll();
     },
@@ -598,7 +621,7 @@ export default {
     async routine(page, mescroll) {
       let data = await selectttpy(
         JSON.stringify(this.date),
-       this.tagContent.toString(),
+        this.tagContent.toString(),
         this.daysty.toString(),
         this.srtype,
         this.minPrice, //小价格
@@ -630,52 +653,53 @@ export default {
       }
     },
     //自定标签
-     async getLabeltyp() {
+    async getLabeltyp() {
       let data = await zhiding(this.routeType);
       if (data) {
-       this.getLtyp=data;
-       for(const list of this.getLtyp){
+        this.getLtyp = data;
+        for (const list of this.getLtyp) {
           this.$set(list, "flag", false);
-           for(const item of list.comTagList){
-             this.$set(item, "flag", false);
+          for (const item of list.comTagList) {
+            this.$set(item, "flag", false);
           }
-       }
-       console.log(this.getLtyp);
+        }
+        console.log(this.getLtyp);
       }
     },
-    lableClick(index1,index2){
-    this.getLtyp[index1].comTagList[index2].flag = !this.getLtyp[index1].comTagList[index2].flag;
-     this.tagContent=[];
-    for(const list of this.getLtyp){
-           for(const item of list.comTagList){
-            if(item.flag){
-               this.tagContent.push(item.tagid); //id
-            }
+    lableClick(index1, index2) {
+      this.getLtyp[index1].comTagList[index2].flag = !this.getLtyp[index1]
+        .comTagList[index2].flag;
+      this.tagContent = [];
+      for (const list of this.getLtyp) {
+        for (const item of list.comTagList) {
+          if (item.flag) {
+            this.tagContent.push(item.tagid); //id
           }
-       }
-        console.log(this.tagContent);
-        this.mescroll.resetUpScroll();
+        }
+      }
+      console.log(this.tagContent);
+      this.mescroll.resetUpScroll();
     },
     //重置
-    reset(){
+    reset() {
       //月份重置
       for (const list of this.dataList) {
-     list.flag=false;
-     }
-     //天数重置
-     for (const list of this.daylist) {
-     list.flag=false;
-     }
-     //价格重置
-     for (const list of this.priceList) {
-     list.flag=false;
-     }
+        list.flag = false;
+      }
+      //天数重置
+      for (const list of this.daylist) {
+        list.flag = false;
+      }
+      //价格重置
+      for (const list of this.priceList) {
+        list.flag = false;
+      }
       //属性重置
-     for (const list of this.getLtyp) {
-       for (const item of list.comTagList) {
-     item.flag=false;
-       }
-     }
+      for (const list of this.getLtyp) {
+        for (const item of list.comTagList) {
+          item.flag = false;
+        }
+      }
       this.mescroll.resetUpScroll();
     }
   }

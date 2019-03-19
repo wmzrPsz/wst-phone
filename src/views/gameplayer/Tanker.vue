@@ -43,10 +43,10 @@
             <i class="sou_her_q_a"></i>
           </li>
           <router-link to="/Scenicspot">
-          <li>
-            <i class="color">景点</i>
-            <i></i>
-          </li>
+            <li>
+              <i class="color">景点</i>
+              <i></i>
+            </li>
           </router-link>
         </ul>
       </div>
@@ -280,7 +280,7 @@
               </ul>
             </div>
           </div>
-           <!--油轮航线-->
+          <!--油轮航线-->
           <div>
             <div class="b_xianm bus">
               <i class="b_xianm_a">
@@ -334,13 +334,13 @@
 
       <div class="dingjia_a_ajia">
         <ul class="sou_her_www font-14">
+          <li @click="sertey(0)" :class="[srtype==0?'sou_her_www_a':'']">
+            <button>综合</button>
+          </li>
           <li @click="sertey(1)" :class="[srtype==1?'sou_her_www_a':'']">
             <button>销量</button>
           </li>
-          <li @click="sertey(4)" :class="[srtype==4?'sou_her_www_a':'']">
-            <button>好评</button>
-          </li>
-          <li @click="sertey(2)" :class="[srtype==2?'sou_her_www_a':'']">
+          <li @click="sertey(2)" v-if="styjiag==1" :class="[srtype==3?'sou_her_www_a':'']">
             <i>价格</i>
             <span class="s_a">
               <i class="sou_her_w_a_a">
@@ -348,13 +348,16 @@
               </i>
             </span>
           </li>
-          <li @click="sertey(3)" :class="[srtype==3?'sou_her_www_a':'']">
+          <li @click="sertey(3)" v-if="styjiag==2" :class="[srtype==2?'sou_her_www_a':'']">
             <i>价格</i>
             <span class="s_a">
               <i class="sou_her_w_a_a">
                 <img src="../../assets/img/A/cglv_jiageopen_icon - 1.png">
               </i>
             </span>
+          </li>
+          <li @click="sertey(4)" :class="[srtype==4?'sou_her_www_a':'']">
+            <button>好评</button>
           </li>
         </ul>
       </div>
@@ -401,22 +404,22 @@
 <style lang="less" scoped>
 .mescroll {
   position: fixed;
-  z-index:9;
-  top:9.2rem;
+  z-index: 9;
+  top: 9.2rem;
   bottom: 0;
   height: auto;
 }
 </style>
 
 <script>
-import { youlun, zhiding, chengshi,gankou} from "@/utils/getData";
+import { youlun, zhiding, chengshi, gankou } from "@/utils/getData";
 import MescrollVue from "mescroll.js/mescroll.vue";
 export default {
   name: "index",
   data() {
     return {
       type: "", //1日期，2行程，3价格，4全部，
-      srtype: 1, //1综合，2销量，3降价格，4升价格
+      srtype: "", //1综合，2销量，3降价格，4升价格
       styser: [], //列表数据
       imgtep: [], //列表图片
       dataList: [], //日期
@@ -431,7 +434,8 @@ export default {
       routeType: 3, //自定标签1常规路线,2当地,3油轮
       tagContent: [],
       cstyle: [], //出发城市列表
-      hangxiatyp:[],//油轮航线
+      hangxiatyp: [], //油轮航线
+      styjiag: 1, //开始1显示降价格，2显示升价格
 
       mescroll: null, // mescroll实例对象
       mescrollUp: {
@@ -471,25 +475,25 @@ export default {
       return lists;
     },
     //获取出发城市
-    startCity(){
-     let lists=[];
-     for(const list of this.cstyle){
-       if(list.flag){
-         lists.push(list.cityid)
-       }
-     }
-     return lists;
+    startCity() {
+      let lists = [];
+      for (const list of this.cstyle) {
+        if (list.flag) {
+          lists.push(list.cityid);
+        }
+      }
+      return lists;
     },
     //获取航线ID
-    hangxianty(){
-     let lists =[];
-     for (const list of this.hangxiatyp) {
-       if(list.flag){
-         lists.push(list.id);
-       }
-     }
-     return lists;
-    },
+    hangxianty() {
+      let lists = [];
+      for (const list of this.hangxiatyp) {
+        if (list.flag) {
+          lists.push(list.id);
+        }
+      }
+      return lists;
+    }
   },
   beforeRouteEnter(to, from, next) {
     // 如果没有配置回到顶部按钮或isBounce,则beforeRouteEnter不用写
@@ -511,7 +515,7 @@ export default {
     this.priceInit(); //价格初始化
     this.getLabeltyp(); //自定标签
     this.chufa(); //出发城市
-    this.gankoutylp();//油轮航线
+    this.gankoutylp(); //油轮航线
   },
   filters: {
     dayFilter: function(value) {
@@ -536,6 +540,12 @@ export default {
     sertey(index) {
       this.srtype = index;
       this.mescroll.resetUpScroll();
+      if (this.srtype == 2) {
+        this.styjiag = 2;
+      }
+      if (this.srtype == 3) {
+        this.styjiag = 1;
+      }
     },
     //月份点击
     monthClick(index) {
@@ -598,18 +608,22 @@ export default {
     },
     //点击价格的选中
     contentClick(index) {
-      this.priceList.map(elem => {
-        elem.flag = false;
-      });
       this.minpak = 2;
       this.maxpak = 2;
+      if (this.priceList[index].flag == false) {
+        this.priceList.map(elem => {
+          elem.flag = false;
+        });
+      }
       this.priceList[index].flag = !this.priceList[index].flag;
       // this.minPrice=priceList[index].minPrice;
-      for (const listpr of this.priceList) {
-        if (listpr.flag) {
-          this.minPrice = listpr.minPrice; //最小价格
-          this.maxPrice = listpr.maxPrice; //最大价格
-        }
+      if (this.priceList[index].flag == true) {
+        this.minPrice = this.priceList[index].minPrice; //最小价格
+        this.maxPrice = this.priceList[index].maxPrice; //最大价格
+      }
+      if (this.priceList[index].flag == false) {
+        this.minPrice = "";
+        this.maxPrice = "";
       }
       console.log("最小价格" + this.minPrice + "最大价格" + this.maxPrice);
       this.mescroll.resetUpScroll();
@@ -671,8 +685,8 @@ export default {
         this.minPrice, //小价格
         this.maxPrice, //大价格
         this.scenicSpotid.toString(), //景点ID
-        this.startCity.toString(),//出发城市ID
-        this.hangxianty.toString(),//航线ID
+        this.startCity.toString(), //出发城市ID
+        this.hangxianty.toString(), //航线ID
         page.num
       );
       if (data) {
@@ -703,29 +717,29 @@ export default {
       let data = await chengshi();
       if (data) {
         this.cstyle = data;
-        for(const list of this.cstyle){
-          this.$set(list,"flag",false);
+        for (const list of this.cstyle) {
+          this.$set(list, "flag", false);
         }
       }
     },
     //点击选中出发城市
-    chensClick(index){
-     this.cstyle[index].flag =! this.cstyle[index].flag;
+    chensClick(index) {
+      this.cstyle[index].flag = !this.cstyle[index].flag;
       this.mescroll.resetUpScroll();
     },
     //油轮航线
-    async gankoutylp(){
+    async gankoutylp() {
       let data = await gankou();
-      if(data){
-       this.hangxiatyp=data;
-        for(const list of this.hangxiatyp){
-          this.$set(list,"flag",false);
+      if (data) {
+        this.hangxiatyp = data;
+        for (const list of this.hangxiatyp) {
+          this.$set(list, "flag", false);
         }
       }
     },
     //点击航线
-    hanxianClick(index){
-    this.hangxiatyp[index].flag =! this.hangxiatyp[index].flag;
+    hanxianClick(index) {
+      this.hangxiatyp[index].flag = !this.hangxiatyp[index].flag;
       this.mescroll.resetUpScroll();
     },
     //自定标签
@@ -776,11 +790,11 @@ export default {
           item.flag = false;
         }
       }
-       //出发城市
+      //出发城市
       for (const list of this.cstyle) {
         list.flag = false;
       }
-       //出发航线
+      //出发航线
       for (const list of this.hangxiatyp) {
         list.flag = false;
       }
