@@ -201,7 +201,6 @@
 <script>
 import { jingdian, zhiding, jdchengshi } from "@/utils/getData";
 import MescrollVue from "mescroll.js/mescroll.vue";
-import { mapState } from "vuex";
 export default {
   name: "index",
   data() {
@@ -220,11 +219,11 @@ export default {
         // 上拉加载的配置.
         callback: this.routine, //回调
 				page: {
-					size: this.pageSize, //每页数据条数
+					size: this.$store.state.pageSize, //每页数据条数
         },
         toTop: {
           //回到顶部按钮
-          src: "../../assets/img/mescroll/mescroll-totop.png", //图片路径,默认null,支持网络图
+            src: "http://www.mescroll.com/img/mescroll-totop.png", //图片路径,默认null,支持网络图
           offset: 200 //列表滚动1000px才显示回到顶部按钮
         }
       }
@@ -232,10 +231,6 @@ export default {
   },
   components: {
     MescrollVue // 注册mescroll组件
-  },
-  //计算属性
-  computed: {
-    ...mapState(["pageSize"])
   },
   beforeRouteEnter(to, from, next) {
     // 如果没有配置回到顶部按钮或isBounce,则beforeRouteEnter不用写
@@ -253,6 +248,7 @@ export default {
   created() {
     this.getLabeltyp(); //自定标签
     this.jdchens(); //出发城市
+    // console.log(this.pageNum);
   },
   methods: {
     // mescroll组件初始化的回调,可获取到mescroll对象

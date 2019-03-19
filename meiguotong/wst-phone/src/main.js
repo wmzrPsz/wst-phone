@@ -16,7 +16,6 @@ Vue.config.productionTip = false
   next();
 })
 
-
 import * as custom from './filters/custom'
 
 Object.keys(custom).forEach(key => {
