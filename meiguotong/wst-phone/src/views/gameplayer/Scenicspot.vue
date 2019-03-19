@@ -158,12 +158,12 @@
           <div class="ze_x_a" v-for="(list,index) in styser" :key="index">
             <div style="overflow:hidden; margin-bottom:0.3rem;">
               <div class="float_left ze_x_le">
-                <img :src="list.imgUrl">
+                <img :src="list.imgUrl | splitVc(0)">
               </div>
               <div class="float_left ze_x_ril">
                 <div class="font-14 ze_x_le_a">{{list.name}}</div>
-                <ul class="font-12 ze_x_ril_a color-d ze_x_ril_a_jia">
-                  <li v-for="(list,index) in list.tagContent" :key="index">{{list}}</li>
+                <ul class="font-12 ze_x_ril_a color-d ze_x_ril_a_jia" v-if="list.tagContent">
+                  <li v-for="(list,index) in list.tagContent.split(',')" :key="index">{{list}}</li>
                 </ul>
               </div>
             </div>
@@ -201,6 +201,7 @@
 <script>
 import { jingdian, zhiding, jdchengshi } from "@/utils/getData";
 import MescrollVue from "mescroll.js/mescroll.vue";
+import { mapState } from "vuex";
 export default {
   name: "index",
   data() {
@@ -218,10 +219,13 @@ export default {
       mescrollUp: {
         // 上拉加载的配置.
         callback: this.routine, //回调
+				page: {
+					size: this.pageSize, //每页数据条数
+        },
         toTop: {
           //回到顶部按钮
           src: "../../assets/img/mescroll/mescroll-totop.png", //图片路径,默认null,支持网络图
-          offset: 1000 //列表滚动1000px才显示回到顶部按钮
+          offset: 200 //列表滚动1000px才显示回到顶部按钮
         }
       }
     };
@@ -231,6 +235,7 @@ export default {
   },
   //计算属性
   computed: {
+    ...mapState(["pageSize"])
   },
   beforeRouteEnter(to, from, next) {
     // 如果没有配置回到顶部按钮或isBounce,则beforeRouteEnter不用写
@@ -279,13 +284,13 @@ export default {
         this.styser = [...this.styser, ...data.list];
         for (const list of this.styser) {
           //景点图片
-          if (list.imgUrl) {
-            this.$set(list, "imgUrl", list.imgUrl.split(",")[0]);
-          }
+          // if (list.imgUrl) {
+          //   this.$set(list, "imgUrl", list.imgUrl.split(",")[0]);
+          // }
           //景点tagContent
-          if (list.tagContent) {
-            this.$set(list, "tagContent", list.tagContent.split(","));
-          }
+          // if (list.tagContent) {
+          //   this.$set(list, "tagContent", list.tagContent.split(","));
+          // }
         }
         // 数据渲染成功后,隐藏下拉刷新的状态
         this.$nextTick(() => {
