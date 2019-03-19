@@ -80,24 +80,13 @@ export const selectttpy = (date,tagContent,daysty,srtype,minPrice,maxPrice,sceni
     labelAttrid:tagContent,//属性
     pageNo: pageNo,
 },'post');
-//景点
-export const selectScenicList = (date,daysty,srtype,minPrice,maxPrice,scenicSpotid, pageNo) => ajax('/api/scenic/selectScenicList', {
-    date:date,//日期
-    day:daysty,//天数
-    minPrice:minPrice,//最小价格
-    maxPrice:maxPrice,//最大价格
-    orderByType:srtype,//1.销量2.价格降序3.价格升序4好评
-    scenic:scenicSpotid,//景点Id
-    pageNo: pageNo,
-},'post');
 //当地玩家
-export const wanjia = (guideAge,guideSex,shuxin,minPrice,maxPrice,srtype,pageNo) => ajax('/api/guide/guideScreen',{
+export const wanjia = (guideAge,guideSex,shuxin,minPrice,maxPrice,pageNo) => ajax('/api/guide/guideScreen',{
     guideAge:guideAge,//年龄
     guideSex:guideSex,//性别
     minPrice:minPrice,//低价
     maxPrice:maxPrice,//高价
     tagId:shuxin,//制订标签属性
-    orderByType:srtype,//1.销量2.价格降序3.价格升序4好评
     pageNo: pageNo,
 });
 //油轮接口
@@ -113,9 +102,20 @@ export const youlun = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSpo
     route:hangxianty,//航线ID
     pageNo: pageNo,
 },'post');
+//景点接口
+export const jingdian = (cityid,tagContent,srtype,pageNo) => ajax('/api/scenic/selectScenicList',{
+    cityid:cityid,//城市ID
+    orderByType:srtype,//1.销量2.价格降序3.价格升序4好评
+    labelAttrid:tagContent,//属性ID
+    pageNo: pageNo,
+});
+//景点选择城市接口/根据语言获取城市和城市景点数量接口
+export const jdchengshi = () => ajax('/api/scenic/getCityScenicNum',{
+
+});
 //获取邮轮航线接口
 export const gankou = () => ajax('/api/cruise/getCourse',{
-
+  
 });
 //根据语言获取出发城市接口
 export const chengshi = () => ajax('/api/common/getCityList',{

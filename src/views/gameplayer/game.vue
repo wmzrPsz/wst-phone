@@ -38,14 +38,16 @@
           </li>
           <router-link to="/Tanker">
           <li>
-            <i class="color">油轮</i>
+            <i class="color">邮轮</i>
             <i></i>
           </li>
           </router-link>
+           <router-link to="/Scenicspot">
           <li>
-            <i>景点</i>
+            <i class="color">景点</i>
             <i></i>
           </li>
+          </router-link>
         </ul>
       </div>
       <!--日期筛选-->
@@ -184,33 +186,6 @@
           </div>
         </div>
       </div>
-
-      <div class="dingjia_a_ajia">
-        <ul class="sou_her_www font-14">
-          <li @click="sertey(1)" :class="[srtype==1?'sou_her_www_a':'']">
-            <button>销量</button>
-          </li>
-          <li @click="sertey(4)" :class="[srtype==4?'sou_her_www_a':'']">
-            <button>好评</button>
-          </li>
-          <li @click="sertey(2)" :class="[srtype==2?'sou_her_www_a':'']">
-            <i>价格</i>
-            <span class="s_a">
-              <i class="sou_her_w_a_a">
-                <img src="../../assets/img/A/cglv_jiageopen_icon.png">
-              </i>
-            </span>
-          </li>
-          <li @click="sertey(3)" :class="[srtype==3?'sou_her_www_a':'']">
-            <i>价格</i>
-            <span class="s_a">
-              <i class="sou_her_w_a_a">
-                <img src="../../assets/img/A/cglv_jiageopen_icon - 1.png">
-              </i>
-            </span>
-          </li>
-        </ul>
-      </div>
     </div>
     <div class="dingjia_a">
       <mescroll-vue ref="mescroll" :up="mescrollUp" @init="mescrollInit">
@@ -248,8 +223,8 @@
 <style lang="less" scoped>
 .mescroll {
   position: fixed;
-  z-index: -1;
-  top: 9rem;
+  z-index:9;
+  top: 7rem;
   bottom: 0;
   height: auto;
 }
@@ -264,7 +239,6 @@ export default {
     return {
       styser: [], //列表数据
       type: "", //1年龄段，2性别，3价格，4全部，
-      srtype: 1, //1综合，2销量，3降价格，4升价格
       agetley: [], //年龄初始化列表
       Gendertlyp: [], //性别初始化
       priceList: [], //价格初始化
@@ -352,11 +326,6 @@ export default {
       } else {
         this.type = index;
       }
-    },
-    //销售量和价格的切换
-    sertey(index) {
-      this.srtype = index;
-      this.mescroll.resetUpScroll();
     },
     //点击年龄选中
     nianlinggag(index) {
@@ -499,7 +468,6 @@ export default {
         this.shuxin.toString(),
         this.minPrice,
         this.maxPrice,
-        this.srtype,
         page.num
       );
       if (data) {
