@@ -3,10 +3,11 @@
  * @Author: 彭善智
  * @LastEditors: 彭善智
  * @Date: 2019-03-12 22:51:19
- * @LastEditTime: 2019-03-13 10:21:05
+ * @LastEditTime: 2019-03-20 17:09:52
  */
 
 import store from '../vuex/store'
+import ajax from '../config/fetch';
 
 //判断是否登录
 export const fnIsLogin = () => {
@@ -93,21 +94,22 @@ export const isWeiXin = () => {
 
 //转码bse64
 function Base64(result){
-  imgSrc = result.replace("data:image/jpg;base64,", "");
-  imgSrc = result.replace("data:image/png;base64,", "");
-  imgSrc = result.replace("data:image/jpeg;base64,", "");
+  let imgSrc = result.replace("data:image/jpg;base64,", "");
+      imgSrc = result.replace("data:image/png;base64,", "");
+      imgSrc = result.replace("data:image/jpeg;base64,", "");
   return imgSrc;
 }
 
 //上传图片
-export const imgUpload = (event) => {
+export const imgUpload = (url) => {
   return new Promise((resolve, reject) => {
+    let event = window.event || arguments.callee.caller.arguments[0];
     let file = event.target.files[0];
     let reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = function (e) {
-      console.log( e.target.result);
-      resolve(ajax(imgUploadUrl,{"file": Base64(e.target.result)},"POST")) 
+      // console.log( e.target.result);
+      resolve(ajax(url,{"file": Base64(e.target.result)},"POST")) 
     }
   })
 }
