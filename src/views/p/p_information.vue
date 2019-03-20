@@ -10,9 +10,11 @@
       <div class="centrality_zz">
         <div class="centrality_e font-14">
           <ul>
+            	<input type="file" id="img" accept="image/*" v-show @change="showActionSheet"/>
+              <label for="img">
             <li>
               用户头像
-              <span class="float_right" @click="showActionSheet">
+              <span class="float_right">
                 <i class="float_left centrality_e_b_gai beijingtu">
                   <img :src="zhiliao.photo">
                 </i>
@@ -21,6 +23,7 @@
                 </i>
               </span>
             </li>
+              </label>
             <li>
               手机号
               <span class="float_right">
@@ -72,7 +75,8 @@
 </template>
 <script>
 import {
-  Material //个人质料
+  Material, //个人质料
+  imgUp
 } from "@/utils/getData";
 export default {
   name: "index",
@@ -103,22 +107,10 @@ export default {
     },
     //
     //上传头像照片
-    showActionSheet() {
-         this.getImage();
+    async showActionSheet() {
+         let url = await imgUp();
+        console.log(url)
     },
-     getImage() {
-          let cmr = plus.camera.getCamera();
-          cmr.captureImage(function(p) {
-            plus.io.resolveLocalFileSystemURL(p, function(entry) {
-              compressImage(entry.toLocalURL(),entry.name);
-            }, function(e) {
-              plus.nativeUI.toast("读取拍照文件错误：" + e.message);
-            });
-          }, function(e) {
-          }, {
-            filter: 'image'
-          });
-        },
 
   }
 };
