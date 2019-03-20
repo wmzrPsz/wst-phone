@@ -21,8 +21,16 @@ const Tanker = r => require.ensure([], () => r(require('../views/gameplayer/Tank
 const Scenicspot = r => require.ensure([], () => r(require('../views/gameplayer/Scenicspot')), 'Scenicspot')//景点
 //首页（弹出）
 const sousuo_tan = r => require.ensure([], () => r(require('../views/gameplayer/sousuo_tan')), 'sousuo_tan')//首页（弹出）
-Vue.use(Router)
 
+
+////////////////////////////////个人中心质料////////////////////////////////////////////////////////////////////////
+//个人中心质料index
+const p_index = r => require.ensure([], () => r(require('../views/p/p_index')), 'p_index')
+//个人中心消息
+const p_news = r => require.ensure([], () => r(require('../views/p/p_news')), 'p_news')
+//个人中心信息
+const p_information = r => require.ensure([], () => r(require('../views/p/p_information')), 'p_information')
+Vue.use(Router)
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -118,5 +126,26 @@ export default new Router({
       component: Scenicspot,
       meta: { 'title': '搜索景点' }
     },
+    //个人中心质料
+    {
+      path: '/p_index',
+      name: 'p_index',
+      component: p_index,
+      meta: { 'title': '个人中心质料' }
+    },
+     //个人中心消息
+     {
+      path: '/p_news',
+      name: 'p_news',
+      component: p_news,
+      meta: { 'title': '个人中心消息' }
+    },
+      //个人中心信息
+      {
+        path: '/p_information',
+        name: 'p_information',
+        component:p_information,
+        meta: { 'title': '个人中心信息' }
+      },
   ]
 })

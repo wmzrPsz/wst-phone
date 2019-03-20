@@ -5,12 +5,22 @@
     <div class="dingjia">
       <div class="a_bdengl border_c">
         <ul>
-          <li class="float_left font-14">
+          <!--登陆了-->
+          <li class="float_left font-14" v-if="log==1">
+            <router-link to="/p_index">
+            <i class="a_btou">
+              <img :src="zhiliao.photo">
+            </i>
+            </router-link>
+              <i class="denlu_jia">{{zhiliao.nickName}}</i>
+          </li>
+          <!--没登陆默认-->
+          <li class="float_left font-14" v-if="log==2">
             <i class="a_btou">
               <img :src="getProtsty.defaultPhoto">
             </i>
             <router-link to="/login">
-            <i class="denlu_jia">登陆/组册</i>
+              <i class="denlu_jia">登陆/注册</i>
             </router-link>
           </li>
           <li class="float_right a_bdengl_righ" onclick="window.history.go(-1)">
@@ -129,9 +139,10 @@ import {
   getLanguage,
   getProtocol,
   getCurrency,
-  getComNavigation
+  getComNavigation,
+  Material //个人质料
 } from "@/utils/getData";
-import {fnIsLogin} from "@/utils/common";//判断有无登陆方法
+import { fnIsLogin } from "@/utils/common"; //判断有无登陆方法
 
 export default {
   name: "index",
@@ -145,7 +156,9 @@ export default {
       yuyan: [], //获取接口语言数组
       huobi: [], //货币
       huobityp: [],
-      gettp: [] //获取首页
+      gettp: [], //获取首页
+      log: "", //判断有没有登陆
+      zhiliao: "" //个人质料
     };
   },
   computed: {
@@ -185,7 +198,7 @@ export default {
       this.changeLanguage(this.yuyan[index].languageid);
       this.HotCitysty(); //热门城市
       this.getProtocol(); //获取基本参数
-      this.getComNttyp();
+      this.getComNttyp(); //调用判断登陆方法
     },
     onConfirma(value, index) {
       this.showl = false;
@@ -234,13 +247,22 @@ export default {
         this.getProtsty = data;
       }
     },
-   //登陆
+    //登陆
     async fnIsLogin() {
       let data = await fnIsLogin();
       if (data) {
-       console.log("已登陆--------------")
-      }else{
-         console.log("没登陆"+data)
+        console.log("已登陆--------------");
+        this.log = 1;
+        this.Material();
+      } else {
+        this.log = 2;
+      }
+    },
+    //个人质料
+    async Material() {
+      let data = await Material();
+      if (data) {
+        this.zhiliao = data;
       }
     }
   }
