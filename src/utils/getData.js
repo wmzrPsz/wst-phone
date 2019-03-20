@@ -151,3 +151,6 @@ export const xiaoxi = (pageNo) =>ajax('/api/member/getCompush',{
 export const pinglun = (pageNo) =>ajax('/api/member/getComment',{
     pageNo:pageNo
 })
+//图片上传
+export const imgUp = () =>ajax('/api/common/imgUpload',{
+})
