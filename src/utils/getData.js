@@ -140,3 +140,14 @@ export const getCurrency = () =>ajax('/api/common/getCurrency',{
 //获取基本参数
 export const getProtocol = () =>ajax('/api/common/getProtocol',{
 })
+//获取个人（旅行社）信息/个人质料
+export const Material = () =>ajax('/api/member/myInfor',{
+})
+//获得个人消息
+export const xiaoxi = (pageNo) =>ajax('/api/member/getCompush',{
+    pageNo:pageNo
+})
+//获得个人评论消息
+export const pinglun = (pageNo) =>ajax('/api/member/getComment',{
+    pageNo:pageNo
+})
