@@ -1,6 +1,6 @@
 import ajax from '../config/fetch';
 import md5 from 'js-md5';
-
+import {imgUpload} from "@/utils/common"
 
 //登录
 export const login = (phone, passWord) => ajax('/api/forlogin/login', {
@@ -152,5 +152,5 @@ export const pinglun = (pageNo) =>ajax('/api/member/getComment',{
     pageNo:pageNo
 })
 //图片上传
-export const imgUp = () =>ajax('/api/common/imgUpload',{
-})
+export const imgUp = () => imgUpload('/api/common/imgUpload')
+
