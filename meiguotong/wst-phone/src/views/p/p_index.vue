@@ -38,12 +38,14 @@
 
       <div class="centrality_zz">
         <div class="centrality_b">
+		 <router-link to="/p_order">
           <div class="centrality_b_a border_f">
             <div class="centrality_b_b beijingtu">
               <img src="../../assets/img/D/grzx_wddd_icon@2x.png">
             </div>
             <i class="font-14">我的订单</i>
           </div>
+		 </router-link>
           <div class="centrality_b_a">
             <div class="centrality_b_b beijingtu">
               <img src="../../assets/img/D/grzx_tkdd_icon@2x.png">
@@ -54,16 +56,20 @@
 
         <div class="centrality_c color-b font-14">
           <ul>
+            <router-link to="/p_collection">
             <li>我的收藏
               <i class="beijingtu">
                 <img src="../../assets/img/A/more_icon@2x.png">
               </i>
             </li>
+            </router-link>
+            <router-link to="/p_draft">
             <li>我的草稿
               <i class="beijingtu">
                 <img src="../../assets/img/A/more_icon@2x.png">
               </i>
             </li>
+            </router-link>
             <li>财务管理
               <i class="beijingtu">
                 <img src="../../assets/img/A/more_icon@2x.png">

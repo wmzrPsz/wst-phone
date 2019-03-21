@@ -30,6 +30,22 @@ const p_index = r => require.ensure([], () => r(require('../views/p/p_index')), 
 const p_news = r => require.ensure([], () => r(require('../views/p/p_news')), 'p_news')
 //个人中心信息
 const p_information = r => require.ensure([], () => r(require('../views/p/p_information')), 'p_information')
+//个人中心我的订单
+const p_order = r => require.ensure([], () => r(require('../views/p/p_order')), 'p_order')
+//个人中心我的收藏
+const p_collection = r => require.ensure([], () => r(require('../views/p/p_collection')), 'p_collection')
+//个人中心我的收藏——常规路线
+const p_collection_a = r => require.ensure([], () => r(require('../views/p/p_collection_a')), 'p_collection_a')
+//个人中心我的收藏——当地参团
+const p_collection_b = r => require.ensure([], () => r(require('../views/p/p_collection_b')), 'p_collection_b')
+//个人中心我的收藏——当地玩家
+const p_collection_c = r => require.ensure([], () => r(require('../views/p/p_collection_c')), 'p_collection_c')
+//个人中心我的收藏——邮轮
+const p_collection_d = r => require.ensure([], () => r(require('../views/p/p_collection_d')), 'p_collection_d')
+//个人中心我的收藏——景点
+const p_collection_e = r => require.ensure([], () => r(require('../views/p/p_collection_e')), 'p_collection_e')
+//个人中心我的草稿
+const p_draft = r => require.ensure([], () => r(require('../views/p/p_draft')), 'p_draft')
 Vue.use(Router)
 export default new Router({
   mode: 'history',
@@ -119,7 +135,7 @@ export default new Router({
       meta: { 'title': '搜索油轮' }
     },
 
-    //搜索油轮
+    //搜索景点
     {
       path: '/Scenicspot',
       name: 'Scenicspot',
@@ -147,5 +163,61 @@ export default new Router({
         component:p_information,
         meta: { 'title': '个人中心信息' }
       },
+      //个人中心我的订单
+      {
+        path:'/p_order',
+        name:'p_order',
+        component:p_order,
+        meta:{'title':'我的订单'}
+      },
+      //我的收藏
+      {
+        path:'/p_collection',
+        name:'p_collection',
+        component:p_collection,
+        meta:{'title':'我的收藏'}
+      },
+       //我的收藏-常规路线
+       {
+        path:'/p_collection_a',
+        name:'p_collection_a',
+        component:p_collection_a,
+        meta:{'title':'我的收藏_常规路线'}
+      },
+        //我的收藏-当地参团
+        {
+          path:'/p_collection_b',
+          name:'p_collection_b',
+          component:p_collection_b,
+          meta:{'title':'我的收藏_当地参团'}
+        },
+         //我的收藏-当地玩家
+         {
+          path:'/p_collection_c',
+          name:'p_collection_c',
+          component:p_collection_c,
+          meta:{'title':'我的收藏_当地玩家'}
+        },
+        //我的收藏-邮轮
+        {
+          path:'/p_collection_d',
+          name:'p_collection_d',
+          component:p_collection_d,
+          meta:{'title':'我的收藏_邮轮'}
+        },
+         //我的收藏-景点
+         {
+          path:'/p_collection_e',
+          name:'p_collection_e',
+          component:p_collection_e,
+          meta:{'title':'我的收藏_景点'}
+        },
+        //我的草稿
+        {
+          path:'/p_draft',
+          name:'p_draft',
+          component:p_draft,
+          meta:{'title':'我的草稿'}
+        }
   ]
 })
