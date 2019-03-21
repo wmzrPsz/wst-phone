@@ -152,5 +152,32 @@ export const pinglun = (pageNo) =>ajax('/api/member/getComment',{
     pageNo:pageNo
 })
 //图片上传
-export const imgUp = () => imgUpload('/api/common/imgUpload')
+export const imgUp = () => imgUpload('/api/common/imgUpload',{
+
+})
+//修改个人（旅行社）信息
+export const xuigai = (memberType,photo,nickName,phone,countryid,cityid,address,birthday,sex) =>ajax('/api/member/updateMy',{
+    memberType:memberType,
+    photo:photo,//头像
+    nickName:nickName,//昵称
+    phone:phone,//手机号
+    countryid:countryid,//国家ID
+    cityid:cityid,//城市ID
+    address:address,//详细地址
+    birthday:birthday,//生日
+    sex:sex,//性别
+})
+//我的收藏——常规路线
+export const changui = (collectionType,pageNo) =>ajax('/api/member/myCollection',{
+    collectionType:collectionType,
+    pageNo:pageNo
+})
+//取消收藏接口
+export const quxiao = (collectionids) =>ajax('/api/member/deleteCollection',{
+    collectionids:collectionids
+})
+//我的草稿
+export const caogao = (pageNo) =>ajax('/api/member/myDraft',{
+    pageNo:pageNo
+})
 
