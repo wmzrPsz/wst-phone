@@ -3,7 +3,7 @@
  * @Author: 彭善智
  * @LastEditors: 彭善智
  * @Date: 2019-03-12 22:51:19
- * @LastEditTime: 2019-03-20 17:09:52
+ * @LastEditTime: 2019-03-21 12:01:45
  */
 
 import store from '../vuex/store'
@@ -108,7 +108,7 @@ export const imgUpload = (url) => {
     let reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = function (e) {
-      // console.log( e.target.result);
+      console.log( Base64(e.target.result));
       resolve(ajax(url,{"file": Base64(e.target.result)},"POST")) 
     }
   })
