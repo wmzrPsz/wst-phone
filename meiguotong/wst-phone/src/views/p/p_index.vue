@@ -70,16 +70,20 @@
               </i>
             </li>
             </router-link>
+            <router-link to="p_finance">
             <li>财务管理
               <i class="beijingtu">
                 <img src="../../assets/img/A/more_icon@2x.png">
               </i>
             </li>
+            </router-link>
+            <router-link to="/p_contacts">
             <li>常用联系人
               <i class="beijingtu">
                 <img src="../../assets/img/A/more_icon@2x.png">
               </i>
             </li>
+            </router-link>
             <li>关于我们
               <i class="beijingtu">
                 <img src="../../assets/img/A/more_icon@2x.png">

@@ -1,18 +1,24 @@
 <template>
-  <div>
+  <div class="index">
     <div class="her_a font-20 background-a">
       <i class="her_a_left float_left" onclick="window.history.go(-1)">
         <img src="../../assets/img/A/back_icon@2x.png">
       </i>
       <i class="her_a_zong color float_zhong">我的草稿</i>
-      <i class="float_right color her_a_zong_a font-14">编辑</i>
+     <i class="float_right color her_a_zong_a font-14" @click="biajiflag()">编辑</i>
     </div>
     <div class="dingjia_jia">
       <mescroll-vue ref="mescroll" :up="mescrollUp" @init="mescrollInit">
-        <div v-for="(list,index) in styser" :key="index">
+        <div v-for="(list,index) in styser" :key="index" @click="selis(index)" style="clear: both;">
+            <div class="ze_jiaxun" v-if="thist==1" >
+            <!--未选中-->
+             <i v-if="list.flag==false"><img src="../../assets/img/A/home_choice_unche@2x.png"></i>
+            <!--选中-->
+            <i  v-if="list.flag==true"><img src="../../assets/img/A/home_choice_check@2x.png"></i>
+          </div>
           <div class="draft_z">
             <div class="float_left draft_a beijingtu">
-              <img :src="list.cityImg">
+              <img :src="list.cityImg" :onerror="defaultImgEro">
             </div>
             <div class="float_right draft_b">
               <span class="font-14 draft_b_a">{{list.title}}</span>
@@ -23,7 +29,7 @@
       </mescroll-vue>
     </div>
     <!--取消-->
-    <button class="background-d color font-16 refundxin_f_b" style="background-color: #EE6363;">删除草稿</button>
+    <button class="background-d color font-16 refundxin_f_b" style="background-color: #EE6363;" v-if="thist==1" @click="quxiaosty">删除</button>
   </div>
 </template>
 <style lang="less" scoped>
@@ -36,12 +42,15 @@
 }
 </style>
 <script>
-import { caogao } from "@/utils/getData";
+import { caogao,shancaogao } from "@/utils/getData";
 import MescrollVue from "mescroll.js/mescroll.vue";
 export default {
   name: "index",
   data() {
     return {
+      defaultImgEro:'this.src="../../assets/img/A/3.png"',
+      thist:0,//未弹出选择按钮——取消收藏
+      collectionids:[],//取消收藏的id
       styser: [], //常规列表
       mescroll: null, // mescroll实例对象
       mescrollUp: {
@@ -75,6 +84,30 @@ export default {
     next();
   },
   methods: {
+       //编辑
+    biajiflag(){
+      if(this.thist==0){
+        this.thist=1;
+        return ;
+      }
+      if(this.thist==1){
+        this.thist=0;
+        return ;
+      }
+    },
+    //点击选中
+    selis(index){
+     this.styser[index].flag =!this.styser[index].flag;
+    },
+    //点击取消收藏
+    quxiaosty(){
+     for(const list of this.styser){
+       if(list.flag){
+          this.collectionids.push(list.id)
+       }
+     }
+     this.quxiaos();
+    },
     // mescroll组件初始化的回调,可获取到mescroll对象
     mescrollInit(mescroll) {
       this.mescroll = mescroll; // 如果this.mescroll对象没有使用到,则mescrollInit可以不用配置
@@ -94,7 +127,15 @@ export default {
         // 联网异常,隐藏上拉和下拉的加载进度
         mescroll.endErr();
       }
-    }
+    },
+     //取消收藏接口
+    async quxiaos(){
+      let data = await shancaogao(this.collectionids.toString());
+      if(data){
+        this.$toast("删除成功")
+         this.mescroll.resetUpScroll();
+      }
+    },
   }
 };
 </script>
