@@ -46,6 +46,12 @@ const p_collection_d = r => require.ensure([], () => r(require('../views/p/p_col
 const p_collection_e = r => require.ensure([], () => r(require('../views/p/p_collection_e')), 'p_collection_e')
 //个人中心我的草稿
 const p_draft = r => require.ensure([], () => r(require('../views/p/p_draft')), 'p_draft')
+//个人中心财务管理
+const p_finance = r => require.ensure([], () => r(require('../views/p/p_finance')), 'p_finance')
+//个人中心联系人
+const p_contacts = r => require.ensure([], () => r(require('../views/p/p_contacts')), 'p_contacts')
+//个人中心添加联系人
+const p_contacts_a = r => require.ensure([], () => r(require('../views/p/p_contacts_a')), 'p_contacts_a')
 Vue.use(Router)
 export default new Router({
   mode: 'history',
@@ -218,6 +224,27 @@ export default new Router({
           name:'p_draft',
           component:p_draft,
           meta:{'title':'我的草稿'}
+        },
+        //我的财务管理
+        {
+          path:'/p_finance',
+          name:'p_finance',
+          component:p_finance,
+          meta:{'title':'我的财务管理'}
+        },
+        //我的联系人
+        {
+          path:'/p_contacts',
+          name:'p_contacts',
+          component:p_contacts,
+          meta:{'title':'我的联系人'}
+        },
+         //添加联系人
+         {
+          path:'/p_contacts_a',
+          name:'p_contacts_a',
+          component:p_contacts_a,
+          meta:{'title':'添加联系人'}
         }
   ]
 })

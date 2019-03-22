@@ -180,4 +180,26 @@ export const quxiao = (collectionids) =>ajax('/api/member/deleteCollection',{
 export const caogao = (pageNo) =>ajax('/api/member/myDraft',{
     pageNo:pageNo
 })
+//我的草稿
+export const shancaogao = (collectionids) =>ajax('/api/member/deleteDraft',{
+    ids:collectionids,
+})
+//获取常用联系人接口
+export const lianxir = () =>ajax('/api/common/getMemberContacts',{
+})
+//删除联系人接口
+export const shangchulianx = (contactid) =>ajax('/api/member/deleteMemberContact',{
+    contactid:contactid,
+})
+//添加/修改常用联系人接口
+export const tianjialianx = (chineseName,englishName,certType,certNo,certValidDate,birthday,area,mobile) =>ajax('/api/member/addMemberContact',{
+    chineseName:chineseName,//中名字
+    englishName:englishName,//英名字
+    certType:certType,//证件类型
+    certNo:certNo,//证件号
+    certValidDate:certValidDate,//证件有效期
+    birthday:birthday,//出生日期
+    area:area,//手机区域
+    mobile:mobile,//手机号码
 
+})

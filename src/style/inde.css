@@ -2862,10 +2862,10 @@ select{
 	height: 2.5rem;
 }
 .information_c img{
-    height: 1rem;
-    width: 1rem;
+    height:0.8rem;
+    width: 0.8rem;
     margin-left: 0.5rem;
-    margin-top: 0.7rem;
+    margin-top: 0.8rem;
 }
 .information_d span{
 	margin-top: 0.5rem!important;
@@ -4737,11 +4737,13 @@ select{
 }
 .draft_z{
 	overflow: hidden;
-	width: 95%;
+	width:88%;
 	margin:auto;
 	margin-top: 1rem;
 	padding-bottom: 0.5rem;
 	border-bottom: 1px solid  #F5F5F5;
+	float: left;
+	margin-left:0.5rem;
 }
 .draft_a{
 	width: 30%;
@@ -4761,7 +4763,9 @@ select{
 }
 .balance{
 	overflow: hidden;
-	margin-top: 2rem;
+	position: fixed;
+	top: 5rem;
+	width: 100%;
 }
 .balance span{
 	display: block;
