@@ -5027,3 +5027,18 @@ select{
 	margin-left: 0.3rem;
 	margin-top:1.5rem;
 }
+.a_guany p{
+	width: 100%;
+	font-size: 15px;
+	text-align: left;
+}
+.a_guany p img{
+	width: 100%;
+}
+.b_guany p{
+	text-align: left;
+	font-size: 15px;
+	width: 95%;
+	margin: auto;
+	margin-top:3rem;
+}

@@ -1,118 +1,255 @@
 <template>
   <div class="index">
-    <div class="her_a font-20 background-a"  onclick="window.history.go(-1)">
-      <i class="her_a_left float_left">
-        <img src="../../assets/img/A/back_icon@2x.png">
-      </i>
-      <i class="her_a_zong color float_zhong">出游人信息</i>
-    </div>
-    <div class="dingjia">
-      <div class="information">
-        <ul class="font-16">
-          <li class>
-            <div class="float_left">
-              <i class="color-a">*</i>中文姓名
-            </div>
-            <input
-              class="color-b float_right information_a font-16"
-              type="text"
-              placeholder="需要与证件一至"
-              name
-              v-model="chineseName"
-            >
-          </li>
-          <li class>
-            <div class="float_left">
-              <i class="color-a">*</i>英文姓名
-            </div>
-            <input
-              class="color-b float_right information_a font-16"
-              type="text"
-              placeholder="需要与证件一至"
-              name
-              v-model="englishName"
-            >
-          </li>
-
-          <li class>
-            <div class="float_left">
-              <i class="color-a">*</i>证件类型
-            </div>
-            <div class="float_right">
-              <select class="float_left font-16 information_b" v-model="certType">
-                <option disabled value>证件类型</option>
-                <option value="1">身份证</option>
-                <option value="2">护照</option>
-                <option value="3">本地ID</option>
-              </select>
-              <i class="float_left information_c">
-                <img src="../../assets/img/B/search_cglv_open_icon@2x -a.png">
-              </i>
-            </div>
-          </li>
-          <li class>
-            <input
-              class="color-b float_right information_a font-16"
-              type="text"
-              placeholder="输入身份证号"
-              name
-              v-model="certNo"
-            >
-          </li>
-
-          <li class>
-            <div class="float_left">
-              <i class="color-a">*</i>证件有效期
-            </div>
-            <div class="float_right" @click="show = true">{{certValidDate}}</div>
-          </li>
-
-          <li class>
-            <div class="float_left">
-              <i class="color-a">*</i>出生年月日
-            </div>
-            <div class="float_right" @click="show1 = true">{{birthday}}</div>
-          </li>
-
-          <li class>
-            <div class="float_left">
-              <i class="color-a">*</i>手机号码
-            </div>
-            <div class="float_right">
-              <select class="float_left font-16 information_b" v-model="area">
-                <option disabled value>手机区域</option>
-                <option v-for="(list,index) in quyustye" :value="list.id" :key="index">{{list.name}}</option>
-              </select>
-              <i class="float_left information_c">
-                <img src="../../assets/img/B/search_cglv_open_icon@2x -a.png">
-              </i>
-            </div>
-          </li>
-          <li class>
-            <input
-              class="color-b float_right information_a font-16"
-              type="text"
-              placeholder="输入手机号码"
-              name
-              v-model="mobile"
-            >
-          </li>
-        </ul>
+    <div v-if="this.serdata==1">
+      <div class="her_a font-20 background-a" onclick="window.history.go(-1)">
+        <i class="her_a_left float_left">
+          <img src="../../assets/img/A/back_icon@2x.png">
+        </i>
+        <i class="her_a_zong color float_zhong">出游人信息</i>
       </div>
-      <button
-        class="di_s_b_dengl color background-d font-16"
-        style="margin-top: 3rem;"
-        @click="tianjia"
-      >确定</button>
+      <div class="dingjia">
+        <div class="information">
+          <ul class="font-16">
+            <li class>
+              <div class="float_left">
+                <i class="color-a">*</i>中文姓名
+              </div>
+              <input
+                class="color-b float_right information_a font-16"
+                type="text"
+                placeholder="需要与证件一至"
+                name
+                v-model="chineseName"
+              >
+            </li>
+            <li class>
+              <div class="float_left">
+                <i class="color-a">*</i>英文姓名
+              </div>
+              <input
+                class="color-b float_right information_a font-16"
+                type="text"
+                placeholder="需要与证件一至"
+                name
+                v-model="englishName"
+              >
+            </li>
+
+            <li class>
+              <div class="float_left">
+                <i class="color-a">*</i>证件类型
+              </div>
+              <div class="float_right">
+                <select class="float_left font-16 information_b" v-model="certType">
+                  <option disabled value>证件类型</option>
+                  <option value="1">身份证</option>
+                  <option value="2">护照</option>
+                  <option value="3">本地ID</option>
+                </select>
+                <i class="float_left information_c">
+                  <img src="../../assets/img/B/search_cglv_open_icon@2x -a.png">
+                </i>
+              </div>
+            </li>
+            <li class>
+              <input
+                class="color-b float_right information_a font-16"
+                type="text"
+                placeholder="输入身份证号"
+                name
+                v-model="certNo"
+              >
+            </li>
+
+            <li class>
+              <div class="float_left">
+                <i class="color-a">*</i>证件有效期
+              </div>
+              <div class="float_right" @click="show = true">{{certValidDate}}</div>
+            </li>
+
+            <li class>
+              <div class="float_left">
+                <i class="color-a">*</i>出生年月日
+              </div>
+              <div class="float_right" @click="show1 = true">{{birthday}}</div>
+            </li>
+
+            <li class>
+              <div class="float_left">
+                <i class="color-a">*</i>手机号码
+              </div>
+              <div class="float_right">
+                <select class="float_left font-16 information_b" v-model="area">
+                  <option disabled value>手机区域</option>
+                  <option
+                    v-for="(list,index) in quyustye"
+                    :value="list.id"
+                    :key="index"
+                  >{{list.name}}</option>
+                </select>
+                <i class="float_left information_c">
+                  <img src="../../assets/img/B/search_cglv_open_icon@2x -a.png">
+                </i>
+              </div>
+            </li>
+            <li class>
+              <input
+                class="color-b float_right information_a font-16"
+                type="text"
+                placeholder="输入手机号码"
+                name
+                v-model="mobile"
+              >
+            </li>
+          </ul>
+        </div>
+        <button
+          class="di_s_b_dengl color background-d font-16"
+          style="margin-top: 3rem;"
+          @click="tianjia"
+        >确定</button>
+      </div>
+      <!--证件有效期-->
+      <van-popup v-model="show" position="bottom">
+        <van-datetime-picker v-model="currentDate" type="date" @cancel="quxiao" @confirm="queding"/>
+      </van-popup>
+      <!--出生日期-->
+      <van-popup v-model="show1" position="bottom">
+        <van-datetime-picker
+          v-model="currentDate"
+          type="date"
+          @cancel="quxiao"
+          @confirm="queding_a"
+        />
+      </van-popup>
     </div>
-    <!--证件有效期-->
-    <van-popup v-model="show" position="bottom">
-      <van-datetime-picker v-model="currentDate" type="date" @cancel="quxiao" @confirm="queding"/>
-    </van-popup>
-    <!--出生日期-->
-    <van-popup v-model="show1" position="bottom">
-      <van-datetime-picker v-model="currentDate" type="date" @cancel="quxiao" @confirm="queding_a"/>
-    </van-popup>
+
+    <!--修改-->
+    <div v-if="this.serdata!=1">
+      <div class="her_a font-20 background-a" onclick="window.history.go(-1)">
+        <i class="her_a_left float_left">
+          <img src="../../assets/img/A/back_icon@2x.png">
+        </i>
+        <i class="her_a_zong color float_zhong">出游人信息</i>
+      </div>
+      <div class="dingjia">
+        <div class="information">
+          <ul class="font-16">
+            <li class>
+              <div class="float_left">
+                <i class="color-a">*</i>中文姓名
+              </div>
+              <input
+                class="color-b float_right information_a font-16"
+                type="text"
+                placeholder="需要与证件一至"
+                name
+                v-model="data.chineseName"
+              >
+            </li>
+            <li class>
+              <div class="float_left">
+                <i class="color-a">*</i>英文姓名
+              </div>
+              <input
+                class="color-b float_right information_a font-16"
+                type="text"
+                placeholder="需要与证件一至"
+                name
+                v-model="data.englishName"
+              >
+            </li>
+
+            <li class>
+              <div class="float_left">
+                <i class="color-a">*</i>证件类型
+              </div>
+              <div class="float_right">
+                <select class="float_left font-16 information_b" v-model="data.certType">
+                  <option disabled value>证件类型</option>
+                  <option value="1">身份证</option>
+                  <option value="2">护照</option>
+                  <option value="3">本地ID</option>
+                </select>
+                <i class="float_left information_c">
+                  <img src="../../assets/img/B/search_cglv_open_icon@2x -a.png">
+                </i>
+              </div>
+            </li>
+            <li class>
+              <input
+                class="color-b float_right information_a font-16"
+                type="text"
+                placeholder="输入身份证号"
+                name
+                v-model="data.certNo"
+              >
+            </li>
+
+            <li class>
+              <div class="float_left">
+                <i class="color-a">*</i>证件有效期
+              </div>
+              <div class="float_right" @click="show = true">{{data.certValidDate}}</div>
+            </li>
+
+            <li class>
+              <div class="float_left">
+                <i class="color-a">*</i>出生年月日
+              </div>
+              <div class="float_right" @click="show1 = true">{{data.birthday}}</div>
+            </li>
+
+            <li class>
+              <div class="float_left">
+                <i class="color-a">*</i>手机号码
+              </div>
+              <div class="float_right">
+                <select class="float_left font-16 information_b" v-model="data.area">
+                  <option disabled value>手机区域</option>
+                  <option
+                    v-for="(list,index) in quyustye"
+                    :value="list.id"
+                    :key="index"
+                  >{{list.name}}</option>
+                </select>
+                <i class="float_left information_c">
+                  <img src="../../assets/img/B/search_cglv_open_icon@2x -a.png">
+                </i>
+              </div>
+            </li>
+            <li class>
+              <input
+                class="color-b float_right information_a font-16"
+                type="text"
+                placeholder="输入手机号码"
+                name
+                v-model="data.mobile"
+              >
+            </li>
+          </ul>
+        </div>
+        <button
+          class="di_s_b_dengl color background-d font-16"
+          style="margin-top: 3rem;"
+          @click="tianjia_a"
+        >确定</button>
+      </div>
+      <!--证件有效期-->
+      <van-popup v-model="show" position="bottom">
+        <van-datetime-picker v-model="currentDate" type="date" @cancel="quxiao" @confirm="queding"/>
+      </van-popup>
+      <!--出生日期-->
+      <van-popup v-model="show1" position="bottom">
+        <van-datetime-picker
+          v-model="currentDate"
+          type="date"
+          @cancel="quxiao"
+          @confirm="queding_a"
+        />
+      </van-popup>
+    </div>
   </div>
 </template>
 <style lang="less" scoped>
@@ -142,6 +279,7 @@ export default {
       englishName: "", //英文名字
       certNo: "", //证件号码
       mobile: "", //手机号码
+      contactid:''
     };
   },
   created() {
@@ -151,7 +289,7 @@ export default {
     this.certValidDate = this.year + "-" + this.month + "-" + this.day;
     this.birthday = this.year + "-" + this.month + "-" + this.day;
     this.quyu();
-
+    this.gamert();
   },
   methods: {
     //拿区域
@@ -173,9 +311,8 @@ export default {
       this.month = this.currentDate.getMonth() + 1; //月
       this.day = this.currentDate.getDate(); //日
       this.certValidDate = this.year + "-" + this.month + "-" + this.day;
-
     },
-    //确定获取证件有效期
+    //确定出生日期
     queding_a() {
       this.show1 = false;
       this.year = this.currentDate.getFullYear(); //年
@@ -222,8 +359,36 @@ export default {
         this.certValidDate,
         this.birthday,
         this.area,
-        this.mobile
+        this.mobile,
+        this.contactid,
       );
+    },
+    //点击修改数据
+    tianjia_a(){
+     this.tianjiatype_a();
+      this.$toast("修改成功");
+      this.$router.push("/p_contacts");
+    },
+    async tianjiatype_a() {
+      let data = await tianjialianx(
+        this.data.chineseName,
+        this.data.englishName,
+        this.data.certType,
+        this.data.certNo,
+        this.data.certValidDate,
+        this.data.birthday,
+        this.data.area,
+        this.data.mobile,
+        this.data.contactid,
+      );
+    },
+    //添加
+    async gamert() {
+      let serdata = this;
+      let data = this;
+      this.serdata = this.$route.params.type;
+      this.data = this.$route.params.data;
+      console.log(this.data);
     }
   }
 };

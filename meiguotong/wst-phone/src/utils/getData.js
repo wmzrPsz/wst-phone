@@ -192,7 +192,7 @@ export const shangchulianx = (contactid) =>ajax('/api/member/deleteMemberContact
     contactid:contactid,
 })
 //添加/修改常用联系人接口
-export const tianjialianx = (chineseName,englishName,certType,certNo,certValidDate,birthday,area,mobile) =>ajax('/api/member/addMemberContact',{
+export const tianjialianx = (chineseName,englishName,certType,certNo,certValidDate,birthday,area,mobile,contactid) =>ajax('/api/member/addMemberContact',{
     chineseName:chineseName,//中名字
     englishName:englishName,//英名字
     certType:certType,//证件类型
@@ -201,5 +201,8 @@ export const tianjialianx = (chineseName,englishName,certType,certNo,certValidDa
     birthday:birthday,//出生日期
     area:area,//手机区域
     mobile:mobile,//手机号码
-
+    contactid:contactid,
+})
+//关于我们接口
+export const guanyusty = () =>ajax('/api/member/getArticle',{
 })
