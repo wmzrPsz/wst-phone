@@ -1,11 +1,13 @@
 <template>
   <div class="index">
     <div class="her_a font-20 background-a">
-      <i class="her_a_left float_left" onclick="window.history.go(-1)">
+      <router-link to="/p_index">
+      <i class="her_a_left float_left" >
         <img src="../../assets/img/A/back_icon@2x.png">
       </i>
+      </router-link>
       <i class="her_a_zong color float_zhong">常用联系人</i>
-      <router-link to="/p_contacts_a">
+      <router-link :to="{name:'p_contacts_a',params:{type:1}}">
         <i class="float_right color her_a_zong_a font-14">添加</i>
       </router-link>
     </div>
@@ -61,7 +63,7 @@ export default {
     return {
       lianthis: [], //联系人列表
       contactid: "", //删除联系人的ID
-      xiuteye: {} //传修改数据
+      xiuteye: {}, //传修改数据
     };
   },
   created() {
@@ -79,6 +81,7 @@ export default {
     async shanclianxi() {
       let data = await shangchulianx(this.contactid);
       if (data) {
+        this.lixiren();
       }
     },
     //点击删除
@@ -88,10 +91,12 @@ export default {
       this.$toast("删除成功");
     },
     //点击修改
-     xiugai(list) {
+    xiugai(list) {
       this.$router.push({
-		path:'/p_contacts_a',
-		data: JSON.stringify(list)
+        name:"p_contacts_a",
+        params: {
+         data:list,
+        }
       });
     }
   }

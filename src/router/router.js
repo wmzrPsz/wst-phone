@@ -52,6 +52,10 @@ const p_finance = r => require.ensure([], () => r(require('../views/p/p_finance'
 const p_contacts = r => require.ensure([], () => r(require('../views/p/p_contacts')), 'p_contacts')
 //个人中心添加联系人
 const p_contacts_a = r => require.ensure([], () => r(require('../views/p/p_contacts_a')), 'p_contacts_a')
+//个人中心关于我们
+const p_about = r => require.ensure([], () => r(require('../views/p/p_about')), 'p_about')
+//个人中心关于我们_公司概括
+const p_about_a = r => require.ensure([], () => r(require('../views/p/p_about_a')), 'p_about_a')
 Vue.use(Router)
 export default new Router({
   mode: 'history',
@@ -245,6 +249,20 @@ export default new Router({
           name:'p_contacts_a',
           component:p_contacts_a,
           meta:{'title':'添加联系人'}
+        },
+        //关于我们
+        {
+          path:'/p_about',
+          name:'p_about',
+          component:p_about,
+          meta:{'title':'关于们'}
+        },
+         //关于我们公司概括
+         {
+          path:'/p_about_a',
+          name:'p_about_a',
+          component:p_about_a,
+          meta:{'title':'关于们公司概括'}
         }
   ]
 })

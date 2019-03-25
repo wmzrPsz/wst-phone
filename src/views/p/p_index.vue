@@ -84,16 +84,18 @@
               </i>
             </li>
             </router-link>
+            <router-link to="/p_about">
             <li>关于我们
               <i class="beijingtu">
                 <img src="../../assets/img/A/more_icon@2x.png">
               </i>
             </li>
+            </router-link>
           </ul>
         </div>
       </div>
 
-      <button class="font-14 centrality_d">退出登录</button>
+      <button class="font-14 centrality_d" @click="liog">退出登录</button>
     </div>
   </div>
 </template>
@@ -101,6 +103,7 @@
 import {
   Material //个人质料
 } from "@/utils/getData";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "index",
   data() {
@@ -115,6 +118,9 @@ export default {
   created(){
    this.Material();
   },
+  computed: {
+    
+  },
   components: {},
    filters:{
 	 sexVc:function(value){
@@ -125,12 +131,18 @@ export default {
 	 }
  },
   methods: {
+    ...mapMutations(["removeLogin"]),
     //个人质料
     async Material() {
       let data = await Material();
       if (data) {
         this.zhiliao = data;
       }
+    },
+    //退出登登陆
+   async liog(){
+     this.removeLogin();
+     this.$router.push("/login");
     }
   }
 };
