@@ -77,9 +77,9 @@ export default {
   methods:{
    async forgettesr(){
     //邮箱忘记密码
-   if(isPoneAvailable(this.moib)){
-    this.type=2;
-   }
+  //  if(isPoneAvailable(this.moib)){
+  //   this.type=2;
+  //  }
      if(isNull(this.moib)){
         this.$toast("请输入手机号或邮箱号");
         return;
