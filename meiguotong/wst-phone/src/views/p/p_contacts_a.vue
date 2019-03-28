@@ -41,7 +41,7 @@
               </div>
               <div class="float_right">
                 <select class="float_left font-16 information_b" v-model="certType">
-                  <option disabled value>证件类型</option>
+
                   <option value="1">身份证</option>
                   <option value="2">护照</option>
                   <option value="3">本地ID</option>
@@ -167,7 +167,6 @@
               </div>
               <div class="float_right">
                 <select class="float_left font-16 information_b" v-model="data.certType">
-                  <option disabled value>证件类型</option>
                   <option value="1">身份证</option>
                   <option value="2">护照</option>
                   <option value="3">本地ID</option>
@@ -207,7 +206,6 @@
               </div>
               <div class="float_right">
                 <select class="float_left font-16 information_b" v-model="data.area">
-                  <option disabled value>手机区域</option>
                   <option
                     v-for="(list,index) in quyustye"
                     :value="list.id"
@@ -267,7 +265,7 @@ export default {
       show: false,
       show1: false,
       currentDate: new Date(),
-      certType: "", //证件类型
+      certType: 1, //证件类型
       quyustye: [],
       area: "", //区域
       year: "", //年
