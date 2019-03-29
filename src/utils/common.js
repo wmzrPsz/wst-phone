@@ -3,11 +3,11 @@
  * @Author: 彭善智
  * @LastEditors: 彭善智
  * @Date: 2019-03-12 22:51:19
- * @LastEditTime: 2019-03-21 12:01:45
+ * @LastEditTime: 2019-03-29 15:58:32
  */
 
 import store from '../vuex/store'
-import ajax from '../config/fetch';
+import ajax from './fetch';
 
 //判断是否登录
 export const fnIsLogin = () => {
