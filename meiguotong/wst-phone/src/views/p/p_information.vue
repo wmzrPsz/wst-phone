@@ -60,7 +60,7 @@
 
             <li>
               我的地址
-              <span class="float_right">
+              <span class="float_right" @click="show1 = true">
                 <i class="float_left centrality_e_b">{{zhiliao.address}}</i>
                 <i class="float_left centrality_e_a beijingtu">
                   <img src="../../assets/img/A/more_icon@2x.png">
@@ -71,9 +71,13 @@
         </div>
       </div>
     </div>
-    <!---->
+    <!--男女-->
     <van-popup v-model="show" position="bottom">
       <van-picker :columns="columns" @change="onChange" :visible-item-count="3"/>
+    </van-popup>
+    <!--国家城市-->
+    <van-popup v-model="show1" position="bottom">
+      <van-picker :columns="columns1" @change="onChange1" :visible-item-count="3"/>
     </van-popup>
   </div>
 </template>
@@ -81,20 +85,39 @@
 import {
   Material, //个人质料
   imgUp,
-  xuigai //修改
+  xuigai, //修改
+  Country //城市接口
 } from "@/utils/getData";
+var citys = {
+  '浙江': ['杭州', '宁波', '温州', '嘉兴', '湖州'],
+  '福建': ['福州', '厦门', '莆田', '三明', '泉州'],
+  '浙江h': ['杭州', '宁波', '温州', '嘉兴', '湖州'],
+};
 export default {
   name: "index",
   data() {
     return {
       zhiliao: "", //个人中心质料
       show: false,
+      show1: false,
+      trt: "你好",
       columns: ["男", "女"],
-      imgulp: ""
+      imgulp: "",
+     columns1: [
+        {
+          values: Object.keys(citys),
+        },
+        //默认开始选中
+        {
+          values: citys[""],
+        }
+      ],
+      guotype: [] //国家列表
     };
   },
   created() {
     this.Material();
+    this.guojia(); //国家
   },
   components: {},
   filters: {
@@ -134,16 +157,40 @@ export default {
         this.zhiliao.cityid,
         this.zhiliao.address,
         this.zhiliao.birthday,
-        this.zhiliao.sex,
+        this.zhiliao.sex
       );
       if (data) {
         this.$toast("修改成功");
       }
     },
     onChange(picker, value, index) {
-       this.$set(this.zhiliao, "sex", index+1);
-       this.xumodify();
+      this.$set(this.zhiliao, "sex", index + 1);
+      this.xumodify();
     },
+    //国家修改
+    onChange1(picker, values) {
+      picker.setColumnValues(1, citys[values[0]]);
+    },
+    //获取国家
+    async guojia() {
+      let data = await Country();
+      let citys={};
+      if (data) {
+        this.guotype = data;
+       console.log(this.guotype);
+        for(const list of this.guotype){ 
+          for(const tes of list.cityList){
+            console.log(tes);
+          }
+        //  this.$set(citys,list.countryName,list.cityList);
+        }
+      //  this.columns1[0].values=Object.keys(citys);
+      }
+    },
+    //
+    //  onChange1(picker, value, index) {
+    //   alert(`当前值：${value}, 当前索引：${index}`);
+    // }
   }
 };
 </script>
