@@ -179,8 +179,10 @@ export default {
         this.guotype = data;
        console.log(this.guotype);
         for(const list of this.guotype){ 
+          if(list.cityList){
           for(const tes of list.cityList){
             console.log(tes);
+          }
           }
         //  this.$set(citys,list.countryName,list.cityList);
         }
