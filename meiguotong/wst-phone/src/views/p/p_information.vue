@@ -89,9 +89,9 @@ import {
   Country //城市接口
 } from "@/utils/getData";
 var citys = {
-  '浙江': ['杭州', '宁波', '温州', '嘉兴', '湖州'],
-  '福建': ['福州', '厦门', '莆田', '三明', '泉州'],
-  '浙江h': ['杭州', '宁波', '温州', '嘉兴', '湖州'],
+  浙江: ["杭州", "宁波", "温州", "嘉兴", "湖州"],
+  福建: ["福州", "厦门", "莆田", "三明", "泉州"],
+  浙江h: ["杭州", "宁波", "温州", "嘉兴", "湖州"]
 };
 export default {
   name: "index",
@@ -103,13 +103,12 @@ export default {
       trt: "你好",
       columns: ["男", "女"],
       imgulp: "",
-     columns1: [
+      columns1: [
         {
-          values: Object.keys(citys),
+          values: Object.keys(citys)
         },
-        //默认开始选中
         {
-          values: citys[""],
+          values: citys[""]
         }
       ],
       guotype: [] //国家列表
@@ -174,25 +173,25 @@ export default {
     //获取国家
     async guojia() {
       let data = await Country();
-      let citys={};
+      let citys = {};//国家
       if (data) {
         this.guotype = data;
-       console.log(this.guotype);
-        for(const list of this.guotype){ 
-          if(list.cityList){
-          for(const tes of list.cityList){
-            console.log(tes);
+        console.log(this.guotype);
+        for (const list of this.guotype) {
+          let city_a = [];//城市
+          if (list.cityList) {
+            for (const tes of list.cityList) {
+              city_a.push(tes.cityName);
+            }
           }
-          }
-        //  this.$set(citys,list.countryName,list.cityList);
+          this.$set(citys, list.countryName, city_a);
         }
-      //  this.columns1[0].values=Object.keys(citys);
+        this.columns1[0].values = Object.keys(citys);
       }
+      console.log(citys);
     },
     //
-    //  onChange1(picker, value, index) {
-    //   alert(`当前值：${value}, 当前索引：${index}`);
-    // }
+    onChange1(picker, value, index) {}
   }
 };
 </script>
