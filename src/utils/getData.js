@@ -1,4 +1,4 @@
-import ajax from '../config/fetch';
+import ajax from './fetch';
 import md5 from 'js-md5';
 import {imgUpload} from "@/utils/common"
 
