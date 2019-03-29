@@ -206,3 +206,7 @@ export const tianjialianx = (chineseName,englishName,certType,certNo,certValidDa
 //关于我们接口
 export const guanyusty = () =>ajax('/api/member/getArticle',{
 })
+//根据语言获取国家城市接口
+export const Country = () =>ajax('/api/member/getCountryCity',{
+    
+})
