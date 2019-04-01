@@ -23,8 +23,8 @@
     <!--头部导航栏-->
     <div class="daohan">
       <ul>
-        <li>包车租车</li>
-        <li>包车租车</li>
+        <li> <router-link to="/b_index">包车租车</router-link></li>
+        <li><router-link to="/F_index">常规路线</router-link></li>
         <li>包车租车</li>
         <li>包车租车</li>
         <li>包车租车</li>
@@ -1153,11 +1153,14 @@
     <!---->
   </div>
 </template>
+<style lang="less" scoped>
+.daohan{
+   color: white!important;
+ }
+</style>
 
 <script>
-
 import ezHeader from '@/components/header.vue'
-
 export default {
   name: "indexher",
   data() {
