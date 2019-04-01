@@ -61,7 +61,7 @@
             <li>
               我的地址
               <span class="float_right" @click="show1 = true">
-                <i class="float_left centrality_e_b">{{zhiliao.address}}</i>
+                <i class="float_left centrality_e_b">{{Countrytpy}}-{{cityid}}</i>
                 <i class="float_left centrality_e_a beijingtu">
                   <img src="../../assets/img/A/more_icon@2x.png">
                 </i>
@@ -90,8 +90,7 @@ import {
 } from "@/utils/getData";
 var citys = {
   浙江: ["杭州", "宁波", "温州", "嘉兴", "湖州"],
-  福建: ["福州", "厦门", "莆田", "三明", "泉州"],
-  浙江h: ["杭州", "宁波", "温州", "嘉兴", "湖州"]
+  福建: ["福州", "厦门", "莆田", "三明", "泉州"]
 };
 export default {
   name: "index",
@@ -103,20 +102,16 @@ export default {
       trt: "你好",
       columns: ["男", "女"],
       imgulp: "",
-      columns1: [
-        {
-          values: Object.keys(citys)
-        },
-        {
-          values: citys[""]
-        }
-      ],
-      guotype: [] //国家列表
+      columns1: [{}, {}],
+      guotype: [], //国家列表
+      citys: {}, //国家
+      moren: "", //一开始显示第一个国家的城市
     };
   },
   created() {
     this.Material();
     this.guojia(); //国家
+    //  console.log(citys);
   },
   components: {},
   filters: {
@@ -125,6 +120,28 @@ export default {
         return "男";
       }
       return "女";
+    }
+  },
+  computed: {
+    //城市
+    cityid() {
+      for (const list of this.guotype) {
+        if (list.cityList) {
+          for (const terpy of list.cityList) {
+            if (terpy.cityid == this.zhiliao.cityid) {
+              return terpy.cityName;
+            }
+          }
+        }
+      }
+    },
+    //国家
+    Countrytpy() {
+      for (const list of this.guotype) {
+        if (list.countryid == this.zhiliao.countryid) {
+          return list.countryName;
+        }
+      }
     }
   },
   methods: {
@@ -167,31 +184,50 @@ export default {
       this.xumodify();
     },
     //国家修改
-    onChange1(picker, values) {
-      picker.setColumnValues(1, citys[values[0]]);
+    onChange1(picker, values, index) {
+      let countrtyp={};//国家
+      let cityidtyp={};//城市
+      picker.setColumnValues(1, this.citys[values[0]]);
+       this.countrtyp = values[0];
+       this.cityidtyp = values[1];
+       //国家
+      for (const list of this.guotype) {
+        if(list.cityList){
+          for(const tery of list.cityList){
+          if (tery.cityName == this.cityidtyp) {
+         this.$set(this.zhiliao, "cityid",tery.cityid);
+        }
+          }
+        }
+        if (list.countryName == this.countrtyp) {
+         this.$set(this.zhiliao, "countryid",list.countryid);
+        }
+      }
+    this.xumodify();
+     this.$toast("修改成功");
     },
     //获取国家
     async guojia() {
       let data = await Country();
-      let citys = {};//国家
       if (data) {
         this.guotype = data;
+        this.moren = this.guotype[0].countryName;
         console.log(this.guotype);
         for (const list of this.guotype) {
-          let city_a = [];//城市
+          let city_a = []; //城市
           if (list.cityList) {
             for (const tes of list.cityList) {
               city_a.push(tes.cityName);
             }
           }
-          this.$set(citys, list.countryName, city_a);
+          this.$set(this.citys, list.countryName, city_a);
         }
-        this.columns1[0].values = Object.keys(citys);
       }
-      console.log(citys);
-    },
-    //
-    onChange1(picker, value, index) {}
+      this.columns1[0].values = Object.keys(this.citys);
+      this.columns1[1].values = this.citys[this.moren];
+      console.log(this.citys);
+      return this.citys;
+    }
   }
 };
 </script>
