@@ -56,6 +56,14 @@ const p_contacts_a = r => require.ensure([], () => r(require('../views/p/p_conta
 const p_about = r => require.ensure([], () => r(require('../views/p/p_about')), 'p_about')
 //个人中心关于我们_公司概括
 const p_about_a = r => require.ensure([], () => r(require('../views/p/p_about_a')), 'p_about_a')
+
+///////////////////////////////////////////////B包车租车//////////////////////////////////////////////////////////////////////
+//包车租车首页
+const b_index = r => require.ensure([], () => r(require('../views/B/b_index')), 'b_index')
+
+///////////////////////////////////////////////F常规路线//////////////////////////////////////////////////////////////////////
+//
+const F_index = r => require.ensure([], () => r(require('../views/F/F_index')), 'F_index')
 Vue.use(Router)
 export default new Router({
   mode: 'history',
@@ -263,6 +271,23 @@ export default new Router({
           name:'p_about_a',
           component:p_about_a,
           meta:{'title':'关于们公司概括'}
-        }
+        },
+        /////////////////////////包车出车///////////////////////////////
+        //包车租车首页
+        {
+          path:'/b_index',
+          name:'b_index',
+          component:b_index,
+          meta:{'title':'包车租车'}
+        },
+        /////////////////////////常规路线///////////////////////////////
+        //搜索常规路线
+        {
+          path:'/F_index',
+          name:'F_index',
+          component:F_index,
+          meta:{'title':'常规路线搜索'}
+        },
+
   ]
 })
