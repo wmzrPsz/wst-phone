@@ -91,9 +91,9 @@
       <button class="color background-d font-14 xiayi" style="margin-top:2rem!important;">搜索</button>
     </div>
     <!--点击选择月份-->
-    <div class="brijtan"></div>
-    <div class="Route_x ">
-      <div class="font-16">6月</div>
+    <div class="brijtan " v-if="yue==2"></div>
+    <div class="Route_x " v-if="yue==2">
+      <div class="font-16">{{listpryue.month}}月</div>
       <div class="Route_x_a">
         <dl class="font-12">
           <dd>
@@ -103,6 +103,7 @@
       </div>
 
       <button
+      @click="yuetpy()"
         class="color background-d font-14 xiayi"
         style="margin-top:2rem!important; margin-bottom:1rem!important;"
       >确定</button>
@@ -122,7 +123,9 @@ export default {
     return {
       dataList: [], //日期
       day: "", //日期的天
-      daylist: [] //行程的天
+      daylist: [], //行程的天
+      yue:1,//表示月份隐藏
+      listpryue:'',
     };
   },
   created() {
@@ -143,9 +146,24 @@ export default {
   },
 
   methods: {
+    //确定月份
+    yuetpy(){
+    this.yue=1;
+    },
     //月份点击
     monthClick(index) {
-	this.dataList[index].flag = !this.dataList[index].flag;
+    this.yue=2;
+     if(this.dataList[index].flag==false){
+        this.dataList.map(elem => {
+        elem.flag = false;
+      });
+      }
+    this.dataList[index].flag = !this.dataList[index].flag;
+   for (const listpr of this.dataList) {
+        if(listpr.flag==true){
+         this.listpryue=listpr;
+        }
+      }
 	},
     LopTime(year = new Date().getFullYear(), month = new Date().getMonth()) {
       //计算这个月多少天
