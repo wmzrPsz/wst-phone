@@ -750,7 +750,6 @@ select{
 	padding-bottom:0.7rem;
 	background-color:white;
 }
-
 .sou_her_w li{
 	width: 25%;
 	text-align:center;
@@ -2910,9 +2909,11 @@ select{
 	width: 76%;
 	border: 1px solid gainsboro;
 	border-bottom: none;
+	border-right: none;
+	
 }
 .Route_c_a  dl dd{
-	width: 24.67%;
+	width: 24.5%;
 	height: 1.5rem;
 	line-height: 1.5rem;
 	text-align: center;
@@ -2920,10 +2921,6 @@ select{
 	border: 1px solid gainsboro;
 	border-top: none;
 	border-left: none;
-}
-.Route_c_a  dl dd:nth-child(4n),
-.Route_c_a  dl dd:last-child {
-  border-right:none;
 }
 .Route_z{
 	overflow: hidden;
@@ -2980,7 +2977,7 @@ select{
 	clear: both;
 }
 .Route_x_a dl dd{
-	width: 13.959%;
+	width: 13.9%;
 	text-align: center;
 	line-height: 1.5rem;
 	float: left;
@@ -2990,7 +2987,7 @@ select{
 .Route_x_a dl dd i{
 	display: block;
 	position: relative;
-	margin-top: -0.79rem;
+	margin-top: -0.8rem;
 	left: 100%;
 	margin-left: -0.8rem;
 	width: 0.8rem;
@@ -5041,4 +5038,11 @@ select{
 	width: 95%;
 	margin: auto;
 	margin-top:3rem;
+}
+.b_xianm_b_jiadian_day{
+	background-image: url(../assets/img/C/cglx_check_icon@2x.png);
+}
+.tuozhi{
+	overflow: hidden;
+	margin-bottom: 0.5rem;
 }
