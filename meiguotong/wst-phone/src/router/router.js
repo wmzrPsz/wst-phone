@@ -64,6 +64,8 @@ const b_index = r => require.ensure([], () => r(require('../views/B/b_index')), 
 ///////////////////////////////////////////////F常规路线//////////////////////////////////////////////////////////////////////
 //
 const F_index = r => require.ensure([], () => r(require('../views/F/F_index')), 'F_index')
+//f常规路线搜索详情列表
+const F_details = r => require.ensure([], () => r(require('../views/F/F_details')), 'F_details')
 Vue.use(Router)
 export default new Router({
   mode: 'history',
@@ -288,6 +290,12 @@ export default new Router({
           component:F_index,
           meta:{'title':'常规路线搜索'}
         },
-
+       //搜索进去详情列表
+       {
+        path:'/F_details',
+        name:'F_details',
+        component:F_details,
+        meta:{'title':'常规路线列表'}
+      },
   ]
 })
