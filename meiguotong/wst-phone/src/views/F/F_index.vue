@@ -20,7 +20,9 @@
             <img src="../../assets/img/B/bczc_adress_icon@2x.png">
           </i>
           <span class="font-14 color-b float_left">广州</span>
+          <router-link to="/F_search">
           <input class="float_left font-14 color-b" type="text" placeholder="输入你要搜索的城市" name>
+          </router-link>
         </div>
         <!--出发日期-->
         <div class="border_e" style="overflow: hidden; padding-bottom: 1rem;">
@@ -198,14 +200,25 @@ export default {
   },
   //计算属性
   computed: {
-    //获取选择的日期
+     //获取选择的日期
     date() {
       let lists = [];
+      let data = [];//号
       for (const list of this.dataList) {
+        var mag = {};
         if (list.falg_a) {
-         console.log("5555"+list);
+        this.$set(mag,'year',list.year);//年
+        this.$set(mag,'month',list.month);//月
+        for(const datayu of list.days){
+        if(datayu.flag){
+         data.push(datayu.day);//月
+         this.$set(mag,'days',data.toString());
+        }
+        }
+        lists.push(mag);
         }
       }
+      console.log(lists);
       return lists;
     },
      //获取天数
@@ -233,7 +246,14 @@ export default {
     this.$router.push({
      name: 'F_details',
      params: {
-     orderId:"22",
+     folis:1,
+    //date:JSON.stringify(this.date),//年月日
+     date:this.date,
+     tagContent:this.tagContent,//属性
+     daysty:this.daysty,//天数
+     minPrice:this.minPrice,//最小价格
+     maxPrice:this.maxPrice,//最大价格
+     scenicSpotid:this.scenicSpotid,//景点id
      }
      })
     },

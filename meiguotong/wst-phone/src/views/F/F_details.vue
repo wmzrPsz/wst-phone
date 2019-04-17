@@ -1,7 +1,7 @@
 <template>
   <div class="index" style="background-color: white;">
     <div class="her_a font-20 background-a">
-      <i class="her_a_left float_left"><img src="../../assets/img/A/back_icon@2x.png"></i>
+      <i class="her_a_left float_left"><img src="../../assets/img/A/back_icon@2x.png" onclick="window.history.go(-1)"></i>
       <i class="her_a_zong color float_zhong">常规路线</i>
      </div>
     <div class="dingjia_b">
@@ -289,7 +289,7 @@
     <div class="dingjia_a">
       <mescroll-vue ref="mescroll" :up="mescrollUp" @init="mescrollInit">
         <div class="ze_x">
-          <div class="ze_x_a" v-for="(sert,index) in styser" :key="index">
+          <div class="ze_x_a" v-for="(sert,index) in styser" :key="index" @click="xianqing(sert)">
             <div style="overflow:hidden;">
               <div class="float_left ze_x_le">
                 <img :src="sert.carImg">
@@ -393,6 +393,7 @@ export default {
       styjiag:1,//开始1显示降价格，2显示升价格
       yue:1,//表示月份隐藏
       listpryue:'',//月份天数
+      folis:'',
 
       mescroll: null, // mescroll实例对象
       mescrollUp: {
@@ -417,21 +418,40 @@ export default {
     //获取选择的日期
     date() {
       let lists = [];
-      for (const list of this.dataList) {
+      let data = [];//号
+      if(this.folis==1){
+        if(this.$route.params.date!=null){
+         lists=this.$route.params.date;//搜索传进来的日期
+        }
+      }else{
+       for (const list of this.dataList) {
+        var mag = {};
         if (list.falg_a) {
-        lists.push(list.year);
+        this.$set(mag,'year',list.year);//年
+        this.$set(mag,'month',list.month);//月
+        for(const datayu of list.days){
+        if(datayu.flag){
+         data.push(datayu.day);//月
+         this.$set(mag,'days',data.toString());
+        }
+        }
+        lists.push(mag);
         }
       }
-      console.log("sss"+lists);
+      }
       return lists;
     },
     //获取天数
     daysty() {
       let lists = [];
-      for (const listday of this.daylist) {
+      if(this.folis==1){
+        lists=this.$route.params.daysty;//搜索传进来的日期
+      }else{
+        for (const listday of this.daylist) {
         if (listday.flag) {
           lists.push(listday.day);
         }
+      }
       }
       return lists;
     }
@@ -456,6 +476,8 @@ export default {
     this.priceInit(); //价格初始化
     this.scenic(); //获取途径景点
     this.getLabeltyp(); //自定标签
+    this.folis=this.$route.params.folis;
+    console.log(this.folis);
   },
   filters: {
     dayFilter: function(value) {
@@ -465,6 +487,15 @@ export default {
     }
   },
   methods: {
+    //点击常规路线详情
+    xianqing(sert){
+    this.$router.push({
+     name: 'F_details_page',
+     params:{
+     routeid:sert.routeid,
+     },
+     })
+    },
      //确定月份
   yuetpy(listpryue){
     this.yue=1;
@@ -482,6 +513,7 @@ export default {
      //月份点击
      monthClick(index) {
     this.yue=2;
+    this.folis="";
      if(this.dataList[index].flag==false){
         this.dataList.map(elem => {
         elem.flag = false;
@@ -571,6 +603,7 @@ export default {
       this.daylist = dayst;
     },
     dayClick(index) {
+      this.folis="";
       this.daylist[index].flag = !this.daylist[index].flag;
       if (this.daylist); //多选 daylist[index].flag=true//为选中天数
       this.mescroll.resetUpScroll();
@@ -644,10 +677,25 @@ export default {
       }
     },
     queding() {
-      this.mescroll.resetUpScroll();
       this.type = 0;
+      this.folis="";
+      this.mescroll.resetUpScroll();
     },
     async routine(page, mescroll) {
+      if(this.folis==1){
+      if(this.$route.params.minPrice!=null){
+      this.minPrice=this.$route.params.minPrice;//价格
+      }
+      if(this.$route.params.maxPrice!=null){
+      this.maxPrice=this.$route.params.maxPrice;//价格
+      }
+       if(this.$route.params.tagContent!=null){
+      this.tagContent=this.$route.params.tagContent;//属性
+      }
+      if(this.$route.params.scenicSpotid!=null){
+      this.scenicSpotid = this.$route.params.scenicSpotid;//景点id
+      }
+      }
       let data = await seledin(
         JSON.stringify(this.date),
         this.tagContent.toString(),
@@ -705,6 +753,7 @@ export default {
       }
     },
     sceClick(index) {
+      this.folis="";
       this.scenicSpotid = [];
       this.scejing[index].flag = !this.scejing[index].flag;
       for (const list of this.scejing) {
@@ -715,6 +764,7 @@ export default {
       this.mescroll.resetUpScroll();
     },
     lableClick(index1, index2) {
+      this.folis="";
       this.getLtyp[index1].comTagList[index2].flag = !this.getLtyp[index1]
         .comTagList[index2].flag;
       this.tagContent = [];

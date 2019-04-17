@@ -210,3 +210,12 @@ export const guanyusty = () =>ajax('/api/member/getArticle',{
 export const Country = () =>ajax('/api/member/getCountryCity',{
     
 })
+//常规路线详情接口
+export const getRouteDetailstyp = (routeid) =>ajax('/api/route/getRouteDetails',{
+    routeid:routeid,
+    
+})
+//常规路线/参团行程内容接口
+export const getRouteContpy = (routeid) =>ajax('/api/route/getRouteContent',{  
+    routeid:routeid,
+})

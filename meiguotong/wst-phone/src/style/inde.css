@@ -863,7 +863,8 @@ select{
 	overflow:hidden;
 	text-overflow:ellipsis;
     white-space:nowrap; 
-    width:100%;
+	width:100%;
+	text-align: left;
 }
 .ze_x_ril_d li{
    float: left;
@@ -1640,6 +1641,7 @@ select{
 	width: 100%;
 	overflow:hidden;
 	margin-bottom: 0.2rem;
+	text-align: left;
 }
 .Choose_a_room_d{
 	width: 27%;
@@ -3032,6 +3034,7 @@ select{
 	clear: both;
 	display: block;
 	margin-top: 0.3rem;
+	text-align: left;
 }
 .refund_b_a{
 	display: block;
@@ -3066,6 +3069,7 @@ select{
 	clear: both;
 	width: 100%;
 	padding-bottom: 0.5rem;
+	text-align: left;
 
 }
 .refund_c_b li{
@@ -3092,8 +3096,9 @@ select{
 	overflow: hidden;
 	clear: both;
 }
-.refund_d_a text{
+.refund_d_a_jia{
 	font-weight: 600;
+	text-align: left
 }
 .refund_d_a{
 	overflow: hidden;
@@ -3119,6 +3124,7 @@ select{
 	padding-right: 0.5rem;
 	line-height:1.5rem;
 	border: 1px solid gainsboro;
+	margin-right:0.5rem;
 }
 .refund_d_b ul i{
 	margin-top: 0.5rem;
@@ -3130,7 +3136,6 @@ select{
 	overflow: hidden;
 	clear: both;
 	margin-top:0.5rem;
-
 }
 .refund_d_c_jia{
 	color:#2577e3;
@@ -3158,6 +3163,7 @@ select{
 	overflow: hidden;
 	clear: both;
 	margin-top: 0.3rem;
+	text-align: left;
 }
 .refund_d_d dl dd{
 	margin-bottom: 0.3rem;
@@ -5045,4 +5051,12 @@ select{
 .tuozhi{
 	overflow: hidden;
 	margin-bottom: 0.5rem;
+}
+.flexslider_jia{
+	width: 100%;
+	height:12rem;
+}
+.flexslider_jia img{
+	width: 100%;
+	height: 100%;
 }
