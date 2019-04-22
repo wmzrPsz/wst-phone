@@ -220,23 +220,23 @@ export const getRouteContpy = (routeid) =>ajax( process.env.VUE_APP_PROXY_API +'
     routeid:routeid,
 })
 //评价
-export const selectCommentUrl = (pageNo,routeid,proType) =>ajax('/api/common/selectComment',{  
+export const selectCommentUrl = (pageNo,routeid,proType) =>ajax(process.env.VUE_APP_PROXY_API +'/common/selectComment',{  
     pageNo:pageNo,
     typeid:routeid,
     proType:proType,
 })
 //用户资讯
-export const getConsultUrl = (pageNo,routeid,proType) =>ajax('/api/common/getConsult',{  
+export const getConsultUrl = (pageNo,routeid,proType) =>ajax( process.env.VUE_APP_PROXY_API +'/common/getConsult',{  
     pageNo:pageNo,
     typeid:routeid,
     proType:proType,
 })
 //收藏接口
-export const saveCollectionUrl =(routeid,collectionType) =>ajax('/api/common/saveCollection',{
+export const saveCollectionUrl =(routeid,collectionType) =>ajax( process.env.VUE_APP_PROXY_API +'/common/saveCollection',{
     typeid:routeid,
     collectionType:collectionType,
 })
 //取消收藏
-export const deleteCollectionUrl =(routeid) =>ajax('/api/member/deleteCollection',{
+export const deleteCollectionUrl =(routeid) =>ajax( process.env.VUE_APP_PROXY_API +'/member/deleteCollection',{
     collectionids:routeid,
 })
