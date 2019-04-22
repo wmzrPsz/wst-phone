@@ -14,6 +14,8 @@
 }
 </style>
 <script>
+import { mapState, mapMutations } from "vuex";
+import { getLanguage, getProtocol, getCurrency, Material } from '@/utils/getData';
 export default {
   name: 'App',
   created () {
@@ -27,6 +29,34 @@ export default {
         sessionStorage.setItem("store",JSON.stringify(this.$store.state))
     })
 
+    this.getProtocol();
+    this.getLanguage();
+    this.getCurrency();
+    this.getMember();
+  },
+  computed: {
+      ...mapState([ "loginType" ]),
+  },
+  methods: {
+    ...mapMutations(["languageListChange", "currencyListChange", "setComProtocol", "setMember"]),
+    //获取网站基本参数
+    async getProtocol() {
+      this.setComProtocol(await getProtocol());
+    },
+    //获取语言
+    async getLanguage() {
+       this.languageListChange(await getLanguage())
+    },
+    //获取货币
+    async getCurrency() {
+      this.currencyListChange(await getCurrency())
+    },
+    //获取会员信息
+    async getMember() {
+        if (this.loginType == 2) {
+            this.setMember(await Material());
+        }
+    },
   }
 }
 </script>

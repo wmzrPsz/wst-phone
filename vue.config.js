@@ -1,4 +1,3 @@
-const path = require("./src/config/base").path;  //路径你们改下
 
 module.exports = {
     // 项目部署的基础路径
@@ -69,35 +68,24 @@ module.exports = {
 
     // 配置 webpack-dev-server 行为。
     devServer: {
-  //      open: process.platform === 'darwin',
-  //      openPage: "",
-        // host: 'localhost',
-        port: 8888,
+        disableHostCheck: true,
+        port: 8080,
         // https: false,
        hotOnly: false,  ////热更新（webpack已实现了，这里false即可）
-        open: false,  ////浏览器自动打开页面
+        open: true,  ////浏览器自动打开页面
         historyApiFallback: true,  //当使用 HTML5 History API 时，任意的 404 响应都可能需要被替代为 index.html
-    //    proxy: {
-    //        "/interface": 'http://47.105.70.4:8989/meiguotong/a/interface',
-    //    } , // string | Object
-        // proxy: 'http://localhost:8081',
         proxy: {
-            '/api': {
-          //    target: 'http://47.105.70.4:8989/meiguotong/a/interface',
-        //    target: 'http://localhost:8081/meiguotong/a/interface',
-           target: path,
-           //   target: process.env.API_ROOT,
-         //     target:     process.env.NODE_ENV === 'production' ? "http://47.105.70.4:8989/meiguotong/a/interface":"http://47.105.70.4:8989/meiguotong/a/interface";
-          //    target: path,
+          [process.env.VUE_APP_PROXY_API]: {
+              target: process.env.VUE_APP_APIROOT,
               ws: true,  //如果要代理 websockets
               changeOrigin: true,
               pathRewrite:{
-                '^/api':'/'
+                ['^'+process.env.VUE_APP_PROXY_API]:'/'
                 }
             },
           },
         before: app => {
-         app.proxy = "http://localhost:8081/meiguotong/a/interface";
+       
         }
     },
 

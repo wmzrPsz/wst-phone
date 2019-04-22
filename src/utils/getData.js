@@ -3,12 +3,12 @@ import md5 from 'js-md5';
 import {imgUpload} from "@/utils/common"
 
 //登录
-export const login = (phone, passWord) => ajax('/api/forlogin/login', {
+export const login = (phone, passWord) => ajax( process.env.VUE_APP_PROXY_API +'/forlogin/login', {
                 phone: phone,
                 passWord: md5(passWord)
 });
 //注册
-export const register = (type,mobile,email,smsCode,passWord,area,) => ajax('/api/forlogin/register', {
+export const register = (type,mobile,email,smsCode,passWord,area,) => ajax( process.env.VUE_APP_PROXY_API +'/forlogin/register', {
     createType:type,//
     phone:mobile,//手机号码
     email:email,//邮箱号码
@@ -20,7 +20,7 @@ export const register = (type,mobile,email,smsCode,passWord,area,) => ajax('/api
     source:3,
 });
 //邮箱和短信
-export const sendSms = (mobile,email,type,area)=> ajax('/api/forlogin/sendSms',{
+export const sendSms = (mobile,email,type,area)=> ajax( process.env.VUE_APP_PROXY_API +'/forlogin/sendSms',{
     mobile:mobile,
     email:email,
     category:type,
@@ -43,7 +43,7 @@ export const fordet = (type,moib,smsCo,passWord)=> ajax('api/forlogin/updatePass
 //首页
 
 //绑定手机或邮箱
-export const bind = (type,mobile,email,smsCode,passWord,area,) => ajax('/api/forlogin/bindNew', {
+export const bind = (type,mobile,email,smsCode,passWord,area,) => ajax( process.env.VUE_APP_PROXY_API +'/forlogin/bindNew', {
     createType:type,//
     phone:mobile,//手机号码
     email:email,//邮箱号码
@@ -55,11 +55,11 @@ export const bind = (type,mobile,email,smsCode,passWord,area,) => ajax('/api/for
     source:3,
 });
 //获取自定标签
-export const zhiding =(routeType) => ajax('/api/common/getLabel',{
+export const zhiding =(routeType) => ajax( process.env.VUE_APP_PROXY_API +'/common/getLabel',{
     routeType:routeType,
 })
 //常规路线搜索接口
-export const seledin = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSpotid, pageNo) => ajax('/api/route/selectRoute', {
+export const seledin = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSpotid, pageNo) => ajax( process.env.VUE_APP_PROXY_API +'/route/selectRoute', {
     date:date,//日期
     day:daysty,//天数
     minPrice:minPrice,//最小价格
@@ -70,7 +70,7 @@ export const seledin = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSp
     pageNo: pageNo,
 },'post');
 //当地参团搜索接口
-export const selectttpy = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSpotid, pageNo) => ajax('/api/route/selectCityRoute', {
+export const selectttpy = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSpotid, pageNo) => ajax( process.env.VUE_APP_PROXY_API +'/route/selectCityRoute', {
     date:date,//日期
     day:daysty,//天数
     minPrice:minPrice,//最小价格
@@ -81,7 +81,7 @@ export const selectttpy = (date,tagContent,daysty,srtype,minPrice,maxPrice,sceni
     pageNo: pageNo,
 },'post');
 //当地玩家
-export const wanjia = (guideAge,guideSex,shuxin,minPrice,maxPrice,pageNo) => ajax('/api/guide/guideScreen',{
+export const wanjia = (guideAge,guideSex,shuxin,minPrice,maxPrice,pageNo) => ajax( process.env.VUE_APP_PROXY_API +'/guide/guideScreen',{
     guideAge:guideAge,//年龄
     guideSex:guideSex,//性别
     minPrice:minPrice,//低价
@@ -90,7 +90,7 @@ export const wanjia = (guideAge,guideSex,shuxin,minPrice,maxPrice,pageNo) => aja
     pageNo: pageNo,
 });
 //油轮接口
-export const youlun = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSpotid,startCity,hangxianty,pageNo) => ajax('/api/cruise/cruiseScreen', {
+export const youlun = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSpotid,startCity,hangxianty,pageNo) => ajax( process.env.VUE_APP_PROXY_API +'/cruise/cruiseScreen', {
     date:date,//日期
     day:daysty,//天数
     minPrice:minPrice,//最小价格
@@ -103,60 +103,60 @@ export const youlun = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSpo
     pageNo: pageNo,
 },'post');
 //景点接口
-export const jingdian = (cityid,tagContent,srtype,pageNo) => ajax('/api/scenic/selectScenicList',{
+export const jingdian = (cityid,tagContent,srtype,pageNo) => ajax( process.env.VUE_APP_PROXY_API +'/scenic/selectScenicList',{
     cityid:cityid,//城市ID
     orderByType:srtype,//1.销量2.价格降序3.价格升序4好评
     labelAttrid:tagContent,//属性ID
     pageNo: pageNo,
 });
 //景点选择城市接口/根据语言获取城市和城市景点数量接口
-export const jdchengshi = () => ajax('/api/scenic/getCityScenicNum',{
+export const jdchengshi = () => ajax( process.env.VUE_APP_PROXY_API +'/scenic/getCityScenicNum',{
 
 });
 //获取邮轮航线接口
-export const gankou = () => ajax('/api/cruise/getCourse',{
+export const gankou = () => ajax( process.env.VUE_APP_PROXY_API +'/cruise/getCourse',{
   
 });
 //根据语言获取出发城市接口
-export const chengshi = () => ajax('/api/common/getCityList',{
+export const chengshi = () => ajax( process.env.VUE_APP_PROXY_API +'/common/getCityList',{
 
 });
 //获取途径 景点
-export const  getScenicByCity = () => ajax('/api/common/getScenicByCity',{
+export const  getScenicByCity = () => ajax( process.env.VUE_APP_PROXY_API +'/common/getScenicByCity',{
     cityid:1,//城市ID
 });
 //获取首页导航栏
-export const getComNavigation = () =>ajax('/api/common/getComNavigation',{
+export const getComNavigation = () =>ajax( process.env.VUE_APP_PROXY_API +'/common/getComNavigation',{
 })
 //获取热门城市
-export const HotCityList = () =>ajax('/api/common/getHotCity',{
+export const HotCityList = () =>ajax( process.env.VUE_APP_PROXY_API +'/common/getHotCity',{
 })
 //获取语言
-export const getLanguage = () =>ajax('/api/common/getLanguage',{
+export const getLanguage = () =>ajax( process.env.VUE_APP_PROXY_API +'/common/getLanguage',{
 })
 //获取货币
-export const getCurrency = () =>ajax('/api/common/getCurrency',{
+export const getCurrency = () =>ajax( process.env.VUE_APP_PROXY_API +'/common/getCurrency',{
 })
 //获取基本参数
-export const getProtocol = () =>ajax('/api/common/getProtocol',{
+export const getProtocol = () =>ajax( process.env.VUE_APP_PROXY_API +'/common/getProtocol',{
 })
 //获取个人（旅行社）信息/个人质料
-export const Material = () =>ajax('/api/member/myInfor',{
+export const Material = () =>ajax( process.env.VUE_APP_PROXY_API +'/member/myInfor',{
 })
 //获得个人消息
-export const xiaoxi = (pageNo) =>ajax('/api/member/getCompush',{
+export const xiaoxi = (pageNo) =>ajax( process.env.VUE_APP_PROXY_API +'/member/getCompush',{
     pageNo:pageNo
 })
 //获得个人评论消息
-export const pinglun = (pageNo) =>ajax('/api/member/getComment',{
+export const pinglun = (pageNo) =>ajax( process.env.VUE_APP_PROXY_API +'/member/getComment',{
     pageNo:pageNo
 })
 //图片上传
-export const imgUp = () => imgUpload('/api/common/imgUpload',{
+export const imgUp = () => imgUpload( process.env.VUE_APP_PROXY_API +'/common/imgUpload',{
 
 })
 //修改个人（旅行社）信息
-export const xuigai = (memberType,photo,nickName,phone,countryid,cityid,address,birthday,sex) =>ajax('/api/member/updateMy',{
+export const xuigai = (memberType,photo,nickName,phone,countryid,cityid,address,birthday,sex) =>ajax( process.env.VUE_APP_PROXY_API +'/member/updateMy',{
     memberType:memberType,
     photo:photo,//头像
     nickName:nickName,//昵称
@@ -168,31 +168,31 @@ export const xuigai = (memberType,photo,nickName,phone,countryid,cityid,address,
     sex:sex,//性别
 })
 //我的收藏——常规路线
-export const changui = (collectionType,pageNo) =>ajax('/api/member/myCollection',{
+export const changui = (collectionType,pageNo) =>ajax( process.env.VUE_APP_PROXY_API +'/member/myCollection',{
     collectionType:collectionType,
     pageNo:pageNo
 })
 //取消收藏接口
-export const quxiao = (collectionids) =>ajax('/api/member/deleteCollection',{
+export const quxiao = (collectionids) =>ajax( process.env.VUE_APP_PROXY_API +'/member/deleteCollection',{
     collectionids:collectionids
 })
 //我的草稿
-export const caogao = (pageNo) =>ajax('/api/member/myDraft',{
+export const caogao = (pageNo) =>ajax( process.env.VUE_APP_PROXY_API +'/member/myDraft',{
     pageNo:pageNo
 })
 //我的草稿
-export const shancaogao = (collectionids) =>ajax('/api/member/deleteDraft',{
+export const shancaogao = (collectionids) =>ajax( process.env.VUE_APP_PROXY_API +'/member/deleteDraft',{
     ids:collectionids,
 })
 //获取常用联系人接口
-export const lianxir = () =>ajax('/api/common/getMemberContacts',{
+export const lianxir = () =>ajax( process.env.VUE_APP_PROXY_API +'/common/getMemberContacts',{
 })
 //删除联系人接口
-export const shangchulianx = (contactid) =>ajax('/api/member/deleteMemberContact',{
+export const shangchulianx = (contactid) =>ajax( process.env.VUE_APP_PROXY_API +'/member/deleteMemberContact',{
     contactid:contactid,
 })
 //添加/修改常用联系人接口
-export const tianjialianx = (chineseName,englishName,certType,certNo,certValidDate,birthday,area,mobile,contactid) =>ajax('/api/member/addMemberContact',{
+export const tianjialianx = (chineseName,englishName,certType,certNo,certValidDate,birthday,area,mobile,contactid) =>ajax( process.env.VUE_APP_PROXY_API +'/member/addMemberContact',{
     chineseName:chineseName,//中名字
     englishName:englishName,//英名字
     certType:certType,//证件类型
@@ -204,19 +204,19 @@ export const tianjialianx = (chineseName,englishName,certType,certNo,certValidDa
     contactid:contactid,
 })
 //关于我们接口
-export const guanyusty = () =>ajax('/api/member/getArticle',{
+export const guanyusty = () =>ajax( process.env.VUE_APP_PROXY_API +'/member/getArticle',{
 })
 //根据语言获取国家城市接口
-export const Country = () =>ajax('/api/member/getCountryCity',{
+export const Country = () =>ajax( process.env.VUE_APP_PROXY_API +'/member/getCountryCity',{
     
 })
 //常规路线详情接口
-export const getRouteDetailstyp = (routeid) =>ajax('/api/route/getRouteDetails',{
+export const getRouteDetailstyp = (routeid) =>ajax( process.env.VUE_APP_PROXY_API +'/route/getRouteDetails',{
     routeid:routeid,
     
 })
 //常规路线/参团行程内容接口
-export const getRouteContpy = (routeid) =>ajax('/api/route/getRouteContent',{  
+export const getRouteContpy = (routeid) =>ajax( process.env.VUE_APP_PROXY_API +'/route/getRouteContent',{  
     routeid:routeid,
 })
 //评价
