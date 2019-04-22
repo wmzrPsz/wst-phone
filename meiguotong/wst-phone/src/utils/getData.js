@@ -219,3 +219,24 @@ export const getRouteDetailstyp = (routeid) =>ajax('/api/route/getRouteDetails',
 export const getRouteContpy = (routeid) =>ajax('/api/route/getRouteContent',{  
     routeid:routeid,
 })
+//评价
+export const selectCommentUrl = (pageNo,routeid,proType) =>ajax('/api/common/selectComment',{  
+    pageNo:pageNo,
+    typeid:routeid,
+    proType:proType,
+})
+//用户资讯
+export const getConsultUrl = (pageNo,routeid,proType) =>ajax('/api/common/getConsult',{  
+    pageNo:pageNo,
+    typeid:routeid,
+    proType:proType,
+})
+//收藏接口
+export const saveCollectionUrl =(routeid,collectionType) =>ajax('/api/common/saveCollection',{
+    typeid:routeid,
+    collectionType:collectionType,
+})
+//取消收藏
+export const deleteCollectionUrl =(routeid) =>ajax('/api/member/deleteCollection',{
+    collectionids:routeid,
+})

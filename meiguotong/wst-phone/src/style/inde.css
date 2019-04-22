@@ -3098,7 +3098,8 @@ select{
 }
 .refund_d_a_jia{
 	font-weight: 600;
-	text-align: left
+	text-align: left;
+	margin-top: 0.3rem;
 }
 .refund_d_a{
 	overflow: hidden;
@@ -3114,9 +3115,6 @@ select{
 	height: 1.5rem;
 
 }
-.refund_d_b{
-	overflow: hidden;
-}
 .refund_d_b ul li{
 	margin-top: 0.5rem;
 	float: left;
@@ -3124,13 +3122,15 @@ select{
 	padding-right: 0.5rem;
 	line-height:1.5rem;
 	border: 1px solid gainsboro;
-	margin-right:0.5rem;
+}
+.refund_d_b_hu_a{
+	float: left;
 }
 .refund_d_b ul i{
 	margin-top: 0.5rem;
 	line-height: 1.5rem;
-	margin-right: 0.3rem;
-	margin-left: 0.3rem;
+	margin-left: 0.1rem;
+	margin-right: 0.1rem;
 }
 .refund_d_c {
 	overflow: hidden;
@@ -3140,7 +3140,7 @@ select{
 .refund_d_c_jia{
 	color:#2577e3;
 	background-color: white!important;
-	border: 1px solid #2577e3;
+	border: 1px solid #2577e3!important;
 }
 .refund_d_c ul li{
 	margin-top: 0.5rem;
@@ -3151,6 +3151,7 @@ select{
 	line-height: 1rem;
 	padding-left:0.3rem;
 	padding-right: 0.3rem;
+	border: 1px solid #F5F5F5;
 }
 .refund_d_d_jia{
 	clear: both;
@@ -3176,6 +3177,7 @@ select{
 	display: block;
 	margin-left: 0.5rem;
 	width:95%;
+	text-align: left;
 }
 .refund_d_f{
 	display: block;
@@ -3197,6 +3199,7 @@ select{
 .visual_a span{
 	display: block;
 	clear: block;
+	text-align: left;
 }
 .visual_b{
 	display: block;
@@ -3217,6 +3220,9 @@ select{
 	font-weight: 600;
 	margin-top:0.5rem;
 	overflow: hidden;
+}
+.visual_bb i{
+	float: left;
 }
 .visual_c{
 	overflow: hidden;margin-top: 0.3rem;
@@ -3250,6 +3256,9 @@ select{
 	top: 100%;
 	margin-top: -2.5rem;
 }
+.collection_di_a{
+	margin-top: -0.2rem;
+}
 .collection_di_a i{
 	display: block;
 	float: left;
@@ -3257,7 +3266,7 @@ select{
     height:1rem;
     margin-right:0.5rem;
     margin-left: 0.5rem;
-    margin-top:0.7rem;
+    margin-top:0.5rem;
 }
 .collection_di_a text{
 	display: block;
