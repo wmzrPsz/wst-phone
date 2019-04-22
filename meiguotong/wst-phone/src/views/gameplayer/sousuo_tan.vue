@@ -9,7 +9,7 @@
           <li class="float_left font-14" v-if="log==1">
             <router-link to="/p_index">
             <i class="a_btou">
-              <img :src="zhiliao.photo">
+              <img v-lazy="zhiliao.photo">
             </i>
             </router-link>
               <i class="denlu_jia">{{zhiliao.nickName}}</i>
@@ -17,7 +17,7 @@
           <!--没登陆默认-->
           <li class="float_left font-14" v-if="log==2">
             <i class="a_btou">
-              <img :src="getProtsty.defaultPhoto">
+              <img v-lazy="getProtsty.defaultPhoto">
             </i>
             <router-link to="/login">
               <i class="denlu_jia">登陆/注册</i>
@@ -59,7 +59,7 @@
         <div class="b_xianm dianh_a_a border_d">
           <div class="float_left">
             <i class="rex">
-              <img :src="getProtsty.img">
+              <img v-lazy="getProtsty.img">
             </i>
             <br>
             <i class="font-12 float_left">服务热线</i>
