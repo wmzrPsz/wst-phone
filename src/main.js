@@ -2,12 +2,12 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/router'
 import store from './vuex/store'
-import {Toast,Popup,Picker,DatetimePicker,Swipe,SwipeItem } from 'vant'
+import {Toast,Popup,Picker,DatetimePicker,Swipe,SwipeItem,Rate} from 'vant'
 import "./style/inde.css";
  //生产环境提示，这里设置成了false
 Vue.config.productionTip = false
 
- Vue.use(Toast).use(Popup).use(Picker).use(DatetimePicker).use(Swipe).use(SwipeItem);
+ Vue.use(Toast).use(Popup).use(Picker).use(DatetimePicker).use(Swipe).use(SwipeItem).use(Rate);
 
 
  router.beforeEach((to, from, next) => {
