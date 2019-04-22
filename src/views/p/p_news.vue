@@ -34,7 +34,7 @@
         <div class="border_e evaluate_wanjia_z" v-for="(list,index) in styser" :key="index">
           <div class="evaluate_wanjia_z_a">
             <div class="evaluate_wanjia_c beijingtu float_left">
-              <img :src="list.memberPhoto">
+              <img v-lazy="list.memberPhoto">
             </div>
             <div class="evaluate_wanjia_d float_left">
               <div class="font-16" style="text-align: left;">{{list.memberName}}</div>

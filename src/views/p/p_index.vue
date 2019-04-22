@@ -16,7 +16,7 @@
       <div class="centrality" :style="backgroundDiv">
         <div class="centrality_a">
           <div class="centrality_aa beijingtu">
-            <img :src="zhiliao.photo">
+            <img v-lazy="zhiliao.photo">
           </div>
           <div class="centrality_ab color-b font-12">
             <ul>

@@ -18,7 +18,7 @@
           </div>
           <div class="draft_z">
             <div class="float_left draft_a beijingtu">
-              <img :src="list.cityImg" :onerror="defaultImgEro">
+              <img v-lazy="list.cityImg" :onerror="defaultImgEro">
             </div>
             <div class="float_right draft_b">
               <span class="font-14 draft_b_a">{{list.title}}</span>

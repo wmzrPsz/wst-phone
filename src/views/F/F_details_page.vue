@@ -4,7 +4,7 @@
    <div class="flexslider ">
     <van-swipe :autoplay="1000" class="flexslider_jia">
    <van-swipe-item v-for="(image, index) in images" :key="index">
-    <img :src="image" />
+    <img v-lazy="image" />
   </van-swipe-item>
 </van-swipe>
   </div>
@@ -84,7 +84,7 @@
           </dl>
           <div class="refund_d_e  font-16">{{lister.scenicName}}</div>
           <div class="refund_d_e color-b font-14">{{lister.infor}}</div>
-          <span class="refund_d_f beijingtu" v-if="imgtyp==1"><img :src="lister.img"></span>
+          <span class="refund_d_f beijingtu" v-if="imgtyp==1"><img v-lazy="lister.img"></span>
       </div>
 		 </div>
       <!--用户点评-->
@@ -97,7 +97,7 @@
         <div v-if="pingluntyp.length!=0">
         <div class="border_e evaluate_wanjia_z" v-for="(pinlist,index) in pingluntyp" :key="index">
           <div class="evaluate_wanjia_z_a">
-           <div class="evaluate_wanjia_c beijingtu float_left"><img :src="pinlist.memberPhoto"></div>
+           <div class="evaluate_wanjia_c beijingtu float_left"><img v-lazy="pinlist.memberPhoto"></div>
            <div class="evaluate_wanjia_d float_left">
             <div class="font-16 float_left">{{pinlist.memberName}}</div>
             <div class="ez-star ">
@@ -111,8 +111,8 @@
            </div>
           </div>
         </div>
-         <button class="font-12 wanjiahuof_a color-b">查看更多</button>
       </div>
+         <button class="font-12 wanjiahuof_a color-b" @click="pinglunclick()">查看更多</button>
 
 		 </div>
 		 <!--用户质询-->
@@ -128,7 +128,7 @@
              <span class="font-12 float_right color-b">{{yonslit.createDate}}</span>
          </ul>
       </div>
-       <button class="font-12 wanjiahuof_a color-b">查看更多</button>
+       <button class="font-12 wanjiahuof_a color-b" @click="yonghuclick()">查看更多</button>
 		 </div>
 		 <!--视屏质料-->
 
@@ -223,13 +223,31 @@
 			}
 	 }
  },
-  created(){
+  mounted(){
    this.styget();
    this.styneiryp();
    this.selectyp();//评价
    this.yonzityp();//用户资讯
   },
   methods:{
+  //点击查看更多评论
+  pinglunclick(){
+    this.$router.push({
+     name: 'F_comment',
+     params:{
+     routeid:this.$route.params.routeid,
+     },
+     })
+    },
+    //点击用户质询更多
+    yonghuclick :function(){
+    this.$router.push({
+      name:'F_inquiry',
+      params:{
+       routeid:this.$route.params.routeid,
+      }
+    })
+    },
   //常规路线详情
   async styget(){
     this.routeid=this.$route.params.routeid;
@@ -299,7 +317,6 @@
    this.routeid,
   )
   if(data){
-    alert("sss");
    this.styget();
   }
   }

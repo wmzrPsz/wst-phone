@@ -192,10 +192,10 @@
         <div class="wanjia_jia">
           <div class="wanjia_a border_a" v-for="(style,index) in styser" :key="index">
             <div class="wanjia_b">
-              <img style="width: 100%;" :src="style.img">
+              <img style="width: 100%;" v-lazy="style.img">
             </div>
             <div class="wanjia_c">
-              <img style="width: 100%; height: 100%;" :src="style.photo">
+              <img style="width: 100%; height: 100%;" v-lazy="style.photo">
             </div>
             <div class="wanjia_d">
               <ul>

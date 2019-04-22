@@ -369,7 +369,7 @@
           <div class="ze_x_a" v-for="(sert,index) in styser" :key="index">
             <div style="overflow:hidden;">
               <div class="float_left ze_x_le">
-                <img :src="sert.carImg">
+                <img v-lazy="sert.carImg">
               </div>
               <div class="float_left ze_x_ril">
                 <div class="font-14 ze_x_ril_jia">{{sert.title}}</div>

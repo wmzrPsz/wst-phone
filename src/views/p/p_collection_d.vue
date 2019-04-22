@@ -23,7 +23,7 @@
           <div class="ze_x_a">
             <div style="overflow:hidden;">
               <div class="float_left ze_x_le">
-                <img :src="sert.img |splitVc(0)">
+                <img v-lazy="sert.img |splitVc(0)">
               </div>
               <div class="float_left ze_x_ril">
                 <div class="font-14 ze_x_ril_jia">{{sert.name}}</div>
