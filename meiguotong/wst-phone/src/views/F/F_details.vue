@@ -292,7 +292,7 @@
           <div class="ze_x_a" v-for="(sert,index) in styser" :key="index" @click="xianqing(sert)">
             <div style="overflow:hidden;">
               <div class="float_left ze_x_le">
-                <img :src="sert.carImg">
+                <img v-lazy="sert.carImg">
               </div>
               <div class="float_left ze_x_ril">
                 <div class="font-14 ze_x_ril_jia">{{sert.title}}</div>
@@ -469,7 +469,7 @@ export default {
     this.$refs.mescroll && this.$refs.mescroll.beforeRouteLeave(); // 退出路由时,记录列表滚动的位置,隐藏回到顶部按钮和isBounce的配置
     next();
   },
-  created() {
+  mounted() {
     this.LopTime(); //获取当前一年的月份和天数
     this.LopTime_list(); //12个月循环
     this.dayListInit(); //天数初始化

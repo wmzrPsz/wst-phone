@@ -19,7 +19,7 @@
           <div class="ze_x_a">
             <div style="overflow:hidden;">
               <div class="float_left ze_x_le">
-                <img :src="list.img | splitVc(0)">
+                <img v-lazy="list.img | splitVc(0)">
               </div>
               <div class="float_left ze_x_ril">
                 <p class="font-16" style="overflow:hidden;">{{list.name}}</p>

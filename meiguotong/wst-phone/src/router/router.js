@@ -70,6 +70,10 @@ const F_details = r => require.ensure([], () => r(require('../views/F/F_details'
 const F_search = r => require.ensure([], () => r(require('../views/F/F_search')), 'F_search')
 //常规路线详情
 const F_details_page = r => require.ensure([], () => r(require('../views/F/F_details_page')), 'F_details_page')
+//评论
+const F_comment = r => require.ensure([], () => r(require('../views/F/F_comment')), 'F_comment')
+//用户质询
+const F_inquiry = r => require.ensure([], () => r(require('../views/F/F_inquiry')), 'F_inquiry')
 Vue.use(Router)
 export default new Router({
   mode: 'history',
@@ -314,6 +318,20 @@ export default new Router({
         name:'F_details_page',
         component:F_details_page,
         meta:{'title':'常规路线详情'}
+      },
+      //评论
+      {
+        path:'/F_comment',
+        name:'F_comment',
+        component:F_comment,
+        meta:{'title':'常规路线全部评论'}
+      },
+      //用户质询
+      {
+        path:'/F_inquiry',
+        name:'F_inquiry',
+        component:F_inquiry,
+        meta:{'title':'用户质询'}
       },
   ]
 })

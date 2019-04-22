@@ -1160,14 +1160,14 @@
 </style>
 
 <script>
-import ezHeader from '@/components/header.vue'
+import ezHeader from '@/components/header.vue';
 export default {
   name: "indexher",
   data() {
     return {};
   },
   components:{
-    ezHeader
+    ezHeader,
   },
   methods: {}
 };

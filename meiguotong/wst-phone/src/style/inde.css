@@ -499,9 +499,6 @@ select{
 }
 .dian_jia_a{
 	overflow: hidden;
-	position: fixed;
-	bottom: 0px;
-	width: 100%;
 }
 .dianh_a{
 	margin-top: 0.5rem;
@@ -1840,8 +1837,6 @@ select{
 }
 .sanxing_b{
 	clear: both;
-	width:95%;
-	margin:auto;
 }
 .sanxing_b i img{
 	width: 0.5rem;
@@ -2064,7 +2059,6 @@ select{
 	height: 0.6rem;
 	margin-right: 0.3rem;
 	float: left;
-	margin-top: 0.2rem;
 }
 .evaluate_wanjia_z{
 	overflow: hidden;
@@ -2111,6 +2105,7 @@ select{
 	padding-left:0.5rem;
 	margin:auto;
 	background-color: #F5F5F5;
+	font-size: 12px;
 }
 .Car_renting_z{
 	overflow: hidden;

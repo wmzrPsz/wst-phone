@@ -161,7 +161,7 @@
           <div class="ze_x_a" v-for="(list,index) in styser" :key="index">
             <div style="overflow:hidden; margin-bottom:0.3rem;">
               <div class="float_left ze_x_le">
-                <img :src="list.imgUrl | splitVc(0)">
+                <img v-lazy="list.imgUrl | splitVc(0)">
               </div>
               <div class="float_left ze_x_ril">
                 <div class="font-14 ze_x_le_a">{{list.name}}</div>

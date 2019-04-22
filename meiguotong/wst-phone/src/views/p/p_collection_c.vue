@@ -15,10 +15,10 @@
               <img v-if="style.flag==true" src="../../assets/img/A/me_plcz_through_btn.png">
             </div>
             <div class="wanjia_b" style="margin-top:-13.5rem;">
-              <img style="width: 100%;height:7rem" :src="style.img">
+              <img style="width: 100%;height:7rem" v-lazy="style.img">
             </div>
             <div class="wanjia_c">
-              <img style="width: 100%; height: 100%;" :src="style.img">
+              <img style="width: 100%; height: 100%;" v-lazy="style.img">
             </div>
             <div class="wanjia_d">
               <ul>

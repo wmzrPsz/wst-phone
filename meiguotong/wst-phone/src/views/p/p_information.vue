@@ -16,7 +16,7 @@
                 用户头像
                 <span class="float_right">
                   <i class="float_left centrality_e_b_gai beijingtu">
-                    <img :src="zhiliao.photo">
+                    <img v-lazy="zhiliao.photo">
                   </i>
                   <i class="float_left centrality_e_a beijingtu">
                     <img src="../../assets/img/A/more_icon@2x.png">

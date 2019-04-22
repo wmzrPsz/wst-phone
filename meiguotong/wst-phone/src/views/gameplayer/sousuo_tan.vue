@@ -142,8 +142,9 @@ import {
   getComNavigation,
   Material //个人质料
 } from "@/utils/getData";
-import { fnIsLogin } from "@/utils/common"; //判断有无登陆方法
-
+import { isNull } from "@/utils/common";
+import store from '@/vuex/store';
+import ajax from '@/utils/fetch';
 export default {
   name: "index",
   data() {
@@ -157,8 +158,8 @@ export default {
       huobi: [], //货币
       huobityp: [],
       gettp: [], //获取首页
-      log: "", //判断有没有登陆
-      zhiliao: "" //个人质料
+      zhiliao: "", //个人质料
+      log:1
     };
   },
   computed: {
@@ -249,20 +250,22 @@ export default {
     },
     //登陆
     async fnIsLogin() {
-      let data = await fnIsLogin();
-      if (data) {
-        console.log("已登陆--------------");
-        this.log = 1;
+       if(store.state.loginUid!=0){
+         //登陆了
+        this.log=1;
         this.Material();
-      } else {
-        this.log = 2;
-      }
+       }
+       if(store.state.loginUid==0){
+         //没登陆了
+        this.log=2;
+       }
     },
     //个人质料
     async Material() {
       let data = await Material();
       if (data) {
         this.zhiliao = data;
+        console.log(this.zhiliao);
       }
     }
   }

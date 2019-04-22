@@ -240,3 +240,11 @@ export const saveCollectionUrl =(routeid,collectionType) =>ajax( process.env.VUE
 export const deleteCollectionUrl =(routeid) =>ajax( process.env.VUE_APP_PROXY_API +'/member/deleteCollection',{
     collectionids:routeid,
 })
+//添加用户咨询接口
+export const saveConsultUrl = (routeid,proType,content,name,mobile) =>ajax (process.env.VUE_APP_PROXY_API + '/common/saveConsult',{
+    typeid:routeid,
+    proType:proType,
+    content:content,
+    name:name,
+    mobile:mobile
+})
