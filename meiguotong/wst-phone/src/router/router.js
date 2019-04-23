@@ -316,7 +316,7 @@ export default new Router({
       },
       //常规路线详情
       {
-        path:'/params/:routeid',
+        path:'/F_details_page/:routeid',
         name:'F_details_page',
         component:F_details_page,
         meta:{'title':'常规路线详情'}
