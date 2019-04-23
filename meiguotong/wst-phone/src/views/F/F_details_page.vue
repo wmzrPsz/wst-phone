@@ -242,7 +242,7 @@
     //点击用户质询更多
     yonghuclick :function(){
     this.$router.push({
-      name:'F_inquiry',
+      name:'F_information',
       params:{
        routeid:this.$route.params.routeid,
       }
