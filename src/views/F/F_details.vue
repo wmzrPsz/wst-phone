@@ -491,9 +491,6 @@ export default {
     xianqing(sert){
     this.$router.push({
      path: 'F_details_page/'+sert.routeid,
-    //  params:{
-    //  routeid:sert.routeid,
-    //  },
      })
     },
      //确定月份

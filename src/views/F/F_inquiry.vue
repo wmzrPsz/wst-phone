@@ -65,7 +65,7 @@ export default {
 			this.mobile,
 		);
 		if(data){
-		 this.$router.push("/F_details");
+		 window.history.go(-1)
 		}
 		}
 	}

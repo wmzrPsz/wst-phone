@@ -77,6 +77,7 @@ import MescrollVue from "mescroll.js/mescroll.vue";
 	 name :'index',
 	 data(){
 		 return{
+       routeid:this.$route.params.routeid,
 			 pingluntyp:[],//评论列表
 			 proType:4,//1.包车租车2.短程接送3.接送机4常规路线5.当地参团6.游轮7.景点门票8.当地玩家9.酒店10.保险11.旅游定制12导游 13.攻略评论 14.城市评论',
 			content:'',//评论的内容
@@ -125,11 +126,9 @@ import MescrollVue from "mescroll.js/mescroll.vue";
     },
     //评价
   async selectyp(page, mescroll){
-    this.routeid=this.$route.params.routeid;
    let data = await selectCommentUrl(
      page.num,
-		//  this.$route.params.routeid,
-		this.routeid,
+		 this.routeid,
      this.proType,
    );
 	  if (data) {

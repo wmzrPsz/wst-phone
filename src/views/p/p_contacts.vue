@@ -7,7 +7,7 @@
       </i>
       </router-link>
       <i class="her_a_zong color float_zhong">常用联系人</i>
-      <router-link :to="{name:'p_contacts_a',params:{type:1}}">
+      <router-link :to="{ path: '/p_contacts_a/'+'添加'}">
         <i class="float_right color her_a_zong_a font-14">添加</i>
       </router-link>
     </div>
@@ -24,7 +24,7 @@
             </div>
             <div class="float_right refundxin_e_d_z">
               <button class="font-12 refundxin_e_d refundxin_e_d_jia" @click="chancfly(index)">删除</button>
-              <button class="font-12 refundxin_e_d" @click="xiugai(list)">修改</button>
+              <button class="font-12 refundxin_e_d" @click="xuigaiclick(list)">修改</button>
             </div>
           </li>
         </ul>
@@ -63,13 +63,21 @@ export default {
     return {
       lianthis: [], //联系人列表
       contactid: "", //删除联系人的ID
-      xiuteye: {}, //传修改数据
     };
   },
   created() {
     this.lixiren();
   },
   methods: {
+    //修改
+    xuigaiclick:function(list){
+       this.$router.push({
+        name:'p_contacts_a',
+        params: {
+            datalist: JSON.stringify(list),
+          }
+     })
+    },
     //获取联系人
     async lixiren() {
       let data = await lianxir();
@@ -90,15 +98,6 @@ export default {
       this.shanclianxi();
       this.$toast("删除成功");
     },
-    //点击修改
-    xiugai(list) {
-      this.$router.push({
-        name:"p_contacts_a",
-        params: {
-         data:list,
-        }
-      });
-    }
   }
 };
 </script>
