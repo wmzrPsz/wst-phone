@@ -490,10 +490,10 @@ export default {
     //点击常规路线详情
     xianqing(sert){
     this.$router.push({
-     name: 'F_details_page',
-     params:{
-     routeid:sert.routeid,
-     },
+     path: 'F_details_page/'+sert.routeid,
+    //  params:{
+    //  routeid:sert.routeid,
+    //  },
      })
     },
      //确定月份
