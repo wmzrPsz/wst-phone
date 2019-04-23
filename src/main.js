@@ -10,11 +10,21 @@ Vue.config.productionTip = false
 
  Vue.use(Toast).use(Popup).use(Picker).use(DatetimePicker).use(Swipe).use(SwipeItem).use(Rate);
 
-
- router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {
   console.log(to)
   console.log(from)
-  next();
+  if(to.meta.requireAuth){ // 判断该路由是否需要登录权限
+    if(store.state.loginUid){ // 通过vuex state获取当前的loginUid是否存在
+      next();
+    }else{
+      next({
+        path: '/login',  // 跳转到登录页面
+        query: { redirect: to.fullPath }, // 将跳转的路由path作为参数，用于登录成功后回到登录前页面
+      });
+    }
+  }else{
+    next();
+  }
 })
 
 import * as custom from './filters/custom'
