@@ -3,10 +3,10 @@
  * @Author: 彭善智
  * @LastEditors: 彭善智
  * @Date: 2019-03-01 22:48:18
- * @LastEditTime: 2019-04-22 10:29:29
+ * @LastEditTime: 2019-04-23 15:37:53
  */
 import {Toast} from 'vant';
-import store from '../vuex/store'
+import store from '../vuex/index'
 
 
 
