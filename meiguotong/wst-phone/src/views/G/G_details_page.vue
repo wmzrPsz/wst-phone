@@ -187,7 +187,7 @@
 </template>
 
  <script>
- import { getRouteDetailstyp,getRouteContpy,selectCommentUrl,getConsultUrl,saveCollectionUrl,deleteCollectionUrl} from "@/utils/getData";
+ import { getCityRouteDetailsUrl,getRouteContpy,selectCommentUrl,getConsultUrl,saveCollectionUrl,deleteCollectionUrl} from "@/utils/getData";
  import store from '@/vuex/index';
  import ajax from '@/utils/fetch';
   export default {
@@ -246,7 +246,7 @@
     },
   //常规路线详情
   async styget(){
-    let data = await getRouteDetailstyp(this.routeid);
+    let data = await getCityRouteDetailsUrl(this.routeid);
     if(data){
       this.slist=data;
       if(data.carImg){

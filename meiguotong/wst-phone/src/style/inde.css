@@ -1639,6 +1639,17 @@ select{
 	overflow:hidden;
 	margin-bottom: 0.2rem;
 	text-align: left;
+	min-height: 2rem;
+	
+}
+.martop_jia{
+	width: 100%;
+	overflow:hidden;
+	text-align: left;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	
 }
 .Choose_a_room_d{
 	width: 27%;
@@ -3018,6 +3029,7 @@ select{
 	text-align: center;
 	line-height: 1.3rem;
 	background-color:#87CEEB;
+	margin-bottom: 0.3rem;
 }
 .refund_aa{
 	margin-top: 0.2rem;

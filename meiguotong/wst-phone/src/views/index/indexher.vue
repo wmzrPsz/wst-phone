@@ -25,7 +25,7 @@
       <ul>
         <li> <router-link to="/b_index">包车租车</router-link></li>
         <li><router-link to="/F_index">常规路线</router-link></li>
-        <li>包车租车</li>
+        <li><router-link to="/G_index">当地参团</router-link></li>
         <li>包车租车</li>
         <li>包车租车</li>
         <li>包车租车</li>

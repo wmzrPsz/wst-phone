@@ -6,7 +6,7 @@
  * @LastEditTime: 2019-03-29 15:58:32
  */
 
-import store from '../vuex/store'
+import store from '../vuex/index'
 import ajax from './fetch';
 
 //判断是否登录

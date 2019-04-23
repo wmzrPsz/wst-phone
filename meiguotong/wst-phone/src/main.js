@@ -1,12 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router/index'
-import store from './vuex/store'
+import router from './router/router'
+import store from './vuex/index'
 import {Toast,Popup,Picker,DatetimePicker,Swipe,SwipeItem,Rate} from 'vant'
 import "./style/inde.css";
 import VueLazyload from 'vue-lazyload'  
-
-
  //生产环境提示，这里设置成了false
 Vue.config.productionTip = false
 

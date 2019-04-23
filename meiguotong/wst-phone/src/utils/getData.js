@@ -80,6 +80,11 @@ export const selectttpy = (date,tagContent,daysty,srtype,minPrice,maxPrice,sceni
     labelAttrid:tagContent,//属性
     pageNo: pageNo,
 },'post');
+//当地参团接口
+export const getCityRouteDetailsUrl = (routeid) =>ajax( process.env.VUE_APP_PROXY_API +'/route/getCityRouteDetails',{
+    routeid:routeid,
+    
+})
 //当地玩家
 export const wanjia = (guideAge,guideSex,shuxin,minPrice,maxPrice,pageNo) => ajax( process.env.VUE_APP_PROXY_API +'/guide/guideScreen',{
     guideAge:guideAge,//年龄
