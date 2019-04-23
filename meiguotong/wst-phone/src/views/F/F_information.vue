@@ -3,7 +3,7 @@
             <div class="her_a font-20 background-a">
                 <i class="her_a_left float_left"  onclick="window.history.go(-1)"><img src="../../assets/img/A/back_icon@2x.png"></i>
                 <i class="her_a_zong color float_zhong">全部评论</i>
-                <i class="float_right color her_a_zong_a font-14">问题资讯</i>
+                <i class="float_right color her_a_zong_a font-14" @click="zixunclick()">问题资讯</i>
                </div>
            <!--玩家信息评价-->
               <mescroll-vue ref="mescroll" :up="mescrollUp" @init="mescrollInit">
@@ -41,6 +41,7 @@ import MescrollVue from "mescroll.js/mescroll.vue";
 	 name :'index',
 	 data(){
 		 return{
+       routeid:this.$route.params.routeid,
 			 zhixuntyp:[],//评论列表
 			 proType:4,//1.包车租车2.短程接送3.接送机4常规路线5.当地参团6.游轮7.景点门票8.当地玩家9.酒店10.保险11.旅游定制12导游 13.攻略评论 14.城市评论',
 			content:'',//评论的内容
@@ -87,9 +88,14 @@ import MescrollVue from "mescroll.js/mescroll.vue";
     alert(this.content);
     }
     },
+    //点击问题资讯
+		zixunclick :function(){
+    this.$router.push({
+			path:'/F_inquiry/'+this.routeid,
+		})
+		},
     //评价
   async selectyp(page, mescroll){
-    this.routeid=this.$route.params.routeid;
    let data = await getConsultUrl(
      page.num,
 		//  this.$route.params.routeid,

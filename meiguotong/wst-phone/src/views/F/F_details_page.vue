@@ -188,11 +188,13 @@
 
  <script>
  import { getRouteDetailstyp,getRouteContpy,selectCommentUrl,getConsultUrl,saveCollectionUrl,deleteCollectionUrl} from "@/utils/getData";
+ import store from '@/vuex/store';
+ import ajax from '@/utils/fetch';
   export default {
   name: "index",
   data(){
     return {
-      routeid:'',
+      routeid:this.$route.params.routeid,
       slist:'',//详情
       images: [],//轮播图片
       tagContent:[],//属性
@@ -231,26 +233,19 @@
   },
   methods:{
   //点击查看更多评论
-  pinglunclick(){
+  pinglunclick :function(){
     this.$router.push({
-     name: 'F_comment',
-     params:{
-     routeid:this.$route.params.routeid,
-     },
+     path: '/F_comment/'+this.routeid,
      })
     },
     //点击用户质询更多
     yonghuclick :function(){
     this.$router.push({
-      name:'F_information',
-      params:{
-       routeid:this.$route.params.routeid,
-      }
+     path: '/F_information/'+this.routeid,
     })
     },
   //常规路线详情
   async styget(){
-    this.routeid=this.$route.params.routeid;
     let data = await getRouteDetailstyp(this.routeid);
     if(data){
       this.slist=data;
@@ -267,7 +262,6 @@
   },
   //内容天数
   async styneiryp(){
-    this.routeid=this.$route.params.routeid;
     let data = await getRouteContpy(this.routeid);
    //天数
    for(let i=1;i<=data.length;i++){
@@ -279,7 +273,6 @@
   },
   //评价
   async selectyp(){
-    this.routeid=this.$route.params.routeid;
    let data = await selectCommentUrl(
      this.pageNo,
      this.routeid,
@@ -301,25 +294,32 @@
   },
   //添加收藏
   async scstyle(){
-  //2收藏
-  if(this.slist.ifcollection==2){
+    if(store.state.loginUid!=0){
+         //登陆了
+           //2收藏
+    if(this.slist.ifcollection==2){
     let data = await saveCollectionUrl(
+   this.routeid,
+   this.collectionType,
+    )
+    if(data){
+    this.styget();
+   }
+   }
+   //取消收藏
+  if(this.slist.ifcollection==1){
+   let data = await deleteCollectionUrl(
    this.routeid,
    this.collectionType,
   )
   if(data){
    this.styget();
   }
-  }
-  //取消收藏
-  if(this.slist.ifcollection==1){
-   let data = await deleteCollectionUrl(
-   this.routeid,
-  )
-  if(data){
-   this.styget();
-  }
-  }
+  } 
+       }
+       if(store.state.loginUid==0){
+       this.$toast("请先登陆");
+       }
   },
   //点击收藏
   souclick(){
@@ -341,10 +341,10 @@
   //点击退货说明
   shuomiclick(index){
     if(index==1){
-      alert(this.slist.priceInfor);
+     alert(this.slist.content);
     }
     if(index==2){
-      alert(this.slist.content);
+       alert(this.slist.priceInfor);
     }
   },
   },

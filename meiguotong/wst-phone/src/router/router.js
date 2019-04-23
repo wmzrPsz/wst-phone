@@ -265,7 +265,7 @@ export default new Router({
         },
          //添加联系人
          {
-          path:'/p_contacts_a',
+          path:'/p_contacts_a/:datalist',
           name:'p_contacts_a',
           component:p_contacts_a,
           meta:{'title':'添加联系人'}
@@ -323,21 +323,21 @@ export default new Router({
       },
       //评论
       {
-        path:'/F_comment',
+        path:'/F_comment/:routeid',
         name:'F_comment',
         component:F_comment,
         meta:{'title':'常规路线全部评论'}
       },
       //用户质询
       {
-        path:'/F_inquiry',
+        path:'/F_inquiry/:routeid',
         name:'F_inquiry',
         component:F_inquiry,
         meta:{'title':'用户质询'}
       },
       //用户资讯全部评论
       {
-        path:'/F_information',
+        path:'/F_information/:routeid',
         name:'F_information',
         component:F_information,
         meta:{'title':'用户资讯全部评论'}

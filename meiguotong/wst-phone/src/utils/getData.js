@@ -237,8 +237,9 @@ export const saveCollectionUrl =(routeid,collectionType) =>ajax( process.env.VUE
     collectionType:collectionType,
 })
 //取消收藏
-export const deleteCollectionUrl =(routeid) =>ajax( process.env.VUE_APP_PROXY_API +'/member/deleteCollection',{
+export const deleteCollectionUrl =(routeid,collectionType) =>ajax( process.env.VUE_APP_PROXY_API +'/member/deleteCollection',{
     collectionids:routeid,
+    collectionType:collectionType,
 })
 //添加用户咨询接口
 export const saveConsultUrl = (routeid,proType,content,name,mobile) =>ajax (process.env.VUE_APP_PROXY_API + '/common/saveConsult',{
