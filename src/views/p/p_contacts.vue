@@ -11,7 +11,7 @@
         <i class="float_right color her_a_zong_a font-14">添加</i>
       </router-link>
     </div>
-    <div class="dingjia">
+    <div class="ztjiao">
       <div class="Edinz_zz">
         <ul class="Edinz_b font-16">
           <li v-for="(list,index) in lianthis" :key="index" style=" margin-top:0.5rem">
@@ -33,6 +33,16 @@
   </div>
 </template>
 <style lang="less" scoped>
+.ztjiao{
+  position: fixed;
+  z-index:1;
+  top:2rem;
+  bottom:0rem;
+  height: auto;
+  overflow: hidden;
+  width:100%;
+  margin: auto;
+}
 .ze_jia span {
   text-align: left;
 }
@@ -74,7 +84,7 @@ export default {
        this.$router.push({
         name:'p_contacts_a',
         params: {
-            datalist: JSON.stringify(list),
+            datalist: list,
           }
      })
     },

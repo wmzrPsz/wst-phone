@@ -2,7 +2,7 @@
   <div class="index" style="background-color: white;">
     <div class="her_a font-20 background-a">
       <i class="her_a_left float_left"><img src="../../assets/img/A/back_icon@2x.png" onclick="window.history.go(-1)"></i>
-      <i class="her_a_zong color float_zhong">常规路线</i>
+      <i class="her_a_zong color float_zhong">当地参团</i>
      </div>
     <div class="dingjia_b">
       <div class="brijtan_b" v-if="type!=0"></div>
@@ -303,6 +303,7 @@
               </div>
             </div>
             <div class="font-12 color-b ze_x_ril_c">{{sert.infor}}</div>
+            <div class="float_left font-12 group_d color-h"><i><img src="../../assets/img/B/bczc_adress_icon@2x.png"></i>{{sert.endCityContent}}</div>
             <div>
               <ul class="ze_x_ril_d float_right">
                 <li class="font-14">
@@ -376,7 +377,7 @@
 </style>
 
 <script>
-import { seledin, getScenicByCity, zhiding } from "@/utils/getData";
+import { selectttpy, getScenicByCity, zhiding } from "@/utils/getData";
 import MescrollVue from "mescroll.js/mescroll.vue";
 export default {
   name: "index",
@@ -395,12 +396,11 @@ export default {
       maxpak: 2,
       scenicSpotid: [],
       getLtyp: [], //自定标签
-      routeType: 1, //自定标签1常规路线
+      routeType: 2, //自定标签2当地参团
       tagContent: [],
       styjiag:1,//开始1显示降价格，2显示升价格
       yue:1,//表示月份隐藏
       listpryue:'',//月份天数
-      folis:'',
 
       mescroll: null, // mescroll实例对象
       mescrollUp: {
@@ -411,7 +411,7 @@ export default {
         },
         toTop: {
           //回到顶部按钮
-          src: "../../assets/img/mescroll/mescroll-totop.png", //图片路径,默认null,支持网络图
+          src: "http://www.mescroll.com/img/mescroll-totop.png", //图片路径,默认null,支持网络图
           offset: 1000 //列表滚动1000px才显示回到顶部按钮
         }
       }
@@ -426,11 +426,6 @@ export default {
     date() {
       let lists = [];
       let data = [];//号
-      if(this.folis==1){
-        if(this.$route.params.date!=null){
-         lists=this.$route.params.date;//搜索传进来的日期
-        }
-      }else{
        for (const list of this.dataList) {
         var mag = {};
         if (list.falg_a) {
@@ -445,20 +440,15 @@ export default {
         lists.push(mag);
         }
       }
-      }
       return lists;
     },
     //获取天数
     daysty() {
       let lists = [];
-      if(this.folis==1){
-        lists=this.$route.params.daysty;//搜索传进来的日期
-      }else{
         for (const listday of this.daylist) {
         if (listday.flag) {
           lists.push(listday.day);
         }
-      }
       }
       return lists;
     }
@@ -483,8 +473,6 @@ export default {
     this.priceInit(); //价格初始化
     this.scenic(); //获取途径景点
     this.getLabeltyp(); //自定标签
-    this.folis=this.$route.params.folis;
-    console.log(this.folis);
   },
   filters: {
     dayFilter: function(value) {
@@ -494,10 +482,10 @@ export default {
     }
   },
   methods: {
-    //点击常规路线详情
+    //点击当地路线详情
     xianqing(sert){
     this.$router.push({
-     path: 'F_details_page/'+sert.routeid,
+     path: 'G_details_page/'+sert.routeid,
      })
     },
      //确定月份
@@ -517,7 +505,6 @@ export default {
      //月份点击
      monthClick(index) {
     this.yue=2;
-    this.folis="";
      if(this.dataList[index].flag==false){
         this.dataList.map(elem => {
         elem.flag = false;
@@ -529,7 +516,6 @@ export default {
          this.listpryue=listpr;
         }
       }
-      console.log(this.listpryue);
   },
   //点击选中几号
   datyclick(index){
@@ -686,21 +672,7 @@ export default {
       this.mescroll.resetUpScroll();
     },
     async routine(page, mescroll) {
-      if(this.folis==1){
-      if(this.$route.params.minPrice!=null){
-      this.minPrice=this.$route.params.minPrice;//价格
-      }
-      if(this.$route.params.maxPrice!=null){
-      this.maxPrice=this.$route.params.maxPrice;//价格
-      }
-       if(this.$route.params.tagContent!=null){
-      this.tagContent=this.$route.params.tagContent;//属性
-      }
-      if(this.$route.params.scenicSpotid!=null){
-      this.scenicSpotid = this.$route.params.scenicSpotid;//景点id
-      }
-      }
-      let data = await seledin(
+      let data = await selectttpy(
         JSON.stringify(this.date),
         this.tagContent.toString(),
         this.daysty.toString(),
@@ -757,7 +729,6 @@ export default {
       }
     },
     sceClick(index) {
-      this.folis="";
       this.scenicSpotid = [];
       this.scejing[index].flag = !this.scejing[index].flag;
       for (const list of this.scejing) {
@@ -768,7 +739,6 @@ export default {
       this.mescroll.resetUpScroll();
     },
     lableClick(index1, index2) {
-      this.folis="";
       this.getLtyp[index1].comTagList[index2].flag = !this.getLtyp[index1]
         .comTagList[index2].flag;
       this.tagContent = [];

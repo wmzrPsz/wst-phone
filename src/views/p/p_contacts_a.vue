@@ -141,29 +141,31 @@ export default {
       show: false,
       show1: false,
       currentDate: new Date(),
-      certType: 1, //证件类型
+      certType: this.$route.params.datalist.certType, //证件类型
       quyustye: [],
-      area: "", //区域
+      area: this.$route.params.datalist.area, //区域
       year: "", //年
       month: "", //月
       day: "", //日
-      certValidDate: "", //传的证件日期（yyyy-mm-xxxx）
-      birthday: "", //出生日期（yyyy-mm-xx）
+      certValidDate:this.$route.params.datalist.certValidDate, //传的证件日期（yyyy-mm-xxxx）
+      birthday: this.$route.params.datalist.birthday, //出生日期（yyyy-mm-xx）
       chineseName:this.$route.params.datalist.chineseName, //中文名字
-      englishName: "", //英文名字
-      certNo: "", //证件号码
-      mobile: "", //手机号码
-      contactid:''
+      englishName: this.$route.params.datalist.englishName, //英文名字
+      certNo:this.$route.params.datalist.certNo, //证件号码
+      mobile: this.$route.params.datalist.mobile, //手机号码
+      contactid:this.$route.params.datalist.contactid
     };
   },
   created() {
     this.year = this.currentDate.getFullYear(); //年
     this.month = this.currentDate.getMonth() + 1; //月
     this.day = this.currentDate.getDate(); //日
-    this.certValidDate = this.year + "-" + this.month + "-" + this.day;
+    if(this.$route.params.datalist=='添加'){
+     this.certType=1;
+     this.certValidDate = this.year + "-" + this.month + "-" + this.day;
     this.birthday = this.year + "-" + this.month + "-" + this.day;
+    }
     this.quyu();
-    console.log(this.$route.params.datalist)
   },
   methods: {
     //拿区域
@@ -196,27 +198,27 @@ export default {
     },
     //点击确定添加联系人
     tianjia() {
-      if (this.chineseName.length == 0) {
+      if (this.chineseName == null) {
         this.$toast("请输入中文姓名");
         return;
       }
-      if (this.englishName.length == 0) {
+      if (this.englishName == null) {
         this.$toast("请输入英文姓名");
         return;
       }
-      if (this.certType.length == 0) {
+      if (this.certType == null) {
         this.$toast("请选择证件类型");
         return;
       }
-      if (this.certNo.length == 0) {
+      if (this.certNo == null) {
         this.$toast("请输入证件号");
         return;
       }
-      if (this.area.length == 0) {
+      if (this.area == null) {
         this.$toast("请选择手机区域");
         return;
       }
-      if (this.mobile.length != 11) {
+      if (this.mobil != null) {
         this.$toast("请输入正确手机号码");
         return;
       }

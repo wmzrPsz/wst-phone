@@ -76,6 +76,13 @@ const F_comment = r => require.ensure([], () => r(require('../views/F/F_comment'
 const F_inquiry = r => require.ensure([], () => r(require('../views/F/F_inquiry')), 'F_inquiry')
 //用户质询全部评论
 const F_information = r => require.ensure([], () => r(require('../views/F/F_information')), 'F_information')
+///////////////////////////////////////////////G当地参团//////////////////////////////////////////////////////////////////////
+//当地参团主页
+const G_index = r => require.ensure([], () => r(require('../views/G/G_index')), 'G_index')
+//当地参团列表
+const G_details = r => require.ensure([], () => r(require('../views/G/G_details')), 'G_details')
+//当地参团详情
+const G_details_page = r =>require.ensure([],() => r(require('../views/G/G_details_page')),'G_details_page')
 Vue.use(Router)
 export default new Router({
   mode: 'history',
@@ -341,6 +348,28 @@ export default new Router({
         name:'F_information',
         component:F_information,
         meta:{'title':'用户资讯全部评论'}
+      },
+      //////////////////////////////////////当地参团//////////////////////////////////////////////
+      //当地参团
+      {
+        path:'/G_index',
+        name:'G_index',
+        component:G_index,
+        meta:{'title':'当地参团'}
+      },
+      //参团列表
+      {
+        path:'/G_details',
+        name:'G_details',
+        component:G_details,
+        meta:{'title':'当地参团'}
+      },
+       //参团详情
+       {
+        path:'/G_details_page/:routeid',
+        name:'G_details_page',
+        component:G_details_page,
+        meta:{'title':'当地参团'}
       },
   ]
 })

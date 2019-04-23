@@ -143,7 +143,7 @@ import {
   Material //个人质料
 } from "@/utils/getData";
 import { isNull } from "@/utils/common";
-import store from '@/vuex/store';
+import store from '@/vuex/index';
 import ajax from '@/utils/fetch';
 export default {
   name: "index",
