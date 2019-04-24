@@ -43,7 +43,7 @@
      </div>
 
      <div class="beu_he"></div>
-     <div class="refund_z">
+     <div class="refund_z refun_jia">
      	<div class="refund_c font-14">路线说明</div>
      	<div class="font-14 color-b refund_c_a border_e">{{slist.infor}}</div>
 
@@ -205,10 +205,10 @@
       thifs:0,//展示第几天的数据
       tuslit:1,//1内容形成2用户评价3用户质询4视屏质料
       pageNo:4,//默认4条
-      proType:4,//1.包车租车2.短程接送3.接送机4常规路线5.当地参团6.游轮7.景点门票8.当地玩家9.酒店10.保险11.旅游定制12导游 13.攻略评论 14.城市评论',
+      proType:5,//1.包车租车2.短程接送3.接送机4常规路线5.当地参团6.游轮7.景点门票8.当地玩家9.酒店10.保险11.旅游定制12导游 13.攻略评论 14.城市评论',
       pingluntyp:[],//评论列表
       yonghutyp:[],//用户资讯列表
-      collectionType:1,//收藏1.常规路线2.当地参团3.当地玩家4.游轮5.景点
+      collectionType:2,//收藏1.常规路线2.当地参团3.当地玩家4.游轮5.景点
       imgtyp:'',
     }
   },
@@ -235,13 +235,13 @@
   //点击查看更多评论
   pinglunclick :function(){
     this.$router.push({
-     path: '/F_comment/'+this.routeid,
+     path: '/comment/'+this.routeid+this.proType,
      })
     },
     //点击用户质询更多
     yonghuclick :function(){
     this.$router.push({
-     path: '/F_information/'+this.routeid,
+     path: '/information/'+this.routeid+this.proType,
     })
     },
   //常规路线详情

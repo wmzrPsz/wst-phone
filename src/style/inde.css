@@ -1658,7 +1658,6 @@ select{
 .Choose_a_room_d_z{
 	overflow:hidden;
 	margin-top: 4rem;
-	margin-bottom:3rem;
 }
 .Choose_a_room_d_a{
 	width: 70%;
@@ -2135,7 +2134,7 @@ select{
 .Car_renting_a{
 	width: 68%;
 	overflow: hidden;
-
+    text-align: left;
 }
 .Car_renting_b{
 	height:1.5rem;
@@ -3015,6 +3014,12 @@ select{
 	width: 95%;
 	margin:auto;
 }
+.refun_jia{
+	overflow: hidden;
+	width: 95%;
+	margin:auto;
+	margin-bottom: 3rem;
+}
 .refund_a{
 	width: 100%;
 	overflow: hidden;
@@ -3494,7 +3499,6 @@ select{
 	height: 3rem;
 	float: left;
 	margin-right: 2%;
-	background-color: red;
 	margin-top: 0.3rem;
 }
 .gameplayer_c_e dd:nth-child(3n),
@@ -3588,6 +3592,7 @@ select{
 .gameplayer_f{
 	margin-left: 0.5rem;
 	margin-bottom:0.5rem;
+	text-align: left;
 }
 .gameplayer_f_a{
 	width:100%;

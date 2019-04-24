@@ -1,6 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+
+//公用
+//评论
+const comment = r => require.ensure([], () => r(require('../views/public/comment')), 'comment')
+//用户质询全部评论
+const information = r => require.ensure([], () => r(require('../views/public/information')), 'information')
+//用户质询
+const inquiry = r => require.ensure([], () => r(require('../views/public/inquiry')), 'inquiry')
+//搜索页面
+const search = r => require.ensure([], () => r(require('../views/public/search')), 'search')
+
 const error = r => require.ensure([], () => r(require('../views/error/error')), 'error')
 const login = r => require.ensure([], () => r(require('../views/index/login')), 'login')//登陆首页
 const register = r => require.ensure([], () => r(require('../views/index/register')), 'register')//注册
@@ -66,16 +77,8 @@ const b_index = r => require.ensure([], () => r(require('../views/B/b_index')), 
 const F_index = r => require.ensure([], () => r(require('../views/F/F_index')), 'F_index')
 //f常规路线搜索详情列表
 const F_details = r => require.ensure([], () => r(require('../views/F/F_details')), 'F_details')
-//f搜索页面
-const F_search = r => require.ensure([], () => r(require('../views/F/F_search')), 'F_search')
 //常规路线详情
 const F_details_page = r => require.ensure([], () => r(require('../views/F/F_details_page')), 'F_details_page')
-//评论
-const F_comment = r => require.ensure([], () => r(require('../views/F/F_comment')), 'F_comment')
-//用户质询
-const F_inquiry = r => require.ensure([], () => r(require('../views/F/F_inquiry')), 'F_inquiry')
-//用户质询全部评论
-const F_information = r => require.ensure([], () => r(require('../views/F/F_information')), 'F_information')
 ///////////////////////////////////////////////G当地参团//////////////////////////////////////////////////////////////////////
 //当地参团主页
 const G_index = r => require.ensure([], () => r(require('../views/G/G_index')), 'G_index')
@@ -83,6 +86,11 @@ const G_index = r => require.ensure([], () => r(require('../views/G/G_index')), 
 const G_details = r => require.ensure([], () => r(require('../views/G/G_details')), 'G_details')
 //当地参团详情
 const G_details_page = r =>require.ensure([],() => r(require('../views/G/G_details_page')),'G_details_page')
+////////////////////////////////////////////////H——当地玩家//////////////////////////////////////////////////////////////////////////////
+const H_index = r =>require.ensure([],() => r(require('../views/H/H_index')),'H_index')
+//当地玩家
+const H_game = r => require.ensure([], () => r(require('../views/H/H_game')), 'H_game')//当地玩家
+const H_detail = r => require.ensure([], () => r(require('../views/H/H_detail')), 'H_detail')//当地玩家详情
 Vue.use(Router)
 export default new Router({
   mode: 'history',
@@ -100,6 +108,34 @@ export default new Router({
       //  redirect: 'login',
       meta: { 'title': '首页' }
     },
+     //评论
+     {
+      path:'/comment/:routeid:proType',
+      name:'comment',
+      component:comment,
+      meta:{'title':'全部评论'}
+    },
+     //用户资讯全部评论
+     {
+      path:'/information/:routeid:proType',
+      name:'information',
+      component:information,
+      meta:{'title':'用户资讯全部评论'}
+    },
+     //用户质询
+     {
+      path:'/inquiry/:routeid:proType',
+      name:'inquiry',
+      component:inquiry,
+      meta:{'title':'用户质询'}
+    },
+      //搜索页面
+      {
+        path:'/search',
+        name:'search',
+        component:search,
+        meta:{'title':'常规路线搜索'}
+      },
     {
       path: '/login',
       name: 'login',
@@ -314,40 +350,12 @@ export default new Router({
         component:F_details,
         meta:{'title':'常规路线列表'}
       },
-      //搜索页面
-      {
-        path:'/F_search',
-        name:'F_search',
-        component:F_search,
-        meta:{'title':'常规路线搜索'}
-      },
       //常规路线详情
       {
         path:'/F_details_page/:routeid',
         name:'F_details_page',
         component:F_details_page,
         meta:{'title':'常规路线详情'}
-      },
-      //评论
-      {
-        path:'/F_comment/:routeid',
-        name:'F_comment',
-        component:F_comment,
-        meta:{'title':'常规路线全部评论'}
-      },
-      //用户质询
-      {
-        path:'/F_inquiry/:routeid',
-        name:'F_inquiry',
-        component:F_inquiry,
-        meta:{'title':'用户质询'}
-      },
-      //用户资讯全部评论
-      {
-        path:'/F_information/:routeid',
-        name:'F_information',
-        component:F_information,
-        meta:{'title':'用户资讯全部评论'}
       },
       //////////////////////////////////////当地参团//////////////////////////////////////////////
       //当地参团
@@ -371,5 +379,25 @@ export default new Router({
         component:G_details_page,
         meta:{'title':'当地参团'}
       },
+      /////////////////////////////////////H当地玩家//////////////////////////////////////
+      {
+        path:'/H_index',
+        name:'H_index',
+        component:H_index,
+        meta:{'title':'当地玩家'}
+      },
+         //搜索当地玩家
+    {
+      path: '/H_game',
+      name: 'H_game',
+      component:H_game,
+      meta: { 'title': '搜索当地玩家' }
+    },
+    {
+      path:'/H_detail/:routeid',
+      name:'H_detail',
+      component:H_detail,
+      meta:{'title':'当地玩家详情'}
+    }
   ]
 })

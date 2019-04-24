@@ -144,7 +144,7 @@
               <li
                 v-for="(list, index) in dataList"
                 :key="index"
-                :class="list.flag_a?'b_xianm_b_jiadian':''"
+                :class="list.falg_a?'b_xianm_b_jiadian':''"
                 @click.stop="monthClick(index)"
               >{{list.month}}月</li>
             </ul>
