@@ -28,12 +28,18 @@
                 <div class="float_right color-b" style="width: 60%">
                 <ul>
       	 		<li>
-            <input id="start_date" class="float_left color-b time_a font-14" type="text" value="2018-05-09：25：26" name="start_date"><i class="bao_her_d fl"><img src="../../assets/img/A/more_icon@2x.png"></i></li>
+						<div class="start_date" @click="show = true">{{certValidDate}}</div>
+						<i class="bao_her_d fl">
+						<img src="../../assets/img/A/more_icon@2x.png">
+						</i>
+						</li>
       	 	<li>
-            <input id="end_date" class="float_left color-b time_a font-14" type="text" value="2018-05-09：25：26" name="end_date"><i class="bao_her_d fl"><img src="../../assets/img/A/more_icon@2x.png"></i></li>
+           <div class="start_date" @click="show1 = true">{{birthday}}</div>
+					 <i class="bao_her_d fl"><img src="../../assets/img/A/more_icon@2x.png"></i>
+					 </li>
       	 	    </ul>
       	 		</div>
-      	 		<li style="clear: both;"><i class="float_left">人数<i class="bao_her_e">9</i></i> <i class="float_right">行李箱<i class="bao_her_e"></i>8</i> </li>
+      	 		<li style="clear: both;"><i class="float_left"  @click="show2 = true">人数<i class="bao_her_e">{{people}}</i></i> <i class="float_right" @click="show3 = true">行李箱<i class="bao_her_e"></i>{{luggage}}</i> </li>
       	 	</ul>
       	 </div>
          <button class="color background-d font-14 xiayi">共4天下一步</button>
@@ -254,8 +260,47 @@
       </div>
        <p class="dib_w font-12 color-b">万事同美国eaiusa.com万事同美国eaiusa.com万事同美国eaiusa.com</p>
  </div>
+ <!--出发时间-->
+      <van-popup v-model="show" position="bottom">
+        <van-datetime-picker v-model="currentDate" type="date" @cancel="quxiao" @confirm="queding"/>
+      </van-popup>
+   <!--结束时间-->
+      <van-popup v-model="show1" position="bottom">
+        <van-datetime-picker
+          v-model="currentDate"
+          type="date"
+         @cancel="quxiao"
+          @confirm="queding_a"
+        />
+      </van-popup>
+	 <!--选择人数-->
+	 <van-popup v-model="show2" position="bottom">
+	 <van-picker
+  show-toolbar
+  title="选择人数"
+  :columns="columns"
+  @cancel="quxiao"
+  @confirm="onConfirm"
+  />
+		 </van-popup>
+	 <!--选择行李-->
+	 <van-popup v-model="show3" position="bottom">
+	 <van-picker
+  show-toolbar
+  title="选择行李"
+  :columns="columns"
+  @cancel="quxiao"
+  @confirm="onConfirm_a"
+  />
+		 </van-popup>
 </div>
 </template>
+<style lang="less">
+.start_date{
+	widows: 4rem;
+	float: left;
+}
+</style>
 
 <script>
 export default {
@@ -265,12 +310,60 @@ export default {
       backgroundDiv: {
         backgroundImage:
           "url(" + require("../../assets/img/A/home_dingzhi_bg@2x.png") + ")"
-	  },
+		},
+		columns: ['1', '2', '3', '4', '5'],
+		certValidDate:'',//出发时间
+		birthday:'',//结束时间
+    year: "", //年
+    month: "", //月
+		day: "", //日
+		show: false,
+		show1: false,
+		show2: false,
+		show3: false,
+		currentDate: new Date(),
+		people:0,//人数
+		luggage:0,//行李
     };
   },
-  created(){
+  created() {
+    this.year = this.currentDate.getFullYear(); //年
+    this.month = this.currentDate.getMonth() + 1; //月
+    this.day = this.currentDate.getDate(); //日
+     this.certValidDate = this.year + "-" + this.month + "-" + this.day;
+    this.birthday = this.year + "-" + this.month + "-" + this.day;
   },
   methods: {
+		 onConfirm(value, index) {
+			this.people=value;
+			this.show2=false;
+		},
+		 onConfirm_a(value, index) {
+			this.luggage=value;
+			this.show3=false;
+		},
+		 quxiao() {
+			this.show = false;
+			this.show1 = false;
+			this.show2 = false;
+			this.show3 = false;
+    },
+    //确定获取证件有效期
+    queding() {
+      this.show = false;
+      this.year = this.currentDate.getFullYear(); //年
+      this.month = this.currentDate.getMonth() + 1; //月
+      this.day = this.currentDate.getDate(); //日
+      this.certValidDate = this.year + "-" + this.month + "-" + this.day;
+    },
+    //确定出生日期
+    queding_a() {
+      this.show1 = false;
+      this.year = this.currentDate.getFullYear(); //年
+      this.month = this.currentDate.getMonth() + 1; //月
+      this.day = this.currentDate.getDate(); //日
+      this.birthday = this.year + "-" + this.month + "-" + this.day;
+    },
   }
 };
 </script>

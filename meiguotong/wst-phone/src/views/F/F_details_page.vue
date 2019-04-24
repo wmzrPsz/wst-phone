@@ -43,7 +43,7 @@
      </div>
 
      <div class="beu_he"></div>
-     <div class="refund_z">
+     <div class="refund_z refun_jia">
      	<div class="refund_c font-14">路线说明</div>
      	<div class="font-14 color-b refund_c_a border_e">{{slist.infor}}</div>
 
@@ -235,13 +235,13 @@
   //点击查看更多评论
   pinglunclick :function(){
     this.$router.push({
-     path: '/F_comment/'+this.routeid,
+     path: '/comment/'+this.routeid+this.proType,
      })
     },
     //点击用户质询更多
     yonghuclick :function(){
     this.$router.push({
-     path: '/F_information/'+this.routeid,
+     path: '/information/'+this.routeid+this.proType,
     })
     },
   //常规路线详情

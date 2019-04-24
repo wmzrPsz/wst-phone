@@ -20,7 +20,7 @@
             <img src="../../assets/img/B/bczc_adress_icon@2x.png">
           </i>
           <span class="font-14 color-b float_left">广州</span>
-          <router-link to="/F_search">
+          <router-link to="/search">
           <input class="float_left font-14 color-b" type="text" placeholder="输入你要搜索的城市" name>
           </router-link>
         </div>

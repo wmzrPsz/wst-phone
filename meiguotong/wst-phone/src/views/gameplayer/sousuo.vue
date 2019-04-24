@@ -3,9 +3,11 @@
     <div class="dingjia_b">
       <div class="sou_her background-a sou_her_jia" style="clear:both">
         <ul class="sou_her_a">
-          <li class="float_left font-16" onclick="window.history.go(-1)">
+          <router-link to="/indexher">
+          <li class="float_left font-16">
             <button class="color-f" style="margin-top: 0.3rem;">取消</button>
           </li>
+          </router-link>
           <li class="sou_her_b">
             <i class="sou_her_d">
               <img src="../../assets/img/A/ic_search.png">
@@ -380,7 +382,8 @@
   position: fixed;
   z-index: 9;
   top: 9.2rem;
-  bottom: 0;
+  bottom: 0rem;
+  height: auto;
 }
 </style>
 

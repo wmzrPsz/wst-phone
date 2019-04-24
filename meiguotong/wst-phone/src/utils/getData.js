@@ -94,6 +94,16 @@ export const wanjia = (guideAge,guideSex,shuxin,minPrice,maxPrice,pageNo) => aja
     tagId:shuxin,//制订标签属性
     pageNo: pageNo,
 });
+//当地玩家详情
+export const guideDetailsUrl = (routeid) =>ajax( process.env.VUE_APP_PROXY_API +'/guide/guideDetails',{
+    guideId:routeid,
+    
+})
+//当地玩家推荐路线列表接口
+export const guideRouteUrl = (routeid,pageNo) =>ajax( process.env.VUE_APP_PROXY_API +'/guide/guideRoute',{
+    guideId:routeid,
+    pageNo: pageNo,
+})
 //油轮接口
 export const youlun = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSpotid,startCity,hangxianty,pageNo) => ajax( process.env.VUE_APP_PROXY_API +'/cruise/cruiseScreen', {
     date:date,//日期

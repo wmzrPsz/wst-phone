@@ -13,7 +13,9 @@
 
       <div class="group">
         <text class="font-14 Order_d_b">当地参团</text>
+         <router-link to="/search">
         <input class="font-14 group_a color-b" type="text" value="输入搜索目的地" name="">
+         </router-link>
         <div class="group_b">
           <i class="float_left"><img src="../../assets/img/C/ddct_huo_icon@2x.png"></i>
           <span class="float_left font-14">热门目的地</span>
@@ -23,17 +25,7 @@
       <div class="group_c font-14 color-b">
        <router-link to="/G_details">
         <ul>
-          <li>奥克兰</li>
-          <li>奥克兰</li>
-          <li>缅因州.波特兰</li>
-
-          <li>奥克兰</li>
-          <li>奥克兰</li>
-          <li>缅因州.波特兰</li>
-
-          <li>奥克兰</li>
-          <li>奥克兰</li>
-          <li>缅因州.波特兰</li>
+          <li v-for="(texe,index) in lisst" :key="index">{{texe.cityName}}</li>
         </ul>
        </router-link>
       </div>
@@ -47,7 +39,7 @@ export default {
   name:'index',
   data(){
     return{
-
+    lisst:[],//城市列表
     }
   },
   mounted(){
@@ -56,6 +48,7 @@ export default {
   methods:{
   async stycli(){
     let data= await HotCityList();
+    this.lisst=data;
   }
   },
 }

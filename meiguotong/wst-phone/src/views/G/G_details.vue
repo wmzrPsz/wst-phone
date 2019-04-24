@@ -139,12 +139,12 @@
             <i class="font-16 b_xianm_c">筛选日期</i>
           </div>
 
-          <div class="b_xianm">
+         <div class="b_xianm">
             <ul class="font-12 b_xianm_b color-b">
               <li
                 v-for="(list, index) in dataList"
                 :key="index"
-                :class="list.flag_a?'b_xianm_b_jiadian':''"
+                :class="list.falg_a?'b_xianm_b_jiadian':''"
                 @click.stop="monthClick(index)"
               >{{list.month}}月</li>
             </ul>
