@@ -19,7 +19,7 @@ router.beforeEach((to, from, next) => {
     }else{
       next({
         path: '/login',  // 跳转到登录页面
-        query: { redirect: to.fullPath }, // 将跳转的路由path作为参数，用于登录成功后回到登录前页面
+        query: { redirect: to.fullPath}, // 将跳转的路由path作为参数，用于登录成功后回到登录前页面
       });
     }
   }else{
