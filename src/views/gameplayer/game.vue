@@ -3,9 +3,11 @@
     <div class="dingjia_b">
       <div class="sou_her background-a sou_her_jia" style="clear:both">
         <ul class="sou_her_a">
-          <li class="float_left font-16" onclick="window.history.go(-1)">
+           <router-link to="/indexher">
+          <li class="float_left font-16">
             <button class="color-f" style="margin-top: 0.3rem;">取消</button>
           </li>
+          </router-link>
           <li class="sou_her_b">
             <i class="sou_her_d">
               <img src="../../assets/img/A/ic_search.png">
@@ -256,7 +258,7 @@ export default {
         },
         toTop: {
           //回到顶部按钮
-          src: "../../assets/img/mescroll/mescroll-totop.png", //图片路径,默认null,支持网络图
+          src: "http://www.mescroll.com/img/mescroll-totop.png", //图片路径,默认null,支持网络图
           offset: 1000 //列表滚动1000px才显示回到顶部按钮
         }
       }

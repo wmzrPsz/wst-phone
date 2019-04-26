@@ -179,9 +179,7 @@
       </div>
       <div class="float_right collection_di_b">
           <button class="font-14 ">购物车</button>
-          <router-link to="/F_book">
           <button class="font-14 collection_di_c">订购</button>
-          </router-link>
       </div>
     </div>
     </div>
@@ -189,14 +187,14 @@
 </template>
 
  <script>
- import { getRouteDetailstyp,getRouteContpy,selectCommentUrl,getConsultUrl,saveCollectionUrl,deleteCollectionUrl} from "@/utils/getData";
+ import { linerLineDetailsUrl,getRouteContpy,selectCommentUrl,getConsultUrl,saveCollectionUrl,deleteCollectionUrl} from "@/utils/getData";
  import store from '@/vuex/index';
  import ajax from '@/utils/fetch';
   export default {
   name: "index",
   data(){
     return {
-      routeid:this.$route.params.routeid,
+      lineid:this.$route.params.lineid,
       slist:'',//详情
       images: [],//轮播图片
       tagContent:[],//属性
@@ -207,10 +205,10 @@
       thifs:0,//展示第几天的数据
       tuslit:1,//1内容形成2用户评价3用户质询4视屏质料
       pageNo:4,//默认4条
-      proType:4,//1.包车租车2.短程接送3.接送机4常规路线5.当地参团6.游轮7.景点门票8.当地玩家9.酒店10.保险11.旅游定制12导游 13.攻略评论 14.城市评论',
+      proType:6,//1.包车租车2.短程接送3.接送机4常规路线5.当地参团6.游轮7.景点门票8.当地玩家9.酒店10.保险11.旅游定制12导游 13.攻略评论 14.城市评论',
       pingluntyp:[],//评论列表
       yonghutyp:[],//用户资讯列表
-      collectionType:1,//收藏1.常规路线2.当地参团3.当地玩家4.游轮5.景点
+      collectionType:4,//收藏1.常规路线2.当地参团3.当地玩家4.游轮5.景点
       imgtyp:'',
     }
   },
@@ -237,34 +235,34 @@
   //点击查看更多评论
   pinglunclick :function(){
     this.$router.push({
-     path: '/comment/'+this.routeid+this.proType,
+     path: '/comment/'+this.lineid+this.proType,
      })
     },
     //点击用户质询更多
     yonghuclick :function(){
     this.$router.push({
-     path: '/information/'+this.routeid+this.proType,
+     path: '/information/'+this.lineid+this.proType,
     })
     },
   //常规路线详情
   async styget(){
-    let data = await getRouteDetailstyp(this.routeid);
-    if(data){
-      this.slist=data;
-      if(data.carImg){
-      this.images=data.carImg.split(",");
-      }
-      if(data.tagContent){
-      this.tagContent=data.tagContent.split(",");
-      }
-      if(data.scenicContent){
-        this.scenicContent=data.scenicContent.split(",");
-      }
-    }
+    let data = await linerLineDetailsUrl(this.lineid);
+    // if(data){
+    //   this.slist=data;
+    //   if(data.carImg){
+    //   this.images=data.carImg.split(",");
+    //   }
+    //   if(data.tagContent){
+    //   this.tagContent=data.tagContent.split(",");
+    //   }
+    //   if(data.scenicContent){
+    //     this.scenicContent=data.scenicContent.split(",");
+    //   }
+    // }
   },
   //内容天数
   async styneiryp(){
-    let data = await getRouteContpy(this.routeid);
+    let data = await getRouteContpy(this.lineid);
    //天数
    for(let i=1;i<=data.length;i++){
      this.daty.push(i)
@@ -277,7 +275,7 @@
   async selectyp(){
    let data = await selectCommentUrl(
      this.pageNo,
-     this.routeid,
+     this.lineid,
      this.proType,
    );
    if(data){
@@ -289,7 +287,7 @@
   async yonzityp(){
    let data = await getConsultUrl(
      this.pageNo,
-     this.routeid,
+     this.lineid,
      this.proType,
    )
    this.yonghutyp=data.list;
@@ -301,7 +299,7 @@
            //2收藏
     if(this.slist.ifcollection==2){
     let data = await saveCollectionUrl(
-   this.routeid,
+   this.lineid,
    this.collectionType,
     )
     if(data){
@@ -311,7 +309,7 @@
    //取消收藏
   if(this.slist.ifcollection==1){
    let data = await deleteCollectionUrl(
-   this.routeid,
+   this.lineid,
    this.collectionType,
   )
   if(data){

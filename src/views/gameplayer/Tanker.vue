@@ -3,9 +3,11 @@
     <div class="dingjia_b">
       <div class="sou_her background-a sou_her_jia" style="clear:both">
         <ul class="sou_her_a">
-          <li class="float_left font-16" onclick="window.history.go(-1)">
+          <router-link to="/indexher">
+          <li class="float_left font-16">
             <button class="color-f" style="margin-top: 0.3rem;">取消</button>
           </li>
+          </router-link>
           <li class="sou_her_b">
             <i class="sou_her_d">
               <img src="../../assets/img/A/ic_search.png">
@@ -369,10 +371,10 @@
           <div class="ze_x_a" v-for="(sert,index) in styser" :key="index">
             <div style="overflow:hidden;">
               <div class="float_left ze_x_le">
-                <img v-lazy="sert.carImg">
+                <img v-lazy="sert.imgUrl">
               </div>
               <div class="float_left ze_x_ril">
-                <div class="font-14 ze_x_ril_jia">{{sert.title}}</div>
+                <div class="font-14 ze_x_ril_jia">{{sert.name}}</div>
                 <ul class="font-12 ze_x_ril_a color-b">
                   <li v-for="(tag, index) in sert.tagContent.split(',')" :key="index">{{tag}}</li>
                 </ul>
@@ -385,7 +387,7 @@
                 <i>
                   <img src="../../assets/img/B/bczc_adress_icon@2x.png">
                 </i>
-                {{sert.endCityContent}}
+                {{sert.startCityName}}
               </div>
               <ul class="ze_x_ril_d float_right">
                 <li class="font-14">
@@ -437,13 +439,16 @@ export default {
       hangxiatyp: [], //油轮航线
       styjiag: 1, //开始1显示降价格，2显示升价格
 
-      mescroll: null, // mescroll实例对象
+     mescroll: null, // mescroll实例对象
       mescrollUp: {
         // 上拉加载的配置.
         callback: this.routine, //回调
+        	page: {
+					size: this.$store.state.pageSize, //每页数据条数
+        },
         toTop: {
           //回到顶部按钮
-          src: "./src/assets/img/mescroll/mescroll-totop.png", //图片路径,默认null,支持网络图
+          src: "../../assets/img/mescroll/mescroll-totop.png", //图片路径,默认null,支持网络图
           offset: 1000 //列表滚动1000px才显示回到顶部按钮
         }
       }
@@ -704,7 +709,7 @@ export default {
           }
         }
         // 数据渲染成功后,隐藏下拉刷新的状态
-        this.$nextTick(() => {
+         this.$nextTick(() => {
           mescroll.endSuccess(data.list.length);
         });
       } else {

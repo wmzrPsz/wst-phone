@@ -105,7 +105,7 @@ export const guideRouteUrl = (routeid,pageNo) =>ajax( process.env.VUE_APP_PROXY_
     pageNo: pageNo,
 })
 //油轮接口
-export const youlun = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSpotid,startCity,hangxianty,pageNo) => ajax( process.env.VUE_APP_PROXY_API +'/cruise/cruiseScreen', {
+export const youlun = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSpotid,startCity,hangxianty,pageNo,searchContent,portid) => ajax( process.env.VUE_APP_PROXY_API +'/cruise/cruiseScreen', {
     date:date,//日期
     day:daysty,//天数
     minPrice:minPrice,//最小价格
@@ -116,7 +116,19 @@ export const youlun = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSpo
     startCity:startCity,//出发城市ID
     route:hangxianty,//航线ID
     pageNo: pageNo,
+    searchContent:searchContent,
+    portid:portid,//出发港口
 },'post');
+//获取油轮出发港口
+export const getStartCityUrl = () =>ajax( process.env.VUE_APP_PROXY_API +'/cruise/getStartCity',{
+})
+//获取邮轮公司接口
+export const getLinerCompanyUrl = () =>ajax( process.env.VUE_APP_PROXY_API +'/cruise/getLinerCompany',{
+})
+//油轮详细接口
+export const linerLineDetailsUrl = (lineid) =>ajax( process.env.VUE_APP_PROXY_API +'/cruise/linerlineDetails',{
+    lineid:lineid
+})
 //景点接口
 export const jingdian = (cityid,tagContent,srtype,pageNo) => ajax( process.env.VUE_APP_PROXY_API +'/scenic/selectScenicList',{
     cityid:cityid,//城市ID

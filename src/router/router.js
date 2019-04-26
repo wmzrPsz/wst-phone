@@ -79,6 +79,8 @@ const F_index = r => require.ensure([], () => r(require('../views/F/F_index')), 
 const F_details = r => require.ensure([], () => r(require('../views/F/F_details')), 'F_details')
 //常规路线详情
 const F_details_page = r => require.ensure([], () => r(require('../views/F/F_details_page')), 'F_details_page')
+//常规路线预订
+const F_book = r => require.ensure([], () => r(require('../views/F/F_book')), 'F_book')
 ///////////////////////////////////////////////G当地参团//////////////////////////////////////////////////////////////////////
 //当地参团主页
 const G_index = r => require.ensure([], () => r(require('../views/G/G_index')), 'G_index')
@@ -91,6 +93,10 @@ const H_index = r =>require.ensure([],() => r(require('../views/H/H_index')),'H_
 //当地玩家
 const H_game = r => require.ensure([], () => r(require('../views/H/H_game')), 'H_game')//当地玩家
 const H_detail = r => require.ensure([], () => r(require('../views/H/H_detail')), 'H_detail')//当地玩家详情
+/////////////////////////////////////////////////K——油轮//////////////////////////////////////////////////////////////////////////////////
+const K_index = r => require.ensure([], () => r(require('../views/K/K_index')), 'K_index')//油轮主页
+const K_tanker = r => require.ensure([], () => r(require('../views/K/K_tanker')), 'K_tanker')//油轮列表
+const K_details_page = r => require.ensure([], () => r(require('../views/K/K_details_page')), 'K_details_page')//油轮详情
 Vue.use(Router)
 export default new Router({
   mode: 'history',
@@ -357,6 +363,13 @@ export default new Router({
         component:F_details_page,
         meta:{'title':'常规路线详情'}
       },
+      //预订
+      {
+        path:'/F_book/',
+        name:'F_book',
+        component:F_book,
+        meta:{'title':'常规路线详情'}
+      },
       //////////////////////////////////////当地参团//////////////////////////////////////////////
       //当地参团
       {
@@ -398,6 +411,27 @@ export default new Router({
       name:'H_detail',
       component:H_detail,
       meta:{'title':'当地玩家详情'}
-    }
+    },
+    ///////////////////////////油轮////////////////////////////////////
+    {
+      path:'/K_index',
+      name:'K_index',
+      component:K_index,
+      meta:{'title':'油轮'}
+    },
+    //油轮列表
+    {
+      path:'/K_tanker/',
+      name:'K_tanker',
+      component:K_tanker,
+      meta:{'title':'油轮'}
+    },
+    //油轮详情
+    {
+      path:'/K_details_page/:lineid',
+      name:'K_details_page',
+      component:K_details_page,
+      meta:{'title':'油轮详情'}
+    },
   ]
 })

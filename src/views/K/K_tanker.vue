@@ -1,57 +1,10 @@
 <template>
   <div class="index" style="background-color: white;">
+    <div class="her_a font-20 background-a">
+      <i class="her_a_left float_left"><img src="../../assets/img/A/back_icon@2x.png" onclick="window.history.go(-1)"></i>
+      <i class="her_a_zong color float_zhong">油轮</i>
+     </div>
     <div class="dingjia_b">
-      <div class="sou_her background-a sou_her_jia" style="clear:both">
-        <ul class="sou_her_a">
-          <router-link to="/indexher">
-          <li class="float_left font-16">
-            <button class="color-f" style="margin-top: 0.3rem;">取消</button>
-          </li>
-          </router-link>
-          <li class="sou_her_b">
-            <i class="sou_her_d">
-              <img src="../../assets/img/A/ic_search.png">
-            </i>
-            <i>
-              <input class="font-12 color-f" type="text" placeholder="搜索旅游地/当地玩家/景点/油轮">
-            </i>
-          </li>
-          <li class="float_right font-16">
-            <button class="sou_her_c color background-d">搜索</button>
-          </li>
-        </ul>
-
-        <ul class="sou_her_q color font-12">
-          <router-link to="/sousuo">
-            <li>
-              <i class="color">常规旅行</i>
-              <i></i>
-            </li>
-          </router-link>
-          <li>
-            <i class="color-g">当地参团</i>
-            <i class="sou_her_q_a"></i>
-          </li>
-          <router-link to="/game">
-            <li>
-              <i class="color">当地玩家</i>
-              <i></i>
-            </li>
-          </router-link>
-          <router-link to="/Tanker">
-            <li>
-              <i class="color">邮轮</i>
-              <i></i>
-            </li>
-          </router-link>
-          <router-link to="/Scenicspot">
-            <li>
-              <i class="color">景点</i>
-              <i></i>
-            </li>
-          </router-link>
-        </ul>
-      </div>
       <div class="brijtan_b" v-if="type!=0"></div>
       <!--日期筛选-->
       <div class="shaixuang">
@@ -61,10 +14,7 @@
               <i>日期</i>
               <span class="s_a">
                 <i class="sou_her_w_a">
-                  <img src="../../assets/img/A/sign_open_icon@2x.png">
-                </i>
-                <i class="sou_her_w_a yinc">
-                  <img src="../../assets/img/A/sign_open_icon@3x.png">
+                  <img src="../../assets/img/B/bjyw_open_icon@2x.png">
                 </i>
               </span>
             </li>
@@ -72,33 +22,27 @@
               <i>行程</i>
               <span class="s_a">
                 <i class="sou_her_w_a">
-                  <img src="../../assets/img/A/sign_open_icon@2x.png">
+                  <img src="../../assets/img/B/bjyw_open_icon@2x.png">
                 </i>
-                <i class="sou_her_w_a yinc">
-                  <img src="../../assets/img/A/sign_open_icon@3x.png">
-                </i>
+               
               </span>
             </li>
             <li @click="teypex(3)">
               <i>价格预算</i>
               <span class="s_a">
                 <i class="sou_her_w_a">
-                  <img src="../../assets/img/A/sign_open_icon@2x.png">
+                   <img src="../../assets/img/B/bjyw_open_icon@2x.png">
                 </i>
-                <i class="sou_her_w_a yinc">
-                  <img src="../../assets/img/A/sign_open_icon@3x.png">
-                </i>
+              
               </span>
             </li>
             <li @click="teypex(4)">
               <i>全部筛选</i>
               <span class="s_a">
                 <i class="sou_her_w_a">
-                  <img src="../../assets/img/A/sign_open_icon@2x.png">
+                  <img src="../../assets/img/B/bjyw_open_icon@2x.png">
                 </i>
-                <i class="sou_her_w_a yinc">
-                  <img src="../../assets/img/A/sign_open_icon@3x.png">
-                </i>
+               
               </span>
             </li>
           </ul>
@@ -112,12 +56,12 @@
             <i class="font-16 b_xianm_c">筛选日期</i>
           </div>
 
-          <div class="b_xianm">
+         <div class="b_xianm">
             <ul class="font-12 b_xianm_b color-b">
               <li
                 v-for="(list, index) in dataList"
                 :key="index"
-                :class="list.flag?'b_xianm_b_jiadian':''"
+                :class="list.falg_a?'b_xianm_b_jiadian':''"
                 @click.stop="monthClick(index)"
               >{{list.month}}月</li>
             </ul>
@@ -203,7 +147,7 @@
               <li
                 v-for="(list, index) in dataList"
                 :key="index"
-                :class="list.flag?'b_xianm_b_jiadian':''"
+                :class="list.falg_a?'b_xianm_b_jiadian':''"
                 @click.stop="monthClick(index)"
               >{{list.month}}月</li>
             </ul>
@@ -263,6 +207,44 @@
               </div>
             </ul>
           </div>
+          <!--出发城市-->
+          <div>
+            <div class="b_xianm bus">
+              <i class="b_xianm_a">
+                <img src="../../assets/img/A/home_tanchu_circle_icon@2x.png">
+              </i>
+              <i class="font-16 b_xianm_c">出发城市</i>
+            </div>
+            <div class="b_xianm">
+              <ul class="font-12 b_xianm_b color-b">
+                <li
+                  v-for="(list,index) in cstyle"
+                  :key="index"
+                  :class="list.flag?'b_xianm_b_jiadian':''"
+                  @click.stop="chensClick(index)"
+                >{{list.cityName}}</li>
+              </ul>
+            </div>
+          </div>
+          <!--油轮航线-->
+          <div>
+            <div class="b_xianm bus">
+              <i class="b_xianm_a">
+                <img src="../../assets/img/A/home_tanchu_circle_icon@2x.png">
+              </i>
+              <i class="font-16 b_xianm_c">邮轮航线</i>
+            </div>
+            <div class="b_xianm">
+              <ul class="font-12 b_xianm_b color-b">
+                <li
+                  v-for="(list,index) in hangxiatyp"
+                  :key="index"
+                  :class="list.flag?'b_xianm_b_jiadian':''"
+                  @click.stop="hanxianClick(index)"
+                >{{list.name}}</li>
+              </ul>
+            </div>
+          </div>
           <div v-for="(list,index1) in getLtyp" :key="index1">
             <div class="b_xianm bus">
               <i class="b_xianm_a">
@@ -297,7 +279,7 @@
       </div>
 
       <div class="dingjia_a_ajia">
-       <ul class="sou_her_www font-14">
+        <ul class="sou_her_www font-14">
           <li @click="sertey(0)" :class="[srtype==0?'sou_her_www_a':'']">
             <button>综合</button>
           </li>
@@ -312,7 +294,7 @@
               </i>
             </span>
           </li>
-          <li @click="sertey(3)"  v-if="styjiag==2" :class="[srtype==2?'sou_her_www_a':'']">
+          <li @click="sertey(3)" v-if="styjiag==2" :class="[srtype==2?'sou_her_www_a':'']">
             <i>价格</i>
             <span class="s_a">
               <i class="sou_her_w_a_a">
@@ -330,13 +312,13 @@
     <div class="dingjia_a">
       <mescroll-vue ref="mescroll" :up="mescrollUp" @init="mescrollInit">
         <div class="ze_x">
-          <div class="ze_x_a" v-for="(sert,index) in styser" :key="index">
+          <div class="ze_x_a" v-for="(sert,index) in styser" :key="index" @click="xianqinclick(sert)">
             <div style="overflow:hidden;">
               <div class="float_left ze_x_le">
-                <img v-lazy="sert.carImg">
+                <img v-lazy="sert.imgUrl">
               </div>
               <div class="float_left ze_x_ril">
-                <div class="font-14 ze_x_ril_jia">{{sert.title}}</div>
+                <div class="font-14 ze_x_ril_jia">{{sert.name}}</div>
                 <ul class="font-12 ze_x_ril_a color-b">
                   <li v-for="(tag, index) in sert.tagContent.split(',')" :key="index">{{tag}}</li>
                 </ul>
@@ -349,7 +331,7 @@
                 <i>
                   <img src="../../assets/img/B/bczc_adress_icon@2x.png">
                 </i>
-                {{sert.endCityContent}}
+                {{sert.startCityName}}
               </div>
               <ul class="ze_x_ril_d float_right">
                 <li class="font-14">
@@ -363,25 +345,70 @@
         </div>
       </mescroll-vue>
     </div>
+      <!--点击选择月份-->
+    <div class="brijtan " v-if="yue==2"></div>
+    <div class="Route_x " v-if="yue==2">
+      <div class="font-16" style="line-height: 2rem;">{{listpryue.month}}月</div>
+      <div class="Route_x_a">
+        <dl class="font-12">
+          <dd v-for="(list,index) in listpryue.days" :key="index" @click.stop="datyclick(index)">
+            {{list.day}}号
+            <i class="b_xianm_b_jiadian_day" v-if="list.flag==true"></i>
+          </dd>
+        </dl>
+      </div>
+
+      <button
+      @click="yuetpy(listpryue)"
+        class="color background-d font-14 xiayi"
+        style="margin-top:2rem!important; margin-bottom:1rem!important;"
+      >确定</button>
+    </div>
   </div>
 </template>
 <style lang="less" scoped>
 .mescroll {
   position: fixed;
-  z-index: 9;
-  top: 9.2rem;
+  z-index:9;
+  top:7.7rem;
+  bottom: 0;
+  height: auto;
+}
+.dingjia_b{
+  margin-top:2.5rem;
+}
+.sou_her_ww{
+ background-color: #484b4e;
+  overflow: hidden;
+  color: white;
+  position: fixed;
+  width: 100%;
+}
+.dingjia_a_ajia{
+  margin-top:-2rem!important;
+}
+.ong_z{
+  margin-top: 3rem;
+}
+.qyuanb{
+   position: fixed;
+  z-index:999;
+  top:2.5rem;
   bottom: 0;
   height: auto;
 }
 </style>
 
 <script>
-import { selectttpy, zhiding } from "@/utils/getData";
+import { youlun, zhiding, chengshi, gankou } from "@/utils/getData";
 import MescrollVue from "mescroll.js/mescroll.vue";
 export default {
   name: "index",
   data() {
     return {
+      // startCity:this.$route.params.startCity,
+      searchContent:this.$route.params.searchContent,
+      portid:this.$route.params.portid,//出发港口
       type: "", //1日期，2行程，3价格，4全部，
       srtype: "", //1综合，2销量，3降价格，4升价格
       styser: [], //列表数据
@@ -395,20 +422,24 @@ export default {
       maxpak: 2,
       scenicSpotid: [],
       getLtyp: [], //自定标签
-      routeType: 2, //自定标签1常规路线,2当地
+      routeType: 3, //自定标签1常规路线,2当地,3油轮
       tagContent: [],
-       styjiag:1,//开始1显示降价格，2显示升价格
+      cstyle: [], //出发城市列表
+      hangxiatyp: [], //油轮航线
+      styjiag: 1, //开始1显示降价格，2显示升价格
+       yue:1,//表示月份隐藏
+      listpryue:'',//月份天数
 
-      mescroll: null, // mescroll实例对象
+     mescroll: null, // mescroll实例对象
       mescrollUp: {
         // 上拉加载的配置.
         callback: this.routine, //回调
-        page: {
-          size: this.$store.state.pageSize //每页数据条数
+        	page: {
+					size: this.$store.state.pageSize, //每页数据条数
         },
         toTop: {
           //回到顶部按钮
-          src: "http://www.mescroll.com/img/mescroll-totop.png", //图片路径,默认null,支持网络图
+          src: "../../assets/img/mescroll/mescroll-totop.png", //图片路径,默认null,支持网络图
           offset: 1000 //列表滚动1000px才显示回到顶部按钮
         }
       }
@@ -422,9 +453,19 @@ export default {
     //获取选择的日期
     date() {
       let lists = [];
-      for (const list of this.dataList) {
-        if (list.flag) {
-          lists.push(list);
+      let data = [];//号
+       for (const list of this.dataList) {
+        var mag = {};
+        if (list.falg_a) {
+        this.$set(mag,'year',list.year);//年
+        this.$set(mag,'month',list.month);//月
+        for(const datayu of list.days){
+        if(datayu.flag){
+         data.push(datayu.day);//月
+         this.$set(mag,'days',data.toString());
+        }
+        }
+        lists.push(mag);
         }
       }
       return lists;
@@ -435,6 +476,30 @@ export default {
       for (const listday of this.daylist) {
         if (listday.flag) {
           lists.push(listday.day);
+        }
+      }
+      return lists;
+    },
+    //获取出发城市
+    startCity() {
+      let lists = [];
+       lists.push(this.$route.params.startCity);
+      //this.$route.params.startCity
+      // let lists=[];
+      for (const list of this.cstyle) {
+        if (list.flag) {
+          lists.push(list.cityid);
+        }
+      }
+      return lists;
+    },
+    //获取航线ID
+    hangxianty() {
+      let lists = [];
+       lists.push(this.$route.params.route);
+      for (const list of this.hangxiatyp) {
+        if (list.flag) {
+          lists.push(list.id);
         }
       }
       return lists;
@@ -459,6 +524,8 @@ export default {
     this.dayListInit(); //天数初始化
     this.priceInit(); //价格初始化
     this.getLabeltyp(); //自定标签
+    this.chufa(); //出发城市
+    this.gankoutylp(); //油轮航线
   },
   filters: {
     dayFilter: function(value) {
@@ -479,24 +546,56 @@ export default {
         this.type = index;
       }
     },
-     //销售量和价格的切换
+    //点击详情
+    xianqinclick(sert){
+    this.$router.push({
+     path: '/K_details_page/'+sert.id,
+    })
+    },
+    //销售量和价格的切换
     sertey(index) {
       this.srtype = index;
       this.mescroll.resetUpScroll();
-      if(this.srtype==2){
-        this.styjiag=2;
+      if (this.srtype == 2) {
+        this.styjiag = 2;
       }
-      if(this.srtype==3){
-        this.styjiag=1;
+      if (this.srtype == 3) {
+        this.styjiag = 1;
       }
+    },
+      //确定月份
+  yuetpy(listpryue){
+    this.yue=1;
+    for(const srt of listpryue.days){
+      if(srt.flag==true){
+        this.$set(listpryue,'falg_a',true);
+         this.mescroll.resetUpScroll();
+        return;
+      }
+      this.$set(listpryue,'falg_a',false);
+    }
+     this.mescroll.resetUpScroll();
+    return;
     },
     //月份点击
-    monthClick(index) {
-      this.dataList[index].flag = !this.dataList[index].flag;
-      if (this.dataList); //多选 当datalist[index].flag=true//为选中月分
-      this.mescroll.resetUpScroll();
-      return;
-    },
+     monthClick(index) {
+    this.yue=2;
+     if(this.dataList[index].flag==false){
+        this.dataList.map(elem => {
+        elem.flag = false;
+      });
+      }
+    this.dataList[index].flag = !this.dataList[index].flag;
+   for (const listpr of this.dataList) {
+        if(listpr.flag==true){
+         this.listpryue=listpr;
+        }
+      }
+  },
+  //点击选中几号
+  datyclick(index){
+   this.listpryue.days[index].flag = !this.listpryue.days[index].flag;
+  },
     LopTime(year = new Date().getFullYear(), month = new Date().getMonth()) {
       //计算这个月多少天
       let day = new Date(year, month, 0).getDate(); //当月总天数
@@ -522,9 +621,12 @@ export default {
         let days = [];
         for (let k = 1; k <= day; k++) {
           //这个月有多少天循环多少
-          days.push(k);
+          let map = {};
+          this.$set(map, "day", k);
+          this.$set(map, "flag", false);
+          days.push(map);
         }
-        this.$set(map, "days", days.toString());
+        this.$set(map, "days", days);
         list.push(map); //List[{year,month,{day}},{}]
         month++; //每循环一次加一月
       }
@@ -551,24 +653,23 @@ export default {
     },
     //点击价格的选中
     contentClick(index) {
-
       this.minpak = 2;
       this.maxpak = 2;
-      if(this.priceList[index].flag==false){
+      if (this.priceList[index].flag == false) {
         this.priceList.map(elem => {
-        elem.flag = false;
-      });
+          elem.flag = false;
+        });
       }
-       this.priceList[index].flag = !this.priceList[index].flag;
+      this.priceList[index].flag = !this.priceList[index].flag;
       // this.minPrice=priceList[index].minPrice;
-        if (this.priceList[index].flag==true) {
-          this.minPrice = this.priceList[index].minPrice; //最小价格
-          this.maxPrice = this.priceList[index].maxPrice; //最大价格
-        }
-        if (this.priceList[index].flag==false) {
-          this.minPrice="";
-           this.maxPrice ="";
-        }
+      if (this.priceList[index].flag == true) {
+        this.minPrice = this.priceList[index].minPrice; //最小价格
+        this.maxPrice = this.priceList[index].maxPrice; //最大价格
+      }
+      if (this.priceList[index].flag == false) {
+        this.minPrice = "";
+        this.maxPrice = "";
+      }
       console.log("最小价格" + this.minPrice + "最大价格" + this.maxPrice);
       this.mescroll.resetUpScroll();
     },
@@ -621,7 +722,10 @@ export default {
       this.type = 0;
     },
     async routine(page, mescroll) {
-      let data = await selectttpy(
+      if( this.portid==null){
+       this.portid='';
+      }
+      let data = await youlun(
         JSON.stringify(this.date),
         this.tagContent.toString(),
         this.daysty.toString(),
@@ -629,7 +733,11 @@ export default {
         this.minPrice, //小价格
         this.maxPrice, //大价格
         this.scenicSpotid.toString(), //景点ID
-        page.num
+        this.startCity.toString(), //出发城市ID
+        this.hangxianty.toString(), //航线ID
+        page.num,
+        this.searchContent,//搜索内容
+        this.portid,//出发港口
       );
       if (data) {
         // 如果是第一页需手动制空列表
@@ -646,13 +754,43 @@ export default {
           }
         }
         // 数据渲染成功后,隐藏下拉刷新的状态
-        this.$nextTick(() => {
+         this.$nextTick(() => {
           mescroll.endSuccess(data.list.length);
         });
       } else {
         // 联网异常,隐藏上拉和下拉的加载进度
         mescroll.endErr();
       }
+    },
+    //出发城市
+    async chufa() {
+      let data = await chengshi();
+      if (data) {
+        this.cstyle = data;
+        for (const list of this.cstyle) {
+          this.$set(list, "flag", false);
+        }
+      }
+    },
+    //点击选中出发城市
+    chensClick(index) {
+      this.cstyle[index].flag = !this.cstyle[index].flag;
+      this.mescroll.resetUpScroll();
+    },
+    //油轮航线
+    async gankoutylp() {
+      let data = await gankou();
+      if (data) {
+        this.hangxiatyp = data;
+        for (const list of this.hangxiatyp) {
+          this.$set(list, "flag", false);
+        }
+      }
+    },
+    //点击航线
+    hanxianClick(index) {
+      this.hangxiatyp[index].flag = !this.hangxiatyp[index].flag;
+      this.mescroll.resetUpScroll();
     },
     //自定标签
     async getLabeltyp() {
@@ -701,6 +839,14 @@ export default {
         for (const item of list.comTagList) {
           item.flag = false;
         }
+      }
+      //出发城市
+      for (const list of this.cstyle) {
+        list.flag = false;
+      }
+      //出发航线
+      for (const list of this.hangxiatyp) {
+        list.flag = false;
       }
       this.mescroll.resetUpScroll();
     }

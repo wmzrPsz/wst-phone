@@ -3,9 +3,11 @@
     <div class="dingjia_b">
       <div class="sou_her background-a sou_her_jia" style="clear:both">
         <ul class="sou_her_a">
-          <li class="float_left font-16" onclick="window.history.go(-1)">
+           <router-link to="/indexher">
+          <li class="float_left font-16">
             <button class="color-f" style="margin-top: 0.3rem;">取消</button>
           </li>
+          </router-link>
           <li class="sou_her_b">
             <i class="sou_her_d">
               <img src="../../assets/img/A/ic_search.png">
@@ -161,7 +163,8 @@
           <div class="ze_x_a" v-for="(list,index) in styser" :key="index">
             <div style="overflow:hidden; margin-bottom:0.3rem;">
               <div class="float_left ze_x_le">
-                <img v-lazy="list.imgUrl | splitVc(0)">
+                <img v-lazy="list.imgUrl">
+                <!-- <img v-lazy="[list.imgUrl==null? '' :'list.imgUrl | splitVc(0)']"> -->
               </div>
               <div class="float_left ze_x_ril">
                 <div class="font-14 ze_x_le_a">{{list.name}}</div>
