@@ -2,13 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/router'
 import store from './vuex/index'
-import {Toast,Popup,Picker,DatetimePicker,Swipe,SwipeItem,Rate} from 'vant'
+import {Toast,Popup,Picker,DatetimePicker,Swipe,SwipeItem,Rate,Stepper} from 'vant'
 import "./style/inde.css";
 import VueLazyload from 'vue-lazyload'  
  //生产环境提示，这里设置成了false
 Vue.config.productionTip = false
 
- Vue.use(Toast).use(Popup).use(Picker).use(DatetimePicker).use(Swipe).use(SwipeItem).use(Rate);
+ Vue.use(Toast).use(Popup).use(Picker).use(DatetimePicker).use(Swipe).use(SwipeItem).use(Rate).use(Stepper);
 
 router.beforeEach((to, from, next) => {
   console.log(to)
