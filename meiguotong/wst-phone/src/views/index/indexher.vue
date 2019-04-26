@@ -23,7 +23,7 @@
     <!--头部导航栏-->
     <div class="daohan">
       <ul>
-        <li> <router-link to="/b_index">包车租车</router-link></li>
+        <li> <router-link to="/B_index">包车租车</router-link></li>
         <li><router-link to="/F_index">常规路线</router-link></li>
         <li><router-link to="/G_index">当地参团</router-link></li>
         <li><router-link to="/H_index">当地玩家</router-link></li>
