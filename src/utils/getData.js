@@ -58,6 +58,11 @@ export const bind = (type,mobile,email,smsCode,passWord,area,) => ajax( process.
 export const zhiding =(routeType) => ajax( process.env.VUE_APP_PROXY_API +'/common/getLabel',{
     routeType:routeType,
 })
+//退款说明接口
+export const refundInforUrl =(routeType,priceDate) => ajax( process.env.VUE_APP_PROXY_API +'/common/refundInfor',{
+    productid:routeType,
+    priceDate:priceDate,
+})
 //常规路线搜索接口
 export const seledin = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSpotid, pageNo) => ajax( process.env.VUE_APP_PROXY_API +'/route/selectRoute', {
     date:date,//日期

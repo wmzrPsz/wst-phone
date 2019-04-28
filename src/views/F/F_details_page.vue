@@ -183,11 +183,40 @@
       </div>
     </div>
     </div>
+    <van-popup v-model="show"  class="refund_jia">
+      <div>
+        <p>退款说明</p>
+         <p>订单确认后,提前<i>{{refund.refundDay}}</i>天退单,返回<i>{{refund.refundNum}}</i>%</p>
+      </div>
+    </van-popup>
+    <van-popup v-model="show1"  class="refund_jia" :overlay="true">
+      <div>
+        <p>价格说明</p>
+         <p>{{slist.priceInfor}}</p>
+      </div>
+    </van-popup>
   </div>
 </template>
+<style lang="less">
+ .refund_jia{
+   width:80%!important;
+   overflow: hidden;
+   border-radius: 8px;
+   border: 1px slategray solid;
+ }
+ .refund_jia p{
+   font-size: 13px!important;
+   text-align: left;
+   width: 90%;
+   margin:0.3rem auto;
+ }
+  .refund_jia p i{
+    color: coral;
+  }
+</style>
 
  <script>
- import { getRouteDetailstyp,getRouteContpy,selectCommentUrl,getConsultUrl,saveCollectionUrl,deleteCollectionUrl} from "@/utils/getData";
+ import { getRouteDetailstyp,getRouteContpy,selectCommentUrl,getConsultUrl,saveCollectionUrl,deleteCollectionUrl,refundInforUrl} from "@/utils/getData";
  import store from '@/vuex/index';
  import ajax from '@/utils/fetch';
   export default {
@@ -209,7 +238,11 @@
       pingluntyp:[],//评论列表
       yonghutyp:[],//用户资讯列表
       collectionType:1,//收藏1.常规路线2.当地参团3.当地玩家4.游轮5.景点
+      productType:4,//1.包车租车2.短程接送3.接送机4常规路线5.当地参团6.游轮7.景点门票9.酒店10.保险11.当地玩家12.旅游定制-导游13.旅游定制-司兼导14包车/租车-导游//15包车/租车-司兼导
       imgtyp:'',
+      show:false,
+      show1:false,
+      refund:'',//退款
     }
   },
   filters:{
@@ -289,6 +322,17 @@
      console.log(this.pingluntyp.length);
    }
   },
+  //退货说明
+  async tuihuotyp(){
+    let data = await refundInforUrl(
+      this.routeid,
+      this.productType,
+    )
+    if(data){
+      this.refund=data;
+      this.show=true;
+    }
+  },
   //用户资讯
   async yonzityp(){
    let data = await getConsultUrl(
@@ -320,8 +364,8 @@
   )
   if(data){
    this.styget();
-  }
-  } 
+    }
+    } 
        }
        if(store.state.loginUid==0){
        this.$toast("请先登陆");
@@ -344,13 +388,19 @@
   dinaclick(index){
   this.tuslit=index;
   },
+
   //点击退货说明
   shuomiclick(index){
+    //退货说明
     if(index==1){
-     alert(this.slist.content);
+    if(store.state.loginUid!=0){
+        this.tuihuotyp();
+       }else{
+         this.$toast("请先登录");
+       }
     }
     if(index==2){
-       alert(this.slist.priceInfor);
+      this.show1=true;
     }
   },
   },
