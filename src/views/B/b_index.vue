@@ -348,7 +348,7 @@ export default {
 			this.show2 = false;
 			this.show3 = false;
     },
-    //确定获取证件有效期
+    //确定获取出发时间
     queding() {
       this.show = false;
       this.year = this.currentDate.getFullYear(); //年
@@ -356,7 +356,7 @@ export default {
       this.day = this.currentDate.getDate(); //日
       this.certValidDate = this.year + "-" + this.month + "-" + this.day;
     },
-    //确定出生日期
+    //确定结束时间
     queding_a() {
       this.show1 = false;
       this.year = this.currentDate.getFullYear(); //年

@@ -363,12 +363,12 @@ export default new Router({
         component:F_details_page,
         meta:{'title':'常规路线详情'}
       },
-      //预订
+      // //预订
       {
-        path:'/F_book/',
+        path:'/F_book/:routeid',
         name:'F_book',
         component:F_book,
-        meta:{'title':'常规路线详情'}
+        meta:{'title':'预订'}
       },
       //////////////////////////////////////当地参团//////////////////////////////////////////////
       //当地参团

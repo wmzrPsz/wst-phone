@@ -23,7 +23,7 @@
  .mescroll {
   position: fixed;
   z-index:1;
-  top:2rem;
+  top:2.5rem;
   bottom:2.5rem;
   height: auto;
   overflow: hidden;
@@ -31,6 +31,7 @@
 }
 .collection_di_e{
 text-align: left;
+margin-top:0.5rem!important;
 }
     </style>
     

@@ -1,5 +1,5 @@
-<template>
-  <div class="index">
+ <template>
+  <div class="app">
    <div class="beijingtu Choose_a_room_a"><img src="../../assets/img/A/back_icon@2x.png" onclick="window.history.go(-1)"></div>
    <div class="flexslider ">
     <van-swipe :autoplay="1000" class="flexslider_jia">
@@ -11,7 +11,7 @@
       <div class="Choose_a_room_b">
       <div class="Choose_a_room_b_j">
        <div class="martop">
-       	<div class="float_left font-16 martop_jia">{{slist.title}}</div>
+       	<div class="float_left font-16 martop_jia">{{slist.name}}</div>
        </div>
        	<div>
       	  <div class="font-12 color-h float_left">￥<i class="font-18 color-h">{{slist.price}}</i><i class="color-b font-14">/起</i></div>
@@ -31,7 +31,7 @@
       <div class="refund_a font-12"><span v-for="(ter,index) in tagContent" :key="index">{{ter}}</span></div>
       <div class="refund_aa">
       <span class="font-12  color-d">{{slist.subtitle}}</span>
-      <span class="font-12  color-b">编号2：本产品由测试及具有资质的合作旅行社提供相关服务</span>
+      <span class="font-12  color-b">编号{{slist.lineNo}}:本产品由测试及具有资质的合作旅行社提供相关服务</span>
       </div>
       <div class="refund_b" id="test6">
       	<div class="float_left font-14"><i class="refund_b_a"><img src="../../assets/img/C/cglxxq_date_icon@2x.png"></i>可定日期与价格</div>
@@ -44,9 +44,10 @@
 
      <div class="beu_he"></div>
      <div class="refund_z refun_jia">
-     	<div class="refund_c font-14">路线说明</div>
-     	<div class="font-14 color-b refund_c_a border_e">{{slist.infor}}</div>
-
+     	<div class="refund_c font-14">世界梦想号</div>
+     	<div class="font-14 color-b refund_c_a ">所属公司{{gongsityp.company}}</div>
+      <div class="font-14 color-b refund_c_a">首航{{gongsityp.startDate}}| 吨位{{gongsityp.weight}}|载客量{{gongsityp.passengersNum}}</div>
+      <div class="font-14 color-b refund_c_a border_e">长度{{gongsityp.length}}| 宽度{{gongsityp.width}} | 高度{{gongsityp.heigth}}</div>
      	<div class="refund_c_tou">
      		<ul class="font-12 refund_c_b">
      			<li :class="[tuslit==1? 'refund_c_dian':'']" @click="dinaclick(1)">内容形成<i class="refund_c_c" v-if="tuslit==1"><img src="../../assets/img/A/home_rmzc_qiehuan_bg@2x.png"></i>
@@ -74,7 +75,7 @@
 
 		  <div class="refund_d_c">
 		  	<ul class="font-12 color-b">
-		  		<li :class="[thifs==index? 'refund_d_c_jia':'']" v-for="(styl,index) in daty" :key="index" @click="datatyp(index)">第{{styl}}天</li>
+		  		<li :class="[thifs==index? 'refund_d_c_jia':'']" v-for="(styl,index) in listyp.length" :key="index" @click="datatyp(index)">第{{styl}}天</li>
 		  	</ul>
 		  </div>
       <div class="refund_d_d font-14" v-for="(lister,index) in listyp_a.contentList" :key="index">
@@ -84,7 +85,7 @@
           </dl>
           <div class="refund_d_e  font-16">{{lister.scenicName}}</div>
           <div class="refund_d_e color-b font-14">{{lister.infor}}</div>
-          <span class="refund_d_f beijingtu" v-if="imgtyp==1"><img v-lazy="lister.img"></span>
+          <span class="refund_d_f beijingtu" v-for="(img, index) in lister.imgUrl.split(',')" :key="index"><img v-lazy="img"></span>
       </div>
 		 </div>
       <!--用户点评-->
@@ -141,31 +142,21 @@
       <div class="visual">
       <video src="../../assets/img/B/480.mp4" controls></video>
       </div>
-      <div class="visual_a">
-        <span class="font-16">备注信息</span>
-        <span class="font-14 color-b">升级24小时专用接机</span>
+     	</div>
+<!---->
+            <div class="visual_a">
+        <!-- <span class="font-16">备注信息</span>
+        <span class="font-14 color-b">升级24小时专用接机</span> -->
         <div>
             <div class="visual_bb font-14"><i class="visual_b"><img src="../../assets/img/A/gant.png"></i><i>产品经理推荐</i></div>
              <ul class="visual_c font-14">
              <li>
               <i><img src="../../assets/img/B/bjyw_star_icon@2x.png"></i>
-              <span>精品高性能精品</span>
-            </li>
-            <li>
-              <i><img src="../../assets/img/B/bjyw_star_icon@2x.png"></i>
-              <span>精品高性能精</span>
-            </li>
-            <li>
-              <i><img src="../../assets/img/B/bjyw_star_icon@2x.png"></i>
-              <span>精品高性能精品高性能精品高性能精品高性能精品高性能</span>
+              <span>{{slist.recommend}}</span>
             </li>
              </ul>
         </div>
       </div>
-       
-
-     	</div>
-<!---->
      </div>
      
     </div>
@@ -185,16 +176,33 @@
     </div>
   </div>
 </template>
+<style lang="less">
+.refund_c{
+  text-align: left;
+}
+.refund_d_f{
+  width:100%;
+}
+.information ul{
+  clear: both;
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+.information ul span{
+  margin-top: 0.3rem;
+}
+</style>
 
  <script>
- import { linerLineDetailsUrl,getRouteContpy,selectCommentUrl,getConsultUrl,saveCollectionUrl,deleteCollectionUrl} from "@/utils/getData";
+ import { linerLineDetailsUrl,tripLisUrl,selectCommentUrl,getConsultUrl,saveCollectionUrl,deleteCollectionUrl} from "@/utils/getData";
  import store from '@/vuex/index';
  import ajax from '@/utils/fetch';
   export default {
-  name: "index",
+  name: "app",
   data(){
     return {
       lineid:this.$route.params.lineid,
+      gongsityp:'',//
       slist:'',//详情
       images: [],//轮播图片
       tagContent:[],//属性
@@ -209,7 +217,6 @@
       pingluntyp:[],//评论列表
       yonghutyp:[],//用户资讯列表
       collectionType:4,//收藏1.常规路线2.当地参团3.当地玩家4.游轮5.景点
-      imgtyp:'',
     }
   },
   filters:{
@@ -247,29 +254,28 @@
   //常规路线详情
   async styget(){
     let data = await linerLineDetailsUrl(this.lineid);
-    // if(data){
-    //   this.slist=data;
-    //   if(data.carImg){
-    //   this.images=data.carImg.split(",");
-    //   }
-    //   if(data.tagContent){
-    //   this.tagContent=data.tagContent.split(",");
-    //   }
-    //   if(data.scenicContent){
-    //     this.scenicContent=data.scenicContent.split(",");
-    //   }
-    // }
+    if(data){
+      this.slist=data.linerline;
+      this.gongsityp=data.liner;
+      if(this.slist.imgUrl){
+      this.images=this.slist.imgUrl.split(",");
+      }
+      if(this.slist.tagContent){
+        this.tagContent=this.slist.tagContent.split(",");
+      }
+      if(this.slist.startCityName){
+        console.log(this.slist.startCityName);
+        this.scenicContent=this.slist.startCityName.split(",");
+      }
+    }
   },
   //内容天数
   async styneiryp(){
-    let data = await getRouteContpy(this.lineid);
-   //天数
-   for(let i=1;i<=data.length;i++){
-     this.daty.push(i)
-   }
-   this.listyp=data;
-   console.log(this.listyp);
-   this.datatyp(0);
+    let data = await tripLisUrl(this.lineid);
+    this.listyp=data;
+    if(this.listyp.length!=0){
+      this.datatyp(0);
+    }
   },
   //评价
   async selectyp(){
@@ -280,7 +286,6 @@
    );
    if(data){
      this.pingluntyp=data.list;
-     console.log(this.pingluntyp.length);
    }
   },
   //用户资讯
@@ -329,10 +334,6 @@
   datatyp(index){
     this.thifs=index;
     this.listyp_a=this.listyp[index];
-    if(this.listyp_a.contentList.img!=null){
-     this.imgtyp=1;
-    }
-    console.log(this.listyp_a);
   },
   //切换
   dinaclick(index){
