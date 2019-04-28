@@ -69,6 +69,12 @@ export const seledin = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSp
     labelAttrid:tagContent,//属性
     pageNo: pageNo,
 },'post');
+//日期价格接口
+export const getRoutePriceDetailsUrl = (routeid,priceDate) =>ajax( process.env.VUE_APP_PROXY_API +'/route/getRoutePriceDetails',{
+    routeid:routeid,
+    priceDate:priceDate
+    
+})
 //当地参团搜索接口
 export const selectttpy = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSpotid, pageNo) => ajax( process.env.VUE_APP_PROXY_API +'/route/selectCityRoute', {
     date:date,//日期
@@ -128,6 +134,10 @@ export const getLinerCompanyUrl = () =>ajax( process.env.VUE_APP_PROXY_API +'/cr
 //油轮详细接口
 export const linerLineDetailsUrl = (lineid) =>ajax( process.env.VUE_APP_PROXY_API +'/cruise/linerlineDetails',{
     lineid:lineid
+})
+//邮轮行程列表接口
+export const tripLisUrl = (lineid) =>ajax( process.env.VUE_APP_PROXY_API +'/cruise/tripList',{  
+    lineid:lineid,
 })
 //景点接口
 export const jingdian = (cityid,tagContent,srtype,pageNo) => ajax( process.env.VUE_APP_PROXY_API +'/scenic/selectScenicList',{

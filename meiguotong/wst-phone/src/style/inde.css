@@ -3337,14 +3337,6 @@ select{
 	margin-left:-0.5rem;
 
 }
-.room{
-	overflow: hidden;
-	width: 90%;
-	margin:auto;
-	margin-top:1rem;
-	padding-bottom: 0.5rem;
-
-}
 .room_a {
 	margin-top: 0.5rem;
 	overflow: hidden;

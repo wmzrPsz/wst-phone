@@ -179,9 +179,7 @@
       </div>
       <div class="float_right collection_di_b">
           <button class="font-14 ">购物车</button>
-          <router-link to="/F_book">
-          <button class="font-14 collection_di_c">订购</button>
-          </router-link>
+          <button class="font-14 collection_di_c" @click="yudingclick()">订购</button>
       </div>
     </div>
     </div>
@@ -234,6 +232,12 @@
    this.yonzityp();//用户资讯
   },
   methods:{
+    //点击预订
+    yudingclick :function(){
+     this.$router.push({
+     path: '/F_book/'+this.routeid,
+     })
+    },
   //点击查看更多评论
   pinglunclick :function(){
     this.$router.push({
