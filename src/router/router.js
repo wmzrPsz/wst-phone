@@ -81,6 +81,8 @@ const F_details = r => require.ensure([], () => r(require('../views/F/F_details'
 const F_details_page = r => require.ensure([], () => r(require('../views/F/F_details_page')), 'F_details_page')
 //常规路线预订
 const F_book = r => require.ensure([], () => r(require('../views/F/F_book')), 'F_book')
+//订单
+const orderlist = r => require.ensure([], () => r(require('../views/F/orderlist')), 'orderlist')
 ///////////////////////////////////////////////G当地参团//////////////////////////////////////////////////////////////////////
 //当地参团主页
 const G_index = r => require.ensure([], () => r(require('../views/G/G_index')), 'G_index')
@@ -365,9 +367,16 @@ export default new Router({
       },
       // //预订
       {
-        path:'/F_book/:routeid',
+        path:'/F_book/:routeid:price',
         name:'F_book',
         component:F_book,
+        meta:{'title':'预订'}
+      },
+      //订单
+      {
+        path:'/orderlist/:date/:adult/:child/:One/:two/:three/:four/:arrange/:pricetyps',
+        name:'orderlist',
+        component:orderlist,
         meta:{'title':'预订'}
       },
       //////////////////////////////////////当地参团//////////////////////////////////////////////

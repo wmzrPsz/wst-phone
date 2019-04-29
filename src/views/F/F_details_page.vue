@@ -268,7 +268,7 @@
     //点击预订
     yudingclick :function(){
      this.$router.push({
-     path: '/F_book/'+this.routeid,
+     path: '/F_book/'+this.routeid+this.slist.price,
      })
     },
   //点击查看更多评论
