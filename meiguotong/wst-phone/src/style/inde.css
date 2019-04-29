@@ -1847,15 +1847,21 @@ select{
 }
 .sanxing_b{
 	clear: both;
+	overflow: hidden;
 }
 .sanxing_b i img{
 	width: 0.5rem;
 	height: 0.5rem;
 	margin-right: 0.5rem;
+	margin-top: 1rem;
+	float: left;
+	margin-left: 0.5rem;
 
 }
-.sanxing_b text{
+.sanxing_b span{
+	text-align: left;
 	line-height: 2.5rem;
+	float: left;
 }
 .sanxing_c ul li{
 	float: left;
@@ -2245,6 +2251,10 @@ select{
 	border-bottom: 1px solid #F5F5F5;
 	line-height: 2rem;
 }
+.Order_d ul li i{
+	text-align: left;
+	float: left;
+}
 .Order_d_aa{
 	clear: both;
 	overflow: hidden;
@@ -2272,7 +2282,7 @@ select{
 	display: block;
     font-weight: 600;
    text-align: left;
-   margin-top: 0.5rem;
+   line-height:2rem;
 }
 .Order_d_e{
 	height:1rem;
