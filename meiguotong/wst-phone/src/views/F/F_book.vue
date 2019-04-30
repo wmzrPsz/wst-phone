@@ -340,16 +340,19 @@
    import {getRoutePriceDetailsUrl} from "@/utils/getData";
    import $ from 'jquery';
    import { async } from 'q';
+   import store from '@/vuex/index';
    export default {
        name:'index',
        data(){
            return{
+            //  fonid:store.fonid.routeid,
              //选中价格
              pricetyps:'',
              listyp:'',
              mejiage:this.$route.params.price,//门票价格
              routeid:this.$route.params.routeid,
              priceDate:'',
+             priceDatejie:'',
               adult:0,//大人
               child:0,//小孩
               One:0,//默认单人房数
@@ -374,6 +377,7 @@
          created() {
         this.calendarDateInit();
         this.getIndexDay();
+        console.log(this.fonid);
       },
        mounted(){
        },
@@ -389,7 +393,7 @@
     console.log(this.pricetyps);
     if(this.pricetyps!=0){
       this.$router.push({
-     path: '/orderlist/'+this.date+"/"+this.adult+"/"+this.child+"/"+this.One+"/"+this.two+"/"+this.three+"/"+this.four+"/"+this.arrange+"/"+this.pricetyps,
+     path: '/orderlist/'+this.date+"/"+this.adult+"/"+this.child+"/"+this.One+"/"+this.two+"/"+this.three+"/"+this.four+"/"+this.arrange+"/"+this.pricetyps+'/'+this.$route.params.dayNum+'/'+this.$route.params.endCityContent,
      })
     }
     },

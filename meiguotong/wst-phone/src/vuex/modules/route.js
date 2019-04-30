@@ -1,3 +1,4 @@
+
 const route = {
   namespaced: true,
   state: {
@@ -12,3 +13,4 @@ const route = {
 }
 
 export default route
+

@@ -367,14 +367,14 @@ export default new Router({
       },
       // //预订
       {
-        path:'/F_book/:routeid:price',
+        path:'/F_book/:routeid/:price/:dayNum/:endCityContent',
         name:'F_book',
         component:F_book,
         meta:{'title':'预订'}
       },
       //订单
       {
-        path:'/orderlist/:date/:adult/:child/:One/:two/:three/:four/:arrange/:pricetyps',
+        path:'/orderlist/:date/:adult/:child/:One/:two/:three/:four/:arrange/:pricetyps/:dayNum/:endCityContent',
         name:'orderlist',
         component:orderlist,
         meta:{'title':'预订'}
