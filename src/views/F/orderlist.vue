@@ -149,8 +149,17 @@ export default {
     four:this.$route.params.four,//四人房
     arrange:this.$route.params.arrange,//配房
     pricetyps:this.$route.params.pricetyps,//总价格
+    dayNum:this.$route.params.dayNum,//形成天数
+    endCityContent:this.$route.params.endCityContent,//出发城市
     }
-  }
+  },
+  mounted(){
+    console.log((new Date(this.date)).getTime());
+   },
+  methods:{
+    //到期时间
+
+  },
 }
 </script>
 
