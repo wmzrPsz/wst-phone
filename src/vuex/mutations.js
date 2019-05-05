@@ -1,4 +1,9 @@
+
 const mutations = {
+  // passwtyp(state,routeid) {
+  //   state.routeid= routeid;
+  //   console.log( state.routeid);
+  // },
     //登录
     addLogin(state,data){
       [state.loginUid, state.loginKey, state.loginTime, state.loginType] = [data.uid, data.key, data.time, 2];

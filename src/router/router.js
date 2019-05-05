@@ -11,6 +11,8 @@ const information = r => require.ensure([], () => r(require('../views/public/inf
 const inquiry = r => require.ensure([], () => r(require('../views/public/inquiry')), 'inquiry')
 //搜索页面
 const search = r => require.ensure([], () => r(require('../views/public/search')), 'search')
+//选择联系人页面
+
 
 const error = r => require.ensure([], () => r(require('../views/error/error')), 'error')
 const login = r => require.ensure([], () => r(require('../views/index/login')), 'login')//登陆首页
@@ -367,14 +369,14 @@ export default new Router({
       },
       // //预订
       {
-        path:'/F_book/:routeid/:price/:dayNum/:endCityContent',
+        path:'/F_book/:routeid/:price',
         name:'F_book',
         component:F_book,
         meta:{'title':'预订'}
       },
       //订单
       {
-        path:'/orderlist/:date/:adult/:child/:One/:two/:three/:four/:arrange/:pricetyps/:dayNum/:endCityContent',
+        path:'/orderlist/:date/:adult/:child/:One/:two/:three/:four/:arrange/:pricetyps',
         name:'orderlist',
         component:orderlist,
         meta:{'title':'预订'}
