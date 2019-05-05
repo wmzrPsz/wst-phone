@@ -6,8 +6,6 @@ import actions from './actions'
 Vue.use(Vuex)
 
 const debug = process.env.NODE_ENV !== 'production'
-
-
 const state = {
   loginUid: "",
   loginKey: "",
@@ -20,11 +18,9 @@ const state = {
   languageList: [],  //语言集合
   currencyList: [],  //货币集合
   member: {},  //会员信息
-}
-
-const fonid = {
   routeid:'',
 }
+
 const modulesFiles = require.context('./modules', false, /\.js$/)
 const modules = modulesFiles.keys().reduce((modules, modulePath) => {
   const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
@@ -35,7 +31,6 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 
 
 const store = new Vuex.Store({
-  fonid,
   strict: debug,
   state,
   getters,
