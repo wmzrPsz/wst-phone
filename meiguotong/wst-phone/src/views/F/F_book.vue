@@ -445,7 +445,9 @@ export default {
             "/" +
             this.arrange +
             "/" +
-            this.pricetyps
+            this.pricetyps+
+            "/"+
+            this.routeid
         });
         //价格
         this.Price(this.listyp);

@@ -7,7 +7,7 @@
       </i>
       </router-link>
       <i class="her_a_zong color float_zhong">常用联系人</i>
-      <router-link :to="{ path: '/p_contacts_a/'+'添加'}">
+      <router-link to="/p_contacts_a/1">
         <i class="float_right color her_a_zong_a font-14">添加</i>
       </router-link>
     </div>
@@ -67,6 +67,7 @@
 <script>
 import { lianxir, shangchulianx } from "@/utils/getData";
 import { async } from "q";
+import { mapMutations } from "vuex";
 export default {
   name: "index",
   data() {
@@ -79,14 +80,13 @@ export default {
     this.lixiren();
   },
   methods: {
+      ...mapMutations("route", ["contacts"]),
     //修改
     xuigaiclick:function(list){
        this.$router.push({
-        name:'p_contacts_a',
-        params: {
-            datalist: list,
-          }
+        path:'/p_contacts_a/2',
      })
+     this.contacts(list);
     },
     //获取联系人
     async lixiren() {

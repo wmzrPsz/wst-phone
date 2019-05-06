@@ -63,6 +63,10 @@ export const refundInforUrl =(routeType,priceDate) => ajax( process.env.VUE_APP_
     productid:routeType,
     productType:priceDate,
 })
+//保险说明
+export const getInsuranceUrl =(productType) => ajax( process.env.VUE_APP_PROXY_API +'/common/getInsurance',{
+    productType:productType,
+})
 //常规路线搜索接口
 export const seledin = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSpotid, pageNo) => ajax( process.env.VUE_APP_PROXY_API +'/route/selectRoute', {
     date:date,//日期
@@ -73,6 +77,23 @@ export const seledin = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSp
     scenic:scenicSpotid,//景点Id
     labelAttrid:tagContent,//属性
     pageNo: pageNo,
+},'post');
+//常规路线生成订单接口
+export const saveRouteOrderUrl =(routeid,contactsName,contactsMobile,remark,date,adult,child,One,two,three,four,arrange,insuranceid,Selection) => ajax( process.env.VUE_APP_PROXY_API +'/route/saveRouteOrder',{
+    routeid:routeid,
+    contactsName:contactsName,//联系人
+    contactsMobile:contactsMobile,//联系电话
+    remark:remark,//备注
+    startDate:date,//出发时间
+    adultNum:adult,//大人
+    childNum:child,//小孩
+    oneNum:One,//单人间
+    twoNum:two,
+    threeNum:three,
+    fourNum:four,
+    arrangeNum:arrange,
+    insuranceid:insuranceid,//保险id
+    orderMember:Selection,
 },'post');
 //日期价格接口
 export const getRoutePriceDetailsUrl = (routeid,priceDate) =>ajax( process.env.VUE_APP_PROXY_API +'/route/getRoutePriceDetails',{
