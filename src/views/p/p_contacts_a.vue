@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <div >
+    <div>
       <div class="her_a font-20 background-a" onclick="window.history.go(-1)">
         <i class="her_a_left float_left">
           <img src="../../assets/img/A/back_icon@2x.png">
@@ -41,7 +41,7 @@
               </div>
               <div class="float_right">
                 <select class="float_left font-16 information_b" v-model="certType">
-
+                  <option disabled value>证件类型</option>
                   <option value="1">身份证</option>
                   <option value="2">护照</option>
                   <option value="3">本地ID</option>
@@ -134,6 +134,8 @@ select {
 <script>
 import { tianjialianx } from "@/utils/getData";
 import { areaSelectList } from "@/utils/config";
+import { mapState } from "vuex";
+
 export default {
   name: "index",
   data() {
@@ -141,31 +143,45 @@ export default {
       show: false,
       show1: false,
       currentDate: new Date(),
-      certType: this.$route.params.datalist.certType, //证件类型
+      certType: "", //证件类型
       quyustye: [],
-      area: this.$route.params.datalist.area, //区域
+      area: "", //区域
       year: "", //年
       month: "", //月
       day: "", //日
-      certValidDate:this.$route.params.datalist.certValidDate, //传的证件日期（yyyy-mm-xxxx）
-      birthday: this.$route.params.datalist.birthday, //出生日期（yyyy-mm-xx）
-      chineseName:this.$route.params.datalist.chineseName, //中文名字
-      englishName: this.$route.params.datalist.englishName, //英文名字
-      certNo:this.$route.params.datalist.certNo, //证件号码
-      mobile: this.$route.params.datalist.mobile, //手机号码
-      contactid:this.$route.params.datalist.contactid
+      certValidDate: "", //传的证件日期（yyyy-mm-xxxx）
+      birthday: "", //出生日期（yyyy-mm-xx）
+      chineseName: "", //中文名字
+      englishName: "", //英文名字
+      certNo: "", //证件号码
+      mobile: "", //手机号码
+      contactid: ""
     };
   },
   created() {
     this.year = this.currentDate.getFullYear(); //年
     this.month = this.currentDate.getMonth() + 1; //月
     this.day = this.currentDate.getDate(); //日
-    if(this.$route.params.datalist=='添加'){
-     this.certType=1;
-     this.certValidDate = this.year + "-" + this.month + "-" + this.day;
+    this.certValidDate = this.year + "-" + this.month + "-" + this.day;
     this.birthday = this.year + "-" + this.month + "-" + this.day;
-    }
     this.quyu();
+    console.log(this.contacts);
+    if (this.$route.params.typlis == 2) {
+      this.chineseName = this.contacts.chineseName;
+      this.englishName = this.contacts.englishName;
+      this.certType = this.contacts.certType;
+      this.certNo = this.contacts.certNo;
+      this.certValidDate = this.contacts.certValidDate;
+      this.birthday = this.contacts.birthday;
+      this.mobile = this.contacts.mobile;
+      this.area = this.contacts.area;
+       this.contactid = this.contacts.contactid;
+    }
+  },
+  computed: {
+    ...mapState({
+      contacts: state => state.route.contacts
+    })
   },
   methods: {
     //拿区域
@@ -218,13 +234,13 @@ export default {
         this.$toast("请选择手机区域");
         return;
       }
-      if (this.mobil != null) {
+      if (this.mobile == null) {
         this.$toast("请输入正确手机号码");
         return;
       }
       this.tianjiatype();
       this.$toast("添加成功");
-      this.$router.push("/p_contacts");
+      window.history.go(-1);
     },
     async tianjiatype() {
       let data = await tianjialianx(
@@ -236,9 +252,9 @@ export default {
         this.birthday,
         this.area,
         this.mobile,
-        this.contactid,
+        this.contactid
       );
-    },
+    }
   }
 };
 </script>

@@ -12,6 +12,7 @@ const inquiry = r => require.ensure([], () => r(require('../views/public/inquiry
 //搜索页面
 const search = r => require.ensure([], () => r(require('../views/public/search')), 'search')
 //选择联系人页面
+const tourist = r => require.ensure([], () => r(require('../views/public/tourist')), 'tourist')
 
 
 const error = r => require.ensure([], () => r(require('../views/error/error')), 'error')
@@ -145,6 +146,13 @@ export default new Router({
         name:'search',
         component:search,
         meta:{'title':'常规路线搜索'}
+      },
+      //选择联系人
+      {
+        path:'/tourist/:zonchoiceperson',
+        name:'tourist',
+        component:tourist,
+        meta:{'tele':'选择联系人'}
       },
     {
       path: '/login',
@@ -318,7 +326,7 @@ export default new Router({
         },
          //添加联系人
          {
-          path:'/p_contacts_a/:datalist',
+          path:'/p_contacts_a/:typlis',
           name:'p_contacts_a',
           component:p_contacts_a,
           meta:{'title':'添加联系人'}
@@ -376,10 +384,10 @@ export default new Router({
       },
       //订单
       {
-        path:'/orderlist/:date/:adult/:child/:One/:two/:three/:four/:arrange/:pricetyps',
+        path:'/orderlist/:date/:adult/:child/:One/:two/:three/:four/:arrange/:pricetyps/:routeid',
         name:'orderlist',
         component:orderlist,
-        meta:{'title':'预订'}
+        meta:{'title':'订单'}
       },
       //////////////////////////////////////当地参团//////////////////////////////////////////////
       //当地参团
