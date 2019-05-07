@@ -18,7 +18,6 @@ const mutations = {
   },
   Selection(state, Selection) {
     state.Selection = Selection;
-    console.log(state.Selection);
   },
 
 }

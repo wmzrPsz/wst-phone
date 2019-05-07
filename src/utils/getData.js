@@ -99,7 +99,12 @@ export const saveRouteOrderUrl =(routeid,contactsName,contactsMobile,remark,date
 export const getRoutePriceDetailsUrl = (routeid,priceDate) =>ajax( process.env.VUE_APP_PROXY_API +'/route/getRoutePriceDetails',{
     routeid:routeid,
     priceDate:priceDate
-    
+})
+//添加购物车
+export const saveCarUrl = (routeid,carType) =>ajax(process.env.VUE_APP_PROXY_API +'/common/saveCar',{
+    typeid:routeid,
+    carType:carType
+
 })
 //当地参团搜索接口
 export const selectttpy = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSpotid, pageNo) => ajax( process.env.VUE_APP_PROXY_API +'/route/selectCityRoute', {

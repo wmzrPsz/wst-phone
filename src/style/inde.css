@@ -1861,7 +1861,6 @@ select{
 .sanxing_b span{
 	text-align: left;
 	line-height: 2.5rem;
-	float: left;
 }
 .sanxing_c ul li{
 	float: left;
@@ -2417,7 +2416,6 @@ select{
 }
 .Insurance_d{
 	margin-right: 0.5rem;
-	margin-top: 0.7rem;
 	width:0.9rem;
 	height:0.9rem;
 }

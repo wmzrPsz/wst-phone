@@ -38,7 +38,7 @@
         </div>
         <div class="refund_aa">
           <span class="font-12 color-d">{{slist.subtitle}}</span>
-          <span class="font-12 color-b">编号2：本产品由测试及具有资质的合作旅行社提供相关服务</span>
+          <span class="font-12 color-b">编号{{slist.no}}：本产品由{{slist.companyName}}及具有资质的合作旅行社提供相关服务</span>
         </div>
         <div class="refund_b" id="test6">
           <div class="float_left font-14">
@@ -245,7 +245,7 @@
           <div class="font-14">收藏</div>
         </div>
         <div class="float_right collection_di_b">
-          <button class="font-14">购物车</button>
+          <button class="font-14" @click="saveCarclick()">购物车</button>
           <button class="font-14 collection_di_c" @click="yudingclick()">订购</button>
         </div>
       </div>
@@ -294,7 +294,8 @@ import {
   getConsultUrl,
   saveCollectionUrl,
   deleteCollectionUrl,
-  refundInforUrl
+  refundInforUrl,
+  saveCarUrl
 } from "@/utils/getData";
 import store from "@/vuex/index";
 import ajax from "@/utils/fetch";
@@ -322,7 +323,8 @@ export default {
       imgtyp: "",
       show: false,
       show1: false,
-      refund: "" //退款
+      refund: "", //退款
+      carType:1//1.常规路线2.当地参团3.当地玩家4.游轮5.景点
     };
   },
   filters: {
@@ -346,6 +348,10 @@ export default {
   },
   methods: {
     ...mapMutations("route", ["passwtyp"]),
+    //点击加入购物车
+    async saveCarclick(){
+    // let data = await saveCarUrl(this.routeid ,this.carType);
+    },
     //点击预订
     yudingclick: function() {
       this.$router.push({
@@ -425,6 +431,7 @@ export default {
         if (this.slist.ifcollection == 2) {
           let data = await saveCollectionUrl(this.routeid, this.collectionType);
           if (data) {
+            this.$toast("收藏成功")
             this.styget();
           }
         }
@@ -435,6 +442,7 @@ export default {
             this.collectionType
           );
           if (data) {
+            this.$toast("取消收藏成功")
             this.styget();
           }
         }
