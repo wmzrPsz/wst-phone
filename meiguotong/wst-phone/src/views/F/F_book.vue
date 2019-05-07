@@ -388,7 +388,6 @@ export default {
       three: 0, //三人房
       four: 0, //四人房
       arrange: 0, //配房
-      date: "",
       price: "", //价格
       //
       calendarDate: {},
@@ -404,53 +403,61 @@ export default {
   created() {
     this.calendarDateInit();
     this.getIndexDay();
-    console.log(this.fonid);
   },
-  mounted() {},
+  mounted() {
+  },
 
   methods: {
     ...mapMutations("route", ["Price"]),
     //下一步
     nextclick: function() {
-      if (this.listyp == 0) {
-        this.$toast("请选择日期");
-        return;
+      if (store.state.loginUid != 0) {
+        //登陆了
+        if (this.listyp == 0) {
+          this.$toast("请选择日期");
+          return;
+        }
+        this.pricetyps =
+          this.One * this.listyp.oneCost +
+          this.two * this.listyp.twoCost +
+          this.three * this.listyp.threeCost +
+          this.four * this.listyp.fourCost +
+          this.arrange * this.listyp.arrangeCost +
+          this.adult * this.mejiage +
+          this.child * this.mejiage;
+        console.log(this.pricetyps);
+        if (this.pricetyps != 0) {
+          this.$router.push({
+            path:
+              "/orderlist/" +
+              this.date +
+              "/" +
+              this.adult +
+              "/" +
+              this.child +
+              "/" +
+              this.One +
+              "/" +
+              this.two +
+              "/" +
+              this.three +
+              "/" +
+              this.four +
+              "/" +
+              this.arrange +
+              "/" +
+              this.pricetyps +
+              "/" +
+              this.routeid
+          });
+          //价格
+          this.Price(this.listyp);
+        }
       }
-      this.pricetyps =
-        this.One * this.listyp.oneCost +
-        this.two * this.listyp.twoCost +
-        this.three * this.listyp.threeCost +
-        this.four * this.listyp.fourCost +
-        this.arrange * this.listyp.arrangeCost +
-        this.adult * this.mejiage +
-        this.child * this.mejiage;
-      console.log(this.pricetyps);
-      if (this.pricetyps != 0) {
-        this.$router.push({
-          path:
-            "/orderlist/" +
-            this.date +
-            "/" +
-            this.adult +
-            "/" +
-            this.child +
-            "/" +
-            this.One +
-            "/" +
-            this.two +
-            "/" +
-            this.three +
-            "/" +
-            this.four +
-            "/" +
-            this.arrange +
-            "/" +
-            this.pricetyps+
-            "/"+
-            this.routeid
-        });
-        //价格
-        this.Price(this.listyp);
+      if (store.state.loginUid == 0) {
+        //没登陆了
+        this.$toast("请先登录");
+        return;
       }
     },
     //日期接口
@@ -550,6 +557,9 @@ export default {
           (this.calendarDate.lastDays - i + 1);
         dataList.push(map);
       }
+       //循环调用接口
+      this.priceDate =this.calendarDate.lastYear + "-" + this.calendarDate.month;
+      this.timtslit();
       for (var k = 0; k < this.calendarDate.days; k++) {
         let map = {};
         map.flag = false;
@@ -597,11 +607,6 @@ export default {
       }
       console.log(dataList);
       console.log(this.calendarDate);
-      //循环调用接口
-      this.priceDate =
-        this.calendarDate.lastYear + "-" + this.calendarDate.month;
-      this.timtslit();
-      return;
     },
     //判断是否是闰年
     isLeapYear() {

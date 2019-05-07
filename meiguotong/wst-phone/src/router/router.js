@@ -86,6 +86,12 @@ const F_details_page = r => require.ensure([], () => r(require('../views/F/F_det
 const F_book = r => require.ensure([], () => r(require('../views/F/F_book')), 'F_book')
 //订单
 const orderlist = r => require.ensure([], () => r(require('../views/F/orderlist')), 'orderlist')
+//确认订单
+const orderlist_a = r => require.ensure([], () => r(require('../views/F/orderlist_a')), 'orderlist_a')
+//订单详情
+const orderlist_b = r => require.ensure([], () => r(require('../views/F/orderlist_b')), 'orderlist_b')
+//完成订单
+const orderlist_c = r => require.ensure([], () => r(require('../views/F/orderlist_c')), 'orderlist_c')
 ///////////////////////////////////////////////G当地参团//////////////////////////////////////////////////////////////////////
 //当地参团主页
 const G_index = r => require.ensure([], () => r(require('../views/G/G_index')), 'G_index')
@@ -388,6 +394,27 @@ export default new Router({
         name:'orderlist',
         component:orderlist,
         meta:{'title':'订单'}
+      },
+      //确认订单
+      {
+        path:'/orderlist_a/:routeid/:zonmni',
+        name:'orderlist_a',
+        component:orderlist_a,
+        meta:{'title':'订单详情'}
+      },
+      //订单详情
+      {
+        path:'/orderlist_b/:routeid',
+        name:'orderlist_b',
+        component:orderlist_b,
+        meta:{'title':'订单详情'}
+      },
+       //完成订单
+       {
+        path:'/orderlist_c/:routeid',
+        name:'orderlist_c',
+        component:orderlist_c,
+        meta:{'title':'完成订单'}
       },
       //////////////////////////////////////当地参团//////////////////////////////////////////////
       //当地参团

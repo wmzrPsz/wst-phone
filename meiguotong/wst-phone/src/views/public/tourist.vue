@@ -89,6 +89,7 @@ export default {
       let Selection=[];
       for(const testlis of this.lianthis){
          if(testlis.flag){
+          this.$set(testlis,'type',false);
           Selection.push(testlis);
          }
         }

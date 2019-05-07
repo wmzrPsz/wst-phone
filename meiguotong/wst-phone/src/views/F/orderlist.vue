@@ -37,7 +37,7 @@
           <i>
             <img src="../../assets/img/B/clsp_3_icon@2x.png">
           </i>
-          <span class="font-16">订单详细</span>
+          <span class="font-16 float_left">订单详细</span>
         </div>
 
         <div class="Order_b">
@@ -158,7 +158,7 @@
             <i>
               <img src="../../assets/img/B/clsp_3_icon@2x.png">
             </i>
-            <span class="font-16">订单价格</span>
+            <span class="font-16 float_left">订单价格</span>
           </div>
           <div class="Trip">
             <div class="font-16 Order_d_b">常规路线</div>
@@ -257,7 +257,7 @@
 
 <script>
 import {getInsuranceUrl,saveRouteOrderUrl} from "@/utils/getData";
-import { mapState } from "vuex";
+import { mapState} from "vuex";
 export default {
   name: "index",
   data() {
@@ -270,6 +270,7 @@ export default {
       choiceperson:0,//选中人数
       zonchoiceperson:Number(this.$route.params.adult)+Number(this.$route.params.child),//总人数
       date: this.$route.params.date, //出发时间
+      date_a:[],
       endtime: "", //结束时间
       adult: this.$route.params.adult, //大人
       child: this.$route.params.child, //小孩
@@ -289,6 +290,7 @@ export default {
       remark:'',//备注
       contactsMobile:'',//联系人电话
       insuranceid:'',//保险id
+      orderidlist:'',//生成订单的id
     };
   },
   mounted() {
@@ -296,6 +298,15 @@ export default {
     this.expire();
     this.choiceperson=this.Selection.length;
     console.log(this.Routineroute);
+    this.date_a=this.date.split("-");
+    if(this.date_a[1]<10){
+      this.date_a[1]='0'+ this.date_a[1];
+    }
+    if(this.date_a[2]<10){
+      this.date_a[2]='0'+ this.date_a[2];
+    }
+     console.log(this.date_a);
+     this.date=this.date_a[0]+'-'+this.date_a[1]+"-"+this.date_a[2];
   },
 
   computed: {
@@ -363,7 +374,9 @@ export default {
        this.$toast("填写联系人电话");
       return;
     }
-    console.log(this.Selection);
+    // for(const test of this.Selection){
+    //   this.$set(test,"type",false);
+    // }
     let data = await saveRouteOrderUrl(
       this.$route.params.routeid,
       this.contactsName,
@@ -380,6 +393,13 @@ export default {
       this.insuranceid,
       JSON.stringify(this.Selection),
      );
+     if(data){
+       let zonmni = Number(this.pricetyps)+Number(this.baomang)
+        this.orderidlist=data;
+       this.$router.push({
+        path: "/orderlist_a/" +this.orderidlist+"/"+zonmni,
+      });
+     }
   }
   }
 };
