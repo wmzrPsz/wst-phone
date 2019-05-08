@@ -95,7 +95,7 @@ export const saveRouteOrderUrl =(routeid,contactsName,contactsMobile,remark,date
     insuranceid:insuranceid,//保险id
     orderMember:Selection,
 },'post');
-//日期价格接口
+//常规路线/参团日期价格接口
 export const getRoutePriceDetailsUrl = (routeid,priceDate) =>ajax( process.env.VUE_APP_PROXY_API +'/route/getRoutePriceDetails',{
     routeid:routeid,
     priceDate:priceDate
@@ -140,6 +140,16 @@ export const guideDetailsUrl = (routeid) =>ajax( process.env.VUE_APP_PROXY_API +
 export const guideRouteUrl = (routeid,pageNo) =>ajax( process.env.VUE_APP_PROXY_API +'/guide/guideRoute',{
     guideId:routeid,
     pageNo: pageNo,
+})
+//导游确认订单接口
+export const saveGuideOrderUrl = (routeid,pageNo) =>ajax( process.env.VUE_APP_PROXY_API +'/guide/saveGuideOrder',{
+    guideId:routeid,
+    pageNo: pageNo,
+})
+//当地玩家时间价格
+export const getGuideDateDetailsUrl = (routeid,priceDate) =>ajax( process.env.VUE_APP_PROXY_API +'/guide/getGuideDateDetails',{
+    guideid:routeid,
+    priceDate:priceDate
 })
 //油轮接口
 export const youlun = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSpotid,startCity,hangxianty,pageNo,searchContent,portid) => ajax( process.env.VUE_APP_PROXY_API +'/cruise/cruiseScreen', {
@@ -299,14 +309,9 @@ export const getConsultUrl = (pageNo,routeid,proType) =>ajax( process.env.VUE_AP
     typeid:routeid,
     proType:proType,
 })
-//收藏接口
+//收藏接口//取消收藏
 export const saveCollectionUrl =(routeid,collectionType) =>ajax( process.env.VUE_APP_PROXY_API +'/common/saveCollection',{
     typeid:routeid,
-    collectionType:collectionType,
-})
-//取消收藏
-export const deleteCollectionUrl =(routeid,collectionType) =>ajax( process.env.VUE_APP_PROXY_API +'/member/deleteCollection',{
-    collectionids:routeid,
     collectionType:collectionType,
 })
 //添加用户咨询接口

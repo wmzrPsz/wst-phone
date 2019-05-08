@@ -40,7 +40,7 @@
           <span class="font-12 color-d">{{slist.subtitle}}</span>
           <span class="font-12 color-b">编号{{slist.no}}：本产品由{{slist.companyName}}及具有资质的合作旅行社提供相关服务</span>
         </div>
-        <div class="refund_b" id="test6">
+        <div class="refund_b" id="test6" @click="shijianclick()">
           <div class="float_left font-14">
             <i class="refund_b_a">
               <img src="../../assets/img/C/cglxxq_date_icon@2x.png">
@@ -266,6 +266,13 @@
         <p>{{slist.priceInfor}}</p>
       </div>
     </van-popup>
+    <!--日期说明-->
+      <van-popup v-model="show2" :overlay="true" position="bottom">
+      <div>
+      <ezHeader></ezHeader>
+      </div>
+    </van-popup>
+     <!-- <ezHeader></ezHeader> -->
   </div>
 </template>
 <style lang="less">
@@ -300,6 +307,7 @@ import {
 import store from "@/vuex/index";
 import ajax from "@/utils/fetch";
 import { mapMutations } from "vuex";
+import ezHeader from '@/components/header_a.vue';
 export default {
   name: "index",
   data() {
@@ -323,9 +331,13 @@ export default {
       imgtyp: "",
       show: false,
       show1: false,
+      show2:false,
       refund: "", //退款
       carType:1//1.常规路线2.当地参团3.当地玩家4.游轮5.景点
     };
+  },
+   components:{
+    ezHeader,
   },
   filters: {
     trip: function(value) {
@@ -428,28 +440,18 @@ export default {
       if (store.state.loginUid != 0) {
         //登陆了
         //2收藏
-        if (this.slist.ifcollection == 2) {
           let data = await saveCollectionUrl(this.routeid, this.collectionType);
           if (data) {
-            this.$toast("收藏成功")
             this.styget();
           }
-        }
-        //取消收藏
-        if (this.slist.ifcollection == 1) {
-          let data = await deleteCollectionUrl(
-            this.routeid,
-            this.collectionType
-          );
-          if (data) {
-            this.$toast("取消收藏成功")
-            this.styget();
-          }
-        }
       }
       if (store.state.loginUid == 0) {
         this.$toast("请先登陆");
       }
+    },
+    //点击显示时间
+    shijianclick(){
+     this.show2=true;
     },
     //点击收藏
     souclick() {

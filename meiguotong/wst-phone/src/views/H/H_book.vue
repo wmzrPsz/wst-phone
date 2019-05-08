@@ -47,32 +47,6 @@
         </div>
       </div>
     </div>
-    <!---->
-    <!--房间价格-->
-    <div class="jiagefan" v-if="listyp!=0">
-      <ul>
-        <li>
-          <i>单人房</i>
-          <i style="color:#f60">￥{{listyp.oneCost}}</i>
-        </li>
-        <li>
-          <i>双人房</i>
-          <i style="color:#f60">￥{{listyp.twoCost}}</i>
-        </li>
-        <li>
-          <i>三人房</i>
-          <i style="color:#f60">￥{{listyp.threeCost}}</i>
-        </li>
-        <li>
-          <i>四人房</i>
-          <i style="color:#f60">￥{{listyp.fourCost}}</i>
-        </li>
-        <li>
-          <i>配房</i>
-          <i style="color:#f60">￥{{listyp.arrangeCost}}</i>
-        </li>
-      </ul>
-    </div>
     <div class="roomjia">
       <div class="room_a">
         <p class="font-14 float_left famjian_b">成年人</p>
@@ -82,40 +56,12 @@
         <p class="font-14 float_left famjian_b">儿童</p>
         <van-stepper v-model="child" :min="0" class="float_right"/>
       </div>
-      <div class="font-14 border_e room_b">
-        <div>选择房间</div>
-        <div class="room float_left">
-          <p class="font-14 float_left famjian_b">单人房</p>
-          <van-stepper v-model="One" :min="0" class="float_left"/>
-        </div>
-        <div class="room float_right">
-          <p class="font-14 float_left famjian_b">双人房</p>
-          <van-stepper v-model="two" :min="0" class="float_left"/>
-        </div>
-        <div class="room float_left" style=" clear: both;">
-          <p class="font-14 float_left famjian_b">三人房</p>
-          <van-stepper v-model="three" :min="0" class="float_left"/>
-        </div>
-        <div class="room float_right">
-          <p class="font-14 float_left famjian_b">四人房</p>
-          <van-stepper v-model="four" :min="0" class="float_left"/>
-        </div>
-
-        <div class="room float_left" style=" clear: both; margin-left:1.3rem;">
-          <p class="font-14 float_left famjian_b">配</p>
-          <van-stepper v-model="arrange" :min="0" class="float_left"/>
-        </div>
-      </div>
       <div class="Choose_a_room_dibu">
         <div class="Choose_a_room_dibu_c font-16 float_left">
           总计:
           <span class="color-h font-12">
             ￥
-            <i class="font-20" v-if="listyp==0">{{adult*mejiage+child*mejiage}}</i>
-            <i
-              class="font-20"
-              v-if="listyp!=0"
-            >{{One*listyp.oneCost+two*listyp.twoCost+three*listyp.threeCost+four*listyp.fourCost+arrange*listyp.arrangeCost+adult*mejiage+child*mejiage}}</i>
+            <i class="font-20">{{adult*mejiage+child*mejiage}}</i>
           </span>
         </div>
         <button
@@ -367,7 +313,7 @@
 </style>
    
    <script>
-import { getRoutePriceDetailsUrl } from "@/utils/getData";
+import { getGuideDateDetailsUrl } from "@/utils/getData";
 import $ from "jquery";
 import { async } from "q";
 import store from "@/vuex/index";
@@ -376,9 +322,8 @@ export default {
   name: "index",
   data() {
     return {
-      //  fonid:store.fonid.routeid,
       //选中价格
-      tyslit:1,//1常规路线2当地参团
+      tyslit:2,//1常规路线2当地参团
       pricetyps: "",
       listyp: "",
       mejiage: this.$route.params.price, //门票价格
@@ -387,16 +332,9 @@ export default {
       priceDatejie: "",
       adult: 0, //大人
       child: 0, //小孩
-      One: 0, //默认单人房数
-      two: 0, //双人房
-      three: 0, //三人房
-      four: 0, //四人房
-      arrange: 0, //配房
       price: "", //价格
-      //
       calendarDate: {},
-      currencySign: "$",
-      //  opt:[{"oneCost":3999.0,"twoCost":3999.0,"threeCost":3999.0,"fourCost":3999.0,"arrangeCost":3999.0,"state":"-1","date":"2019-04-15","price":3999.00},],
+      currencySign: "",
       opt: [],
       dataList: [],
       date: "" //选择的日期
@@ -423,42 +361,14 @@ export default {
           return;
         }
         this.pricetyps =
-          this.One * this.listyp.oneCost +
-          this.two * this.listyp.twoCost +
-          this.three * this.listyp.threeCost +
-          this.four * this.listyp.fourCost +
-          this.arrange * this.listyp.arrangeCost +
           this.adult * this.mejiage +
           this.child * this.mejiage;
         console.log(this.pricetyps);
         if (this.pricetyps != 0) {
           this.$router.push({
             path:
-              "/orderlist/" +
-              this.date +
-              "/" +
-              this.adult +
-              "/" +
-              this.child +
-              "/" +
-              this.One +
-              "/" +
-              this.two +
-              "/" +
-              this.three +
-              "/" +
-              this.four +
-              "/" +
-              this.arrange +
-              "/" +
-              this.pricetyps +
-              "/" +
-              this.routeid +
-              "/" +
-              this.tyslit
+              "/H_orderlist_a/"+this.adult+"/"+this.child
           });
-          //价格
-          this.Price(this.listyp);
         }
       }
       if (store.state.loginUid == 0) {
@@ -470,16 +380,11 @@ export default {
     //日期接口
     async timtslit() {
       console.log(this.priceDate);
-      let data = await getRoutePriceDetailsUrl(this.routeid, this.priceDate);
+      let data = await getGuideDateDetailsUrl(this.routeid, this.priceDate);
       if (data) {
         let lists = [];
         for (const test of data) {
           let img = {};
-          this.$set(img, "oneCost", test.oneCost);
-          this.$set(img, "twoCost", test.twoCost);
-          this.$set(img, "threeCost", test.threeCost);
-          this.$set(img, "fourCost", test.fourCost);
-          this.$set(img, "arrangeCost", test.arrangeCost);
           this.$set(img, "state", test.state);
           this.$set(img, "date", test.date);
           this.$set(img, "price", test.price);
@@ -582,11 +487,6 @@ export default {
         for (let d in this.opt) {
           map.state = this.opt[d].state; //房间数量情况
           map.price = this.opt[d].price; //价格
-          map.oneCost = this.opt[d].oneCost; //1价格
-          map.twoCost = this.opt[d].twoCost; //2价格
-          map.threeCost = this.opt[d].threeCost; //3价格
-          map.fourCost = this.opt[d].fourCost; //4价格
-          map.arrangeCost = this.opt[d].arrangeCost; //配价格
           map.flag = this.checkDate(map.date, this.opt[d].date);
           if (map.flag) {
             break;

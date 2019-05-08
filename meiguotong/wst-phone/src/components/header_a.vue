@@ -1,14 +1,8 @@
    
    <template>
   <div class="index">
-    <div class="her_a font-20 background-a">
-      <i class="her_a_left float_left" onclick="window.history.go(-1)">
-        <img src="../../assets/img/A/back_icon@2x.png">
-      </i>
-      <i class="her_a_zong color float_zhong">预订</i>
-    </div>
     <!--预订列表日历-->
-    <div class="date-box">
+    <div class="date-box_jia">
       <div class="ht-rili-querybox">
         <div class="ht-rili-datebox">
           <span class="ht-rili-leftarr" @click="monthLeftClick"></span>
@@ -73,57 +67,6 @@
         </li>
       </ul>
     </div>
-    <div class="roomjia">
-      <div class="room_a">
-        <p class="font-14 float_left famjian_b">成年人</p>
-        <van-stepper v-model="adult" :min="0" class="float_right"/>
-      </div>
-      <div class="room_a">
-        <p class="font-14 float_left famjian_b">儿童</p>
-        <van-stepper v-model="child" :min="0" class="float_right"/>
-      </div>
-      <div class="font-14 border_e room_b">
-        <div>选择房间</div>
-        <div class="room float_left">
-          <p class="font-14 float_left famjian_b">单人房</p>
-          <van-stepper v-model="One" :min="0" class="float_left"/>
-        </div>
-        <div class="room float_right">
-          <p class="font-14 float_left famjian_b">双人房</p>
-          <van-stepper v-model="two" :min="0" class="float_left"/>
-        </div>
-        <div class="room float_left" style=" clear: both;">
-          <p class="font-14 float_left famjian_b">三人房</p>
-          <van-stepper v-model="three" :min="0" class="float_left"/>
-        </div>
-        <div class="room float_right">
-          <p class="font-14 float_left famjian_b">四人房</p>
-          <van-stepper v-model="four" :min="0" class="float_left"/>
-        </div>
-
-        <div class="room float_left" style=" clear: both; margin-left:1.3rem;">
-          <p class="font-14 float_left famjian_b">配</p>
-          <van-stepper v-model="arrange" :min="0" class="float_left"/>
-        </div>
-      </div>
-      <div class="Choose_a_room_dibu">
-        <div class="Choose_a_room_dibu_c font-16 float_left">
-          总计:
-          <span class="color-h font-12">
-            ￥
-            <i class="font-20" v-if="listyp==0">{{adult*mejiage+child*mejiage}}</i>
-            <i
-              class="font-20"
-              v-if="listyp!=0"
-            >{{One*listyp.oneCost+two*listyp.twoCost+three*listyp.threeCost+four*listyp.fourCost+arrange*listyp.arrangeCost+adult*mejiage+child*mejiage}}</i>
-          </span>
-        </div>
-        <button
-          class="Choose_a_room_dibu_d float_right background-d font-14 Car_renting_g"
-          @click="nextclick()"
-        >下一步</button>
-      </div>
-    </div>
   </div>
 </template>
    <style lang="less">
@@ -174,13 +117,12 @@
   margin-bottom: 3rem;
 }
 //
-.date-box {
+.date-box_jia {
   overflow: hidden;
   background: #f2f2f2;
   border: 1px solid #e6e8eb;
   box-shadow: 2px 5px 10px 2px #ccc;
   padding-bottom: 30px;
-  margin-top: 2.5rem;
 }
 .calendar-box * {
   box-sizing: border-box;
@@ -240,7 +182,7 @@
   display: inline-block;
   width: 20px;
   height: 20px;
-  background: url(../../assets/img/C/ic_arrow_left@2x.png) left center no-repeat;
+  background: url(../assets/img/C/ic_arrow_left@2x.png) left center no-repeat;
   background-size: contain;
   vertical-align: middle;
   cursor: pointer;
@@ -249,7 +191,7 @@
   display: inline-block;
   width: 20px;
   height: 20px;
-  background: url(../../assets/img/C/ic_arrow_right@2x.png) right center
+  background: url(../assets/img/C/ic_arrow_right@2x.png) right center
     no-repeat;
   background-size: contain;
   vertical-align: middle;
@@ -378,25 +320,15 @@ export default {
     return {
       //  fonid:store.fonid.routeid,
       //选中价格
-      tyslit:1,//1常规路线2当地参团
       pricetyps: "",
       listyp: "",
-      mejiage: this.$route.params.price, //门票价格
       routeid: this.$route.params.routeid,
       priceDate: "",
       priceDatejie: "",
-      adult: 0, //大人
-      child: 0, //小孩
-      One: 0, //默认单人房数
-      two: 0, //双人房
-      three: 0, //三人房
-      four: 0, //四人房
-      arrange: 0, //配房
       price: "", //价格
       //
       calendarDate: {},
-      currencySign: "$",
-      //  opt:[{"oneCost":3999.0,"twoCost":3999.0,"threeCost":3999.0,"fourCost":3999.0,"arrangeCost":3999.0,"state":"-1","date":"2019-04-15","price":3999.00},],
+      currencySign: "",
       opt: [],
       dataList: [],
       date: "" //选择的日期
@@ -414,59 +346,6 @@ export default {
 
   methods: {
     ...mapMutations("route", ["Price"]),
-    //下一步
-    nextclick: function() {
-      if (store.state.loginUid != 0) {
-        //登陆了
-        if (this.listyp == 0) {
-          this.$toast("请选择日期");
-          return;
-        }
-        this.pricetyps =
-          this.One * this.listyp.oneCost +
-          this.two * this.listyp.twoCost +
-          this.three * this.listyp.threeCost +
-          this.four * this.listyp.fourCost +
-          this.arrange * this.listyp.arrangeCost +
-          this.adult * this.mejiage +
-          this.child * this.mejiage;
-        console.log(this.pricetyps);
-        if (this.pricetyps != 0) {
-          this.$router.push({
-            path:
-              "/orderlist/" +
-              this.date +
-              "/" +
-              this.adult +
-              "/" +
-              this.child +
-              "/" +
-              this.One +
-              "/" +
-              this.two +
-              "/" +
-              this.three +
-              "/" +
-              this.four +
-              "/" +
-              this.arrange +
-              "/" +
-              this.pricetyps +
-              "/" +
-              this.routeid +
-              "/" +
-              this.tyslit
-          });
-          //价格
-          this.Price(this.listyp);
-        }
-      }
-      if (store.state.loginUid == 0) {
-        //没登陆了
-        this.$toast("请先登录");
-        return;
-      }
-    },
     //日期接口
     async timtslit() {
       console.log(this.priceDate);
@@ -569,6 +448,7 @@ export default {
       }
        //循环调用接口
       this.priceDate =this.calendarDate.lastYear + "-" + this.calendarDate.month;
+      // this.timtslit();
       for (var k = 0; k < this.calendarDate.days; k++) {
         let map = {};
         map.flag = false;
