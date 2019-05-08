@@ -376,9 +376,8 @@ export default {
   name: "index",
   data() {
     return {
-      //  fonid:store.fonid.routeid,
       //选中价格
-      tyslit:1,//1常规路线2当地参团
+      tyslit:2,//1常规路线2当地参团
       pricetyps: "",
       listyp: "",
       mejiage: this.$route.params.price, //门票价格
@@ -393,10 +392,8 @@ export default {
       four: 0, //四人房
       arrange: 0, //配房
       price: "", //价格
-      //
       calendarDate: {},
-      currencySign: "$",
-      //  opt:[{"oneCost":3999.0,"twoCost":3999.0,"threeCost":3999.0,"fourCost":3999.0,"arrangeCost":3999.0,"state":"-1","date":"2019-04-15","price":3999.00},],
+      currencySign: "",
       opt: [],
       dataList: [],
       date: "" //选择的日期
@@ -454,7 +451,7 @@ export default {
               this.pricetyps +
               "/" +
               this.routeid +
-              "/" +
+               "/" +
               this.tyslit
           });
           //价格

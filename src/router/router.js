@@ -13,6 +13,14 @@ const inquiry = r => require.ensure([], () => r(require('../views/public/inquiry
 const search = r => require.ensure([], () => r(require('../views/public/search')), 'search')
 //选择联系人页面
 const tourist = r => require.ensure([], () => r(require('../views/public/tourist')), 'tourist')
+//订单
+const orderlist = r => require.ensure([], () => r(require('../views/public/orderlist')), 'orderlist')
+//确认订单
+const orderlist_a = r => require.ensure([], () => r(require('../views/public/orderlist_a')), 'orderlist_a')
+//订单详情
+const orderlist_b = r => require.ensure([], () => r(require('../views/public/orderlist_b')), 'orderlist_b')
+//完成订单
+const orderlist_c = r => require.ensure([], () => r(require('../views/public/orderlist_c')), 'orderlist_c')
 
 
 const error = r => require.ensure([], () => r(require('../views/error/error')), 'error')
@@ -84,26 +92,22 @@ const F_details = r => require.ensure([], () => r(require('../views/F/F_details'
 const F_details_page = r => require.ensure([], () => r(require('../views/F/F_details_page')), 'F_details_page')
 //常规路线预订
 const F_book = r => require.ensure([], () => r(require('../views/F/F_book')), 'F_book')
-//订单
-const orderlist = r => require.ensure([], () => r(require('../views/F/orderlist')), 'orderlist')
-//确认订单
-const orderlist_a = r => require.ensure([], () => r(require('../views/F/orderlist_a')), 'orderlist_a')
-//订单详情
-const orderlist_b = r => require.ensure([], () => r(require('../views/F/orderlist_b')), 'orderlist_b')
-//完成订单
-const orderlist_c = r => require.ensure([], () => r(require('../views/F/orderlist_c')), 'orderlist_c')
 ///////////////////////////////////////////////G当地参团//////////////////////////////////////////////////////////////////////
 //当地参团主页
 const G_index = r => require.ensure([], () => r(require('../views/G/G_index')), 'G_index')
 //当地参团列表
 const G_details = r => require.ensure([], () => r(require('../views/G/G_details')), 'G_details')
 //当地参团详情
-const G_details_page = r =>require.ensure([],() => r(require('../views/G/G_details_page')),'G_details_page')
+const G_details_page = r => require.ensure([], () => r(require('../views/G/G_details_page')), 'G_details_page')
+//当地参团预订
+const G_book = r => require.ensure([], () => r(require('../views/G/G_book')), 'G_book')
 ////////////////////////////////////////////////H——当地玩家//////////////////////////////////////////////////////////////////////////////
-const H_index = r =>require.ensure([],() => r(require('../views/H/H_index')),'H_index')
+const H_index = r => require.ensure([], () => r(require('../views/H/H_index')), 'H_index')
 //当地玩家
 const H_game = r => require.ensure([], () => r(require('../views/H/H_game')), 'H_game')//当地玩家
 const H_detail = r => require.ensure([], () => r(require('../views/H/H_detail')), 'H_detail')//当地玩家详情
+const H_book = r => require.ensure([], () => r(require('../views/H/H_book')), 'H_book')//当地玩家预订
+const H_orderlist_a = r => require.ensure([], () => r(require('../views/H/H_orderlist_a')), 'H_orderlist_a')//当地玩家预订确定
 /////////////////////////////////////////////////K——油轮//////////////////////////////////////////////////////////////////////////////////
 const K_index = r => require.ensure([], () => r(require('../views/K/K_index')), 'K_index')//油轮主页
 const K_tanker = r => require.ensure([], () => r(require('../views/K/K_tanker')), 'K_tanker')//油轮列表
@@ -125,41 +129,74 @@ export default new Router({
       //  redirect: 'login',
       meta: { 'title': '首页' }
     },
-     //评论
-     {
-      path:'/comment/:routeid:proType',
-      name:'comment',
-      component:comment,
-      meta:{'title':'全部评论'}
+    //评论
+    {
+      path: '/comment/:routeid:proType',
+      name: 'comment',
+      component: comment,
+      meta: { 'title': '全部评论' }
     },
-     //用户资讯全部评论
-     {
-      path:'/information/:routeid:proType',
-      name:'information',
-      component:information,
-      meta:{'title':'用户资讯全部评论'}
+    //用户资讯全部评论
+    {
+      path: '/information/:routeid:proType',
+      name: 'information',
+      component: information,
+      meta: { 'title': '用户资讯全部评论' }
     },
-     //用户质询
-     {
-      path:'/inquiry/:routeid:proType',
-      name:'inquiry',
-      component:inquiry,
-      meta:{'title':'用户质询'}
+    //用户质询
+    {
+      path: '/inquiry/:routeid:proType',
+      name: 'inquiry',
+      component: inquiry,
+      meta: { 'title': '用户质询' }
     },
-      //搜索页面
-      {
-        path:'/search',
-        name:'search',
-        component:search,
-        meta:{'title':'常规路线搜索'}
-      },
-      //选择联系人
-      {
-        path:'/tourist/:zonchoiceperson',
-        name:'tourist',
-        component:tourist,
-        meta:{'tele':'选择联系人'}
-      },
+    //搜索页面
+    {
+      path: '/search',
+      name: 'search',
+      component: search,
+      meta: { 'title': '常规路线搜索' }
+    },
+    //选择联系人
+    {
+      path: '/tourist/:zonchoiceperson',
+      name: 'tourist',
+      component: tourist,
+      meta: { 'tele': '选择联系人' }
+    },
+    //订单
+    {
+      path: '/orderlist/:date/:adult/:child/:One/:two/:three/:four/:arrange/:pricetyps/:routeid/:tyslit',
+      name: 'orderlist',
+      component: orderlist,
+      meta: { 'title': '订单' }
+    },
+    //确认订单
+    {
+      path: '/orderlist_a/:routeid/:zonmni/:tyslit',
+      name: 'orderlist_a',
+      component: orderlist_a,
+      meta: { 'title': '订单详情' }
+    },
+    //订单详情
+    {
+      path: '/orderlist_b/:routeid/:tyslit',
+      name: 'orderlist_b',
+      component: orderlist_b,
+      meta: { 'title': '订单详情' }
+    },
+    //完成订单
+    {
+      path: '/orderlist_c/:routeid/:tyslit',
+      name: 'orderlist_c',
+      component: orderlist_c,
+      meta: { 'title': '完成订单' }
+    },
+
+
+
+
+
     {
       path: '/login',
       name: 'login',
@@ -246,238 +283,230 @@ export default new Router({
       component: p_index,
       meta: { 'title': '个人中心质料' }
     },
-     //个人中心消息
-     {
+    //个人中心消息
+    {
       path: '/p_news',
       name: 'p_news',
       component: p_news,
       meta: { 'title': '个人中心消息' }
     },
-      //个人中心信息
-      {
-        path: '/p_information',
-        name: 'p_information',
-        component:p_information,
-        meta: { 'title': '个人中心信息' }
-      },
-      //个人中心我的订单
-      {
-        path:'/p_order',
-        name:'p_order',
-        component:p_order,
-        meta:{'title':'我的订单'}
-      },
-      //我的收藏
-      {
-        path:'/p_collection',
-        name:'p_collection',
-        component:p_collection,
-        meta:{'title':'我的收藏'}
-      },
-       //我的收藏-常规路线
-       {
-        path:'/p_collection_a',
-        name:'p_collection_a',
-        component:p_collection_a,
-        meta:{'title':'我的收藏_常规路线'}
-      },
-        //我的收藏-当地参团
-        {
-          path:'/p_collection_b',
-          name:'p_collection_b',
-          component:p_collection_b,
-          meta:{'title':'我的收藏_当地参团'}
-        },
-         //我的收藏-当地玩家
-         {
-          path:'/p_collection_c',
-          name:'p_collection_c',
-          component:p_collection_c,
-          meta:{'title':'我的收藏_当地玩家'}
-        },
-        //我的收藏-邮轮
-        {
-          path:'/p_collection_d',
-          name:'p_collection_d',
-          component:p_collection_d,
-          meta:{'title':'我的收藏_邮轮'}
-        },
-         //我的收藏-景点
-         {
-          path:'/p_collection_e',
-          name:'p_collection_e',
-          component:p_collection_e,
-          meta:{'title':'我的收藏_景点'}
-        },
-        //我的草稿
-        {
-          path:'/p_draft',
-          name:'p_draft',
-          component:p_draft,
-          meta:{'title':'我的草稿'}
-        },
-        //我的财务管理
-        {
-          path:'/p_finance',
-          name:'p_finance',
-          component:p_finance,
-          meta:{'title':'我的财务管理'}
-        },
-        //我的联系人
-        {
-          path:'/p_contacts',
-          name:'p_contacts',
-          component:p_contacts,
-          meta:{'title':'我的联系人'}
-        },
-         //添加联系人
-         {
-          path:'/p_contacts_a/:typlis',
-          name:'p_contacts_a',
-          component:p_contacts_a,
-          meta:{'title':'添加联系人'}
-        },
-        //关于我们
-        {
-          path:'/p_about',
-          name:'p_about',
-          component:p_about,
-          meta:{'title':'关于们'}
-        },
-         //关于我们公司概括
-         {
-          path:'/p_about_a',
-          name:'p_about_a',
-          component:p_about_a,
-          meta:{'title':'关于们公司概括'}
-        },
-        /////////////////////////包车出车///////////////////////////////
-        //包车租车首页
-        {
-          path:'/B_index',
-          name:'B_index',
-          component:B_index,
-          meta:{'title':'包车租车'}
-        },
-        /////////////////////////常规路线///////////////////////////////
-        //搜索常规路线
-        {
-          path:'/F_index',
-          name:'F_index',
-          component:F_index,
-          meta:{'title':'常规路线搜索'}
-        },
-       //搜索进去详情列表
-       {
-        path:'/F_details',
-        name:'F_details',
-        component:F_details,
-        meta:{'title':'常规路线列表'}
-      },
-      //常规路线详情
-      {
-        path:'/F_details_page/:routeid',
-        name:'F_details_page',
-        component:F_details_page,
-        meta:{'title':'常规路线详情'}
-      },
-      // //预订
-      {
-        path:'/F_book/:routeid/:price',
-        name:'F_book',
-        component:F_book,
-        meta:{'title':'预订'}
-      },
-      //订单
-      {
-        path:'/orderlist/:date/:adult/:child/:One/:two/:three/:four/:arrange/:pricetyps/:routeid',
-        name:'orderlist',
-        component:orderlist,
-        meta:{'title':'订单'}
-      },
-      //确认订单
-      {
-        path:'/orderlist_a/:routeid/:zonmni',
-        name:'orderlist_a',
-        component:orderlist_a,
-        meta:{'title':'订单详情'}
-      },
-      //订单详情
-      {
-        path:'/orderlist_b/:routeid',
-        name:'orderlist_b',
-        component:orderlist_b,
-        meta:{'title':'订单详情'}
-      },
-       //完成订单
-       {
-        path:'/orderlist_c/:routeid',
-        name:'orderlist_c',
-        component:orderlist_c,
-        meta:{'title':'完成订单'}
-      },
-      //////////////////////////////////////当地参团//////////////////////////////////////////////
-      //当地参团
-      {
-        path:'/G_index',
-        name:'G_index',
-        component:G_index,
-        meta:{'title':'当地参团'}
-      },
-      //参团列表
-      {
-        path:'/G_details',
-        name:'G_details',
-        component:G_details,
-        meta:{'title':'当地参团'}
-      },
-       //参团详情
-       {
-        path:'/G_details_page/:routeid',
-        name:'G_details_page',
-        component:G_details_page,
-        meta:{'title':'当地参团'}
-      },
-      /////////////////////////////////////H当地玩家//////////////////////////////////////
-      {
-        path:'/H_index',
-        name:'H_index',
-        component:H_index,
-        meta:{'title':'当地玩家'}
-      },
-         //搜索当地玩家
+    //个人中心信息
+    {
+      path: '/p_information',
+      name: 'p_information',
+      component: p_information,
+      meta: { 'title': '个人中心信息' }
+    },
+    //个人中心我的订单
+    {
+      path: '/p_order',
+      name: 'p_order',
+      component: p_order,
+      meta: { 'title': '我的订单' }
+    },
+    //我的收藏
+    {
+      path: '/p_collection',
+      name: 'p_collection',
+      component: p_collection,
+      meta: { 'title': '我的收藏' }
+    },
+    //我的收藏-常规路线
+    {
+      path: '/p_collection_a',
+      name: 'p_collection_a',
+      component: p_collection_a,
+      meta: { 'title': '我的收藏_常规路线' }
+    },
+    //我的收藏-当地参团
+    {
+      path: '/p_collection_b',
+      name: 'p_collection_b',
+      component: p_collection_b,
+      meta: { 'title': '我的收藏_当地参团' }
+    },
+    //我的收藏-当地玩家
+    {
+      path: '/p_collection_c',
+      name: 'p_collection_c',
+      component: p_collection_c,
+      meta: { 'title': '我的收藏_当地玩家' }
+    },
+    //我的收藏-邮轮
+    {
+      path: '/p_collection_d',
+      name: 'p_collection_d',
+      component: p_collection_d,
+      meta: { 'title': '我的收藏_邮轮' }
+    },
+    //我的收藏-景点
+    {
+      path: '/p_collection_e',
+      name: 'p_collection_e',
+      component: p_collection_e,
+      meta: { 'title': '我的收藏_景点' }
+    },
+    //我的草稿
+    {
+      path: '/p_draft',
+      name: 'p_draft',
+      component: p_draft,
+      meta: { 'title': '我的草稿' }
+    },
+    //我的财务管理
+    {
+      path: '/p_finance',
+      name: 'p_finance',
+      component: p_finance,
+      meta: { 'title': '我的财务管理' }
+    },
+    //我的联系人
+    {
+      path: '/p_contacts',
+      name: 'p_contacts',
+      component: p_contacts,
+      meta: { 'title': '我的联系人' }
+    },
+    //添加联系人
+    {
+      path: '/p_contacts_a/:typlis',
+      name: 'p_contacts_a',
+      component: p_contacts_a,
+      meta: { 'title': '添加联系人' }
+    },
+    //关于我们
+    {
+      path: '/p_about',
+      name: 'p_about',
+      component: p_about,
+      meta: { 'title': '关于们' }
+    },
+    //关于我们公司概括
+    {
+      path: '/p_about_a',
+      name: 'p_about_a',
+      component: p_about_a,
+      meta: { 'title': '关于们公司概括' }
+    },
+    /////////////////////////包车出车///////////////////////////////
+    //包车租车首页
+    {
+      path: '/B_index',
+      name: 'B_index',
+      component: B_index,
+      meta: { 'title': '包车租车' }
+    },
+    /////////////////////////常规路线///////////////////////////////
+    //搜索常规路线
+    {
+      path: '/F_index',
+      name: 'F_index',
+      component: F_index,
+      meta: { 'title': '常规路线搜索' }
+    },
+    //搜索进去详情列表
+    {
+      path: '/F_details',
+      name: 'F_details',
+      component: F_details,
+      meta: { 'title': '常规路线列表' }
+    },
+    //常规路线详情
+    {
+      path: '/F_details_page/:routeid',
+      name: 'F_details_page',
+      component: F_details_page,
+      meta: { 'title': '常规路线详情' }
+    },
+    // //预订
+    {
+      path: '/F_book/:routeid/:price',
+      name: 'F_book',
+      component: F_book,
+      meta: { 'title': '预订' }
+    },
+    //////////////////////////////////////当地参团//////////////////////////////////////////////
+    //当地参团
+    {
+      path: '/G_index',
+      name: 'G_index',
+      component: G_index,
+      meta: { 'title': '当地参团' }
+    },
+    //参团列表
+    {
+      path: '/G_details',
+      name: 'G_details',
+      component: G_details,
+      meta: { 'title': '当地参团' }
+    },
+    //参团详情
+    {
+      path: '/G_details_page/:routeid',
+      name: 'G_details_page',
+      component: G_details_page,
+      meta: { 'title': '当地参团' }
+    },
+    // //预订
+    {
+      path: '/G_book/:routeid/:price',
+      name: 'G_book',
+      component: G_book,
+      meta: { 'title': '预订' }
+    },
+    /////////////////////////////////////H当地玩家//////////////////////////////////////
+    {
+      path: '/H_index',
+      name: 'H_index',
+      component: H_index,
+      meta: { 'title': '当地玩家' }
+    },
+    //搜索当地玩家
     {
       path: '/H_game',
       name: 'H_game',
-      component:H_game,
+      component: H_game,
       meta: { 'title': '搜索当地玩家' }
     },
     {
-      path:'/H_detail/:routeid',
-      name:'H_detail',
-      component:H_detail,
-      meta:{'title':'当地玩家详情'}
+      path: '/H_detail/:routeid',
+      name: 'H_detail',
+      component: H_detail,
+      meta: { 'title': '当地玩家详情' }
+    },
+    //H_book
+    {
+      path: '/H_book/:routeid/:price',
+      name: 'H_book',
+      component: H_book,
+      meta: { 'title': '当地玩家预订' }
+    },
+    {
+      path: '/H_orderlist_a/:adult/:child',
+      name: 'H_orderlist_a',
+      component: H_orderlist_a,
+      meta: { 'title': '当地玩家预订确定' }
     },
     ///////////////////////////油轮////////////////////////////////////
     {
-      path:'/K_index',
-      name:'K_index',
-      component:K_index,
-      meta:{'title':'油轮'}
+      path: '/K_index',
+      name: 'K_index',
+      component: K_index,
+      meta: { 'title': '油轮' }
     },
     //油轮列表
     {
-      path:'/K_tanker/',
-      name:'K_tanker',
-      component:K_tanker,
-      meta:{'title':'油轮'}
+      path: '/K_tanker/',
+      name: 'K_tanker',
+      component: K_tanker,
+      meta: { 'title': '油轮' }
     },
     //油轮详情
     {
-      path:'/K_details_page/:lineid',
-      name:'K_details_page',
-      component:K_details_page,
-      meta:{'title':'油轮详情'}
+      path: '/K_details_page/:lineid',
+      name: 'K_details_page',
+      component: K_details_page,
+      meta: { 'title': '油轮详情' }
     },
   ]
 })
