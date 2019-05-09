@@ -61,7 +61,7 @@
           总计:
           <span class="color-h font-12">
             ￥
-            <i class="font-20">{{adult*mejiage+child*mejiage}}</i>
+            <i class="font-20">{{adult*totalprice+child*totalprice}}</i>
           </span>
         </div>
         <button
@@ -94,7 +94,7 @@
   font-size: 12px;
   text-align: center;
   line-height: 1rem;
-   clear: both;
+  clear: both;
   width: 100%;
   display: block;
 }
@@ -323,10 +323,10 @@ export default {
   data() {
     return {
       //选中价格
-      tyslit:2,//1常规路线2当地参团
+      tyslit: 2, //1常规路线2当地参团
       pricetyps: "",
-      listyp: "",
-      mejiage: this.$route.params.price, //门票价格
+      listyp: [],
+      listyp_a: [],
       routeid: this.$route.params.routeid,
       priceDate: "",
       priceDatejie: "",
@@ -337,11 +337,27 @@ export default {
       currencySign: "",
       opt: [],
       dataList: [],
-      date: "" //选择的日期
+      date: "", //选择的日期
+      k: 0,
+      datei: "",
+      datei_a: "",
+      jiagelist:0,
     };
   },
+
   //计算属性
-  computed: {},
+  computed: {
+    //价格总数
+    totalprice() {
+      this.jiagelist=0;
+      for (const jiage of this.dataList) {
+        if (jiage.check) {
+       this.jiagelist = this.jiagelist + jiage.price;
+        }
+      }
+     return this.jiagelist;
+    }
+  },
   created() {
     this.calendarDateInit();
     this.getIndexDay();
@@ -360,14 +376,19 @@ export default {
           this.$toast("请选择日期");
           return;
         }
-        this.pricetyps =
-          this.adult * this.mejiage +
-          this.child * this.mejiage;
+        this.pricetyps =this.adult*this.totalprice+this.child*this.totalprice;
         console.log(this.pricetyps);
         if (this.pricetyps != 0) {
           this.$router.push({
             path:
-              "/H_orderlist_a/"+this.adult+"/"+this.child
+              "/H_orderlist_a/" +
+              this.adult +
+              "/" +
+              this.child +
+              "/" +
+              this.pricetyps +
+              "/" +
+              this.date
           });
         }
       }
@@ -405,7 +426,7 @@ export default {
         this.calendarDate.month -= 1;
       }
       this.getIndexDay();
-       this.timtslit();
+      this.timtslit();
       console.log(this.date);
     },
     //点击右边月份
@@ -417,7 +438,7 @@ export default {
         this.calendarDate.month += 1;
       }
       this.getIndexDay();
-       this.timtslit();
+      this.timtslit();
       console.log(this.date);
     },
     //点击日期
@@ -425,21 +446,64 @@ export default {
       this.date = this.dataList[index].date;
       if (this.dataList[index].flag) {
         this.activeChange();
+        if (this.k != 2) {
+          this.k = this.k + 1;
+          console.log(this.k);
+        } else {
+          this.k = 1;
+          console.log(this.k);
+        }
       }
+      //  this.activeChange();
     },
     //改变选中的日期
     activeChange() {
       this.dataList.map(list => {
-        this.$set(list, "check", false);
+        if (this.k == 2) {
+          this.$set(list, "check", false);
+        }
         if (list.flag && this.date && this.checkDate(this.date, list.date)) {
           this.$set(list, "check", true);
         }
         //获取选中的价格
         if (list.check == true) {
-          this.listyp = list;
-          console.log(this.listyp);
+          if (this.k == 0) {
+            this.listyp = list;
+          }
+          if (this.k == 1) {
+            this.listyp_a = list;
+          }
         }
       });
+      if (this.k == 1) {
+        console.log( this.listyp);
+        console.log( this.listyp_a);
+        if (
+          new Date(this.listyp.date).getTime() >=
+          new Date(this.listyp_a.date).getTime()
+        ) {
+          this.datei = new Date(this.listyp.date).getTime();
+        } else {
+          this.datei = new Date(this.listyp_a.date).getTime();
+          this.jiaclick();
+        }
+      }
+    },
+    //设置价格段
+    jiaclick() {
+      for (const tesr of this.dataList) {
+        if (tesr.check) {
+          this.datei_a = new Date(tesr.date).getTime() + 86400000;
+          for (const tesr_a of this.dataList) {
+            if (new Date(tesr_a.date).getTime() == this.datei_a) {
+              this.$set(tesr_a, "check", true);
+            }
+          }
+          if (this.datei_a >= this.datei) {
+            return;
+          }
+        }
+      }
     },
     //日期初始化
     calendarDateInit() {
@@ -472,8 +536,9 @@ export default {
           (this.calendarDate.lastDays - i + 1);
         dataList.push(map);
       }
-       //循环调用接口
-      this.priceDate =this.calendarDate.lastYear + "-" + this.calendarDate.month;
+      //循环调用接口
+      this.priceDate =
+        this.calendarDate.lastYear + "-" + this.calendarDate.month;
       for (var k = 0; k < this.calendarDate.days; k++) {
         let map = {};
         map.flag = false;
