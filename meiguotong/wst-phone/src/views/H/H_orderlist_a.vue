@@ -86,8 +86,8 @@
             <div class="Order_d_aa">
               <ul class="Order_d_z">
                 <li class="font-14">
-                  <i class="float_left">出发地</i>
-                  <i class="float_right whi_ez">{{Routineroute.endCityContent}}</i>
+                  <i class="float_left">成团</i>
+                  <i class="float_right whi_ez">{{gameplayer.cityName}}</i>
                 </li>
                 <li class="font-14">
                   <i class="float_left">时间</i>
@@ -100,18 +100,28 @@
               </ul>
             </div>
 
-            <div class="Trip_a border_e Orderjia">
+            <!-- <div class="Trip_a border_e Orderjia">
               <div class="font-16 Order_d_b" >当地玩家</div>
-              <div class="font-14" style="text-align: left;">{{Routineroute.title}}</div>
+              <div class="font-14" style="text-align: left;">{{gameplayer.introduction}}</div>
               <div
                 class="font-14 color-d"
                 style="margin-top: 0.5rem;text-align: left;"
-              >{{Routineroute.subtitle}}</div>
+              >{{gameplayer.subtitle}}</div>
               <div
                 class="font-12 color-b"
                 style="margin-top: 0.5rem;text-align: left;"
-              >{{Routineroute.infor}}</div>
-            </div>
+              >{{gameplayer.infor}}</div>
+            </div> -->
+             <!--导游信息-->
+             <div class=" Trip_a border_e Orderjia">
+             	<div class="font-16 Order_d_b">导游信息</div>
+             	<dl class="font-14 video_dian_c">
+             		<dd>{{gameplayer.realName}}</dd>
+             		<dd class="video_dian_d"><span>性别:{{gameplayer.sex | sectext}}</span><span>年龄:{{gameplayer.age}}</span><span>所在地区:{{gameplayer.cityName}}</span></dd>
+             		<dd class="video_dian_d"><span>擅长:{{gameplayer.tagContent}}</span></dd>
+             		<dd class="video_dian_a color-b">个人简历:{{gameplayer.introduction}}</dd>
+             	</dl>
+             </div>
             <!--保险选择-->
 
             <div class="Trip_a border_e Orderjia">
@@ -155,14 +165,14 @@
               <i class="color-b float_left Order_d_e beijingtu">
                 <img src="../../assets/img/C/cglxxq_date_icon@2x.png">
               </i>
-              {{date}} 至 {{endtime}} ({{Routineroute.dayNum}}天)
+              {{date}}
             </div>
             <div class="Trip_a border_e">
               <dl class="font-14">
                 <dd class="float_left Trip_b">行程</dd>
-                <dd class="float_right color-b whi_ez_jia">{{Routineroute.title}}</dd>
+                <!-- <dd class="float_right color-b whi_ez_jia">{{gameplayer.introduction}}</dd> -->
                 <dd class="float_left Trip_b">路线价格</dd>
-                <dd class="float_right color-b whi_ez">￥{{Routineroute.price}}*{{zonchoiceperson}}</dd>
+                <dd class="float_right color-b whi_ez">￥{{gameplayer.price}}*{{zonchoiceperson}}</dd>
               </dl>
             </div>
 
@@ -211,6 +221,9 @@
   </div>
 </template>
 <style lang="less">
+dd{
+  text-align: left;
+}
  .refund_jia {
   width: 80% !important;
   overflow: hidden;
@@ -249,8 +262,8 @@ export default {
       choiceperson:0,//选中人数
       zonchoiceperson:Number(this.$route.params.adult)+Number(this.$route.params.child),//总人数
       date: this.$route.params.date, //出发时间
-      date_a:[],
-      endtime: "", //结束时间
+      // date_a:[],
+      // endtime: "", //结束时间
       adult: this.$route.params.adult, //大人
       child: this.$route.params.child, //小孩
       pricetyps: this.$route.params.pricetyps, //总价格
@@ -267,11 +280,21 @@ export default {
       orderidlist:'',//生成订单的id
     };
   },
+  filters:{
+   sectext:function(value){
+        if (value == 1) {
+        return "男";
+      }
+      if (value == 2) {
+        return "女";
+      }
+   }
+  },
   mounted() {
     this.Insurance();
-    this.expire();
+    // this.expire();
     this.choiceperson=this.Selection.length;
-    console.log(this.Routineroute);
+    console.log(this.gameplayer);
     this.date_a=this.date.split("-");
     if(this.date_a[1]<10){
       this.date_a[1]='0'+ this.date_a[1];
@@ -285,22 +308,22 @@ export default {
 
   computed: {
     ...mapState({
-      Routineroute: state => state.route.Routineroute,
+      gameplayer: state => state.route.gameplayer,
       Price: state => state.route.Price,
       Selection:state=>state.route.Selection,
     })
   },
   methods: {
     //到期时间
-    expire: function() {
-      let endtime_z =
-        new Date(this.date).getTime() +
-        this.Routineroute.dayNum * 24 * 60 * 60 * 1000;
-      let endtime_y = new Date(endtime_z).getFullYear(); //年
-      let endtime_m = new Date(endtime_z).getMonth() + 1; //月
-      let endtime_x = new Date(endtime_z).getDate(); //日
-      this.endtime = endtime_y + "-" + endtime_m + "-" + endtime_x;
-    },
+    // expire: function() {
+    //   let endtime_z =
+    //     new Date(this.date).getTime() +
+    //     this.gameplayer.dayNum * 24 * 60 * 60 * 1000;
+    //   let endtime_y = new Date(endtime_z).getFullYear(); //年
+    //   let endtime_m = new Date(endtime_z).getMonth() + 1; //月
+    //   let endtime_x = new Date(endtime_z).getDate(); //日
+    //   this.endtime = endtime_y + "-" + endtime_m + "-" + endtime_x;
+    // },
     //选择人数
     quclick: function(){
      this.$router.push({

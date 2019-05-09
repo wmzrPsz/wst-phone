@@ -284,13 +284,13 @@ export default {
     this.selectyp(); //评价
   },
   methods: {
-     ...mapMutations("route", ["passwtyp"]),
+     ...mapMutations("route", ["gameplayer"]),
     //点击预订
     yudingclick: function() {
       this.$router.push({
         path: "/H_book/" + this.routeid + "/" + this.slist.price
       });
-      this.passwtyp(this.slist);
+      this.gameplayer(this.slist);
     },
     //点击显示时间
     shijianclick(){
