@@ -12,10 +12,12 @@
     </div>
     <div class="Choose_a_room_b">
       <div class="Choose_a_room_b_j">
-        <div class="martop_tou"><img :src="slist.photo"></div>
+        <div class="martop_tou">
+          <img :src="slist.photo">
+        </div>
         <div class="martop">
-           <div class="float_left font-16 martop_jia">{{slist.realName}}</div>
-          <div class="float_left font-12 martop_jia color-b ">{{slist.introduction}}</div>
+          <div class="float_left font-16 martop_jia">{{slist.realName}}</div>
+          <div class="float_left font-12 martop_jia color-b">{{slist.introduction}}</div>
         </div>
         <div style=" clear: both;">
           <div class="font-12 color-h float_left">
@@ -73,6 +75,9 @@
             <div class="float_right font-12 color-b">成交数量{{stycan.transactionsNum}}笔</div>
           </div>
         </div>
+      </div>
+      <div @click="paginationtyp()"> 
+      <van-pagination v-model="currentPage" :page-count=this.generalpage   mode="simple" />
       </div>
     </div>
     <div class="refund_z refun_jia">
@@ -179,13 +184,13 @@
         <p>{{slist.priceInfor}}</p>
       </div>
     </van-popup>
-     <!--日期说明-->
-      <van-popup v-model="show2" :overlay="true" position="bottom">
+    <!--日期说明-->
+    <van-popup v-model="show2" :overlay="true" position="bottom">
       <div>
-      <ezHeader></ezHeader>
+        <ezHeader></ezHeader>
       </div>
     </van-popup>
-     <!-- <ezHeader></ezHeader> -->
+    <!-- <ezHeader></ezHeader> -->
   </div>
 </template>
 <style lang="less">
@@ -204,8 +209,8 @@
 .refund_jia p i {
   color: coral;
 }
-.martop{
-  width:80%;
+.martop {
+  width: 80%;
   float: right;
 }
 // .Choose_a_room_b{
@@ -214,16 +219,16 @@
 // .Choose_a_room_d_z{
 //   margin-top: 4.5rem;
 // }
-.martop_tou img{
+.martop_tou img {
   width: 100%;
   height: 100%;
 }
-.martop_tou{
+.martop_tou {
   width: 2rem;
   height: 2rem;
   overflow: hidden;
   border-radius: 50px;
-  float: left
+  float: left;
 }
 </style>
  <script>
@@ -238,7 +243,7 @@ import {
 } from "@/utils/getData";
 import store from "@/vuex/index";
 import ajax from "@/utils/fetch";
-import ezHeader from '@/views/H/H_orderlist.vue';
+import ezHeader from "@/views/H/H_orderlist.vue";
 import { mapMutations } from "vuex";
 export default {
   name: "index",
@@ -251,7 +256,9 @@ export default {
       can: [], //导游推荐路线列表
       tuslit: 1, ////1内容形成2用户评价3用户质询4视屏质料
       listyp: [], //内容
-      pageNo: 4, //默认4条
+      pageNo: 4, //默认2条
+      currentPage: 1, //推荐行程一开始默认显示第一条
+      generalpage:0,
       proType: 8, //1.包车租车2.短程接送3.接送机4常规路线5.当地参团6.游轮7.景点门票8.当地玩家9.酒店10.保险11.旅游定制12导游 13.攻略评论 14.城市评论',
       pingluntyp: [], //评论列表
       yonghutyp: [], //用户资讯列表
@@ -260,12 +267,12 @@ export default {
       imgtyp: "",
       show: false,
       show1: false,
-      show2:false,
+      show2: false,
       refund: "" //退款
     };
   },
-   components:{
-    ezHeader,
+  components: {
+    ezHeader
   },
   filters: {
     sex: function(value) {
@@ -284,7 +291,12 @@ export default {
     this.selectyp(); //评价
   },
   methods: {
-     ...mapMutations("route", ["gameplayer"]),
+    paginationtyp(){
+    this.cantyp();
+    console.log(this.generalpage);
+    return;
+    },
+    ...mapMutations("route", ["gameplayer"]),
     //点击预订
     yudingclick: function() {
       this.$router.push({
@@ -293,8 +305,8 @@ export default {
       this.gameplayer(this.slist);
     },
     //点击显示时间
-    shijianclick(){
-     this.show2=true;
+    shijianclick() {
+      this.show2 = true;
     },
     //点击查看更多评论
     pinglunclick: function() {
@@ -311,7 +323,6 @@ export default {
       );
       if (data) {
         this.pingluntyp = data.list;
-        console.log(this.pingluntyp.length);
       }
     },
     //退货说明
@@ -339,11 +350,12 @@ export default {
       }
     },
     async cantyp() {
-      let data = await guideRouteUrl(
-        this.routeid,
-        this.pageNo //先写死
-      );
-      this.can = data.list;
+      let data = await guideRouteUrl(this.routeid, this.currentPage);
+      if(data){
+        this.can = data.list;
+        this.generalpage=data.totalPage
+        return;
+      }
     },
     //切换
     dinaclick(index) {

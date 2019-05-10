@@ -221,7 +221,7 @@
           总计:
           <span class="color-h font-12">
             ￥
-            <i class="font-20">{{Number(pricetyps)+Number(baomang)}}</i>
+            <i class="font-20">{{Number(pricetyps)+baomang}}</i>
           </span>
         </div>
         <button class="Choose_a_room_dibu_d float_right background-d font-14 Car_renting_g" @click="quclicck()">确定订单</button>
@@ -293,11 +293,10 @@ export default {
       productType:4,//1.包车租车2.短程接送3.接送机4常规路线5.当地参团6.游轮7.景点门票8.当地玩家9.旅游定制',
       baixianlist:[],//保险列表
       baocontent:'',
-      baomang:'',//保险价格
       contactsName:'',//联系人名称
       remark:'',//备注
       contactsMobile:'',//联系人电话
-      insuranceid:'',//保险id
+      insuranceid:"",
       orderidlist:'',//生成订单的id
     };
   },
@@ -318,6 +317,16 @@ export default {
   },
 
   computed: {
+    baomang() {
+      let baomang = "";
+      for (const teme of this.baixianlist) {
+        if (teme.flag) {
+          baomang = teme.price;
+          this.insuranceid=teme.id;
+        }
+      }
+      return baomang;
+    },
     ...mapState({
       Routineroute: state => state.route.Routineroute,
       Price: state => state.route.Price,
@@ -357,16 +366,14 @@ export default {
       this.baocontent=list;
     },
     //选择保险
-    xunclick :function(index){
-      this.baixianlist[index].flag =! this.baixianlist[index].flag;
-       for(const test of this.baixianlist){
-       if(test.flag==true){
-         this.insuranceid=test.id;
-         this.baomang=this.baomang+test.price*this.zonchoiceperson;
-       }else{
-          this.baomang=0;
-       }
-     }
+    //选择保险
+    xunclick: function(index) {
+      if (this.baixianlist[index].flag == false) {
+        this.baixianlist.map(elem => {
+          elem.flag = false;
+        });
+      }
+      this.baixianlist[index].flag = !this.baixianlist[index].flag;
     },
   //确定订单
   async quclicck(){
@@ -382,9 +389,6 @@ export default {
        this.$toast("填写联系人电话");
       return;
     }
-    // for(const test of this.Selection){
-    //   this.$set(test,"type",false);
-    // }
     let data = await saveRouteOrderUrl(
       this.$route.params.routeid,
       this.contactsName,
