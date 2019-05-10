@@ -58,7 +58,7 @@
                 <li class="font-14">
                   <i>联系电话</i>
                   <input
-                   v-model="contactsMobile"
+                    v-model="contactsMobile"
                     class="font-14 float_right Order_d_a color-b"
                     type="text"
                     placeholder="请输入联系电话"
@@ -68,7 +68,7 @@
                 <li class="font-14">
                   <i>备注信息</i>
                   <input
-                   v-model="remark"
+                    v-model="remark"
                     class="font-14 float_right Order_d_a color-b"
                     type="text"
                     placeholder="请输入备注信息"
@@ -99,29 +99,21 @@
                 </li>
               </ul>
             </div>
-
-            <!-- <div class="Trip_a border_e Orderjia">
-              <div class="font-16 Order_d_b" >当地玩家</div>
-              <div class="font-14" style="text-align: left;">{{gameplayer.introduction}}</div>
-              <div
-                class="font-14 color-d"
-                style="margin-top: 0.5rem;text-align: left;"
-              >{{gameplayer.subtitle}}</div>
-              <div
-                class="font-12 color-b"
-                style="margin-top: 0.5rem;text-align: left;"
-              >{{gameplayer.infor}}</div>
-            </div> -->
-             <!--导游信息-->
-             <div class=" Trip_a border_e Orderjia">
-             	<div class="font-16 Order_d_b">导游信息</div>
-             	<dl class="font-14 video_dian_c">
-             		<dd>{{gameplayer.realName}}</dd>
-             		<dd class="video_dian_d"><span>性别:{{gameplayer.sex | sectext}}</span><span>年龄:{{gameplayer.age}}</span><span>所在地区:{{gameplayer.cityName}}</span></dd>
-             		<dd class="video_dian_d"><span>擅长:{{gameplayer.tagContent}}</span></dd>
-             		<dd class="video_dian_a color-b">个人简历:{{gameplayer.introduction}}</dd>
-             	</dl>
-             </div>
+            <div class="Trip_a border_e Orderjia">
+              <div class="font-16 Order_d_b">导游信息</div>
+              <dl class="font-14 video_dian_c">
+                <dd>{{gameplayer.realName}}</dd>
+                <dd class="video_dian_d">
+                  <span>性别:{{gameplayer.sex | sectext}}</span>
+                  <span>年龄:{{gameplayer.age}}</span>
+                  <span>所在地区:{{gameplayer.cityName}}</span>
+                </dd>
+                <dd class="video_dian_d">
+                  <span>擅长:{{gameplayer.tagContent}}</span>
+                </dd>
+                <dd class="video_dian_a color-b">个人简历:{{gameplayer.introduction}}</dd>
+              </dl>
+            </div>
             <!--保险选择-->
 
             <div class="Trip_a border_e Orderjia">
@@ -132,16 +124,24 @@
                   class="Short_distance_relay_e float_left Trip_b Short_distance_relay_b"
                   @click="xunclick(index)"
                 >
-                  <i class="Short_distance_relay_c" v-if="listte.flag==false"><img src="../../assets/img/A/home_choice_unche@2x.png"></i>
-                  <i class="Short_distance_relay_c" v-if="listte.flag==true"><img src="../../assets/img/A/home_choice_check@2x.png"></i>
+                  <i class="Short_distance_relay_c" v-if="listte.flag==false">
+                    <img src="../../assets/img/A/home_choice_unche@2x.png">
+                  </i>
+                  <i class="Short_distance_relay_c" v-if="listte.flag==true">
+                    <img src="../../assets/img/A/home_choice_check@2x.png">
+                  </i>
                   {{listte.name}}￥{{listte.price}}/人
                 </dd>
-                <dd class="float_right color-h" style="text-align: left;" @click="baiclick(listte.content)">(保险说明)</dd>
+                <dd
+                  class="float_right color-h"
+                  style="text-align: left;"
+                  @click="baiclick(listte.content)"
+                >(保险说明)</dd>
               </dl>
             </div>
           </div>
         </div>
-        
+
         <div class="xinx font-14" @click="quclick()">
           <div class="float_left" style="margin-left:0.5rem;">出游人信息</div>
           <div class="float_right">
@@ -165,14 +165,13 @@
               <i class="color-b float_left Order_d_e beijingtu">
                 <img src="../../assets/img/C/cglxxq_date_icon@2x.png">
               </i>
-              {{date}}
+              {{date}} 至 {{date_a}} ({{dayNum}})天
             </div>
             <div class="Trip_a border_e">
               <dl class="font-14">
                 <dd class="float_left Trip_b">行程</dd>
-                <!-- <dd class="float_right color-b whi_ez_jia">{{gameplayer.introduction}}</dd> -->
                 <dd class="float_left Trip_b">路线价格</dd>
-                <dd class="float_right color-b whi_ez">￥{{gameplayer.price}}*{{zonchoiceperson}}</dd>
+                <dd class="float_right color-b whi_ez">￥{{pricetyps}}</dd>
               </dl>
             </div>
 
@@ -184,14 +183,17 @@
               </dl>
             </div>
             <text class="font-16 Order_d_b">保险</text>
-            <div class="Trip_a border_e" >
+            <div class="Trip_a border_e">
               <dl class="font-14" v-for="(listte,index) in baixianlist " :key="index">
-                <dd 
+                <dd
                   v-if="listte.flag==true"
                   class="float_left Trip_b Short_distance_relay_b"
                   style="text-align: left;"
                 >{{listte.name}}</dd>
-                <dd class="float_right" v-if="listte.flag==true">￥{{listte.price}}*{{zonchoiceperson}}</dd>
+                <dd
+                  class="float_right"
+                  v-if="listte.flag==true"
+                >￥{{listte.price}}*{{zonchoiceperson}}</dd>
               </dl>
             </div>
           </div>
@@ -203,28 +205,29 @@
           总计:
           <span class="color-h font-12">
             ￥
-            <i class="font-20">{{Number(pricetyps)+Number(baomang)}}</i>
+            <i class="font-20">{{Number(pricetyps)+baomang}}</i>
           </span>
         </div>
-        <button class="Choose_a_room_dibu_d float_right background-d font-14 Car_renting_g" @click="quclicck()">确定订单</button>
+        <button
+          class="Choose_a_room_dibu_d float_right background-d font-14 Car_renting_g"
+          @click="quclicck()"
+        >确定订单</button>
       </div>
     </div>
     <!---->
-     <van-popup v-model="show" class="refund_jia">
+    <van-popup v-model="show" class="refund_jia">
       <div>
         <p>保险说明</p>
-        <p>
-         {{baocontent}}
-        </p>
+        <p>{{baocontent}}</p>
       </div>
     </van-popup>
   </div>
 </template>
 <style lang="less">
-dd{
+dd {
   text-align: left;
 }
- .refund_jia {
+.refund_jia {
   width: 80% !important;
   overflow: hidden;
   border-radius: 8px;
@@ -236,20 +239,20 @@ dd{
   width: 90%;
   margin: 0.3rem auto;
 }
-.Short_distance_relay_c img{
+.Short_distance_relay_c img {
   width: 100%;
   height: 100%;
 }
-.whi_ez_jia{
-	word-break:break-all;
-	width:85%;
-	text-align: right;
+.whi_ez_jia {
+  word-break: break-all;
+  width: 85%;
+  text-align: right;
 }
 </style>
 
 <script>
-import {getInsuranceUrl,saveRouteOrderUrl} from "@/utils/getData";
-import { mapState} from "vuex";
+import { getInsuranceUrl, saveGuideOrderUrl } from "@/utils/getData";
+import { mapState } from "vuex";
 export default {
   name: "index",
   data() {
@@ -258,141 +261,159 @@ export default {
         backgroundImage:
           "url(" + require("../../assets/img/B/qrdd_biaoq_bg@2x.png") + ")"
       },
-      show:false,
-      choiceperson:0,//选中人数
-      zonchoiceperson:Number(this.$route.params.adult)+Number(this.$route.params.child),//总人数
-      date: this.$route.params.date, //出发时间
-      // date_a:[],
-      // endtime: "", //结束时间
+      show: false,
+      choiceperson: 0, //选中人数
+      zonchoiceperson:
+        Number(this.$route.params.adult) + Number(this.$route.params.child), //总人数
+      date:this.$route.params.date, //出发时间
+      date_a: this.$route.params.date_a, //结束时间
+      dayNum: "", //时间段天数
       adult: this.$route.params.adult, //大人
       child: this.$route.params.child, //小孩
       pricetyps: this.$route.params.pricetyps, //总价格
-      dayNum: this.$route.params.dayNum, //形成天数
-      endCityContent: this.$route.params.endCityContent ,//出发城市
-      productType:5,//1.包车租车2.短程接送3.接送机4常规路线5.当地参团6.游轮7.景点门票8.当地玩家9.旅游定制',
-      baixianlist:[],//保险列表
-      baocontent:'',
-      baomang:'',//保险价格
-      contactsName:'',//联系人名称
-      remark:'',//备注
-      contactsMobile:'',//联系人电话
-      insuranceid:'',//保险id
-      orderidlist:'',//生成订单的id
+      endCityContent: this.$route.params.endCityContent, //出发城市
+      productType: 5, //1.包车租车2.短程接送3.接送机4常规路线5.当地参团6.游轮7.景点门票8.当地玩家9.旅游定制',
+      baixianlist: [], //保险列表
+      baocontent: "",
+      contactsName: "", //联系人名称
+      remark: "", //备注
+      contactsMobile: "", //联系人电话
+      orderidlist: "",//生成订单的id
+      insuranceid:'',//选中保险id
+      tyslit:3,//1常规路线2当地参团3当地玩家
     };
   },
-  filters:{
-   sectext:function(value){
-        if (value == 1) {
+
+  computed: {
+    baomang() {
+      let baomang = "";
+      for (const teme of this.baixianlist) {
+        if (teme.flag) {
+          baomang = teme.price;
+          this.insuranceid=teme.id;
+        }
+      }
+      return baomang;
+    },
+    ...mapState({
+      gameplayer: state => state.route.gameplayer,
+      Price: state => state.route.Price,
+      Selection: state => state.route.Selection
+    })
+  },
+  filters: {
+    sectext: function(value) {
+      if (value == 1) {
         return "男";
       }
       if (value == 2) {
         return "女";
       }
-   }
+    },
   },
   mounted() {
+    this.tiantyp();
     this.Insurance();
-    // this.expire();
-    this.choiceperson=this.Selection.length;
-    console.log(this.gameplayer);
-    this.date_a=this.date.split("-");
-    if(this.date_a[1]<10){
-      this.date_a[1]='0'+ this.date_a[1];
-    }
-    if(this.date_a[2]<10){
-      this.date_a[2]='0'+ this.date_a[2];
-    }
-     console.log(this.date_a);
-     this.date=this.date_a[0]+'-'+this.date_a[1]+"-"+this.date_a[2];
-  },
-
-  computed: {
-    ...mapState({
-      gameplayer: state => state.route.gameplayer,
-      Price: state => state.route.Price,
-      Selection:state=>state.route.Selection,
-    })
+    this.choiceperson = this.Selection.length;
   },
   methods: {
-    //到期时间
-    // expire: function() {
-    //   let endtime_z =
-    //     new Date(this.date).getTime() +
-    //     this.gameplayer.dayNum * 24 * 60 * 60 * 1000;
-    //   let endtime_y = new Date(endtime_z).getFullYear(); //年
-    //   let endtime_m = new Date(endtime_z).getMonth() + 1; //月
-    //   let endtime_x = new Date(endtime_z).getDate(); //日
-    //   this.endtime = endtime_y + "-" + endtime_m + "-" + endtime_x;
-    // },
+    //计算行程天数
+    tiantyp: function() {
+      //时间段谁小谁是开始时间
+      if (
+        new Date(this.$route.params.date).getTime() <=
+        new Date(this.$route.params.date_a).getTime()
+      ) {
+        this.date = this.$route.params.date;
+        this.date_a = this.$route.params.date_a;
+        this.dayNum =
+          (new Date(this.$route.params.date_a).getTime() -
+            new Date(this.$route.params.date).getTime()) /
+          86400000;
+      } else{
+        this.date_a = this.$route.params.date;
+        if(this.$route.params.date_a==null){
+          this.date = this.$route.params.date_a;
+        }
+        this.dayNum =
+          (new Date(this.$route.params.date).getTime() -
+            new Date(this.$route.params.date_a).getTime()) /
+          86400000;
+      }
+      //当没选结束时间默认结束时间和开始时间一样
+      if(new Date(this.$route.params.date_a).getTime()==null){
+       this.date_a=this.$route.params.date;
+      }
+    },
     //选择人数
-    quclick: function(){
-     this.$router.push({
-        path: "/tourist/"+this.zonchoiceperson
+    quclick: function() {
+      this.$router.push({
+        path: "/tourist/" + this.zonchoiceperson
       });
     },
     //保险说明
-    async Insurance(){
+    async Insurance() {
       let data = await getInsuranceUrl(this.productType);
-     if(data){
-       this.baixianlist=data;
-     }
-     for(const test of this.baixianlist){
-       this.$set(test,'flag',false);
-     }
+      if (data) {
+        this.baixianlist = data;
+      }
+      for (const test of this.baixianlist) {
+        this.$set(test, "flag", false);
+      }
     },
     //点击保险说明
-    baiclick :function(list){
-      this.show=true;
-      this.baocontent=list;
+    baiclick: function(list) {
+      this.show = true;
+      this.baocontent = list;
     },
     //选择保险
-    xunclick :function(index){
-      this.baixianlist[index].flag =! this.baixianlist[index].flag;
-       for(const test of this.baixianlist){
-       if(test.flag==true){
-         this.insuranceid=test.id;
-         this.baomang=this.baomang+test.price*this.zonchoiceperson;
-       }else{
-          this.baomang=0;
-       }
-     }
+    xunclick: function(index) {
+      if (this.baixianlist[index].flag == false) {
+        this.baixianlist.map(elem => {
+          elem.flag = false;
+        });
+      }
+      this.baixianlist[index].flag = !this.baixianlist[index].flag;
     },
-  //确定订单
-  async quclicck(){
-    if(this.choiceperson!=this.zonchoiceperson){
-      this.$toast("完善出游人信息");
-      return;
-    }
-    if(this.contactsName==0){
-       this.$toast("填写联系人");
-      return;
-    }
-    if(this.contactsMobile==0){
-       this.$toast("填写联系人电话");
-      return;
-    }
-    // for(const test of this.Selection){
-    //   this.$set(test,"type",false);
+    //确定订单
+    // quclicck() {
+    //   console.log(this.baomang);
+    //   console.log(this.insuranceid);
     // }
-    let data = await saveRouteOrderUrl(
-      this.$route.params.routeid,
-      this.contactsName,
-      this.contactsMobile,
-      this.remark,
-      this.date,
-      this.adult,
-      this.child,
-      this.insuranceid,
-      JSON.stringify(this.Selection),
-     );
-     if(data){
-       let zonmni = Number(this.pricetyps)+Number(this.baomang)
-        this.orderidlist=data;
-       this.$router.push({
-        path: "/orderlist_a/" +this.orderidlist+"/"+zonmni+"/"+this.$route.params.tyslit,
-      });
-     }
-  }
+    async quclicck(){
+      if(this.choiceperson!=this.zonchoiceperson){
+        this.$toast("完善出游人信息");
+        return;
+      }
+      if(this.contactsName==0){
+         this.$toast("填写联系人");
+        return;
+      }
+      if(this.contactsMobile==0){
+         this.$toast("填写联系人电话");
+        return;
+      }
+      let data = await saveGuideOrderUrl(
+        this.$route.params.routeid,
+        this.contactsName,
+        this.contactsMobile,
+        this.remark,
+        this.date,
+        this.date_a,
+        this.adult,
+        this.child,
+        this.insuranceid,
+        this.baomang,
+        JSON.stringify(this.Selection),
+       );
+       if(data){
+         let zonmni = Number(this.pricetyps)+Number(this.baomang)
+          this.orderidlist=data;
+         this.$router.push({
+          path: "/orderlist_a/" +this.orderidlist+"/"+zonmni+"/"+this.tyslit,
+        });
+       }
+    }
   }
 };
 </script>

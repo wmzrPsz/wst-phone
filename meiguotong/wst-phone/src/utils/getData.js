@@ -137,15 +137,24 @@ export const guideDetailsUrl = (routeid) =>ajax( process.env.VUE_APP_PROXY_API +
     
 })
 //当地玩家推荐路线列表接口
-export const guideRouteUrl = (routeid,pageNo) =>ajax( process.env.VUE_APP_PROXY_API +'/guide/guideRoute',{
+export const guideRouteUrl = (routeid,currentPage) =>ajax( process.env.VUE_APP_PROXY_API +'/guide/guideRoute',{
     guideId:routeid,
-    pageNo: pageNo,
+    pageNo:currentPage,
 })
 //导游确认订单接口
-export const saveGuideOrderUrl = (routeid,pageNo) =>ajax( process.env.VUE_APP_PROXY_API +'/guide/saveGuideOrder',{
-    guideId:routeid,
-    pageNo: pageNo,
-})
+export const saveGuideOrderUrl = (routeid,contactsName,contactsMobile,remark,date,date_a,adult,child,insuranceid,baomang,Selection) =>ajax( process.env.VUE_APP_PROXY_API +'/guide/saveGuideOrder',{
+    guideid:routeid,
+    contactsName:contactsName,//联系人
+    contactsMobile:contactsMobile,//联系电话
+    Remark:remark,//备注
+    startDate:date,//开始时间
+    endDate:date_a,//结束时间
+    adultNum:adult,//大人
+    childNum:child,//小孩
+    Insurance:insuranceid,//保险id
+    InsurancePrice:baomang,//保险价格
+    orderMember:Selection,//出游人数组
+},'post')
 //当地玩家时间价格
 export const getGuideDateDetailsUrl = (routeid,priceDate) =>ajax( process.env.VUE_APP_PROXY_API +'/guide/getGuideDateDetails',{
     guideid:routeid,

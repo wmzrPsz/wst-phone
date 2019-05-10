@@ -38,6 +38,9 @@
 				<router-link to="/G_details">
 				<button class="font-14 float_right Success_c" v-if="tyslit==2">返回当地参团</button>
 				</router-link>
+					<router-link to="/H_game">
+				<button class="font-14 float_right Success_c" v-if="tyslit==3">返回当地玩家</button>
+				</router-link>
 			</div>
 		</div>
 

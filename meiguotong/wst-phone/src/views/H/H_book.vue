@@ -338,7 +338,7 @@ export default {
       opt: [],
       dataList: [],
       date: "", //选择的日期
-      k: 0,
+      k: 1,
       datei: "",
       datei_a: "",
       jiagelist:0,
@@ -372,10 +372,6 @@ export default {
     nextclick: function() {
       if (store.state.loginUid != 0) {
         //登陆了
-        if (this.listyp == 0) {
-          this.$toast("请选择日期");
-          return;
-        }
         this.pricetyps =this.adult*this.totalprice+this.child*this.totalprice;
         console.log(this.pricetyps);
         if (this.pricetyps != 0) {
@@ -388,7 +384,11 @@ export default {
               "/" +
               this.pricetyps +
               "/" +
-              this.date
+              this.date +
+              "/"+
+              this.date_a +
+              "/"+
+              this.routeid
           });
         }
       }
@@ -442,54 +442,84 @@ export default {
       console.log(this.date);
     },
     //点击日期
-    dayClick(index) {
-      this.date = this.dataList[index].date;
-      if (this.dataList[index].flag) {
-        this.activeChange();
-        if (this.k != 2) {
-          this.k = this.k + 1;
-          console.log(this.k);
-        } else {
-          this.k = 1;
-          console.log(this.k);
-        }
-      }
-      //  this.activeChange();
-    },
-    //改变选中的日期
-    activeChange() {
-      this.dataList.map(list => {
-        if (this.k == 2) {
-          this.$set(list, "check", false);
-        }
+    // dayClick(index) {
+    //   this.date = this.dataList[index].date;
+    //   if (this.dataList[index].flag) {
+    //     this.activeChange();
+    //     if (this.k != 2) {
+    //       this.k = this.k + 1;
+    //       console.log(this.k);
+    //     } else {
+    //       this.k = 1;
+    //       console.log(this.k);
+    //     }
+    //   }
+    //   //  this.activeChange();
+    // },
+    dayClick(index){
+     if(this.k==1){
+        this.date = this.dataList[index].date;//开始时间
+        if(this.dataList[index].flag){
+        this.dataList.map(list => {
         if (list.flag && this.date && this.checkDate(this.date, list.date)) {
           this.$set(list, "check", true);
         }
-        //获取选中的价格
-        if (list.check == true) {
-          if (this.k == 0) {
-            this.listyp = list;
-          }
-          if (this.k == 1) {
-            this.listyp_a = list;
-          }
+        });
+        console.log(this.date);
         }
+      this.k=2;
+      return;
+     }
+     if(this.k==2){
+       this.date_a = this.dataList[index].date;//结束时间
+        if(this.dataList[index].flag){
+        this.dataList.map(list => {
+        if (list.flag && this.date_a && this.checkDate(this.date_a, list.date)) {
+          this.$set(list, "check", true);
+        }
+        });
+        console.log(this.date_a);
+        }
+        this.activeChange();
+      this.k=3;
+      return;
+     }
+     if(this.k==3){
+      this.dataList.map(list => {
+        //获取选中的价格
+         this.$set(list, "check", false);
       });
-      if (this.k == 1) {
-        console.log( this.listyp);
-        console.log( this.listyp_a);
+        this.date = this.dataList[index].date;//开始时间
+        if(this.dataList[index].flag){
+        this.dataList.map(list => {
+        if (list.flag && this.date && this.checkDate(this.date, list.date)) {
+          this.$set(list, "check", true);
+        }
+        });
+        console.log(this.date);
+        }
+      this.k=2;
+      return;
+     }
+    },
+    //改变选中的日期段
+    activeChange() {
         if (
-          new Date(this.listyp.date).getTime() >=
-          new Date(this.listyp_a.date).getTime()
+          new Date(this.date).getTime() >
+          new Date(this.date_a).getTime()
         ) {
-          this.datei = new Date(this.listyp.date).getTime();
-        } else {
-          this.datei = new Date(this.listyp_a.date).getTime();
+          this.datei = new Date(this.date).getTime();
+           this.jiaclick();
+        }
+         if (
+          new Date(this.date).getTime() <
+          new Date(this.date_a).getTime()
+        ) {
+          this.datei = new Date(this.date_a).getTime();
           this.jiaclick();
         }
-      }
     },
-    //设置价格段
+    //设置价格段的样式
     jiaclick() {
       for (const tesr of this.dataList) {
         if (tesr.check) {

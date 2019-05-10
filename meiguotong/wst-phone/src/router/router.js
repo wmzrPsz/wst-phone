@@ -482,7 +482,7 @@ export default new Router({
       meta: { 'title': '当地玩家预订' }
     },
     {
-      path: '/H_orderlist_a/:adult/:child/:pricetyps/:date',
+      path: '/H_orderlist_a/:adult/:child/:pricetyps/:date/:date_a/:routeid',
       name: 'H_orderlist_a',
       component: H_orderlist_a,
       meta: { 'title': '当地玩家预订确定' }
