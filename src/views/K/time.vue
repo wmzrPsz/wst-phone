@@ -1,14 +1,8 @@
    
    <template>
   <div class="index">
-    <div class="her_a font-20 background-a">
-      <i class="her_a_left float_left" onclick="window.history.go(-1)">
-        <img src="../../assets/img/A/back_icon@2x.png">
-      </i>
-      <i class="her_a_zong color float_zhong">预订</i>
-    </div>
     <!--预订列表日历-->
-    <div class="date-box">
+    <div class="date-box_jia">
       <div class="ht-rili-querybox">
         <div class="ht-rili-datebox">
           <span class="ht-rili-leftarr" @click="monthLeftClick"></span>
@@ -27,10 +21,6 @@
           <div class="ht-rili-th">六</div>
         </div>
         <div class="ht-rili-body">
-          <!-- <div class="ht-rili-td ht-rili-td-disabled" data-date="2019-4-30">
-            <span class="ht-rili-day">30</span>
-            <span class="ht-rili-money"></span>
-          </div>-->
           <div
             :class="[list.flag?'ht-rili-onclick':'ht-rili-td-disabled','ht-rili-td',list.check?'ht-rili-td-active':'']"
             v-for="(list, index) in dataList"
@@ -47,29 +37,7 @@
         </div>
       </div>
     </div>
-    <div class="roomjia">
-      <div class="room_a">
-        <p class="font-14 float_left famjian_b">成年人</p>
-        <van-stepper v-model="adult" :min="0" class="float_right"/>
-      </div>
-      <div class="room_a">
-        <p class="font-14 float_left famjian_b">儿童</p>
-        <van-stepper v-model="child" :min="0" class="float_right"/>
-      </div>
-      <div class="Choose_a_room_dibu">
-        <div class="Choose_a_room_dibu_c font-16 float_left">
-          总计:
-          <span class="color-h font-12">
-            ￥
-            <i class="font-20">{{adult*totalprice+child*totalprice}}</i>
-          </span>
-        </div>
-        <button
-          class="Choose_a_room_dibu_d float_right background-d font-14 Car_renting_g"
-          @click="nextclick()"
-        >下一步</button>
-      </div>
-    </div>
+    <!---->
   </div>
 </template>
    <style lang="less">
@@ -94,9 +62,6 @@
   font-size: 12px;
   text-align: center;
   line-height: 1rem;
-  clear: both;
-  width: 100%;
-  display: block;
 }
 .room_a {
   overflow: hidden;
@@ -120,13 +85,12 @@
   margin-bottom: 3rem;
 }
 //
-.date-box {
+.date-box_jia {
   overflow: hidden;
   background: #f2f2f2;
   border: 1px solid #e6e8eb;
   box-shadow: 2px 5px 10px 2px #ccc;
   padding-bottom: 30px;
-  margin-top: 2.5rem;
 }
 .calendar-box * {
   box-sizing: border-box;
@@ -313,7 +277,7 @@
 </style>
    
    <script>
-import { getGuideDateDetailsUrl,getGuideRouteDateDetailsUrl} from "@/utils/getData";
+import { getLinePriceDetailsUrl } from "@/utils/getData";
 import $ from "jquery";
 import { async } from "q";
 import store from "@/vuex/index";
@@ -322,43 +286,24 @@ export default {
   name: "index",
   data() {
     return {
+      //  fonid:store.fonid.routeid,
       //选中价格
-      tyslit: 2, //1常规路线2当地参团
       pricetyps: "",
-      listyp: [],
-      listyp_a: [],
-      routeid: this.$route.params.routeid,
-      routeidslit:this.$route.params.sptyp,//1是当地玩家2是推荐路线
+      listyp: "",
+      lineid: this.$route.params.lineid,
       priceDate: "",
       priceDatejie: "",
-      adult: 0, //大人
-      child: 0, //小孩
       price: "", //价格
+      //
       calendarDate: {},
       currencySign: "",
       opt: [],
       dataList: [],
-      date: "", //选择的日期
-      k: 1,
-      datei: "",
-      datei_a: "",
-      jiagelist:0,
+      date: "" //选择的日期
     };
   },
-
   //计算属性
-  computed: {
-    //价格总数
-    totalprice() {
-      this.jiagelist=0;
-      for (const jiage of this.dataList) {
-        if (jiage.check) {
-       this.jiagelist = this.jiagelist + jiage.price;
-        }
-      }
-     return this.jiagelist;
-    }
-  },
+  computed: {},
   created() {
     this.calendarDateInit();
     this.getIndexDay();
@@ -369,48 +314,14 @@ export default {
 
   methods: {
     ...mapMutations("route", ["Price"]),
-    //下一步
-    nextclick: function() {
-      if (store.state.loginUid != 0) {
-        //登陆了
-        this.pricetyps =this.adult*this.totalprice+this.child*this.totalprice;
-        console.log(this.pricetyps);
-        if (this.pricetyps != 0) {
-          this.$router.push({
-            path:
-              "/H_orderlist_a/" +
-              this.adult +
-              "/" +
-              this.child +
-              "/" +
-              this.pricetyps +
-              "/" +
-              this.date +
-              "/"+
-              this.date_a +
-              "/"+
-              this.routeid +
-              "/"+
-              this.routeidslit
-          });
-        }
-      }
-      if (store.state.loginUid == 0) {
-        //没登陆了
-        this.$toast("请先登录");
-        return;
-      }
-    },
     //日期接口
     async timtslit() {
-      console.log(this.priceDate);
-      if(this.routeidslit==1){
-       let data = await getGuideDateDetailsUrl(this.routeid, this.priceDate);
+      console.log(this.priceDate); 
+      let data = await getLinePriceDetailsUrl(this.lineid, this.priceDate);
       if (data) {
         let lists = [];
         for (const test of data) {
           let img = {};
-          this.$set(img, "state", test.state);
           this.$set(img, "date", test.date);
           this.$set(img, "price", test.price);
           lists.push(img);
@@ -419,24 +330,6 @@ export default {
         this.getIndexDay();
         console.log(this.opt);
         return;
-      }
-      }
-      if(this.routeidslit==2){
-       let data = await getGuideRouteDateDetailsUrl(this.routeid, this.priceDate);
-      if (data) {
-        let lists = [];
-        for (const test of data) {
-          let img = {};
-          this.$set(img, "state", test.state);
-          this.$set(img, "date", test.date);
-          this.$set(img, "price", test.price);
-          lists.push(img);
-        }
-        this.opt = lists;
-        this.getIndexDay();
-        console.log(this.opt);
-        return;
-      }
       }
     },
     //点击左边月份
@@ -448,7 +341,7 @@ export default {
         this.calendarDate.month -= 1;
       }
       this.getIndexDay();
-      this.timtslit();
+       this.timtslit();
       console.log(this.date);
     },
     //点击右边月份
@@ -460,87 +353,30 @@ export default {
         this.calendarDate.month += 1;
       }
       this.getIndexDay();
-      this.timtslit();
+       this.timtslit();
       console.log(this.date);
     },
-    dayClick(index){
-     if(this.k==1){
-        this.date = this.dataList[index].date;//开始时间
-        if(this.dataList[index].flag){
-        this.dataList.map(list => {
-        if (list.flag && this.date && this.checkDate(this.date, list.date)) {
-          this.$set(list, "check", true);
-        }
-        });
-        console.log(this.date);
-        }
-      this.k=2;
-      return;
-     }
-     if(this.k==2){
-       this.date_a = this.dataList[index].date;//结束时间
-        if(this.dataList[index].flag){
-        this.dataList.map(list => {
-        if (list.flag && this.date_a && this.checkDate(this.date_a, list.date)) {
-          this.$set(list, "check", true);
-        }
-        });
-        console.log(this.date_a);
-        }
+    //点击日期
+    dayClick(index) {
+      this.date = this.dataList[index].date;
+      if (this.dataList[index].flag) {
         this.activeChange();
-      this.k=3;
-      return;
-     }
-     if(this.k==3){
+      }
+    },
+    //改变选中的日期
+    activeChange() {
       this.dataList.map(list => {
-        //获取选中的价格
-         this.$set(list, "check", false);
-      });
-        this.date = this.dataList[index].date;//开始时间
-        if(this.dataList[index].flag){
-        this.dataList.map(list => {
+        this.$set(list, "check", false);
         if (list.flag && this.date && this.checkDate(this.date, list.date)) {
           this.$set(list, "check", true);
         }
-        });
-        console.log(this.date);
+        //获取选中的价格
+        if (list.check == true) {
+          this.listyp = list;
+          console.log(this.listyp);
+          // this.room();
         }
-      this.k=2;
-      return;
-     }
-    },
-    //改变选中的日期段
-    activeChange() {
-        if (
-          new Date(this.date).getTime() >
-          new Date(this.date_a).getTime()
-        ) {
-          this.datei = new Date(this.date).getTime();
-           this.jiaclick();
-        }
-         if (
-          new Date(this.date).getTime() <
-          new Date(this.date_a).getTime()
-        ) {
-          this.datei = new Date(this.date_a).getTime();
-          this.jiaclick();
-        }
-    },
-    //设置价格段的样式
-    jiaclick() {
-      for (const tesr of this.dataList) {
-        if (tesr.check) {
-          this.datei_a = new Date(tesr.date).getTime() + 86400000;
-          for (const tesr_a of this.dataList) {
-            if (new Date(tesr_a.date).getTime() == this.datei_a) {
-              this.$set(tesr_a, "check", true);
-            }
-          }
-          if (this.datei_a >= this.datei) {
-            return;
-          }
-        }
-      }
+      });
     },
     //日期初始化
     calendarDateInit() {
@@ -573,9 +409,9 @@ export default {
           (this.calendarDate.lastDays - i + 1);
         dataList.push(map);
       }
-      //循环调用接口
-      this.priceDate =
-        this.calendarDate.lastYear + "-" + this.calendarDate.month;
+       //循环调用接口
+      this.priceDate =this.calendarDate.lastYear + "-" + this.calendarDate.month;
+      // this.timtslit();
       for (var k = 0; k < this.calendarDate.days; k++) {
         let map = {};
         map.flag = false;
@@ -587,7 +423,6 @@ export default {
           "-" +
           (k + 1);
         for (let d in this.opt) {
-          map.state = this.opt[d].state; //房间数量情况
           map.price = this.opt[d].price; //价格
           map.flag = this.checkDate(map.date, this.opt[d].date);
           if (map.flag) {

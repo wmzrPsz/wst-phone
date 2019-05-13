@@ -1,5 +1,4 @@
-   
-   <template>
+<template>
   <div class="index">
     <div class="her_a font-20 background-a">
       <i class="her_a_left float_left" onclick="window.history.go(-1)">
@@ -7,72 +6,202 @@
       </i>
       <i class="her_a_zong color float_zhong">预订</i>
     </div>
-    <!--预订列表日历-->
-    <div class="date-box">
-      <div class="ht-rili-querybox">
-        <div class="ht-rili-datebox">
-          <span class="ht-rili-leftarr" @click="monthLeftClick"></span>
-          <span class="ht-rili-date">{{calendarDate.year}}年{{calendarDate.month}}月</span>
-          <span class="ht-rili-rightarr" @click="monthRightClick"></span>
+    <div class="dingjia_jia">
+      <div class="font-14 business_affairs_d text_left">{{Liner.linerline.name}}</div>
+      <!--预订列表日历-->
+      <div class="ezslis">
+        <div class="date-box_jia">
+          <div class="ht-rili-querybox">
+            <div class="ht-rili-datebox">
+              <span class="ht-rili-leftarr" @click="monthLeftClick"></span>
+              <span class="ht-rili-date">{{calendarDate.year}}年{{calendarDate.month}}月</span>
+              <span class="ht-rili-rightarr" @click="monthRightClick"></span>
+            </div>
+          </div>
+          <div class="ht-rili-entirety floatl">
+            <div class="ht-rili-head">
+              <div class="ht-rili-th">日</div>
+              <div class="ht-rili-th">一</div>
+              <div class="ht-rili-th">二</div>
+              <div class="ht-rili-th">三</div>
+              <div class="ht-rili-th">四</div>
+              <div class="ht-rili-th">五</div>
+              <div class="ht-rili-th">六</div>
+            </div>
+            <div class="ht-rili-body">
+              <div
+                :class="[list.flag?'ht-rili-onclick':'ht-rili-td-disabled','ht-rili-td',list.check?'ht-rili-td-active':'']"
+                v-for="(list, index) in dataList"
+                :key="index"
+                @click="dayClick(index)"
+              >
+                <span class="ht-rili-day">
+                  {{list.day}}
+                  <!-- 1 -->
+                  <i data-state="100" v-if="list.flag">余{{list.state}}</i>
+                </span>
+                <span class="ht-rili-money" v-if="list.flag">￥{{list.price}}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="ht-rili-entirety floatl">
-        <div class="ht-rili-head">
-          <div class="ht-rili-th">日</div>
-          <div class="ht-rili-th">一</div>
-          <div class="ht-rili-th">二</div>
-          <div class="ht-rili-th">三</div>
-          <div class="ht-rili-th">四</div>
-          <div class="ht-rili-th">五</div>
-          <div class="ht-rili-th">六</div>
+      <div class=" rom_d"  v-for="(list,index) in fanlistyp" :key="index">
+        <div class="business_affairs_d_a" @click.stop="fancliak(index)">
+          <div class>
+            <div class="Choose_a_room_d beijingtu float_left">
+              <img :src="list.imgUrl">
+            </div>
+            <div class="Choose_a_room_d_a float_left">
+              <i class="font-14 text_left" style="display: block;">{{list.name}}</i>
+              <div class="business_affairs_d_b text_left">
+                <i class="font-12 color-b text_left" v-if="list.checkInType==1">{{list.spec}}   {{list.checkInType |chifunt}} {{list.minPeopleNumber}}-{{list.maxPeopleNumber}}人 {{list.floor}}层</i>
+                <i class="font-12 color-b text_left" v-if="list.checkInType==2">{{list.spec}}   {{list.checkInType |chifunt}} {{list.peopleNumber}}人 {{list.floor}}层</i>
+                <li class="business_affairs_d_c_z float_right">
+                  <i class="business_affairs_d_c">
+                    <img src="../../assets/img/A/sign_open_icon@2x.png">
+                  </i>
+                  <i class="business_affairs_d_c yinc_a">
+                    <img src="../../assets/img/A/sign_open_icon@3x.png">
+                  </i>
+                </li>
+              </div>
+
+              <div style="margin-top: -0.2rem;" class="text_left">
+                <i class="font-12 color-h">￥</i>
+                <i class="font-16 color-h">{{list.price}}</i>
+                <i class="font-14">/起</i>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="ht-rili-body">
-          <!-- <div class="ht-rili-td ht-rili-td-disabled" data-date="2019-4-30">
-            <span class="ht-rili-day">30</span>
-            <span class="ht-rili-money"></span>
-          </div>-->
-          <div
-            :class="[list.flag?'ht-rili-onclick':'ht-rili-td-disabled','ht-rili-td',list.check?'ht-rili-td-active':'']"
-            v-for="(list, index) in dataList"
-            :key="index"
-            @click="dayClick(index)"
-          >
-            <span class="ht-rili-day">
-              {{list.day}}
-              <!-- 1 -->
-              <i data-state="100" v-if="list.flag">余{{list.state}}</i>
-            </span>
-            <span class="ht-rili-money" v-if="list.flag">￥{{list.price}}</span>
+        <div class="font-14 rom_c" v-if="list.falg">
+          <div class="rom_c_a">
+            <div class="text_left">选择数量</div>
+            <div class="float_left room_a">
+              <div class="float_left font-12 room_a_text">成年</div>
+               <van-stepper v-model="list.adultNum" :min="0" :max="list.max" :disable-input="falg" :change="fanchulick(list)" class="float_right vanstyle"/>
+            </div>
+
+            <div class="float_right room_a">
+             <div class="float_left font-12 room_a_text">儿童</div>
+              <van-stepper v-model="list.childNum" :min="0"  :max="list.max" :disable-input="falg" :change="fanchulick_a(list)" class="float_right vanstyle"/>
+            </div>
+          </div>
+          <div class="rom_c_a">
+            <div class="text_left">选择房间</div>
+              <van-stepper v-model="list.roomNum" :min="0" :disable-input="falg" class="float_left vanstyle" style=" margin-top: 0.5rem;"/>
+            <div class="float_right">
+              <div class="color-h float_right">
+                <i class="font-12">总价:￥</i>
+                <i class="font-16">699</i>
+              </div>
+              <div class="float_right room_c_b">
+                <i class="font-10 color-b float_left room_c_b_a">人均：￥299</i>
+                <button class="font-14 room_c_b_b">完成</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--房间-->
+      </div>
+      <div class="Choose_a_room_dibu">
+        <div class="Choose_a_room_dibu_a float_left">
+          <i class="Choose_a_room_dibu_b font-12 background-g">3</i>
+        </div>
+        <div class="Choose_a_room_dibu_c font-16 float_left">已选3件房间</div>
+        <button class="Choose_a_room_dibu_d float_right background-d font-14">￥2524预订</button>
+      </div>
+    </div>
+    <!--已选择酒店-->
+    <div class="brijtan yinc"></div>
+    <div class="Choose_a_room_dibu_tan yinc">
+      <div class="kuandu Choose_a_room_dibu_tan_z">
+        <div class="Choose_a_room_d_z_z Choose_a_room_dibu_tan_c">
+          <div class="Choose_a_room_d beijingtu float_left">
+            <img src="../../assets/img/B/5.png">
+          </div>
+          <div class="Choose_a_room_d_a float_left">
+            <i class="font-14" style="display: block;">大理石多多</i>
+            <div class="business_affairs_d_b">
+              <i class="font-12 color-b float_left room_c_b_delete_a">10~80m必须入住</i>
+              <button class="room_c_b_delete float_right font-14">删除</button>
+            </div>
+            <div class="color-h float_left" style="margin-top: -0.5rem;">
+              <i class="font-12">总价:￥</i>
+              <i class="font-16">699</i>
+              <i class="font-10 color-b">人均：￥299</i>
+            </div>
+          </div>
+        </div>
+
+        <div class="Choose_a_room_d_z_z Choose_a_room_dibu_tan_c">
+          <div class="Choose_a_room_d beijingtu float_left">
+            <img src="../../assets/img/B/5.png">
+          </div>
+          <div class="Choose_a_room_d_a float_left">
+            <i class="font-14" style="display: block;">大理石多多</i>
+            <div class="business_affairs_d_b">
+              <i class="font-12 color-b float_left room_c_b_delete_a">10~80m必须入住</i>
+              <button class="room_c_b_delete float_right font-14">删除</button>
+            </div>
+            <div class="color-h float_left" style="margin-top: -0.5rem;">
+              <i class="font-12">总价:￥</i>
+              <i class="font-16">699</i>
+              <i class="font-10 color-b">人均：￥299</i>
+            </div>
+          </div>
+        </div>
+
+        <div class="Choose_a_room_d_z_z Choose_a_room_dibu_tan_c">
+          <div class="Choose_a_room_d beijingtu float_left">
+            <img src="../../assets/img/B/5.png">
+          </div>
+          <div class="Choose_a_room_d_a float_left">
+            <i class="font-14" style="display: block;">大理石多多</i>
+            <div class="business_affairs_d_b">
+              <i class="font-12 color-b float_left room_c_b_delete_a">10~80m必须入住</i>
+              <button class="room_c_b_delete float_right font-14">删除</button>
+            </div>
+            <div class="color-h float_left" style="margin-top: -0.5rem;">
+              <i class="font-12">总价:￥</i>
+              <i class="font-16">699</i>
+              <i class="font-10 color-b">人均：￥299</i>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="roomjia">
-      <div class="room_a">
-        <p class="font-14 float_left famjian_b">成年人</p>
-        <van-stepper v-model="adult" :min="0" class="float_right"/>
-      </div>
-      <div class="room_a">
-        <p class="font-14 float_left famjian_b">儿童</p>
-        <van-stepper v-model="child" :min="0" class="float_right"/>
-      </div>
-      <div class="Choose_a_room_dibu">
-        <div class="Choose_a_room_dibu_c font-16 float_left">
-          总计:
-          <span class="color-h font-12">
-            ￥
-            <i class="font-20">{{adult*totalprice+child*totalprice}}</i>
-          </span>
-        </div>
-        <button
-          class="Choose_a_room_dibu_d float_right background-d font-14 Car_renting_g"
-          @click="nextclick()"
-        >下一步</button>
-      </div>
-    </div>
   </div>
 </template>
-   <style lang="less">
+<style lang="less">
+.room_a_text{
+ margin-right: 0.5rem;
+ display: block;
+ line-height:1.5rem;
+}
+.vanstyle{
+    overflow: hidden;
+    border-radius: 50px;
+}
+.van-stepper__minus{
+    background-color: white;
+}
+.van-stepper__input{
+     background-color: white!important;
+     color: #444!important;
+}
+.van-stepper__plus{
+     background-color: white;
+}
+.text_left {
+  text-align: left;
+}
+.ezslis {
+  width: 95%;
+  margin: 0.5rem auto;
+  overflow: hidden;
+}
 .jiagefan ul {
   width: 95%;
   margin: auto;
@@ -94,9 +223,6 @@
   font-size: 12px;
   text-align: center;
   line-height: 1rem;
-  clear: both;
-  width: 100%;
-  display: block;
 }
 .room_a {
   overflow: hidden;
@@ -120,13 +246,12 @@
   margin-bottom: 3rem;
 }
 //
-.date-box {
+.date-box_jia {
   overflow: hidden;
   background: #f2f2f2;
   border: 1px solid #e6e8eb;
   box-shadow: 2px 5px 10px 2px #ccc;
   padding-bottom: 30px;
-  margin-top: 2.5rem;
 }
 .calendar-box * {
   box-sizing: border-box;
@@ -310,54 +435,60 @@
 .ht-rili-head .ht-rili-th {
   font-size: 10px !important;
 }
+.Choose_a_room_dibu_a{
+	height:2rem;
+	width: 2rem;
+	border-radius:50px;
+	border: 1px solid gainsboro;
+	overflow:hidden;
+    background: url(../../assets/img/B/bjyw_hotel_icon@2x.png);
+	background-size: 100% 100%;
+	margin-left: 0.5rem;
+	margin-top: 0.25rem;
+}
 </style>
-   
-   <script>
-import { getGuideDateDetailsUrl,getGuideRouteDateDetailsUrl} from "@/utils/getData";
+<script>
+import { getLinePriceDetailsUrl,linerRoomListUrl} from "@/utils/getData";
 import $ from "jquery";
 import { async } from "q";
 import store from "@/vuex/index";
 import { mapMutations } from "vuex";
+import { mapState } from "vuex";
 export default {
   name: "index",
   data() {
     return {
       //选中价格
-      tyslit: 2, //1常规路线2当地参团
       pricetyps: "",
-      listyp: [],
-      listyp_a: [],
-      routeid: this.$route.params.routeid,
-      routeidslit:this.$route.params.sptyp,//1是当地玩家2是推荐路线
+      listyp: "",
+      lineid: this.$route.params.lineid,
       priceDate: "",
       priceDatejie: "",
-      adult: 0, //大人
-      child: 0, //小孩
       price: "", //价格
       calendarDate: {},
       currencySign: "",
       opt: [],
       dataList: [],
-      date: "", //选择的日期
-      k: 1,
-      datei: "",
-      datei_a: "",
-      jiagelist:0,
+      date: "" ,//选择的日期
+      fanlistyp:[],//房间列表
+      falg:true,
     };
   },
-
   //计算属性
   computed: {
-    //价格总数
-    totalprice() {
-      this.jiagelist=0;
-      for (const jiage of this.dataList) {
-        if (jiage.check) {
-       this.jiagelist = this.jiagelist + jiage.price;
-        }
+    ...mapState({
+      Liner: state => state.route.Liner
+    })
+  },
+  filters:{
+      chifunt:function(value){
+       if(value==1){
+           return "可入住";
+       }
+       if(value==2){
+           return "必须入住";
+       }
       }
-     return this.jiagelist;
-    }
   },
   created() {
     this.calendarDateInit();
@@ -369,48 +500,14 @@ export default {
 
   methods: {
     ...mapMutations("route", ["Price"]),
-    //下一步
-    nextclick: function() {
-      if (store.state.loginUid != 0) {
-        //登陆了
-        this.pricetyps =this.adult*this.totalprice+this.child*this.totalprice;
-        console.log(this.pricetyps);
-        if (this.pricetyps != 0) {
-          this.$router.push({
-            path:
-              "/H_orderlist_a/" +
-              this.adult +
-              "/" +
-              this.child +
-              "/" +
-              this.pricetyps +
-              "/" +
-              this.date +
-              "/"+
-              this.date_a +
-              "/"+
-              this.routeid +
-              "/"+
-              this.routeidslit
-          });
-        }
-      }
-      if (store.state.loginUid == 0) {
-        //没登陆了
-        this.$toast("请先登录");
-        return;
-      }
-    },
     //日期接口
     async timtslit() {
       console.log(this.priceDate);
-      if(this.routeidslit==1){
-       let data = await getGuideDateDetailsUrl(this.routeid, this.priceDate);
+      let data = await getLinePriceDetailsUrl(this.lineid, this.priceDate);
       if (data) {
         let lists = [];
         for (const test of data) {
           let img = {};
-          this.$set(img, "state", test.state);
           this.$set(img, "date", test.date);
           this.$set(img, "price", test.price);
           lists.push(img);
@@ -419,24 +516,6 @@ export default {
         this.getIndexDay();
         console.log(this.opt);
         return;
-      }
-      }
-      if(this.routeidslit==2){
-       let data = await getGuideRouteDateDetailsUrl(this.routeid, this.priceDate);
-      if (data) {
-        let lists = [];
-        for (const test of data) {
-          let img = {};
-          this.$set(img, "state", test.state);
-          this.$set(img, "date", test.date);
-          this.$set(img, "price", test.price);
-          lists.push(img);
-        }
-        this.opt = lists;
-        this.getIndexDay();
-        console.log(this.opt);
-        return;
-      }
       }
     },
     //点击左边月份
@@ -463,84 +542,26 @@ export default {
       this.timtslit();
       console.log(this.date);
     },
-    dayClick(index){
-     if(this.k==1){
-        this.date = this.dataList[index].date;//开始时间
-        if(this.dataList[index].flag){
-        this.dataList.map(list => {
-        if (list.flag && this.date && this.checkDate(this.date, list.date)) {
-          this.$set(list, "check", true);
-        }
-        });
-        console.log(this.date);
-        }
-      this.k=2;
-      return;
-     }
-     if(this.k==2){
-       this.date_a = this.dataList[index].date;//结束时间
-        if(this.dataList[index].flag){
-        this.dataList.map(list => {
-        if (list.flag && this.date_a && this.checkDate(this.date_a, list.date)) {
-          this.$set(list, "check", true);
-        }
-        });
-        console.log(this.date_a);
-        }
+    //点击日期
+    dayClick(index) {
+      this.date = this.dataList[index].date;
+      if (this.dataList[index].flag) {
         this.activeChange();
-      this.k=3;
-      return;
-     }
-     if(this.k==3){
+      }
+    },
+    //改变选中的日期
+    activeChange() {
       this.dataList.map(list => {
-        //获取选中的价格
-         this.$set(list, "check", false);
-      });
-        this.date = this.dataList[index].date;//开始时间
-        if(this.dataList[index].flag){
-        this.dataList.map(list => {
+        this.$set(list, "check", false);
         if (list.flag && this.date && this.checkDate(this.date, list.date)) {
           this.$set(list, "check", true);
         }
-        });
-        console.log(this.date);
+        //获取选中的价格
+        if (list.check == true) {
+          this.listyp = list;
+         this.fanlist();
         }
-      this.k=2;
-      return;
-     }
-    },
-    //改变选中的日期段
-    activeChange() {
-        if (
-          new Date(this.date).getTime() >
-          new Date(this.date_a).getTime()
-        ) {
-          this.datei = new Date(this.date).getTime();
-           this.jiaclick();
-        }
-         if (
-          new Date(this.date).getTime() <
-          new Date(this.date_a).getTime()
-        ) {
-          this.datei = new Date(this.date_a).getTime();
-          this.jiaclick();
-        }
-    },
-    //设置价格段的样式
-    jiaclick() {
-      for (const tesr of this.dataList) {
-        if (tesr.check) {
-          this.datei_a = new Date(tesr.date).getTime() + 86400000;
-          for (const tesr_a of this.dataList) {
-            if (new Date(tesr_a.date).getTime() == this.datei_a) {
-              this.$set(tesr_a, "check", true);
-            }
-          }
-          if (this.datei_a >= this.datei) {
-            return;
-          }
-        }
-      }
+      });
     },
     //日期初始化
     calendarDateInit() {
@@ -576,6 +597,7 @@ export default {
       //循环调用接口
       this.priceDate =
         this.calendarDate.lastYear + "-" + this.calendarDate.month;
+      // this.timtslit();
       for (var k = 0; k < this.calendarDate.days; k++) {
         let map = {};
         map.flag = false;
@@ -587,7 +609,6 @@ export default {
           "-" +
           (k + 1);
         for (let d in this.opt) {
-          map.state = this.opt[d].state; //房间数量情况
           map.price = this.opt[d].price; //价格
           map.flag = this.checkDate(map.date, this.opt[d].date);
           if (map.flag) {
@@ -719,8 +740,41 @@ export default {
       date1 = date1.join("-");
       date2 = date2.join("-");
       return date1 == date2;
-    }
+    },
+    //房间列表接口
+    async fanlist(){
+        let data = await linerRoomListUrl(this.lineid);
+        if(data){
+            this.fanlistyp=data;
+            for(const teseli of this.fanlistyp){
+                if(teseli.checkInType==1){
+                //可入住
+                let daren = teseli.minPeopleNumber+teseli.maxPeopleNumber;
+                this.$set(teseli,'adultNum',daren);//大人
+                this.$set(teseli,'childNum',0);//小孩
+                this.$set(teseli,'max',teseli.minPeopleNumber)
+                } else if(teseli.checkInType==2){
+                //必须入住
+                this.$set(teseli,'adultNum',teseli.peopleNumber);//大人
+                this.$set(teseli,'childNum',0);//小孩
+                this.$set(teseli,'max',teseli.minPeopleNumber)
+                }
+                this.$set(teseli,'roomNum',0);//房间数量
+                this.$set(teseli,"falg",false);
+            }
+        }
+    },
+   //点击房间
+   fancliak :function(index){
+   this.fanlistyp[index].falg=!this.fanlistyp[index].falg;
+   },
+   fanchulick:function(list){
+      list.childNum=list.max-list.adultNum;
+   },
+   fanchulick_a:function(list){
+      list.adultNum=list.max-list.childNum;
+   },
   }
 };
 </script>
-   
+

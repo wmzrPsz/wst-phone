@@ -59,13 +59,13 @@
     </div>
     <!--大众-->
     <div>
-      <div class="Car_renting_z" v-for="(stycan,index) in can" :key="index">
+      <div class="Car_renting_z" v-for="(stycan,index) in can" :key="index" @click="yudingclick_a(stycan)">
         <div class="float_left beijingtu Car_renting">
           <img :src="stycan.photo">
         </div>
         <div class="float_right Car_renting_a">
           <div class="font-14">{{stycan.title}}</div>
-          <div class="font-12 color-b Car_renting_b">{{stycan.scenice}}</div>
+          <div class="font-12 color-b Car_renting_b"><i>{{stycan.sceniceName.split(',').length}}旅游景点</i><i v-for="(tag, index) in stycan.sceniceName.split(',')" :key="index">{{tag}}<i>→</i></i></div>
           <div>
             <div class="float_left">
               <i class="font-12 color-h">￥</i>
@@ -213,12 +213,6 @@
   width: 80%;
   float: right;
 }
-// .Choose_a_room_b{
-// height:5.5rem!important;
-// }
-// .Choose_a_room_d_z{
-//   margin-top: 4.5rem;
-// }
 .martop_tou img {
   width: 100%;
   height: 100%;
@@ -268,7 +262,7 @@ export default {
       show: false,
       show1: false,
       show2: false,
-      refund: "" //退款
+      refund: "", //退款
     };
   },
   components: {
@@ -296,13 +290,20 @@ export default {
     console.log(this.generalpage);
     return;
     },
-    ...mapMutations("route", ["gameplayer"]),
+    ...mapMutations("route", ["gameplayer","Recommendlist"]),
     //点击预订
     yudingclick: function() {
       this.$router.push({
-        path: "/H_book/" + this.routeid + "/" + this.slist.price
+        path: "/H_book/" + this.routeid + "/" + "1"
       });
       this.gameplayer(this.slist);
+    },
+    //点击推荐路线预订
+    yudingclick_a:function(stycan){
+    this.$router.push({
+        path: "/H_book/" +stycan.id + "/" + "2"
+      });
+      this.Recommendlist(stycan);
     },
     //点击显示时间
     shijianclick() {
@@ -349,6 +350,7 @@ export default {
         }
       }
     },
+    //当地玩家推荐路线
     async cantyp() {
       let data = await guideRouteUrl(this.routeid, this.currentPage);
       if(data){

@@ -99,6 +99,13 @@
                 </li>
               </ul>
             </div>
+             <div class="Trip_a border_e Orderjia" v-if="this.$route.params.routeidslit==2">
+              <div class="font-16 Order_d_b">当地玩家</div>
+              <dl class="font-14 video_dian_c">
+                <dd>{{Recommendlist.title}}</dd>
+                 <dd class="font-14 color-b Car_renting_b"><i>{{Recommendlist.sceniceName.split(',').length}}旅游景点</i><i v-for="(tag, index) in Recommendlist.sceniceName.split(',')" :key="index">{{tag}}<i>→</i></i></dd>
+              </dl>
+            </div>
             <div class="Trip_a border_e Orderjia">
               <div class="font-16 Order_d_b">导游信息</div>
               <dl class="font-14 video_dian_c">
@@ -264,7 +271,7 @@ export default {
       show: false,
       choiceperson: 0, //选中人数
       zonchoiceperson:
-        Number(this.$route.params.adult) + Number(this.$route.params.child), //总人数
+      Number(this.$route.params.adult) + Number(this.$route.params.child), //总人数
       date:this.$route.params.date, //出发时间
       date_a: this.$route.params.date_a, //结束时间
       dayNum: "", //时间段天数
@@ -281,6 +288,7 @@ export default {
       orderidlist: "",//生成订单的id
       insuranceid:'',//选中保险id
       tyslit:3,//1常规路线2当地参团3当地玩家
+      guideRouteid:"",//推荐导游路线id
     };
   },
 
@@ -298,7 +306,8 @@ export default {
     ...mapState({
       gameplayer: state => state.route.gameplayer,
       Price: state => state.route.Price,
-      Selection: state => state.route.Selection
+      Selection: state => state.route.Selection,
+      Recommendlist:state =>state.route.stycan,
     })
   },
   filters: {
@@ -315,6 +324,7 @@ export default {
     this.tiantyp();
     this.Insurance();
     this.choiceperson = this.Selection.length;
+    console.log(this.gameplayer);
   },
   methods: {
     //计算行程天数
@@ -375,12 +385,10 @@ export default {
       }
       this.baixianlist[index].flag = !this.baixianlist[index].flag;
     },
-    //确定订单
-    // quclicck() {
-    //   console.log(this.baomang);
-    //   console.log(this.insuranceid);
-    // }
     async quclicck(){
+      if(this.$route.params.routeidslit==2){
+        this.guideRouteid=this.Recommendlist.id
+      }
       if(this.choiceperson!=this.zonchoiceperson){
         this.$toast("完善出游人信息");
         return;
@@ -394,7 +402,7 @@ export default {
         return;
       }
       let data = await saveGuideOrderUrl(
-        this.$route.params.routeid,
+        this.gameplayer.id,
         this.contactsName,
         this.contactsMobile,
         this.remark,
@@ -405,6 +413,7 @@ export default {
         this.insuranceid,
         this.baomang,
         JSON.stringify(this.Selection),
+        this.guideRouteid,//导游路线id
        );
        if(data){
          let zonmni = Number(this.pricetyps)+Number(this.baomang)
