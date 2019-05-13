@@ -4,6 +4,8 @@ const state = {
   contacts: {},//修改联系人 
   Selection: [],//确定的信息人数
   gameplayer:{},//当地玩家详情
+  stycan:{},//当地玩家推荐路线
+  Liner:{},//邮轮详情
 }
 const getters = {
 }
@@ -23,7 +25,12 @@ const mutations = {
   Selection(state, Selection) {
     state.Selection = Selection;
   },
-
+  Recommendlist(state,stycan){
+    state.stycan=stycan;
+  },
+  Liner(state,Linerlist){
+    state.Liner=Linerlist;
+  }
 }
 
 const actions = {

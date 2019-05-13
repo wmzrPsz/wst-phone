@@ -1,9 +1,11 @@
 <template>
   <div class="index" style="background-color: white;">
     <div class="her_a font-20 background-a">
-      <i class="her_a_left float_left"><img src="../../assets/img/A/back_icon@2x.png" onclick="window.history.go(-1)"></i>
+      <i class="her_a_left float_left">
+        <img src="../../assets/img/A/back_icon@2x.png" onclick="window.history.go(-1)">
+      </i>
       <i class="her_a_zong color float_zhong">油轮</i>
-     </div>
+    </div>
     <div class="dingjia_b">
       <div class="brijtan_b" v-if="type!=0"></div>
       <!--日期筛选-->
@@ -24,16 +26,14 @@
                 <i class="sou_her_w_a">
                   <img src="../../assets/img/B/bjyw_open_icon@2x.png">
                 </i>
-               
               </span>
             </li>
             <li @click="teypex(3)">
               <i>价格预算</i>
               <span class="s_a">
                 <i class="sou_her_w_a">
-                   <img src="../../assets/img/B/bjyw_open_icon@2x.png">
+                  <img src="../../assets/img/B/bjyw_open_icon@2x.png">
                 </i>
-              
               </span>
             </li>
             <li @click="teypex(4)">
@@ -42,7 +42,6 @@
                 <i class="sou_her_w_a">
                   <img src="../../assets/img/B/bjyw_open_icon@2x.png">
                 </i>
-               
               </span>
             </li>
           </ul>
@@ -56,7 +55,7 @@
             <i class="font-16 b_xianm_c">筛选日期</i>
           </div>
 
-         <div class="b_xianm">
+          <div class="b_xianm">
             <ul class="font-12 b_xianm_b color-b">
               <li
                 v-for="(list, index) in dataList"
@@ -312,27 +311,32 @@
     <div class="dingjia_a">
       <mescroll-vue ref="mescroll" :up="mescrollUp" @init="mescrollInit">
         <div class="ze_x">
-          <div class="ze_x_a" v-for="(sert,index) in styser" :key="index" @click="xianqinclick(sert)">
+          <div
+            class="ze_x_a"
+            v-for="(sert,index) in styser"
+            :key="index"
+            @click="xianqinclick(sert)"
+          >
             <div style="overflow:hidden;">
               <div class="float_left ze_x_le">
                 <img v-lazy="sert.imgUrl">
               </div>
               <div class="float_left ze_x_ril">
-                <div class="font-14 ze_x_ril_jia">{{sert.name}}</div>
+                <div class="font-14 ze_x_ril_jia_a">{{sert.name}}</div>
                 <ul class="font-12 ze_x_ril_a color-b">
                   <li v-for="(tag, index) in sert.tagContent.split(',')" :key="index">{{tag}}</li>
                 </ul>
                 <div class="font-12 ze_x_ril_b color-c">{{sert.subtitle}}</div>
               </div>
             </div>
-            <div class="font-12 color-b ze_x_ril_c">{{sert.infor}}</div>
+            <div class="font-12 color-b ze_x_ril_c">{{sert.startCityName}} | 上船 {{sert.infor}}</div>
             <div>
-              <div class="float_left font-12 group_d color-h">
+              <!-- <div class="float_left font-12 group_d color-h">
                 <i>
                   <img src="../../assets/img/B/bczc_adress_icon@2x.png">
                 </i>
                 {{sert.startCityName}}
-              </div>
+              </div>-->
               <ul class="ze_x_ril_d float_right">
                 <li class="font-14">
                   <i class="color-h">￥{{sert.price}}</i>
@@ -345,9 +349,9 @@
         </div>
       </mescroll-vue>
     </div>
-      <!--点击选择月份-->
-    <div class="brijtan " v-if="yue==2"></div>
-    <div class="Route_x " v-if="yue==2">
+    <!--点击选择月份-->
+    <div class="brijtan" v-if="yue==2"></div>
+    <div class="Route_x" v-if="yue==2">
       <div class="font-16" style="line-height: 2rem;">{{listpryue.month}}月</div>
       <div class="Route_x_a">
         <dl class="font-12">
@@ -359,7 +363,7 @@
       </div>
 
       <button
-      @click="yuetpy(listpryue)"
+        @click="yuetpy(listpryue)"
         class="color background-d font-14 xiayi"
         style="margin-top:2rem!important; margin-bottom:1rem!important;"
       >确定</button>
@@ -369,31 +373,31 @@
 <style lang="less" scoped>
 .mescroll {
   position: fixed;
-  z-index:9;
-  top:7.7rem;
+  z-index: 9;
+  top: 7.7rem;
   bottom: 0;
   height: auto;
 }
-.dingjia_b{
-  margin-top:2.5rem;
+.dingjia_b {
+  margin-top: 2.5rem;
 }
-.sou_her_ww{
- background-color: #484b4e;
+.sou_her_ww {
+  background-color: #484b4e;
   overflow: hidden;
   color: white;
   position: fixed;
   width: 100%;
 }
-.dingjia_a_ajia{
-  margin-top:-2rem!important;
+.dingjia_a_ajia {
+  margin-top: -2rem !important;
 }
-.ong_z{
+.ong_z {
   margin-top: 3rem;
 }
-.qyuanb{
-   position: fixed;
-  z-index:999;
-  top:2.5rem;
+.qyuanb {
+  position: fixed;
+  z-index: 999;
+  top: 2.5rem;
   bottom: 0;
   height: auto;
 }
@@ -407,8 +411,8 @@ export default {
   data() {
     return {
       // startCity:this.$route.params.startCity,
-      searchContent:this.$route.params.searchContent,
-      portid:this.$route.params.portid,//出发港口
+      searchContent: this.$route.params.searchContent,
+      portid: this.$route.params.portid, //出发港口
       type: "", //1日期，2行程，3价格，4全部，
       srtype: "", //1综合，2销量，3降价格，4升价格
       styser: [], //列表数据
@@ -427,15 +431,15 @@ export default {
       cstyle: [], //出发城市列表
       hangxiatyp: [], //油轮航线
       styjiag: 1, //开始1显示降价格，2显示升价格
-       yue:1,//表示月份隐藏
-      listpryue:'',//月份天数
+      yue: 1, //表示月份隐藏
+      listpryue: "", //月份天数
 
-     mescroll: null, // mescroll实例对象
+      mescroll: null, // mescroll实例对象
       mescrollUp: {
         // 上拉加载的配置.
         callback: this.routine, //回调
-        	page: {
-					size: this.$store.state.pageSize, //每页数据条数
+        page: {
+          size: this.$store.state.pageSize //每页数据条数
         },
         toTop: {
           //回到顶部按钮
@@ -453,19 +457,19 @@ export default {
     //获取选择的日期
     date() {
       let lists = [];
-      let data = [];//号
-       for (const list of this.dataList) {
+      let data = []; //号
+      for (const list of this.dataList) {
         var mag = {};
         if (list.falg_a) {
-        this.$set(mag,'year',list.year);//年
-        this.$set(mag,'month',list.month);//月
-        for(const datayu of list.days){
-        if(datayu.flag){
-         data.push(datayu.day);//月
-         this.$set(mag,'days',data.toString());
-        }
-        }
-        lists.push(mag);
+          this.$set(mag, "year", list.year); //年
+          this.$set(mag, "month", list.month); //月
+          for (const datayu of list.days) {
+            if (datayu.flag) {
+              data.push(datayu.day); //月
+              this.$set(mag, "days", data.toString());
+            }
+          }
+          lists.push(mag);
         }
       }
       return lists;
@@ -483,7 +487,7 @@ export default {
     //获取出发城市
     startCity() {
       let lists = [];
-       lists.push(this.$route.params.startCity);
+      lists.push(this.$route.params.startCity);
       //this.$route.params.startCity
       // let lists=[];
       for (const list of this.cstyle) {
@@ -496,7 +500,7 @@ export default {
     //获取航线ID
     hangxianty() {
       let lists = [];
-       lists.push(this.$route.params.route);
+      lists.push(this.$route.params.route);
       for (const list of this.hangxiatyp) {
         if (list.flag) {
           lists.push(list.id);
@@ -547,10 +551,10 @@ export default {
       }
     },
     //点击详情
-    xianqinclick(sert){
-    this.$router.push({
-     path: '/K_details_page/'+sert.id,
-    })
+    xianqinclick(sert) {
+      this.$router.push({
+        path: "/K_details_page/" + sert.id
+      });
     },
     //销售量和价格的切换
     sertey(index) {
@@ -563,39 +567,39 @@ export default {
         this.styjiag = 1;
       }
     },
-      //确定月份
-  yuetpy(listpryue){
-    this.yue=1;
-    for(const srt of listpryue.days){
-      if(srt.flag==true){
-        this.$set(listpryue,'falg_a',true);
-         this.mescroll.resetUpScroll();
-        return;
+    //确定月份
+    yuetpy(listpryue) {
+      this.yue = 1;
+      for (const srt of listpryue.days) {
+        if (srt.flag == true) {
+          this.$set(listpryue, "falg_a", true);
+          this.mescroll.resetUpScroll();
+          return;
+        }
+        this.$set(listpryue, "falg_a", false);
       }
-      this.$set(listpryue,'falg_a',false);
-    }
-     this.mescroll.resetUpScroll();
-    return;
+      this.mescroll.resetUpScroll();
+      return;
     },
     //月份点击
-     monthClick(index) {
-    this.yue=2;
-     if(this.dataList[index].flag==false){
+    monthClick(index) {
+      this.yue = 2;
+      if (this.dataList[index].flag == false) {
         this.dataList.map(elem => {
-        elem.flag = false;
-      });
+          elem.flag = false;
+        });
       }
-    this.dataList[index].flag = !this.dataList[index].flag;
-   for (const listpr of this.dataList) {
-        if(listpr.flag==true){
-         this.listpryue=listpr;
+      this.dataList[index].flag = !this.dataList[index].flag;
+      for (const listpr of this.dataList) {
+        if (listpr.flag == true) {
+          this.listpryue = listpr;
         }
       }
-  },
-  //点击选中几号
-  datyclick(index){
-   this.listpryue.days[index].flag = !this.listpryue.days[index].flag;
-  },
+    },
+    //点击选中几号
+    datyclick(index) {
+      this.listpryue.days[index].flag = !this.listpryue.days[index].flag;
+    },
     LopTime(year = new Date().getFullYear(), month = new Date().getMonth()) {
       //计算这个月多少天
       let day = new Date(year, month, 0).getDate(); //当月总天数
@@ -722,8 +726,8 @@ export default {
       this.type = 0;
     },
     async routine(page, mescroll) {
-      if( this.portid==null){
-       this.portid='';
+      if (this.portid == null) {
+        this.portid = "";
       }
       let data = await youlun(
         JSON.stringify(this.date),
@@ -736,8 +740,8 @@ export default {
         this.startCity.toString(), //出发城市ID
         this.hangxianty.toString(), //航线ID
         page.num,
-        this.searchContent,//搜索内容
-        this.portid,//出发港口
+        this.searchContent, //搜索内容
+        this.portid //出发港口
       );
       if (data) {
         // 如果是第一页需手动制空列表
@@ -754,7 +758,7 @@ export default {
           }
         }
         // 数据渲染成功后,隐藏下拉刷新的状态
-         this.$nextTick(() => {
+        this.$nextTick(() => {
           mescroll.endSuccess(data.list.length);
         });
       } else {

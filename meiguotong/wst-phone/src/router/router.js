@@ -112,6 +112,7 @@ const H_orderlist_a = r => require.ensure([], () => r(require('../views/H/H_orde
 const K_index = r => require.ensure([], () => r(require('../views/K/K_index')), 'K_index')//油轮主页
 const K_tanker = r => require.ensure([], () => r(require('../views/K/K_tanker')), 'K_tanker')//油轮列表
 const K_details_page = r => require.ensure([], () => r(require('../views/K/K_details_page')), 'K_details_page')//油轮详情
+const K_orderlist = r => require.ensure([], () => r(require('../views/K/K_orderlist')), 'K_orderlist')//油轮预订
 Vue.use(Router)
 export default new Router({
   mode: 'history',
@@ -476,13 +477,13 @@ export default new Router({
     },
     //H_book
     {
-      path: '/H_book/:routeid/:price',
+      path: '/H_book/:routeid/:sptyp',
       name: 'H_book',
       component: H_book,
       meta: { 'title': '当地玩家预订' }
     },
     {
-      path: '/H_orderlist_a/:adult/:child/:pricetyps/:date/:date_a/:routeid',
+      path: '/H_orderlist_a/:adult/:child/:pricetyps/:date/:date_a/:routeid/:routeidslit',
       name: 'H_orderlist_a',
       component: H_orderlist_a,
       meta: { 'title': '当地玩家预订确定' }
@@ -508,5 +509,12 @@ export default new Router({
       component: K_details_page,
       meta: { 'title': '油轮详情' }
     },
+    //邮轮预订
+    {
+      path:'/K_orderlist/:lineid',
+      name:'K_orderlist',
+      component:K_orderlist,
+      meta:{'title':'预订'}
+    }
   ]
 })

@@ -141,8 +141,13 @@ export const guideRouteUrl = (routeid,currentPage) =>ajax( process.env.VUE_APP_P
     guideId:routeid,
     pageNo:currentPage,
 })
+//推荐日期接口
+export const getGuideRouteDateDetailsUrl = (routeid,priceDate) =>ajax( process.env.VUE_APP_PROXY_API +'/guide/getGuideRouteDateDetails',{
+    guideRouteid:routeid,
+    priceDate:priceDate
+})
 //导游确认订单接口
-export const saveGuideOrderUrl = (routeid,contactsName,contactsMobile,remark,date,date_a,adult,child,insuranceid,baomang,Selection) =>ajax( process.env.VUE_APP_PROXY_API +'/guide/saveGuideOrder',{
+export const saveGuideOrderUrl = (routeid,contactsName,contactsMobile,remark,date,date_a,adult,child,insuranceid,baomang,Selection,guideRouteid) =>ajax( process.env.VUE_APP_PROXY_API +'/guide/saveGuideOrder',{
     guideid:routeid,
     contactsName:contactsName,//联系人
     contactsMobile:contactsMobile,//联系电话
@@ -154,6 +159,7 @@ export const saveGuideOrderUrl = (routeid,contactsName,contactsMobile,remark,dat
     Insurance:insuranceid,//保险id
     InsurancePrice:baomang,//保险价格
     orderMember:Selection,//出游人数组
+    guideRouteid:guideRouteid,//推荐导游路线id
 },'post')
 //当地玩家时间价格
 export const getGuideDateDetailsUrl = (routeid,priceDate) =>ajax( process.env.VUE_APP_PROXY_API +'/guide/getGuideDateDetails',{
@@ -185,8 +191,17 @@ export const getLinerCompanyUrl = () =>ajax( process.env.VUE_APP_PROXY_API +'/cr
 export const linerLineDetailsUrl = (lineid) =>ajax( process.env.VUE_APP_PROXY_API +'/cruise/linerlineDetails',{
     lineid:lineid
 })
+//游轮日期价格接口
+export const getLinePriceDetailsUrl = (lineid,priceDate)  =>ajax( process.env.VUE_APP_PROXY_API +'/cruise/getLinePriceDetails',{
+    lineid:lineid,
+    priceDate:priceDate,
+})
 //邮轮行程列表接口
 export const tripLisUrl = (lineid) =>ajax( process.env.VUE_APP_PROXY_API +'/cruise/tripList',{  
+    lineid:lineid,
+})
+//邮轮房间列表接口
+export const linerRoomListUrl = (lineid) =>ajax( process.env.VUE_APP_PROXY_API +'/cruise/linerRoomList',{  
     lineid:lineid,
 })
 //景点接口
