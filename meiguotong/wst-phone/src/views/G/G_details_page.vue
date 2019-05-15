@@ -291,6 +291,9 @@
 .refund_jia p i {
   color: coral;
 }
+.martop{
+  width: 100%;
+}
 </style>
 
  <script>

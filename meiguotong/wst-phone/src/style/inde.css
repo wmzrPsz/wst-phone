@@ -1696,7 +1696,8 @@ select{
 	position: fixed;
 	top: 100%;
     margin-top: -2.5rem;
-    background-color: white;
+	background-color: white;
+	z-index:100;
 }
 .Choose_a_room_dibu_a{
 	height:2rem;
@@ -1772,9 +1773,9 @@ select{
     top: 0;
     left: 0;
     background: #000;
-    z-index: 9000;
+    z-index:2;
     opacity: 0.4;
-   z-index:999;
+   z-index:2;
 }
 .brijtan_a{
 	 width:100%;

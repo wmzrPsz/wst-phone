@@ -47,6 +47,7 @@
         </div>
       </div>
       <div class=" rom_d"  v-for="(list,index) in fanlistyp" :key="index">
+        <div v-if="list.Room==false">
         <div class="business_affairs_d_a" @click.stop="fancliak(index)">
           <div class>
             <div class="Choose_a_room_d beijingtu float_left">
@@ -76,16 +77,26 @@
           </div>
         </div>
         <div class="font-14 rom_c" v-if="list.falg">
-          <div class="rom_c_a">
+          <div class="rom_c_a" v-if="list.checkInType==1">
             <div class="text_left">选择数量</div>
             <div class="float_left room_a">
               <div class="float_left font-12 room_a_text">成年</div>
-               <van-stepper v-model="list.adultNum" :min="0" :max="list.max" :disable-input="falg" :change="fanchulick(list)" class="float_right vanstyle"/>
+               <van-stepper v-model="list.adultNum" :min="list.adultmin" :max="list.adultmax"  :disable-input="falg" :change="fanchulick(list)" class="float_right vanstyle"/>
             </div>
-
             <div class="float_right room_a">
              <div class="float_left font-12 room_a_text">儿童</div>
-              <van-stepper v-model="list.childNum" :min="0"  :max="list.max" :disable-input="falg" :change="fanchulick_a(list)" class="float_right vanstyle"/>
+              <van-stepper v-model="list.childNum" :min="list.childmin" :max="list.childmax" :disable-input="falg" :change="fanchulick_a(list)" class="float_right vanstyle"/>
+            </div>
+          </div>
+           <div class="rom_c_a" v-if="list.checkInType==2">
+            <div class="text_left">选择数量</div>
+            <div class="float_left room_a">
+              <div class="float_left font-12 room_a_text">成年</div>
+               <van-stepper v-model="list.adultNum" :min="0" :max="list.peopleNumber" :disable-input="falg" :change="fanchulick(list)" class="float_right vanstyle"/>
+            </div>
+            <div class="float_right room_a">
+             <div class="float_left font-12 room_a_text">儿童</div>
+              <van-stepper v-model="list.childNum" :min="0" :max="list.peopleNumber" :disable-input="falg" :change="fanchulick(list)" class="float_right vanstyle"/>
             </div>
           </div>
           <div class="rom_c_a">
@@ -94,79 +105,44 @@
             <div class="float_right">
               <div class="color-h float_right">
                 <i class="font-12">总价:￥</i>
-                <i class="font-16">699</i>
+                <i class="font-16">{{(list.price*list.adultNum+list.price*list.childNum)*list.roomNum}}</i>
               </div>
               <div class="float_right room_c_b">
-                <i class="font-10 color-b float_left room_c_b_a">人均：￥299</i>
-                <button class="font-14 room_c_b_b">完成</button>
+                <i class="font-10 color-b float_left room_c_b_a">人均：￥{{list.price}}</i>
+                <button class="font-14 room_c_b_b" @click="wanclick(list)">完成</button>
               </div>
             </div>
           </div>
+        </div>
         </div>
         <!--房间-->
       </div>
       <div class="Choose_a_room_dibu">
-        <div class="Choose_a_room_dibu_a float_left">
-          <i class="Choose_a_room_dibu_b font-12 background-g">3</i>
+        <div class="Choose_a_room_dibu_a float_left" @click="xunclick()">
+          <i class="Choose_a_room_dibu_b font-12 background-g">{{this.roomzong.length}}</i>
         </div>
-        <div class="Choose_a_room_dibu_c font-16 float_left">已选3件房间</div>
-        <button class="Choose_a_room_dibu_d float_right background-d font-14">￥2524预订</button>
+        <div class="Choose_a_room_dibu_c font-16 float_left">已选{{this.roomzong.length}}件房间</div>
+        <button class="Choose_a_room_dibu_d float_right background-d font-14" @click="nextstep()">￥{{estimatedprice}}预订</button>
       </div>
     </div>
     <!--已选择酒店-->
-    <div class="brijtan yinc"></div>
+    <div class="brijtan yinc" @click="yinclick()"></div>
     <div class="Choose_a_room_dibu_tan yinc">
       <div class="kuandu Choose_a_room_dibu_tan_z">
-        <div class="Choose_a_room_d_z_z Choose_a_room_dibu_tan_c">
+        <div class="Choose_a_room_d_z_z Choose_a_room_dibu_tan_c" v-for="(list,index) in roomzong" :key="index">
           <div class="Choose_a_room_d beijingtu float_left">
-            <img src="../../assets/img/B/5.png">
+            <img :src="list.imgUrl">
           </div>
           <div class="Choose_a_room_d_a float_left">
-            <i class="font-14" style="display: block;">大理石多多</i>
+            <i class="font-14 text_left" style="display: block;">{{list.name}}</i>
             <div class="business_affairs_d_b">
-              <i class="font-12 color-b float_left room_c_b_delete_a">10~80m必须入住</i>
-              <button class="room_c_b_delete float_right font-14">删除</button>
+               <i class="font-12 color-b text_left float_left" >{{list.roomNum}}间/ {{list.adultNum}}/成年人{{list.childNum}}/儿童</i>
+              <button class="room_c_b_delete float_right font-14" @click="shanclick(list)">删除</button>
             </div>
             <div class="color-h float_left" style="margin-top: -0.5rem;">
               <i class="font-12">总价:￥</i>
-              <i class="font-16">699</i>
-              <i class="font-10 color-b">人均：￥299</i>
-            </div>
-          </div>
-        </div>
-
-        <div class="Choose_a_room_d_z_z Choose_a_room_dibu_tan_c">
-          <div class="Choose_a_room_d beijingtu float_left">
-            <img src="../../assets/img/B/5.png">
-          </div>
-          <div class="Choose_a_room_d_a float_left">
-            <i class="font-14" style="display: block;">大理石多多</i>
-            <div class="business_affairs_d_b">
-              <i class="font-12 color-b float_left room_c_b_delete_a">10~80m必须入住</i>
-              <button class="room_c_b_delete float_right font-14">删除</button>
-            </div>
-            <div class="color-h float_left" style="margin-top: -0.5rem;">
-              <i class="font-12">总价:￥</i>
-              <i class="font-16">699</i>
-              <i class="font-10 color-b">人均：￥299</i>
-            </div>
-          </div>
-        </div>
-
-        <div class="Choose_a_room_d_z_z Choose_a_room_dibu_tan_c">
-          <div class="Choose_a_room_d beijingtu float_left">
-            <img src="../../assets/img/B/5.png">
-          </div>
-          <div class="Choose_a_room_d_a float_left">
-            <i class="font-14" style="display: block;">大理石多多</i>
-            <div class="business_affairs_d_b">
-              <i class="font-12 color-b float_left room_c_b_delete_a">10~80m必须入住</i>
-              <button class="room_c_b_delete float_right font-14">删除</button>
-            </div>
-            <div class="color-h float_left" style="margin-top: -0.5rem;">
-              <i class="font-12">总价:￥</i>
-              <i class="font-16">699</i>
-              <i class="font-10 color-b">人均：￥299</i>
+              <i class="font-16">{{list.totalprice}}</i>
+              <i class="font-10 color-b">人均：￥{{list.price}}</i>
             </div>
           </div>
         </div>
@@ -459,7 +435,7 @@ export default {
   data() {
     return {
       //选中价格
-      pricetyps: "",
+      pricetyps:0,//油轮路线价格
       listyp: "",
       lineid: this.$route.params.lineid,
       priceDate: "",
@@ -472,13 +448,28 @@ export default {
       date: "" ,//选择的日期
       fanlistyp:[],//房间列表
       falg:true,
+      estimatedprice:0,//预计总价
+      luestimatedprice:"",//路线总价格
+      children_z:'',//儿童总人数
+      adult_z:'',//成年人总人数
+
     };
   },
   //计算属性
   computed: {
     ...mapState({
       Liner: state => state.route.Liner
-    })
+    }),
+    //计算选好的房间
+    roomzong(){
+     let roomtyp=[];
+     for(const textle of this.fanlistyp){
+       if(textle.Room){
+         roomtyp.push(textle);
+       }
+     }
+     return roomtyp;
+    }
   },
   filters:{
       chifunt:function(value){
@@ -499,7 +490,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations("route", ["Price"]),
+    ...mapMutations("route", ["Tanker"]),
     //日期接口
     async timtslit() {
       console.log(this.priceDate);
@@ -559,7 +550,9 @@ export default {
         //获取选中的价格
         if (list.check == true) {
           this.listyp = list;
+          this.pricetyps= this.listyp.price
          this.fanlist();
+         this.yujiclick();
         }
       });
     },
@@ -749,18 +742,20 @@ export default {
             for(const teseli of this.fanlistyp){
                 if(teseli.checkInType==1){
                 //可入住
-                let daren = teseli.minPeopleNumber+teseli.maxPeopleNumber;
-                this.$set(teseli,'adultNum',daren);//大人
+                this.$set(teseli,'adultNum',teseli.minPeopleNumber);//大人
                 this.$set(teseli,'childNum',0);//小孩
-                this.$set(teseli,'max',teseli.minPeopleNumber)
+                this.$set(teseli,'adultmax',teseli.maxPeopleNumber-teseli.childNum);//默认成年人最大直
+                this.$set(teseli,'adultmin',teseli.minPeopleNumber-teseli.childNum);//默认成年最小值
+                this.$set(teseli,'childmax',teseli.maxPeopleNumber-teseli.adultNum);//默认小孩最大直
+                 this.$set(teseli,'childmin',teseli.minPeopleNumber-teseli.adultNum);//默认小孩最小直
                 } else if(teseli.checkInType==2){
                 //必须入住
                 this.$set(teseli,'adultNum',teseli.peopleNumber);//大人
                 this.$set(teseli,'childNum',0);//小孩
-                this.$set(teseli,'max',teseli.minPeopleNumber)
                 }
-                this.$set(teseli,'roomNum',0);//房间数量
+                this.$set(teseli,'roomNum',1);//房间数量
                 this.$set(teseli,"falg",false);
+                this.$set(teseli,"Room",false)
             }
         }
     },
@@ -768,12 +763,93 @@ export default {
    fancliak :function(index){
    this.fanlistyp[index].falg=!this.fanlistyp[index].falg;
    },
+   //判断选择人数的最大最小
    fanchulick:function(list){
-      list.childNum=list.max-list.adultNum;
+     if(list.checkInType==1){
+      if(list.minPeopleNumber-list.childNum>=0){
+       this.$set(list,'adultmax',list.maxPeopleNumber-list.childNum);
+      this.$set(list,'adultmin',list.minPeopleNumber-list.childNum);
+      return;
+     }
+     if(list.minPeopleNumber-list.childNum<0){
+       this.$set(list,'adultmax',list.maxPeopleNumber-list.childNum);
+      this.$set(list,'adultmin',0);
+      return;
+     }
+     }else if(list.checkInType==2){
+          this.$set(list,'childNum',list.peopleNumber-list.adultNum);//小孩
+     }
    },
-   fanchulick_a:function(list){
-      list.adultNum=list.max-list.childNum;
+    fanchulick_a:function(list){
+      if(list.checkInType==1){
+      if(list.minPeopleNumber-list.adultNum>=0){
+       this.$set(list,'childmax',list.maxPeopleNumber-list.adultNum);
+      this.$set(list,'childmin',list.minPeopleNumber-list.adultNum);
+      return;
+      }
+     if(list.minPeopleNumber-list.adultNum<0){
+       this.$set(list,'childmax',list.maxPeopleNumber-list.adultNum);
+      this.$set(list,'childmin',0);
+      return;
+      }
+      }else if(list.checkInType==2){
+         this.$set(list,'adultNum',list.peopleNumber-list.childNum);//大人
+    
+      }
    },
+   //计算预计总价
+   yujiclick(){
+    //estimatedprice
+    if(this.roomzong.length!=0){
+      //每次重新选房间人数重新计算
+      this.luestimatedprice=0;
+      this.estimatedprice=0;
+      this.adult_z=0;
+      this.children_z=0;
+      for(const tesrt of this.roomzong){
+        this.estimatedprice=this.estimatedprice+tesrt.totalprice;
+        this.adult_z=(this.adult_z+tesrt.adultNum)*tesrt.roomNum;//计算成年总人数
+        this.children_z=(this.children_z+tesrt.childNum)*tesrt.roomNum;//计算儿童总人数
+      }
+        this.estimatedprice= this.estimatedprice+this.pricetyps*this.adult_z+this.pricetyps*this.children_z;
+        this.luestimatedprice= this.pricetyps*this.adult_z+this.pricetyps*this.children_z;//路线总价格
+    }
+    if(this.roomzong.length==0){
+      this.estimatedprice=this.pricetyps;
+    }
+   },
+   //点击完成选择房间
+   wanclick:function(list){
+     if(list.roomNum!=0){
+       list.Room=true;
+     this.$set(list,'totalprice',(list.price*list.adultNum+list.price*list.childNum)*list.roomNum);//总价格
+     this.yujiclick();
+     }
+     if(list.roomNum==0){
+       this.$toast("选择房间")
+     }
+   },
+   shanclick:function(list){
+    list.Room=false;
+     this.yujiclick();
+   },
+ //点击展示选择的房间
+ xunclick:function(){
+   $(".brijtan").toggleClass("yinc");
+    $(".Choose_a_room_dibu_tan").toggleClass("yinc");
+    console.log(this.roomzong);
+ },
+ yinclick:function(){
+   $(".brijtan").addClass("yinc");
+    $(".Choose_a_room_dibu_tan").addClass("yinc");
+ },
+ //点击下一步
+ nextstep:function(){
+  this.$router.push({
+    path:'/K_orderlist_a/'+this.lineid+"/"+this.date+"/"+this.estimatedprice+"/"+this.adult_z+"/"+ this.children_z+"/"+this.luestimatedprice
+  })
+  this.Tanker(this.roomzong);
+ },
   }
 };
 </script>

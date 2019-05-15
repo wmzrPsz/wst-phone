@@ -10,7 +10,7 @@
       <div class="dingjia">
         <div class="information">
           <ul class="font-16">
-            <li class>
+            <li >
               <div class="float_left">
                 <i class="color-a">*</i>中文姓名
               </div>
@@ -22,20 +22,27 @@
                 v-model="chineseName"
               >
             </li>
-            <li class>
+            <li class="information_a_jia_a">
               <div class="float_left">
                 <i class="color-a">*</i>英文姓名
               </div>
               <input
-                class="color-b float_right information_a font-16"
+                class="color-b float_right information_a_jia font-16"
                 type="text"
-                placeholder="需要与证件一至"
+                placeholder="性 (拼英或英文)"
                 name
-                v-model="englishName"
+                v-model="englishName_x"
+              >
+               <input
+                class="color-b float_right information_a_jia font-16"
+                type="text"
+                placeholder="名 (拼英或英文)"
+                name
+                v-model="englishName_m"
               >
             </li>
 
-            <li class>
+            <li >
               <div class="float_left">
                 <i class="color-a">*</i>证件类型
               </div>
@@ -51,7 +58,7 @@
                 </i>
               </div>
             </li>
-            <li class>
+            <li >
               <input
                 class="color-b float_right information_a font-16"
                 type="text"
@@ -61,21 +68,21 @@
               >
             </li>
 
-            <li class>
+            <li >
               <div class="float_left">
                 <i class="color-a">*</i>证件有效期
               </div>
               <div class="float_right" @click="show = true">{{certValidDate}}</div>
             </li>
 
-            <li class>
+            <li >
               <div class="float_left">
                 <i class="color-a">*</i>出生年月日
               </div>
               <div class="float_right" @click="show1 = true">{{birthday}}</div>
             </li>
 
-            <li class>
+            <li >
               <div class="float_left">
                 <i class="color-a">*</i>手机号码
               </div>
@@ -130,6 +137,15 @@
 select {
   text-align: right;
 }
+.information_a_jia{
+	height:1.2rem;
+	line-height:1.2rem;
+	text-align: right;
+}
+.information_a_jia_a{
+  margin-top: 0.2rem!important;
+  margin-bottom: 0.2rem!important;
+}
 </style>
 <script>
 import { tianjialianx } from "@/utils/getData";
@@ -153,6 +169,8 @@ export default {
       birthday: "", //出生日期（yyyy-mm-xx）
       chineseName: "", //中文名字
       englishName: "", //英文名字
+      englishName_x: "", //英文性
+      englishName_m: "", //英文名
       certNo: "", //证件号码
       mobile: "", //手机号码
       contactid: ""
@@ -167,15 +185,18 @@ export default {
     this.quyu();
     console.log(this.contacts);
     if (this.$route.params.typlis == 2) {
+      let xinmi=[];
       this.chineseName = this.contacts.chineseName;
-      this.englishName = this.contacts.englishName;
+      xinmi = this.contacts.englishName.split("/");
+      this.englishName_x=xinmi[0];
+      this.englishName_m=xinmi[1];
       this.certType = this.contacts.certType;
       this.certNo = this.contacts.certNo;
       this.certValidDate = this.contacts.certValidDate;
       this.birthday = this.contacts.birthday;
       this.mobile = this.contacts.mobile;
       this.area = this.contacts.area;
-       this.contactid = this.contacts.contactid;
+      this.contactid = this.contacts.contactid;
     }
   },
   computed: {
@@ -214,27 +235,31 @@ export default {
     },
     //点击确定添加联系人
     tianjia() {
-      if (this.chineseName == null) {
+      if (this.chineseName == 0) {
         this.$toast("请输入中文姓名");
         return;
       }
-      if (this.englishName == null) {
-        this.$toast("请输入英文姓名");
+      if (this.englishName_x == 0) {
+        this.$toast("请输入英文姓");
         return;
       }
-      if (this.certType == null) {
+      if (this.englishName_m == 0) {
+        this.$toast("请输入英文名");
+        return;
+      }
+      if (this.certType == 0) {
         this.$toast("请选择证件类型");
         return;
       }
-      if (this.certNo == null) {
+      if (this.certNo == 0) {
         this.$toast("请输入证件号");
         return;
       }
-      if (this.area == null) {
+      if (this.area == 0) {
         this.$toast("请选择手机区域");
         return;
       }
-      if (this.mobile == null) {
+      if (this.mobile == 0) {
         this.$toast("请输入正确手机号码");
         return;
       }
@@ -243,6 +268,7 @@ export default {
       window.history.go(-1);
     },
     async tianjiatype() {
+      this.englishName=this.englishName_x+"/"+this.englishName_m
       let data = await tianjialianx(
         this.chineseName,
         this.englishName,

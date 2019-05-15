@@ -23,7 +23,7 @@
           <div class="ze_x_a">
             <div style="overflow:hidden;">
               <div class="float_left ze_x_le">
-                <img v-lazy="sert.img |splitVc(0)">
+                <img v-lazy="sert.img">
               </div>
               <div class="float_left ze_x_ril">
                 <div class="font-14 ze_x_ril_jia">{{sert.name}}</div>
@@ -146,6 +146,9 @@ export default {
         this.styser = [...this.styser, ...data.list];
          for(const sert of this.styser){
           this.$set(sert,"flag",false);
+          if(sert.img){
+            this.$set(sert,'img',sert.img.split(",")[0]);
+          }
         }
         // 数据渲染成功后,隐藏下拉刷新的状态
         this.$nextTick(() => {

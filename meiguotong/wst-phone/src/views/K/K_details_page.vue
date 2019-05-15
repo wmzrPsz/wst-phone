@@ -368,10 +368,14 @@ export default {
      ...mapMutations("route", ["Liner"]),
     //点击预订
     yuding(){
-    this.$router.push({
+     if (store.state.loginUid != 0) {
+     this.$router.push({
      path:'/K_orderlist/'+this.$route.params.lineid
     })
     this.Liner(this.Linerlist);
+     }else if(store.state.loginUid == 0){
+      this.$toast("请先登录")
+     }
     },
     //点击显示时间
     shijianclick() {
