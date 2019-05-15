@@ -204,12 +204,32 @@ export const tripLisUrl = (lineid) =>ajax( process.env.VUE_APP_PROXY_API +'/crui
 export const linerRoomListUrl = (lineid) =>ajax( process.env.VUE_APP_PROXY_API +'/cruise/linerRoomList',{  
     lineid:lineid,
 })
+
+//邮轮确认订单接口
+export const saveLineOrderUrl = (lineid,contactsName,contactsMobile,remark,date,adult,child,insuranceid,Tanker,Selection) =>ajax( process.env.VUE_APP_PROXY_API +'/cruise/saveLineOrder',{
+    linerLineid:lineid,//路线id
+    contactsName:contactsName,//联系人
+    contactsMobile:contactsMobile,//联系电话
+    remark:remark,//备注
+    startDate:date,//开始时间
+    adultNum:adult,//大人
+    childNum:child,//小孩
+    Insurance:insuranceid,//保险id
+    roomDetails:Tanker,//房间详情
+    orderMember:Selection,//出游人数组
+},'post')
+
 //景点接口
 export const jingdian = (cityid,tagContent,srtype,pageNo) => ajax( process.env.VUE_APP_PROXY_API +'/scenic/selectScenicList',{
     cityid:cityid,//城市ID
     orderByType:srtype,//1.销量2.价格降序3.价格升序4好评
     labelAttrid:tagContent,//属性ID
     pageNo: pageNo,
+});
+//景点详情接口
+export const getScenicDetailsUrl = (scenicid) => ajax( process.env.VUE_APP_PROXY_API +'/scenic/getScenicDetails',{
+    scenicid:scenicid
+
 });
 //景点选择城市接口/根据语言获取城市和城市景点数量接口
 export const jdchengshi = () => ajax( process.env.VUE_APP_PROXY_API +'/scenic/getCityScenicNum',{

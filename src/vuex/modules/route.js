@@ -6,6 +6,7 @@ const state = {
   gameplayer:{},//当地玩家详情
   stycan:{},//当地玩家推荐路线
   Liner:{},//邮轮详情
+  Tanker:[],//油轮房间
 }
 const getters = {
 }
@@ -30,6 +31,9 @@ const mutations = {
   },
   Liner(state,Linerlist){
     state.Liner=Linerlist;
+  },
+  Tanker(state,Tanker){
+    state.Tanker=Tanker;
   }
 }
 

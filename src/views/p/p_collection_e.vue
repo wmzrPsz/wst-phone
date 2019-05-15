@@ -19,7 +19,7 @@
           <div class="ze_x_a">
             <div style="overflow:hidden; margin-bottom:0.3rem;">
               <div class="float_left ze_x_le">
-                <img v-lazy="list.img | splitVc(0)">
+                <img v-lazy="list.img">
               </div>
               <div class="float_left ze_x_ril">
                 <div class="font-14 ze_x_le_a">{{list.name}}</div>
@@ -136,6 +136,9 @@ export default {
         this.styser = [...this.styser, ...data.list];
          for(const list of this.styser){
           this.$set(list,"flag",false);
+          if(list.img){
+            this.$set(list,"img",list.img.split(",")[0])
+          }
         }
         // 数据渲染成功后,隐藏下拉刷新的状态
         this.$nextTick(() => {

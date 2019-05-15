@@ -19,17 +19,17 @@
           <div class="ze_x_a">
             <div style="overflow:hidden;">
               <div class="float_left ze_x_le">
-                <img v-lazy="list.img | splitVc(0)">
+                <img v-lazy="list.img">
               </div>
               <div class="float_left ze_x_ril">
-                <p class="font-16" style="overflow:hidden;">{{list.name}}</p>
+                <p class="font-16 ze_x_le_a" style="overflow:hidden;">{{list.name}}</p>
                 <ul class="font-12 ze_x_ril_a color-b">
                   <li v-for="(tile,index) in list.tagContent.split(',')" :key="index">{{tile}}</li>
                 </ul>
-                <p class="font-12 ze_x_ril_b color-c">时尚自助旅游时尚自助旅游</p>
+                <!-- <p class="font-12 ze_x_ril_b color-c">时尚自助旅游时尚自助旅游</p> -->
               </div>
             </div>
-            <p class="font-12 color-b ze_x_ril_c">在三亚如果你有伴间满足你在三亚如果你有伴间满足你在三亚如果你有伴间满足你</p>
+            <!-- <p class="font-12 color-b ze_x_ril_c">在三亚如果你有伴间满足你在三亚如果你有伴间满足你在三亚如果你有伴间满足你</p> -->
             <div>
               <ul class="ze_x_ril_d float_right">
                 <li class="font-14">
@@ -136,6 +136,9 @@ export default {
         this.styser = [...this.styser, ...data.list];
         for(const list of this.styser){
           this.$set(list,"flag",false);
+          if(list.img){
+           this.$set(list, "img", list.img.split(",")[0]);
+          }
         }
         // 数据渲染成功后,隐藏下拉刷新的状态
         this.$nextTick(() => {

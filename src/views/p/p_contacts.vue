@@ -34,14 +34,7 @@
 </template>
 <style lang="less" scoped>
 .ztjiao{
-  position: fixed;
-  z-index:1;
-  top:2rem;
-  bottom:0rem;
-  height: auto;
-  overflow: hidden;
-  width:100%;
-  margin: auto;
+ margin-top: 2.5rem;
 }
 .ze_jia span {
   text-align: left;

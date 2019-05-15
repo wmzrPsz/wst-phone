@@ -388,8 +388,14 @@
   position: fixed;
   width: 100%;
 }
-.dingjia_a_ajia {
-  margin-top: -2rem !important;
+.dingjia_a_ajia{
+	background-color:white;
+	width: 100%;
+	overflow: hidden;
+	padding-bottom: 0.5rem;
+	position: fixed;
+	top:5rem!important;
+	border-bottom: 3px solid #F5F5F5;
 }
 .ong_z {
   margin-top: 3rem;

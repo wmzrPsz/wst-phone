@@ -28,7 +28,7 @@
         <li><router-link to="/G_index">当地参团</router-link></li>
         <li><router-link to="/H_index">当地玩家</router-link></li>
         <li><router-link to="/K_index">邮轮</router-link></li>
-        <li>包车租车</li>
+        <li><router-link to="/L_index">景点</router-link></li>
       </ul>
 
       <ul>

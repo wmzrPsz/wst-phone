@@ -113,6 +113,13 @@ const K_index = r => require.ensure([], () => r(require('../views/K/K_index')), 
 const K_tanker = r => require.ensure([], () => r(require('../views/K/K_tanker')), 'K_tanker')//油轮列表
 const K_details_page = r => require.ensure([], () => r(require('../views/K/K_details_page')), 'K_details_page')//油轮详情
 const K_orderlist = r => require.ensure([], () => r(require('../views/K/K_orderlist')), 'K_orderlist')//油轮预订
+const K_orderlist_a = r => require.ensure([], () => r(require('../views/K/K_orderlist_a')), 'K_orderlist_a')//油轮预订确定
+
+
+///////////////////////////////////////////////////L____景点//////////////////////////////////////////////////////////////////////////////////////
+const L_index = r => require.ensure([], () => r(require('../views/L/L_index')), 'L_index')//景点主页
+const L_scenic = r =>require.ensure([], ()=> r(require('../views/L/L_scenic')),'L_scenic')
+const L_detail = r => require.ensure([], () => r(require('../views/L/L_detail')), 'L_detail')//景点详情
 Vue.use(Router)
 export default new Router({
   mode: 'history',
@@ -515,6 +522,35 @@ export default new Router({
       name:'K_orderlist',
       component:K_orderlist,
       meta:{'title':'预订'}
+    },
+    //油轮确定预订
+    {
+     path:'/K_orderlist_a/:lineid/:date/:estimatedprice/:adult_z/:children_z/:luestimatedprice',
+     name:'K_orderlist_a',
+     component:K_orderlist_a,
+     meta:{'title':'确定预订'}
+    },
+    //////////////////////////////
+    //景点主页
+    {
+     path:'/L_index',
+     name:'L_index',
+     component:L_index,
+     meta:{'title':'景点'}
+    },
+    //景点
+    {
+      path:'/L_scenic',
+      name:'L_scenic',
+      component:L_scenic,
+      meta:{'title':'景点'}
+    },
+    //景点详情
+    {
+      path:'/L_detail/:scenicid',
+      name:'L_detail',
+      component:L_detail,
+      meta:{"title":'详情'}
     }
   ]
 })
