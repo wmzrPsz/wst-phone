@@ -7,6 +7,7 @@ const state = {
   stycan:{},//当地玩家推荐路线
   Liner:{},//邮轮详情
   Tanker:[],//油轮房间
+  spotlist:{},//景点
 }
 const getters = {
 }
@@ -34,6 +35,10 @@ const mutations = {
   },
   Tanker(state,Tanker){
     state.Tanker=Tanker;
+  },
+  spotlist(state,telist){
+    state.spotlist=telist;
+    console.log(state.spotlist)
   }
 }
 
