@@ -231,6 +231,12 @@ export const getScenicDetailsUrl = (scenicid) => ajax( process.env.VUE_APP_PROXY
     scenicid:scenicid
 
 });
+//景点门票价格接口
+export const getScenicNumUrl = (scenicSpotTicketId,priceDate) => ajax( process.env.VUE_APP_PROXY_API +'/scenic/getScenicNum',{
+    scenicSpotTicketId:scenicSpotTicketId,
+    scenicDate:priceDate,
+
+});
 //景点选择城市接口/根据语言获取城市和城市景点数量接口
 export const jdchengshi = () => ajax( process.env.VUE_APP_PROXY_API +'/scenic/getCityScenicNum',{
 

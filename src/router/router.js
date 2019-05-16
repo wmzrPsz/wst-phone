@@ -120,6 +120,8 @@ const K_orderlist_a = r => require.ensure([], () => r(require('../views/K/K_orde
 const L_index = r => require.ensure([], () => r(require('../views/L/L_index')), 'L_index')//景点主页
 const L_scenic = r =>require.ensure([], ()=> r(require('../views/L/L_scenic')),'L_scenic')
 const L_detail = r => require.ensure([], () => r(require('../views/L/L_detail')), 'L_detail')//景点详情
+const L_book = r => require.ensure([], () => r(require('../views/L/L_book')), 'L_book')//景点预订
+const L_orderlist = r => require.ensure([], () => r(require('../views/L/L_orderlist')), 'L_orderlist')//景点确定订单
 Vue.use(Router)
 export default new Router({
   mode: 'history',
@@ -551,6 +553,19 @@ export default new Router({
       name:'L_detail',
       component:L_detail,
       meta:{"title":'详情'}
+    },
+    //景点预订
+    {
+      path:'/L_book/:scenicSpotTicketId',
+      name:'L_book',
+      component:L_book,
+      meta:{"title":'预订'}
+    },
+    {
+      path:'/L_orderlist/:startDate/:adult/:child',
+      name:'L_orderlist',
+      component:L_orderlist,
+      meta:{"title":'确定订单'}
     }
   ]
 })

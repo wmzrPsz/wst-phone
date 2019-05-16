@@ -3037,10 +3037,10 @@ select{
 	margin-bottom: 0.3rem;
 }
 .refund_aa{
-	margin-top: 0.2rem;
 	padding-bottom: 0.5rem;
 	overflow: hidden;
-	border-bottom: 1px solid gainsboro;
+	width:95%;
+	margin: auto;
 }
 .refund_aa span{
 	clear: both;
@@ -3748,6 +3748,7 @@ select{
 	height: 1.5rem;
 	background-color: #FF6A6A;
 	color:white;
+	margin-top: -0.3rem;
  }
  .room_c_b_delete_a{
  	display: block;
@@ -3838,11 +3839,12 @@ select{
 	overflow: hidden;
 	clear: both;
 	padding-bottom: 0.5rem;
+	border-bottom: 1px solid #F5F5F5;
+	margin-top: 0.5rem;
 }
 .jindian_c{
 	overflow: hidden;
-	border-bottom: 1px solid #F5F5F5;
-	margin-top: 1rem;
+	margin-top: 0.5rem;
 
 }
 .jindian_d p{
