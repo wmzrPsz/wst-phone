@@ -124,7 +124,7 @@
                 <dd class="float_left" v-if="arrange!=0">配房:{{arrange}}</dd>
               </dl>
             </div>
-            <!--保险选择-->
+       <!--保险选择-->
 
             <div class="Trip_a border_e Orderjia">
               <div class="font-16 Order_d_b">保险</div>
@@ -134,11 +134,19 @@
                   class="Short_distance_relay_e float_left Trip_b Short_distance_relay_b"
                   @click="xunclick(index)"
                 >
-                  <i class="Short_distance_relay_c" v-if="listte.flag==false"><img src="../../assets/img/A/home_choice_unche@2x.png"></i>
-                  <i class="Short_distance_relay_c" v-if="listte.flag==true"><img src="../../assets/img/A/home_choice_check@2x.png"></i>
+                  <i class="Short_distance_relay_c" v-if="listte.flag==false">
+                    <img src="../../assets/img/A/home_choice_unche@2x.png">
+                  </i>
+                  <i class="Short_distance_relay_c" v-if="listte.flag==true">
+                    <img src="../../assets/img/A/home_choice_check@2x.png">
+                  </i>
                   {{listte.name}}￥{{listte.price}}/人
                 </dd>
-                <dd class="float_right color-h" style="text-align: left;" @click="baiclick(listte.content)">(保险说明)</dd>
+                <dd
+                  class="float_right color-h"
+                  style="text-align: left;"
+                  @click="baiclick(listte.content)"
+                >(保险说明)</dd>
               </dl>
             </div>
           </div>
@@ -195,14 +203,14 @@
               </dl>
             </div>
 
-            <text class="font-16 Order_d_b">人数</text>
+            <div class="font-16 Order_d_b">人数</div>
             <div class="Trip_a border_e">
               <dl class="font-14">
                 <dd class="float_left Trip_b">人数</dd>
                 <dd class="float_right">{{adult}}成人{{child}}小孩</dd>
               </dl>
             </div>
-            <text class="font-16 Order_d_b">保险</text>
+            <div class="font-16 Order_d_b">保险</div>
             <div class="Trip_a border_e" v-for="(listte,index) in baixianlist " :key="index">
               <dl class="font-14" v-if="listte.flag==true">
                 <dd
@@ -367,7 +375,7 @@ export default {
     },
     //选择保险
     //选择保险
-    xunclick: function(index) {
+     xunclick: function(index) {
       if (this.baixianlist[index].flag == false) {
         this.baixianlist.map(elem => {
           elem.flag = false;

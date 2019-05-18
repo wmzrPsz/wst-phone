@@ -338,6 +338,7 @@
   </div>
 </template>
 <style lang="less">
+
 .qythist{
    position: fixed;
   z-index:1;
@@ -347,7 +348,7 @@
 }
 .mescroll {
   position: fixed;
-  z-index:1;
+  z-index:9;
   top: 8.2rem;
   bottom: 0;
   height: auto;

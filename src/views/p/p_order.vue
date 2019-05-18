@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color:#F5F5F5"  class="index">
+  <div class="index">
     <div class="her_a font-20 background-a">
       <i class="her_a_left float_left" onclick="window.history.go(-1)">
         <img src="../../assets/img/A/back_icon@2x.png">
@@ -8,75 +8,59 @@
     </div>
     <div class="refundxin_e_a background-a">
       <ul class="sou_her_q color font-12">
-        <li>
-          <i class="color-g">全部订单</i>
-          <i class="sou_her_q_a"></i>
+        <li @click="dingdanclick(0)">
+          <i :class="[status==0? 'color-g':'']">全部订单</i>
+          <i   :class="[status==0? 'sou_her_q_a':'']"></i>
         </li>
-        <li>
-          <i>待付款</i>
-          <i></i>
+        <li @click="dingdanclick(1)">
+        <i :class="[status==1? 'color-g':'']">待付款</i>
+          <i   :class="[status==1? 'sou_her_q_a':'']"></i>
         </li>
-        <li>
-          <i>待确认</i>
-          <i></i>
+        <li @click="dingdanclick(2)">
+         <i :class="[status==2? 'color-g':'']">待确认</i>
+          <i   :class="[status==2? 'sou_her_q_a':'']"></i>
         </li>
-        <li>
-          <i>未出行</i>
-          <i></i>
+        <li @click="dingdanclick(3)">
+         <i :class="[status==3? 'color-g':'']">待出行</i>
+          <i   :class="[status==3? 'sou_her_q_a':'']"></i>
         </li>
-        <li>
-          <i>待点评</i>
-          <i></i>
+        <li @click="dingdanclick(4)">
+          <i :class="[status==4? 'color-g':'']">待评价</i>
+          <i   :class="[status==4? 'sou_her_q_a':'']"></i>
         </li>
       </ul>
     </div>
-    <mescroll-vue ref="mescroll" :up="mescrollUp" >
-    <div>
+    <mescroll-vue ref="mescroll" :up="mescrollUp" @init="mescrollInit" style="background-color:#F5F5F5" >
+    <div v-for="(slist,index) in styser" :key="index">
       <div class="pic_route refundxin_e_b">
         <div class="pic_route_aa refundxin_e_c">
           <div class="pic_route_c">
-            <i class="font-12 color-d pic_route_b">接机</i>
-            <i class="float_right color-d font-12">取消</i>
+            <i class="font-12 color-d pic_route_b">{{slist.type | orderTypeVc}}</i>
+            <i class="float_right color-d font-12">{{slist.status | orderStatusVc}}</i>
           </div>
           <!--内容-->
           <div class="pic_route_aa_dianj_a pic_route_aa_dianj">
             <div class="pic_route_aa">
               <div class="float_left pic_route_aa_a beijingtu">
-                <img src="../../assets/img/B/24.png">
+                <img :src="slist.orderSysList[0].image">
               </div>
               <div class="float_right pic_route_aa_b">
-                <div class="font-14 pic_route_aa_c">万啊密4日到5日住海边万啊密4日到5日住海在三亚如果你有伴间满足你在三亚如果你</div>
-                <div class="font-16 color-h" style="margin-top: 0.1rem">
-                  <i class="font-12">￥</i>699
+                <div class="font-14 pic_route_aa_c texe_left">{{slist.orderSysList[0].title}}</div>
+                <div class="font-16 color-h texe_left" style="margin-top: 0.1rem">
+                  <i class="font-12">￥</i>{{slist.price}}
                 </div>
               </div>
               <div class="refundxin_e_d_a">
-                <span class="font-12 color-b">2017-08-12</span>
-                <span class="font-12" style="margin-left: 5rem;">成年人2；儿童3成年人2</span>
-              </div>
-            </div>
-
-            <div class="pic_route_aa">
-              <div class="float_left pic_route_aa_a beijingtu">
-                <img src="../../assets/img/B/24.png">
-              </div>
-              <div class="float_right pic_route_aa_b">
-                <div class="font-14 pic_route_aa_c">万啊密4日到5日住海边万啊密4日到5日住海在三亚如果你有伴间满足你在三亚如果你</div>
-                <div class="font-16 color-h" style="margin-top: 0.1rem">
-                  <i class="font-12">￥</i>699
-                </div>
-              </div>
-              <div class="refundxin_e_d_a">
-                <span class="font-12 color-b">2017-08-12</span>
-                <span class="font-12" style="margin-left: 5rem;">成年人2；儿童3成年人2</span>
+                <i class="font-12 color-b texe_left float_left">{{slist.orderSysList[0].createDate}}</i>
+                <i class="font-12 texe_right float_right">成年{{slist.orderSysList[0].adultNum}};儿童{{slist.orderSysList[0].childNum}}</i>
               </div>
             </div>
           </div>
           <!---->
         </div>
         <div class="float_right refundxin_e_d_z">
-          <button class="font-14 refundxin_e_d refundxin_e_d_jia">删除订单</button>
-          <button class="font-14 refundxin_e_d">查看详细</button>
+          <button class="font-12 refundxin_e_d refundxin_e_d_jia">删除订单</button>
+          <button class="font-12 refundxin_e_d">查看详细</button>
         </div>
       </div>
     </div>
@@ -91,10 +75,17 @@
   bottom: 2rem;
   height: auto;
 }
+.texe_left{
+  text-align: left;
+}
+.texe_right{
+  text-align: right;
+}
 </style>
 <script>
-import {changui} from "@/utils/getData";
+import {myOrderUrl} from "@/utils/getData";
 import MescrollVue from "mescroll.js/mescroll.vue";
+import { orderTypeVc,orderStatusVc} from "@/filters/custom";
 export default {
   name:'index',
   data(){
@@ -111,7 +102,9 @@ export default {
           src: "http://www.mescroll.com/img/mescroll-totop.png", //图片路径,默认null,支持网络图
           offset: 1000 //列表滚动1000px才显示回到顶部按钮
         }
-      }
+      },
+      styser:[],//列表数据
+      status:0,//订单状态 0标识全部 1.待付款2.待确定，3.待出行，4.待评价
    }
   },
    components: {
@@ -130,13 +123,16 @@ export default {
     this.$refs.mescroll && this.$refs.mescroll.beforeRouteLeave(); // 退出路由时,记录列表滚动的位置,隐藏回到顶部按钮和isBounce的配置
     next();
   },
+  created(){
+   
+  },
   methods:{
       // mescroll组件初始化的回调,可获取到mescroll对象
     mescrollInit(mescroll) {
       this.mescroll = mescroll; // 如果this.mescroll对象没有使用到,则mescrollInit可以不用配置
     },
     async shouchang(page, mescroll) {
-      let data = await changui(this.collectionType, page.num);
+      let data = await myOrderUrl(this.status,page.num);
       if (data) {
         // 如果是第一页需手动制空列表
         if (page.num === 1) this.styser = [];
@@ -154,6 +150,11 @@ export default {
         mescroll.endErr();
       }
     },
+    //点击切换
+    dingdanclick:function(index){
+    this.status=index;
+    this.mescroll.resetUpScroll();
+    }
   }
 }
 </script>

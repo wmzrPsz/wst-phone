@@ -82,6 +82,7 @@ const p_about_a = r => require.ensure([], () => r(require('../views/p/p_about_a'
 ///////////////////////////////////////////////B包车租车//////////////////////////////////////////////////////////////////////
 //包车租车首页
 const B_index = r => require.ensure([], () => r(require('../views/B/B_index')), 'B_index')
+const B_rent = r => require.ensure([], () => r(require('../views/B/B_rent')), 'B_rent')
 
 ///////////////////////////////////////////////F常规路线//////////////////////////////////////////////////////////////////////
 //
@@ -393,7 +394,7 @@ export default new Router({
     },
     //关于我们公司概括
     {
-      path: '/p_about_a',
+      path: '/p_about_a/:type',
       name: 'p_about_a',
       component: p_about_a,
       meta: { 'title': '关于们公司概括' }
@@ -405,6 +406,14 @@ export default new Router({
       name: 'B_index',
       component: B_index,
       meta: { 'title': '包车租车' }
+    },
+    {
+     path:'/B_rent',
+     name:"B_rent",
+     component:B_rent,
+     meta:{
+       'title':'租车'
+     }
     },
     /////////////////////////常规路线///////////////////////////////
     //搜索常规路线
@@ -562,7 +571,7 @@ export default new Router({
       meta:{"title":'预订'}
     },
     {
-      path:'/L_orderlist/:startDate/:adult/:child',
+      path:'/L_orderlist/:startDate/:adult/:child/:price/:scenicSpotTicketId',
       name:'L_orderlist',
       component:L_orderlist,
       meta:{"title":'确定订单'}

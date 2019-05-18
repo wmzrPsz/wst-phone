@@ -372,7 +372,7 @@ export default {
         if (this.pricetyps != 0) {
           this.$router.push({
             path:
-              "/L_orderlist/"+this.startDate+"/"+this.adult+"/"+this.child
+              "/L_orderlist/"+this.startDate+"/"+this.adult+"/"+this.child+"/"+this.listyp.price+"/"+this.scenicSpotTicketId
           });
           //价格
           this.Price(this.listyp);

@@ -1,7 +1,9 @@
 <template>
   <div class="index" style="background-color: white;">
      <div class="her_a font-20 background-a">
-      <i class="her_a_left float_left"><img src="../../assets/img/A/back_icon@2x.png" onclick="window.history.go(-1)"></i>
+       <router-link to="/L_index">
+      <i class="her_a_left float_left"><img src="../../assets/img/A/back_icon@2x.png"></i>
+       </router-link>
       <i class="her_a_zong color float_zhong">景点</i>
      </div>
     <div class="dingjia_b">

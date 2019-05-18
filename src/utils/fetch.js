@@ -36,7 +36,7 @@ export default async (url = '', data = {}, type = 'GET', method = 'fetch')=>{
   )
 }
 
- async function Ajax(url = '', data = {}, type = 'GET', method = 'fetch'){
+ async function Fetch(url = '', data = {}, type = 'GET', method = 'fetch'){
 
   // 整理表单数据
    type = type.toUpperCase()

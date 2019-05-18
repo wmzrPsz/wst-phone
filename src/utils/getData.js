@@ -237,6 +237,21 @@ export const getScenicNumUrl = (scenicSpotTicketId,priceDate) => ajax( process.e
     scenicDate:priceDate,
 
 });
+//景点下单接口
+export const saveScenicOrderUrl = (scenicSpotTicketId,contactsName,contactsMobile,remark,startDate,adult,child,insuranceid,Selection,scenicid,zonchoiceperson) => ajax( process.env.VUE_APP_PROXY_API +'/scenic/saveScenicOrder',{
+    ticketid:scenicSpotTicketId,//门票id
+    contactsName:contactsName,//联系人姓名
+    contactsMobile:contactsMobile,//电话
+    remark:remark,//备注
+    startDate:startDate,//出发时间
+    adultNum:adult,//大人
+    childNum:child,//小孩
+    insuranceid:insuranceid,//保险id
+    orderMember:Selection,//出游人
+    scenicid:scenicid,//景点id
+    ticketNum:zonchoiceperson,//门票数量
+
+},'post');
 //景点选择城市接口/根据语言获取城市和城市景点数量接口
 export const jdchengshi = () => ajax( process.env.VUE_APP_PROXY_API +'/scenic/getCityScenicNum',{
 
@@ -247,6 +262,10 @@ export const gankou = () => ajax( process.env.VUE_APP_PROXY_API +'/cruise/getCou
 });
 //根据语言获取出发城市接口
 export const chengshi = () => ajax( process.env.VUE_APP_PROXY_API +'/common/getCityList',{
+
+});
+//15-1获取车辆业务类型接口
+export const selectCarServiceUrl = () => ajax( process.env.VUE_APP_PROXY_API +'/car/selectCarService',{
 
 });
 //获取途径 景点
@@ -371,4 +390,9 @@ export const saveConsultUrl = (routeid,proType,content,name,mobile) =>ajax (proc
     content:content,
     name:name,
     mobile:mobile
+})
+//获取我的订单接口
+export const myOrderUrl =(status,pageNo) =>ajax( process.env.VUE_APP_PROXY_API +'/member/myOrder',{
+    status:status,
+    pageNo:pageNo,
 })

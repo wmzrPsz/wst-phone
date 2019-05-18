@@ -192,7 +192,7 @@
     <div class="dingjia_a">
       <mescroll-vue ref="mescroll" :up="mescrollUp" @init="mescrollInit">
         <div class="wanjia_jia">
-          <div class="wanjia_a border_a" v-for="(style,index) in styser" :key="index">
+          <div class="wanjia_a border_a" v-for="(style,index) in styser" :key="index" @click="wanjiaclick(style)">
             <div class="wanjia_b">
               <img style="width: 100%;" v-lazy="style.img">
             </div>
@@ -320,6 +320,12 @@ export default {
     }
   },
   methods: {
+    //点击跳详情
+    wanjiaclick:function(style){
+      this.$router.push({
+     path: '/H_detail/'+style.id,
+     })
+    },
     // mescroll组件初始化的回调,可获取到mescroll对象
     mescrollInit(mescroll) {
       this.mescroll = mescroll; // 如果this.mescroll对象没有使用到,则mescrollInit可以不用配置
