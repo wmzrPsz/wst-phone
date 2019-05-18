@@ -160,7 +160,7 @@
     <div class="dingjia_a">
       <mescroll-vue ref="mescroll" :up="mescrollUp" @init="mescrollInit">
         <div class="ze_x">
-          <div class="ze_x_a" v-for="(list,index) in styser" :key="index">
+          <div class="ze_x_a" v-for="(list,index) in styser" :key="index" @click="Scenicclick(list)">
             <div style="overflow:hidden; margin-bottom:0.3rem;">
               <div class="float_left ze_x_le">
                 <img v-lazy="list.imgUrl">
@@ -258,6 +258,13 @@ export default {
     // console.log(this.pageNum);
   },
   methods: {
+     //点击景点详情
+    Scenicclick:function(list){
+      console.log(list);
+      this.$router.push({
+        path:'/L_detail/'+list.id,
+      })
+    },
     // mescroll组件初始化的回调,可获取到mescroll对象
     mescrollInit(mescroll) {
       this.mescroll = mescroll; // 如果this.mescroll对象没有使用到,则mescrollInit可以不用配置
@@ -293,9 +300,9 @@ export default {
         this.styser = [...this.styser, ...data.list];
         for (const list of this.styser) {
           //景点图片
-          // if (list.imgUrl) {
-          //   this.$set(list, "imgUrl", list.imgUrl.split(",")[0]);
-          // }
+          if (list.imgUrl) {
+            this.$set(list, "imgUrl", list.imgUrl.split(",")[0]);
+          }
           //景点tagContent
           // if (list.tagContent) {
           //   this.$set(list, "tagContent", list.tagContent.split(","));

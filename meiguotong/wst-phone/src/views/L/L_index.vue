@@ -16,13 +16,15 @@
         <div class="Route_b">
           <i class="Route_a"><img src="../../assets/img/B/bczc_adress_icon@2x.png"></i>
           <span class="font-14 color-b float_left">广州</span>
+          <router-link to="/L_scenic">
           <input class="float_left font-14 color-b" type="text" placeholder="输入你要搜索的城市" name="">
+          </router-link>
         </div>
     
         <div class="b_xianm" style="width:100%;margin:auto;">
           <text class="font-14">热们出发地：</text>
           <ul class="font-12 b_xianm_b color-b">
-            <li class="float_left "><router-link to="/L_scenic">纽约</router-link></li>
+            <li class="float_left ">纽约</li>
             <li class="float_left ">洛杉矶</li>
             <li class="float_left ">华盛顿</li>
             <li class="float_left ">三亚</li>

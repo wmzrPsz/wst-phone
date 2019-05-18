@@ -174,10 +174,10 @@
     <van-popup v-model="show" class="refund_jia">
       <div>
         <p>退款说明</p>
-        <p>
+        <p v-for="(list,index) in refund" :key="index">
           订单确认后,提前
-          <i>{{refund.refundDay}}</i>天退单,返回
-          <i>{{refund.refundNum}}</i>%
+          <i>{{list.refundDay}}</i>天退单,返回
+          <i>{{list.refundNum}}</i>%
         </p>
       </div>
     </van-popup>
@@ -269,7 +269,7 @@ export default {
       collectionType: 3, //收藏1.常规路线2.当地参团3.当地玩家4.游轮5.景点
       productType:7, //1.包车租车2.短程接送3.接送机4常规路线5.当地参团6.游轮7.景点门票9.酒店10.保险11.当地玩家12.旅游定制-导游13.旅游定制-司兼导14包车/租车-导游//15包车/租车-司兼导
       imgtyp: "",
-      refund: "", //退款
+      refund:[], //退款
       booklist:[],//预订列表
       show:false,
       show1:false,
@@ -325,7 +325,7 @@ export default {
     },
     //退货说明
     async tuihuotyp() {
-      let data = await refundInforUrl(this.routeid, this.productType);
+      let data = await refundInforUrl(this.scenicid, this.productType);
       if (data) {
         this.refund = data;
         this.show = true;

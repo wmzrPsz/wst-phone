@@ -348,7 +348,7 @@
     <div class="dingjia_a">
       <mescroll-vue ref="mescroll" :up="mescrollUp" @init="mescrollInit">
         <div class="ze_x">
-          <div class="ze_x_a" v-for="(sert,index) in styser" :key="index">
+          <div class="ze_x_a" v-for="(sert,index) in styser" :key="index" @click="xianqing(sert)">
             <div style="overflow:hidden;">
               <div class="float_left ze_x_le">
                 <img v-lazy="sert.carImg">
@@ -481,6 +481,12 @@ export default {
     }
   },
   methods: {
+     //点击常规路线详情
+    xianqing(sert){
+    this.$router.push({
+     path: 'F_details_page/'+sert.routeid,
+     })
+    },
     // mescroll组件初始化的回调,可获取到mescroll对象
     mescrollInit(mescroll) {
       this.mescroll = mescroll; // 如果this.mescroll对象没有使用到,则mescrollInit可以不用配置

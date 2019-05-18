@@ -18,7 +18,7 @@
           </div>
           <div class="draft_z">
             <div class="float_left draft_a beijingtu">
-              <img v-lazy="list.cityImg" :onerror="defaultImgEro">
+              <img v-lazy="list.cityImg">
             </div>
             <div class="float_right draft_b">
               <span class="font-14 draft_b_a">{{list.title}}</span>
@@ -48,7 +48,6 @@ export default {
   name: "index",
   data() {
     return {
-      defaultImgEro:'this.src="../../assets/img/A/3.png"',
       thist:0,//未弹出选择按钮——取消收藏
       collectionids:[],//取消收藏的id
       styser: [], //常规列表

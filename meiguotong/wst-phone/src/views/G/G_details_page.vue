@@ -253,10 +253,10 @@
     <van-popup v-model="show" class="refund_jia">
       <div>
         <p>退款说明</p>
-        <p>
+        <p v-for="(list,index) in refund" :key="index">
           订单确认后,提前
-          <i>{{refund.refundDay}}</i>天退单,返回
-          <i>{{refund.refundNum}}</i>%
+          <i>{{list.refundDay}}</i>天退单,返回
+          <i>{{list.refundNum}}</i>%
         </p>
       </div>
     </van-popup>
@@ -334,7 +334,7 @@ export default {
       show: false,
       show1: false,
       show2: false,
-      refund: "" //退款
+      refund: [] //退款
     };
   },
   filters: {

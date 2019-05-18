@@ -368,7 +368,7 @@
     <div class="dingjia_a">
       <mescroll-vue ref="mescroll" :up="mescrollUp" @init="mescrollInit">
         <div class="ze_x">
-          <div class="ze_x_a" v-for="(sert,index) in styser" :key="index">
+          <div class="ze_x_a" v-for="(sert,index) in styser" :key="index"  @click="xianqinclick(sert)">
             <div style="overflow:hidden;">
               <div class="float_left ze_x_le">
                 <img v-lazy="sert.imgUrl">
@@ -438,7 +438,8 @@ export default {
       cstyle: [], //出发城市列表
       hangxiatyp: [], //油轮航线
       styjiag: 1, //开始1显示降价格，2显示升价格
-
+      searchContent:'',//搜索内容
+      portid:'',//
      mescroll: null, // mescroll实例对象
       mescrollUp: {
         // 上拉加载的配置.
@@ -530,6 +531,12 @@ export default {
     }
   },
   methods: {
+    //点击详情
+    xianqinclick(sert) {
+      this.$router.push({
+        path: "/K_details_page/" + sert.id
+      });
+    },
     // mescroll组件初始化的回调,可获取到mescroll对象
     mescrollInit(mescroll) {
       this.mescroll = mescroll; // 如果this.mescroll对象没有使用到,则mescrollInit可以不用配置
@@ -692,7 +699,9 @@ export default {
         this.scenicSpotid.toString(), //景点ID
         this.startCity.toString(), //出发城市ID
         this.hangxianty.toString(), //航线ID
-        page.num
+        page.num,
+        this.searchContent, //搜索内容
+        this.portid //出发港口
       );
       if (data) {
         // 如果是第一页需手动制空列表

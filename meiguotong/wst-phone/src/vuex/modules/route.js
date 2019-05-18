@@ -8,6 +8,7 @@ const state = {
   Liner:{},//邮轮详情
   Tanker:[],//油轮房间
   spotlist:{},//景点
+  pathlist:{},//包车租车index页填写的信息
 }
 const getters = {
 }
@@ -39,6 +40,9 @@ const mutations = {
   spotlist(state,telist){
     state.spotlist=telist;
     console.log(state.spotlist)
+  },
+  rebcar(state,pathlist){
+   state.pathlist=pathlist
   }
 }
 

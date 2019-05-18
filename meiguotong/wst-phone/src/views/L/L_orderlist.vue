@@ -112,6 +112,14 @@
                 style="margin-top: 0.5rem;text-align: left;"
               >特色:{{spotlist.content}}</div>
             </div>
+            <div class="Trip_a border_e Orderjia">
+              <dl class="font-14">
+                <dd class="float_left Trip_b">景点</dd>
+                <dd class="float_right color-b whi_ez_jia">{{spotlist.name}}</dd>
+                 <dd class="float_left Trip_b">数量</dd>
+                <dd class="float_right color-b whi_ez_jia">{{zonchoiceperson}}</dd>
+              </dl>
+            </div>
             <!--保险选择-->
 
             <div class="Trip_a border_e Orderjia">
@@ -159,11 +167,18 @@
             </div>
             <div class="Trip_a border_e">
               <dl class="font-14">
-                <dd class="float_left Trip_b">景点</dd>
-                <dd class="float_right color-b whi_ez_jia">{{spotlist.name}}</dd>
+                <dd class="float_left Trip_b">行程</dd>
+                <dd class="float_right color-b whi_ez_jia">{{spotlist.address}}</dd>
               </dl>
             </div>
-
+             <div class="Trip_a border_e ">
+              <dl class="font-14">
+                <dd class="float_left Trip_b">门票</dd>
+                <dd class="float_right color-b whi_ez_jia">{{spotlist.name}}</dd>
+                 <dd class="float_left Trip_b">门票价格</dd>
+                <dd class="float_right color-b whi_ez_jia" style="width:7rem!important">￥{{price}}*{{zonchoiceperson}}张</dd>
+              </dl>
+            </div>
             <div class="font-16 Order_d_b">人数</div>
             <div class="Trip_a border_e">
               <dl class="font-14">
@@ -190,7 +205,7 @@
           总计:
           <span class="color-h font-12">
             ￥
-            <!-- <i class="font-20">{{Number(pricetyps)+baomang}}</i> -->
+            <i class="font-20">{{Number(pricetyps)+baomang*zonchoiceperson}}</i>
           </span>
         </div>
         <button class="Choose_a_room_dibu_d float_right background-d font-14 Car_renting_g" @click="quclicck()">确定订单</button>
@@ -232,7 +247,7 @@
 </style>
 
 <script>
-import {getInsuranceUrl,saveRouteOrderUrl} from "@/utils/getData";
+import {getInsuranceUrl,saveScenicOrderUrl} from "@/utils/getData";
 import { mapState} from "vuex";
 export default {
   name: "index",
@@ -247,7 +262,8 @@ export default {
       zonchoiceperson:Number(this.$route.params.adult)+Number(this.$route.params.child),//总人数
       adult:this.$route.params.adult,//大人
       child:this.$route.params.child,//小孩
-      // pricetyps: this.$route.params.pricetyps, //总价格
+      price:this.$route.params.price,//景点价格
+      pricetyps:( this.$route.params.price*this.$route.params.adult)+( this.$route.params.price*this.$route.params.child), //总价格
       productType:4,//1.包车租车2.短程接送3.接送机4常规路线5.当地参团6.游轮7.景点门票8.当地玩家9.旅游定制',
       baixianlist:[],//保险列表
       baocontent:'',
@@ -257,6 +273,7 @@ export default {
       insuranceid:"",
       orderidlist:'',//生成订单的id
       startDate:this.$route.params.startDate,//出发时间
+      tyslit:5,//景点
     };
   },
   mounted() {
@@ -327,27 +344,24 @@ export default {
        this.$toast("填写联系人电话");
       return;
     }
-    let data = await saveRouteOrderUrl(
-      this.$route.params.routeid,
+    let data = await saveScenicOrderUrl(
+      this.$route.params.scenicSpotTicketId,//门票id
       this.contactsName,
       this.contactsMobile,
       this.remark,
-      this.date,
+      this.startDate,
       this.adult,
       this.child,
-      this.One,
-      this.two,
-      this.three,
-      this.four,
-      this.arrange,
       this.insuranceid,
       JSON.stringify(this.Selection),
+      this.spotlist.id,//景点id
+      this.zonchoiceperson,
      );
      if(data){
-       let zonmni = Number(this.pricetyps)+Number(this.baomang)
+       let zonmni = Number(this.pricetyps)+this.baomang*this.zonchoiceperson
         this.orderidlist=data;
        this.$router.push({
-        path: "/orderlist_a/" +this.orderidlist+"/"+zonmni+"/"+this.$route.params.tyslit,
+        path: "/orderlist_a/" +this.orderidlist+"/"+zonmni+"/"+this.tyslit,
       });
      }
   }

@@ -13,7 +13,7 @@ const state = {
   loginType: 1,  //1游客2.会员
   languageid: 1, //语言ID
   currencyid: 1,  //货币ID
-  pageSize: 2,  //页数
+  pageSize:2,  //页数
   comProtocol: {},  //网站基本信息
   languageList: [],  //语言集合
   currencyList: [],  //货币集合
