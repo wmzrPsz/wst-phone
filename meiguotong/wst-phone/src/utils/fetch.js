@@ -3,7 +3,7 @@
  * @Author: 彭善智
  * @LastEditors: 彭善智
  * @Date: 2019-03-01 22:48:18
- * @LastEditTime: 2019-04-23 15:37:53
+ * @LastEditTime: 2019-05-18 16:19:54
  */
 import {Toast} from 'vant';
 import store from '../vuex/index'
@@ -11,17 +11,29 @@ import store from '../vuex/index'
 
 
 export default async (url = '', data = {}, type = 'GET', method = 'fetch')=>{
-  const res = await Ajax(url,data,type,method);
-  console.log(res);
-  if(res.success){
-    if(!res.body) return res.success;
-    if(Object.keys(res.body).length == 1)
-      return res.body[Object.keys(res.body)[0]];
-    return res.body;
-  }else{
-    Toast(res.msg);
-    return false;
-  }
+  return new Promise((resolve, reject) =>
+    Fetch(url,data,type,method)
+    .then(res=>{
+      console.log(url,res);
+      let data;
+      if(res.success){
+        if(!res.body){
+          data = res.success
+        }else if(Object.keys(res.body).length == 1){
+          data = res.body[Object.keys(res.body)[0]];
+        }else{
+          data = res.body;
+        }
+        resolve(data)
+      }else{
+        errorMsg(res.msg);
+        reject(res.msg);
+      }
+    })
+    .catch(error=>{
+      reject(error)
+    })
+  )
 }
 
  async function Ajax(url = '', data = {}, type = 'GET', method = 'fetch'){
