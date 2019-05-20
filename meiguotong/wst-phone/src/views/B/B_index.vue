@@ -38,19 +38,19 @@
 
         <div class="bao_her_c font-14">
           <ul>
-            <li  @click="show4 = true">
+            <li @click="show4 = true">
               <i class="float_left">选择出发城市</i>
               <i class="float_right color-b">
-               {{quecity}}
+                {{quecity}}
                 <i class="bao_her_d">
                   <img src="../../assets/img/A/more_icon@2x.png">
                 </i>
               </i>
             </li>
-						 <li>
+            <li>
               <i class="float_left">详细地址</i>
               <i class="float_right color-b">
-                <input class="text_right" type="text" placeholder="填写详细地址" v-model="startAddress"> 
+                <input class="text_right" type="text" placeholder="填写详细地址" v-model="startAddress">
                 <i class="bao_her_d">
                   <img src="../../assets/img/A/more_icon@2x.png">
                 </i>
@@ -63,13 +63,13 @@
             <div class="float_right color-b" style="width: 60%">
               <ul>
                 <li>
-									 <i class="bao_her_d fl">
+                  <i class="bao_her_d fl">
                     <img src="../../assets/img/A/more_icon@2x.png">
                   </i>
                   <div class="start_date" @click="show = true">{{certValidDate}}</div>
                 </li>
                 <li>
-									 <i class="bao_her_d fl">
+                  <i class="bao_her_d fl">
                     <img src="../../assets/img/A/more_icon@2x.png">
                   </i>
                   <div class="start_date" @click="show1 = true">{{birthday}}</div>
@@ -550,20 +550,26 @@
         @confirm="onConfirm_a"
       />
     </van-popup>
-		  <!--选择出发城市-->
+    <!--选择出发城市-->
     <van-popup v-model="show4" position="bottom">
-     <van-picker :columns="citychen" @change="onChange" />
+      <van-picker
+        show-toolbar
+        title="选择城市"
+        :columns="citychen"
+        @cancel="quxiao"
+        @confirm="onConfirm_b"
+      />
     </van-popup>
   </div>
 </template>
 <style lang="less">
 .start_date {
   widows: 4rem;
-	float: right;
-	text-align: right;
+  float: right;
+  text-align: right;
 }
-.text_right{
-	text-align: right;
+.text_right {
+  text-align: right;
 }
 </style>
 
@@ -587,26 +593,31 @@ export default {
       show: false,
       show1: false,
       show2: false,
-			show3: false,
-			show4: false,
+      show3: false,
+      show4: false,
       currentDate: new Date(),
       people: 1, //人数
       luggage: 0, //行李
       dantime: "",
-			citylist: "" ,//城市列表
-			citychen: [],
-			quecity:'',//确定城市
-			startAddress:'',//详细地址
+      citylist: "", //城市列表
+      citychen: [],
+      quecity: "", //确定城市
+      startAddress: "", //详细地址
+      cityid:'',//城市id
     };
-	},
-	//计算属性
-	computed:{
-		//天数
-    datet(){
-			let tate=((new Date(this.birthday).getTime()-new Date(this.certValidDate).getTime())/86400000)+1;
-			return tate;
-		}
-	},
+  },
+  //计算属性
+  computed: {
+    //天数
+    datet() {
+      let tate =
+        (new Date(this.birthday).getTime() -
+          new Date(this.certValidDate).getTime()) /
+          86400000 +
+        1;
+      return tate;
+    }
+  },
   created() {
     this.year = this.currentDate.getFullYear(); //年
     this.month = this.currentDate.getMonth() + 1; //月
@@ -620,9 +631,9 @@ export default {
     this.city();
   },
   methods: {
-	 ...mapMutations("route", ["rebcar"]),
-		 onChange(picker, value, index) {
-    this.quecity=value;
+    ...mapMutations("route", ["rebcar"]),
+    onChange(picker, value, index) {
+      this.quecity = value;
     },
     onConfirm(value, index) {
       this.people = value;
@@ -631,6 +642,16 @@ export default {
     onConfirm_a(value, index) {
       this.luggage = value;
       this.show3 = false;
+    },
+    onConfirm_b(value, index) {
+      this.quecity = value;
+      this.show4 = false;
+      //获取选择城市的id
+      for(const test of this.citylist){
+        if(test.cityName==this.quecity){
+          this.cityid=test.cityid;
+        }
+      }
     },
     quxiao() {
       this.show = false;
@@ -674,30 +695,40 @@ export default {
     async city() {
       let data = await chengshi();
       if (data) {
-				this.citylist = data;
-				let img=[];
-				for(const test of this.citylist){
-         img.push(test.cityName)
-				}
-				this.citychen = img;
+        this.citylist = data;
+
+        let img = [];
+        for (const test of this.citylist) {
+          img.push(test.cityName);
+        }
+        this.citychen = img;
       }
-		},
-		//下一步
-		nepx:function(){
-     if(this.quecity==0){
-			 this.$toast("选择出发城市");
-			 return
-		 }
-		 if(this.startAddress==0){
-			this.$toast("输入详细地址");
-			return;
-		 }
-		 this.$router.push({
-			 path:"/B_rent",
-		 });
-		 let pathlist = {quecity:this.quecity,startAddress:this.startAddress,certValidDate:this.certValidDate,birthday:this.birthday,people:this.people,luggage:this.luggage,datet:this.datet}
-		 this.rebcar(pathlist);
-		}
+    },
+    //下一步
+    nepx: function() {
+      if (this.quecity == 0) {
+        this.$toast("选择出发城市");
+        return;
+      }
+      if (this.startAddress == 0) {
+        this.$toast("输入详细地址");
+        return;
+      }
+      this.$router.push({
+        path: "/B_rent"
+      });
+      let pathlist = {
+        quecity: this.quecity,
+        startAddress: this.startAddress,
+        certValidDate: this.certValidDate,
+        birthday: this.birthday,
+        people: this.people,
+        luggage: this.luggage,
+        datet: this.datet,
+        cityid:this.cityid,
+      };
+      this.rebcar(pathlist);
+    }
   }
 };
 </script>

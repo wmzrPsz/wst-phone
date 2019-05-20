@@ -402,7 +402,7 @@ export default {
       yue:1,//表示月份隐藏
       listpryue:'',//月份天数
       folis:'',
-
+      cityid:'1',//出发城市id
       mescroll: null, // mescroll实例对象
       mescrollUp: {
         // 上拉加载的配置.
@@ -735,7 +735,7 @@ export default {
       }
     },
     async scenic() {
-      let data = await getScenicByCity();
+      let data = await getScenicByCity(this.cityid);
       if (data) {
         this.scejing = data;
         for (const list of this.scejing) {

@@ -112,22 +112,7 @@
                   <li class="dianj_bao_z">
                     <span class="dianj_bao_c"></span>
                     <i class="text_left float_left">#广州市民一日游#</i>
-                    <p class="color-b font-12 dianj_bao_d">范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶</p>
-                    <text class="dianj_bao_e yinc">洛杉矶</text>
-                  </li>
-
-                  <li class="dianj_bao_z">
-                    <span class="dianj_bao_c"></span>
-                    <i>#广州市民一日游#</i>
-                    <p class="color-b font-12 dianj_bao_d">范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶</p>
-                    <text class="dianj_bao_e yinc">洛杉矶</text>
-                  </li>
-
-                  <li class="dianj_bao_z">
-                    <span class="dianj_bao_c"></span>
-                    <i>#广州市民一日游#</i>
-                    <p class="color-b font-12 dianj_bao_d">范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶</p>
-                    <text class="dianj_bao_e yinc">洛杉矶</text>
+                    <p class="color-g font-12 dianj_bao_d ">范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶</p>
                   </li>
                 </ul>
               </div>
@@ -330,6 +315,9 @@
   width:0.6rem;
   height:0.6rem;
 }
+.dianj_bao_d{
+  margin-bottom: 0.5rem;
+}
 </style>
     <script>
 import { mapState } from "vuex";
@@ -384,6 +372,9 @@ export default {
 
     }).then(data=>{
      this.businesslist=data;
+     for(const test of this.businesslist){
+      this.$set(test,'falg',false);
+     }
     })
     },
   }

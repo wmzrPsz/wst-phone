@@ -19,7 +19,7 @@
           <i class="Route_a">
             <img src="../../assets/img/B/bczc_adress_icon@2x.png">
           </i>
-          <span class="font-14 color-b float_left">广州</span>
+          <div class="font-14 color-b float_left ">广州</div>
           <router-link to="/search">
           <input class="float_left font-14 color-b" type="text" placeholder="输入你要搜索的城市" name>
           </router-link>
@@ -187,8 +187,9 @@ export default {
       scejing:[],//路途景点
       typlu:1,//路途景点是否显示
       ziplu:1,//制订是否显示
-       getLtyp: [], //自定标签
+      getLtyp: [], //自定标签
       routeType: 1, //自定标签1常规路线
+      cityid:'1',//出发城市id
     };
   },
   created() {
@@ -447,7 +448,7 @@ export default {
     },
     //路途景点
     async scenic() {
-      let data = await getScenicByCity();
+      let data = await getScenicByCity(this.cityid);
       if (data) {
         this.scejing = data;
         for (const list of this.scejing) {
