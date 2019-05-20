@@ -94,25 +94,32 @@
                 <i>华盛顿>洛杉矶</i>
               </i>
               <span class="float_right xuanbao_d">
-                <button class="color-d youw">选择游玩类型</button>
+                <button class="color-d youw" @click="typeclick(index)">选择游玩类型</button>
                 <button class="color-d">选择酒店</button>
               </span>
             </div>
 
             <!--选择游玩类型-->
-            <div class="dianj_bao font-14">
+            <div class="dianj_bao font-14" v-if="list.falg">
               <div class="dianj_bao_a">
-                <ul>
-                  <li class="dianj_bao_z">
-                    <span class="dianj_bao_c dianj_bao_c_jia"></span>
+                <ul v-for="(list,index) in businesslist" :key="index" @click="flstclick(index)">
+                  <li class="dianj_bao_z" v-if="list.range==1">
+                    <span :class="[list.falg==true? 'dianj_bao_c dianj_bao_c_jia':'dianj_bao_c']"></span>
                     <i>接机</i>
-                    <input class="dianj_bao_b color-b" type="text" value="请输入航班号">
+                    <input class="dianj_bao_b color-b" type="text" placeholder="请输入航班号">
+                     <p class="color-g font-12 dianj_bao_d text_left">当地时间12:50降临在白云机场</p>
                   </li>
 
-                  <li class="dianj_bao_z">
-                    <span class="dianj_bao_c"></span>
-                    <i class="text_left float_left">#广州市民一日游#</i>
-                    <p class="color-g font-12 dianj_bao_d ">范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶</p>
+                  <li class="dianj_bao_z"  v-if="list.range==2">
+                    <span :class="[list.falg==true? 'dianj_bao_c dianj_bao_c_jia':'dianj_bao_c']"></span>
+                    <i class="text_left float_left">{{list.title}} {{list.radius}}km</i>
+                    <p class="color-g font-12 dianj_bao_d text_left">范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶</p>
+                  </li>
+                  <li class="dianj_bao_z"  v-if="list.range==3">
+                    <span :class="[list.falg==true? 'dianj_bao_c dianj_bao_c_jia':'dianj_bao_c']"></span>
+                    <i class="text_left float_left">{{list.title}} {{list.radius}}km</i>
+                    <p class="color-g font-12 dianj_bao_d text_left">范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶</p>
+                    <div class="dianj_bao_jia color-b">2222</div>
                   </li>
                 </ul>
               </div>
@@ -295,7 +302,7 @@
   width: 0.5rem;
   height: 0.5rem;
 }
-.text_left {
+.text_left{
   text-align: left;
 }
 .dianj_bao_c{
@@ -317,6 +324,18 @@
 }
 .dianj_bao_d{
   margin-bottom: 0.5rem;
+}
+.dianj_bao_jia{
+  clear: both;
+  text-align: left;
+  width: 5rem;
+  height: 1rem;
+  line-height: 1rem;
+  border: 1px slategray solid;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  margin-left:1.5rem;
+  padding-left: 0.5rem;
 }
 </style>
     <script>
@@ -362,6 +381,7 @@ export default {
       this.time=this.time+86400000;
       this.$set(img,'daty',i)
       this.$set(img,'time',this.time);
+      this.$set(img,'falg',false);
       this.daylist.push(img);
     }
     console.log(this.daylist)
@@ -376,6 +396,26 @@ export default {
       this.$set(test,'falg',false);
      }
     })
+    },
+    //点击游玩类型
+    typeclick(index){
+       if(this.daylist[index].falg==false){
+        this.daylist.map(elem => {
+        elem.falg = false;
+      });
+      }
+      this.daylist[index].falg=!this.daylist[index].falg;
+      this.business(); 
+    },
+    //点击选择
+    flstclick(index){
+       if(this.businesslist[index].falg==false){
+        this.businesslist.map(elem => {
+        elem.falg = false;
+      });
+      }
+     this.businesslist[index].falg=!this.businesslist[index].falg;
+    //  this.$set(this.daylist[index],'kais','ddd');
     },
   }
 };
