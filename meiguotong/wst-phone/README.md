@@ -1,38 +1,41 @@
-<!--
- * @Description:  In User Settings Edit
- * @Author: 彭善智
- * @LastEditors: 彭善智
- * @Date: 2019-03-01 22:28:22
- * @LastEditTime: 2019-03-02 12:30:24
- -->
-
-# wst-phone
+# wst-pc
 
 ## Project setup
 ```
-
 npm install
+yarn  | yarn install
 ```
 
 ### Compiles and hot-reloads for development
 ```
 npm run serve
+yarn serve
 ```
 
 ### Compiles and minifies for production
 ```
 npm run build
+yarn build
 ```
 
 ### Run your tests
 ```
 npm run test
+yarn test
 ```
 
 ### Lints and fixes files
 ```
 npm run lint
+yarn lint
 ```
+### 自动部署
+
+npm run deploy:dev
+yarn deploy:dev
+
+npm run deploy:prod
+yarn deploy:prod
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
