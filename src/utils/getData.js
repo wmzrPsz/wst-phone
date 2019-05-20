@@ -107,13 +107,12 @@ export const saveCarUrl = (routeid,carType) =>ajax(process.env.VUE_APP_PROXY_API
 
 })
 //当地参团搜索接口
-export const selectttpy = (date,tagContent,daysty,srtype,minPrice,maxPrice,scenicSpotid, pageNo) => ajax( process.env.VUE_APP_PROXY_API +'/route/selectCityRoute', {
+export const selectttpy = (date,tagContent,daysty,srtype,minPrice,maxPrice, pageNo) => ajax( process.env.VUE_APP_PROXY_API +'/route/selectCityRoute', {
     date:date,//日期
     day:daysty,//天数
     minPrice:minPrice,//最小价格
     maxPrice:maxPrice,//最大价格
     orderByType:srtype,//1.销量2.价格降序3.价格升序4好评
-    scenic:scenicSpotid,//景点Id
     labelAttrid:tagContent,//属性
     pageNo: pageNo,
 },'post');
@@ -269,8 +268,8 @@ export const selectCarServiceUrl = () => ajax( process.env.VUE_APP_PROXY_API +'/
 
 });
 //获取途径 景点
-export const  getScenicByCity = () => ajax( process.env.VUE_APP_PROXY_API +'/common/getScenicByCity',{
-    cityid:1,//城市ID
+export const  getScenicByCity = (cityid) => ajax( process.env.VUE_APP_PROXY_API +'/common/getScenicByCity',{
+    cityid:cityid,//城市ID
 });
 //获取首页导航栏
 export const getComNavigation = () =>ajax( process.env.VUE_APP_PROXY_API +'/common/getComNavigation',{

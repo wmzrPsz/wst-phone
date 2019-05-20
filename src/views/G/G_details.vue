@@ -204,25 +204,6 @@
               </div>
             </ul>
           </div>
-
-          <div class="b_xianm bus">
-            <i class="b_xianm_a">
-              <img src="../../assets/img/A/home_tanchu_circle_icon@2x.png">
-            </i>
-            <i class="font-16 b_xianm_c">途径景点</i>
-          </div>
-
-          <div class="b_xianm" style="margin-top: 0.5rem">
-            <ul class="font-12 jg_a color-b">
-              <li
-                class="float_left"
-                v-for="(list,index) in scejing"
-                :key="index"
-                :class="list.flag?'b_xianm_b_jiadian':''"
-                @click="sceClick(index)"
-              >{{list.name}}</li>
-            </ul>
-          </div>
           <div v-for="(list,index1) in getLtyp" :key="index1">
             <div class="b_xianm bus">
               <i class="b_xianm_a">
@@ -377,7 +358,7 @@
 </style>
 
 <script>
-import { selectttpy, getScenicByCity, zhiding } from "@/utils/getData";
+import { selectttpy, zhiding } from "@/utils/getData";
 import MescrollVue from "mescroll.js/mescroll.vue";
 export default {
   name: "index",
@@ -471,7 +452,6 @@ export default {
     this.LopTime_list(); //12个月循环
     this.dayListInit(); //天数初始化
     this.priceInit(); //价格初始化
-    this.scenic(); //获取途径景点
     this.getLabeltyp(); //自定标签
   },
   filters: {
@@ -679,7 +659,6 @@ export default {
         this.srtype,
         this.minPrice, //小价格
         this.maxPrice, //大价格
-        this.scenicSpotid.toString(), //景点ID
         page.num
       );
       if (data) {
@@ -705,15 +684,6 @@ export default {
         mescroll.endErr();
       }
     },
-    async scenic() {
-      let data = await getScenicByCity();
-      if (data) {
-        this.scejing = data;
-        for (const list of this.scejing) {
-          this.$set(list, "flag", false);
-        }
-      }
-    },
     //自定标签
     async getLabeltyp() {
       let data = await zhiding(this.routeType);
@@ -727,16 +697,6 @@ export default {
         }
         console.log(this.getLtyp);
       }
-    },
-    sceClick(index) {
-      this.scenicSpotid = [];
-      this.scejing[index].flag = !this.scejing[index].flag;
-      for (const list of this.scejing) {
-        if (list.flag) {
-          this.scenicSpotid.push(list.scenicSpotid); //id
-        }
-      }
-      this.mescroll.resetUpScroll();
     },
     lableClick(index1, index2) {
       this.getLtyp[index1].comTagList[index2].flag = !this.getLtyp[index1]
@@ -764,10 +724,6 @@ export default {
       }
       //价格重置
       for (const list of this.priceList) {
-        list.flag = false;
-      }
-      //途经景点重置
-      for (const list of this.scejing) {
         list.flag = false;
       }
       //属性重置
