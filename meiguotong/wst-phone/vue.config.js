@@ -1,4 +1,3 @@
-
 module.exports = {
     // 项目部署的基础路径
     // 我们默认假设你的应用将会部署在域名的根部，
@@ -18,7 +17,7 @@ module.exports = {
     // 是否在保存的时候使用 `eslint-loader` 进行检查。
     // 有效的值：`ture` | `false` | `"error"`
     // 当设置为 `"error"` 时，检查出的错误会触发编译失败。
-    lintOnSave: "error",
+    lintOnSave: true,
 
     // 使用带有浏览器内编译器的完整构建版本
     // 查阅 https://cn.vuejs.org/v2/guide/installation.html#运行时-编译器-vs-只包含运行时
@@ -26,19 +25,19 @@ module.exports = {
 
     // babel-loader 默认会跳过 node_modules 依赖。
     // 通过这个选项可以显式转译一个依赖。
-    transpileDependencies: [/* string or regex */],
+    transpileDependencies: [ /* string or regex */ ],
 
     // 是否为生产环境构建生成 source map？
     productionSourceMap: true,
 
     configureWebpack: {
         devtool: 'source-map'
-      },
+    },
 
     // 调整内部的 webpack 配置。
     // 查阅 https://github.com/vuejs/vue-docs-zh-cn/blob/master/vue-cli/webpack.md
-    chainWebpack: () => { },
-    configureWebpack: () => { },
+    chainWebpack: () => {},
+    configureWebpack: () => {},
 
     // CSS 相关选项
     css: {
@@ -71,21 +70,21 @@ module.exports = {
         disableHostCheck: true,
         port: 8080,
         // https: false,
-       hotOnly: false,  ////热更新（webpack已实现了，这里false即可）
-        open: true,  ////浏览器自动打开页面
-        historyApiFallback: true,  //当使用 HTML5 History API 时，任意的 404 响应都可能需要被替代为 index.html
+        hotOnly: false, ////热更新（webpack已实现了，这里false即可）
+        open: false, ////浏览器自动打开页面
+        historyApiFallback: true, //当使用 HTML5 History API 时，任意的 404 响应都可能需要被替代为 index.html
         proxy: {
-          [process.env.VUE_APP_PROXY_API]: {
-              target: process.env.VUE_APP_APIROOT,
-              ws: true,  //如果要代理 websockets
-              changeOrigin: true,
-              pathRewrite:{
-                ['^'+process.env.VUE_APP_PROXY_API]:'/'
+            [process.env.VUE_APP_PROXY_API]: {
+                target: process.env.VUE_APP_APIROOT,
+                ws: true, //如果要代理 websockets
+                changeOrigin: true,
+                pathRewrite: {
+                    ['^' + process.env.VUE_APP_PROXY_API]: '/'
                 }
             },
-          },
+        },
         before: app => {
-       
+
         }
     },
 
@@ -96,17 +95,17 @@ module.exports = {
             //     // config.plugins.push(
             //     //     new BundleAnalyzerPlugin()
             //     // );
-                
+
             // }
-       //     config.devServer.proxy.target = process.env.API_ROOT;
+            //     config.devServer.proxy.target = process.env.API_ROOT;
         } else {
             // 为开发环境修改配置...
         }
-        
+
     },
 
     // 第三方插件的选项
     pluginOptions: {
-       
+
     }
 }
