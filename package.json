@@ -4,11 +4,14 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "build": "vue-cli-service build --report ",
+    "lint": "vue-cli-service lint",
+    "deploy:dev": "npm run build && cross-env NODE_ENV=dev node ./deploy",
+    "deploy:prod": "npm run build && cross-env NODE_ENV=prod node ./deploy"
   },
   "dependencies": {
     "jquery": "^3.3.1",
+    "scp2": "^0.5.0",
     "js-md5": "^0.7.3",
     "mescroll.js": "^1.4.1",
     "vant": "^1.6.7",
@@ -25,6 +28,7 @@
     "babel-plugin-import": "^1.11.0",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
+    "cross-env": "^5.2.0",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "lint-staged": "^8.1.0",
