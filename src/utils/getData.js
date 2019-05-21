@@ -267,8 +267,12 @@ export const chengshi = () => ajax( process.env.VUE_APP_PROXY_API +'/common/getC
 export const selectCarServiceUrl = () => ajax( process.env.VUE_APP_PROXY_API +'/car/selectCarService',{
 
 });
-//获取途径 景点
-export const  getScenicByCity = (cityid) => ajax( process.env.VUE_APP_PROXY_API +'/common/getScenicByCity',{
+//获取途径 景点                                                                            getCitySpot
+export const  getScenicByCity = (cityid) => ajax( process.env.VUE_APP_PROXY_API +'/common/getCitySpot',{
+    cityid:cityid,//城市ID
+});
+//获取附近城市
+export const  getNearbyCityUrl = (cityid) => ajax( process.env.VUE_APP_PROXY_API +'/common/getNearbyCity',{
     cityid:cityid,//城市ID
 });
 //获取首页导航栏
