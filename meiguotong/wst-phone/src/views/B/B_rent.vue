@@ -91,7 +91,7 @@
                 <i class="xuanbao_e">
                   <img src="../../assets/img/A/home_lydz_adres2_icon@2x.png">
                 </i>
-                <i>华盛顿>洛杉矶</i>
+                <i>{{list.departure}}>{{list.destination}}</i>
               </i>
               <span class="float_right xuanbao_d">
                 <button class="color-d youw" @click="typeclick(index)">选择游玩类型</button>
@@ -107,19 +107,24 @@
                     <span :class="[list.falg==true? 'dianj_bao_c dianj_bao_c_jia':'dianj_bao_c']"></span>
                     <i>接机</i>
                     <input class="dianj_bao_b color-b" type="text" placeholder="请输入航班号">
-                     <p class="color-g font-12 dianj_bao_d text_left">当地时间12:50降临在白云机场</p>
+                    <p class="color-g font-12 dianj_bao_d text_left">当地时间12:50降临在白云机场</p>
                   </li>
 
-                  <li class="dianj_bao_z"  v-if="list.range==2">
+                  <li class="dianj_bao_z" v-if="list.range==2">
                     <span :class="[list.falg==true? 'dianj_bao_c dianj_bao_c_jia':'dianj_bao_c']"></span>
                     <i class="text_left float_left">{{list.title}} {{list.radius}}km</i>
-                    <p class="color-g font-12 dianj_bao_d text_left">范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶</p>
+                    <p class="color-g font-12 dianj_bao_d text_left">
+                      参考景点:
+                      <i v-for="(list,index) in spotlist" :key="index">{{list.name}},</i>
+                    </p>
                   </li>
-                  <li class="dianj_bao_z"  v-if="list.range==3">
+                  <li class="dianj_bao_z" v-if="list.range==3">
                     <span :class="[list.falg==true? 'dianj_bao_c dianj_bao_c_jia':'dianj_bao_c']"></span>
                     <i class="text_left float_left">{{list.title}} {{list.radius}}km</i>
-                    <p class="color-g font-12 dianj_bao_d text_left">范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶范围洛杉矶</p>
-                    <div class="dianj_bao_jia color-b">2222</div>
+                    <p class="color-g font-12 dianj_bao_d text_left">
+                      <i v-for="(list,index) in citylist" :key="index">{{list.cityName}},</i>
+                    </p>
+                    <div class="dianj_bao_jia color-b" @click="show= true">{{citychenclis}}</div>
                   </li>
                 </ul>
               </div>
@@ -295,6 +300,16 @@
       </div>
       <p class="dib_w font-12 color-b">万事同美国eaiusa.com万事同美国eaiusa.com万事同美国eaiusa.com</p>
     </div>
+    <!--选择到达城市-->
+    <van-popup v-model="show" position="bottom">
+      <van-picker
+        show-toolbar
+        title="选择到达城市"
+        :columns="citychen"
+        @cancel="show=false"
+        @confirm="onConfirm"
+      />
+    </van-popup>
   </div>
 </template>
     <style lang="less">
@@ -302,30 +317,30 @@
   width: 0.5rem;
   height: 0.5rem;
 }
-.text_left{
+.text_left {
   text-align: left;
 }
-.dianj_bao_c{
-	margin-top: 0.5rem;
-	float:left;
-	display: block;
-	width: 20px;
-	height: 20px;
-	margin-right: 0.5rem;
-	background-image:url(../../assets/img/A/home_choice_unche@2x.png);
-	background-size:100% 100%;
+.dianj_bao_c {
+  margin-top: 0.5rem;
+  float: left;
+  display: block;
+  width: 20px;
+  height: 20px;
+  margin-right: 0.5rem;
+  background-image: url(../../assets/img/A/home_choice_unche@2x.png);
+  background-size: 100% 100%;
 }
-.dianj_bao_c_jia{
-	background-image:url(../../assets/img/A/home_choice_check@2x.png);
+.dianj_bao_c_jia {
+  background-image: url(../../assets/img/A/home_choice_check@2x.png);
 }
-.xuanbao_e img{
-  width:0.6rem;
-  height:0.6rem;
+.xuanbao_e img {
+  width: 0.6rem;
+  height: 0.6rem;
 }
-.dianj_bao_d{
+.dianj_bao_d {
   margin-bottom: 0.5rem;
 }
-.dianj_bao_jia{
+.dianj_bao_jia {
   clear: both;
   text-align: left;
   width: 5rem;
@@ -334,21 +349,32 @@
   border: 1px slategray solid;
   border-radius: 8px;
   margin-bottom: 0.5rem;
-  margin-left:1.5rem;
+  margin-left: 1.5rem;
   padding-left: 0.5rem;
 }
 </style>
     <script>
 import { mapState } from "vuex";
-import {selectCarServiceUrl} from "@/utils/getData";
+import {
+  selectCarServiceUrl,
+  getScenicByCity,
+  getNearbyCityUrl
+} from "@/utils/getData";
 export default {
   name: "index",
   data() {
     return {
-      type: 1 ,//1收起2展示
-      daylist:[],//天数列表
-      time:"",//每天时间
-      businesslist:[],//获取车辆业务类型
+      show: false,
+      type: 1, //1收起2展示
+      daylist: [], //天数列表
+      time: "", //每天时间
+      businesslist: [], //获取车辆业务类型
+      spotlist: [], //路途景天列表
+      citylist: [], //附近城市列表
+      citychen: [], //到达城市
+      citychenclis: "", //选择到达的城市
+      citychenclisid: "", //选择到达的城市id
+      typelist: ""
     };
   },
   computed: {
@@ -356,8 +382,8 @@ export default {
       pathlist: state => state.route.pathlist
     })
   },
-  filters:{
-    shijian:function(value){
+  filters: {
+    shijian: function(value) {
       let endtime_y = new Date(value).getFullYear(); //年
       let endtime_m = new Date(value).getMonth() + 1; //月
       let endtime_x = new Date(value).getDate(); //日
@@ -374,49 +400,127 @@ export default {
     exhibition(index) {
       this.type = index;
     },
-    daytyp:function(){
-    this.time=new Date(this.pathlist.certValidDate).getTime()-86400000;
-    for(let i=1;i<=this.pathlist.datet;i++){
-     let img={};
-      this.time=this.time+86400000;
-      this.$set(img,'daty',i)
-      this.$set(img,'time',this.time);
-      this.$set(img,'falg',false);
-      this.daylist.push(img);
-    }
-    console.log(this.daylist)
+    onConfirm(value, index) {
+      this.show = false;
+      this.citychenclis = value;
+      //获取选择城市的id
+      for (const test of this.citylist) {
+        if (test.cityName == this.citychenclis) {
+          this.citychenclisid = test.id;
+        }
+      }
+      this.$set(this.daylist[this.typelist], "destination", this.citychenclis);
+      this.$set(this.daylist[this.typelist],"destinationid", this.citychenclisid );
+      if(this.typelist!=this.daylist.length-1){
+      this.$set(this.daylist[this.typelist + 1],"departure",this.citychenclis);
+      this.$set(this.daylist[this.typelist + 1], "cityid", this.citychenclisid);
+      }
+    },
+    daytyp: function() {
+      this.time = new Date(this.pathlist.certValidDate).getTime() - 86400000;
+      for (let i = 1; i <= this.pathlist.datet; i++) {
+        let img = {};
+        this.time = this.time + 86400000;
+        this.$set(img, "daty", i);
+        this.$set(img, "time", this.time);
+        this.$set(img, "falg", false);
+        this.daylist.push(img);
+      }
+      this.$set(this.daylist[0], "departure", this.pathlist.quecity), //第一天的出发城市
+        this.$set(this.daylist[0], "cityid", this.pathlist.cityid); //第一天出发城市id
     },
     //获取
-   async business(){
-    selectCarServiceUrl({
-
-    }).then(data=>{
-     this.businesslist=data;
-     for(const test of this.businesslist){
-      this.$set(test,'falg',false);
-     }
-    })
+    async business() {
+      selectCarServiceUrl({}).then(data => {
+        this.businesslist = data;
+        for (const test of this.businesslist) {
+          this.$set(test, "falg", false);
+        }
+      });
     },
     //点击游玩类型
-    typeclick(index){
-       if(this.daylist[index].falg==false){
-        this.daylist.map(elem => {
-        elem.falg = false;
-      });
+    typeclick(index) {
+      if (
+        this.daylist[index].cityid != null &&
+        this.daylist[index].destinationid == null
+      ) {
+        this.$set(this.daylist[index], "falg", true);
+        if (index >= 1) {
+          this.$set(this.daylist[index - 1], "falg", false);
+        }
+        this.business();
+        this.scenic(index);
+        this.chenshi(index);
+        this.typelist = index;
       }
-      this.daylist[index].falg=!this.daylist[index].falg;
-      this.business(); 
+      if (
+        this.daylist[index].cityid != null &&
+        this.daylist[index].destinationid != null
+      ) {
+        this.$set(this.daylist[index], "falg", false);
+      }
     },
     //点击选择
-    flstclick(index){
-       if(this.businesslist[index].falg==false){
-        this.businesslist.map(elem => {
+    flstclick(index) {
+      this.businesslist.map(elem => {
         elem.falg = false;
       });
+      this.businesslist[index].falg = !this.businesslist[index].falg;
+      if (this.businesslist[index].range != 3) {
+
+        this.$set(
+          this.daylist[this.typelist],
+          "destination",
+          this.daylist[this.typelist].departure
+        );
+        this.$set(
+          this.daylist[this.typelist],
+          "destinationid",
+          this.daylist[this.typelist].cityid
+        );
+        if(this.typelist!=this.daylist.length-1){
+          this.$set(
+          this.daylist[this.typelist + 1],
+          "departure",
+          this.daylist[this.typelist].departure
+        );
+        this.$set(
+          this.daylist[this.typelist + 1],
+          "cityid",
+          this.daylist[this.typelist].cityid
+        );
+         }
+      } else if (this.businesslist[index].range == 3) {
+        this.$set(this.daylist[this.typelist], "destination", "");
+        this.$set(this.daylist[this.typelist], "destinationid", "");
+        if(this.typelist!=this.daylist.length-1){
+        this.$set(this.daylist[this.typelist + 1], "departure", "");
+        this.$set(this.daylist[this.typelist + 1], "cityid", "");
+        }
       }
-     this.businesslist[index].falg=!this.businesslist[index].falg;
-    //  this.$set(this.daylist[index],'kais','ddd');
+      console.log(this.daylist);
     },
+    //获取路途景点
+    async scenic(index) {
+      let cityid = this.daylist[index].cityid;
+      let data = await getScenicByCity(cityid);
+      if (data) {
+        this.spotlist = data;
+      }
+    },
+    //获取附近城市
+    async chenshi(index) {
+      let cityid = this.daylist[index].cityid;
+      let data = await getNearbyCityUrl(cityid);
+      if (data) {
+        this.citylist = data;
+        let img = [];
+        for (const test of this.citylist) {
+          img.push(test.cityName);
+        }
+        this.citychen = img;
+      }
+    }
   }
 };
 </script>
