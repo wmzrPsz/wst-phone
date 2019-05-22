@@ -464,8 +464,7 @@ export default {
         this.daylist[index].destinationid != null
       ) {
         this.$set(this.daylist[index], "falg", false);
-        let piaylist=this.daylist;
-        this.piaylist(piaylist)
+        this.piaylist(JSON.parse(JSON.stringify(this.daylist)))
       }
     },
     //点击选择
