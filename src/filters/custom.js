@@ -139,3 +139,16 @@ export const orderPayTypeVc =  (value) => {
     }
     return content;
 }
+//酒店星级
+export const hotle =  (value) => {
+    if (!value) return '';
+    let content = "酒店";
+    switch (parseInt(value)) {
+        case 1:  content = "1星级酒店";  break;
+        case 2:  content = "2星级酒店";    break;      
+        case 3:  content = "3星级酒店";  break;
+        case 4:  content = "4星级酒店";  break;
+        case 5:  content = "5星级酒店";  break;
+    }
+    return content;
+}
