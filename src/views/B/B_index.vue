@@ -631,7 +631,7 @@ export default {
     this.city();
   },
   methods: {
-    ...mapMutations("route", ["rebcar"]),
+    ...mapMutations("route", ["rebcar","piaylist"]),
     onChange(picker, value, index) {
       this.quecity = value;
     },
@@ -728,6 +728,8 @@ export default {
         cityid:this.cityid,
       };
       this.rebcar(pathlist);
+      let piaylist=[];
+      this.piaylist(piaylist);
     }
   }
 };

@@ -1497,7 +1497,7 @@ select{
 }
 .jiud_ri_a img{
 	width: 17px;
-	margin-right: 0.5rem;
+	margin-right: 0.3rem;
 }
 .jiud_ri_b{
 	display: block;
@@ -1518,7 +1518,6 @@ select{
 	border-bottom: 1px solid gainsboro;
 }
 .jiud_x{
-	margin-top: -0.1rem;
 	display: block;
 	overflow:hidden;
 	margin-left: 0.5rem;

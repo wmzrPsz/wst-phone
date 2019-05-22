@@ -2,8 +2,8 @@
     <template>
   <div class="index">
     <div class="her_a font-20 background-a">
-      <i class="her_a_left float_left">
-        <img src="../../assets/img/A/head_fenlei_icon@2x.png">
+      <i class="her_a_left float_left" onclick="window.history.go(-1)">
+        <img src="../../assets/img/A/back_icon@2x.png">
       </i>
       <i class="he_t_baoc color">包车/租车</i>
       <i class="her_a_rigth float_right">
@@ -88,14 +88,14 @@
                 <i class="font-12 color-b">({{list.time | shijian}})</i>
               </i>
               <i class="float_right color-b">
-                <i class="xuanbao_e">
+                <i class="xuanbao_e" v-if="list.departure!=null">
                   <img src="../../assets/img/A/home_lydz_adres2_icon@2x.png">
                 </i>
-                <i>{{list.departure}}>{{list.destination}}</i>
+                <i v-if="list.departure!=null">{{list.departure}}>{{list.destination}}</i>
               </i>
               <span class="float_right xuanbao_d">
                 <button class="color-d youw" @click="typeclick(index)">选择游玩类型</button>
-                <button class="color-d">选择酒店</button>
+                <button class="color-d" @click="roomclick(list)">选择酒店</button>
               </span>
             </div>
 
@@ -360,6 +360,8 @@ import {
   getScenicByCity,
   getNearbyCityUrl
 } from "@/utils/getData";
+import { mapMutations } from "vuex";
+import { stat } from 'fs';
 export default {
   name: "index",
   data() {
@@ -379,7 +381,8 @@ export default {
   },
   computed: {
     ...mapState({
-      pathlist: state => state.route.pathlist
+      pathlist: state => state.route.pathlist,
+      piaylist_a:state => state.route.piaylist,//游玩列表
     })
   },
   filters: {
@@ -392,11 +395,14 @@ export default {
     }
   },
   mounted() {
-    console.log(this.pathlist);
     this.daytyp();
     this.business();
+    if(this.piaylist_a!=0){
+      this.daylist=this.piaylist_a;
+    }
   },
   methods: {
+    ...mapMutations("route", ["piaylist"]),
     exhibition(index) {
       this.type = index;
     },
@@ -427,7 +433,7 @@ export default {
         this.daylist.push(img);
       }
       this.$set(this.daylist[0], "departure", this.pathlist.quecity), //第一天的出发城市
-        this.$set(this.daylist[0], "cityid", this.pathlist.cityid); //第一天出发城市id
+      this.$set(this.daylist[0], "cityid", this.pathlist.cityid); //第一天出发城市id
     },
     //获取
     async business() {
@@ -458,6 +464,8 @@ export default {
         this.daylist[index].destinationid != null
       ) {
         this.$set(this.daylist[index], "falg", false);
+        let piaylist=this.daylist;
+        this.piaylist(piaylist)
       }
     },
     //点击选择
@@ -490,14 +498,15 @@ export default {
           this.daylist[this.typelist].cityid
         );
          }
-      } else if (this.businesslist[index].range == 3) {
-        this.$set(this.daylist[this.typelist], "destination", "");
-        this.$set(this.daylist[this.typelist], "destinationid", "");
-        if(this.typelist!=this.daylist.length-1){
-        this.$set(this.daylist[this.typelist + 1], "departure", "");
-        this.$set(this.daylist[this.typelist + 1], "cityid", "");
-        }
-      }
+      } 
+      // else if (this.businesslist[index].range == 3) {
+      //   this.$set(this.daylist[this.typelist], "destination", "");
+      //   this.$set(this.daylist[this.typelist], "destinationid", "");
+      //   if(this.typelist!=this.daylist.length-1){
+      //   this.$set(this.daylist[this.typelist + 1], "departure", "");
+      //   this.$set(this.daylist[this.typelist + 1], "cityid", "");
+      //   }
+      // }
       console.log(this.daylist);
     },
     //获取路途景点
@@ -520,6 +529,12 @@ export default {
         }
         this.citychen = img;
       }
+    },
+    //点击选择酒店
+    roomclick(list){
+      this.$router.push({
+        path:'/B_room',
+      })
     }
   }
 };
