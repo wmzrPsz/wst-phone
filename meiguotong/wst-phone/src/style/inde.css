@@ -1495,6 +1495,13 @@ select{
 	width: 62%;
 	margin-left:3%;
 }
+.jiud_ri ul li{
+	margin-top: 0.3rem;
+	overflow: hidden;
+}
+.jiud_ri_a{
+	clear: both;
+}
 .jiud_ri_a img{
 	width: 17px;
 	margin-right: 0.3rem;
@@ -1545,11 +1552,12 @@ select{
 	border-bottom: 1px solid gainsboro;
 	overflow:hidden;
 	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
 	margin-left: 1rem;
 	margin-right: 1rem;
 }
 .famjian_b{
-	line-height: 1.2rem;
+	margin-top: 0.2rem;
 	margin-right:0.5rem;
 }
 .ez-counter{

@@ -397,7 +397,7 @@ export default {
   mounted() {
     this.daytyp();
     this.business();
-    if(this.piaylist_a!=0){
+    if(this.piaylist_a.length!=0){
       this.daylist=this.piaylist_a;
     }
   },
@@ -498,14 +498,6 @@ export default {
         );
          }
       } 
-      // else if (this.businesslist[index].range == 3) {
-      //   this.$set(this.daylist[this.typelist], "destination", "");
-      //   this.$set(this.daylist[this.typelist], "destinationid", "");
-      //   if(this.typelist!=this.daylist.length-1){
-      //   this.$set(this.daylist[this.typelist + 1], "departure", "");
-      //   this.$set(this.daylist[this.typelist + 1], "cityid", "");
-      //   }
-      // }
       console.log(this.daylist);
     },
     //获取路途景点
@@ -531,9 +523,17 @@ export default {
     },
     //点击选择酒店
     roomclick(list){
-      this.$router.push({
-        path:'/B_room',
+      if(list.destination!=null){
+      let endtime_y = new Date(list.time).getFullYear(); //年
+      let endtime_m = new Date(list.time).getMonth() + 1; //月
+      let endtime_x = new Date(list.time).getDate(); //日
+      let endtime = endtime_y + "-" + endtime_m + "-" + endtime_x;
+       this.$router.push({
+        path:'/B_room/'+endtime+"/"+list.destinationid,
       })
+      }else if(list.destination==null){
+       this.$toast("完善游玩类型")
+      }
     }
   }
 };

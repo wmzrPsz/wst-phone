@@ -84,6 +84,7 @@ const p_about_a = r => require.ensure([], () => r(require('../views/p/p_about_a'
 const B_index = r => require.ensure([], () => r(require('../views/B/B_index')), 'B_index')
 const B_rent = r => require.ensure([], () => r(require('../views/B/B_rent')), 'B_rent')
 const B_room = r => require.ensure([], () => r(require('../views/B/B_room')), 'B_room')
+const B_room_details = r => require.ensure([], () => r(require('../views/B/B_room_details')), 'B_room_details')
 
 ///////////////////////////////////////////////F常规路线//////////////////////////////////////////////////////////////////////
 //
@@ -418,12 +419,21 @@ export default new Router({
     },
     //选择房间
     {
-     path:'/B_room',
+     path:'/B_room/:date/:cityid',
      name:'B_room',
      component:B_room,
      meta:{
        'title':'房间'
      }
+    },
+    //获取房间酒店
+    {
+      path:'/B_room_details',
+      name:'B_room_details',
+      component:B_room_details,
+      meta:{
+        'title':'酒店'
+      }
     },
     /////////////////////////常规路线///////////////////////////////
     //搜索常规路线
