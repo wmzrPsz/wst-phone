@@ -83,6 +83,7 @@ const p_about_a = r => require.ensure([], () => r(require('../views/p/p_about_a'
 //包车租车首页
 const B_index = r => require.ensure([], () => r(require('../views/B/B_index')), 'B_index')
 const B_rent = r => require.ensure([], () => r(require('../views/B/B_rent')), 'B_rent')
+const B_room = r => require.ensure([], () => r(require('../views/B/B_room')), 'B_room')
 
 ///////////////////////////////////////////////F常规路线//////////////////////////////////////////////////////////////////////
 //
@@ -413,6 +414,15 @@ export default new Router({
      component:B_rent,
      meta:{
        'title':'租车'
+     }
+    },
+    //选择房间
+    {
+     path:'/B_room',
+     name:'B_room',
+     component:B_room,
+     meta:{
+       'title':'房间'
      }
     },
     /////////////////////////常规路线///////////////////////////////
