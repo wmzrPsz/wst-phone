@@ -1612,7 +1612,7 @@ select{
 	overflow: hidden;
 	clear: both;
 	width: 94%;
-    height: 5rem;
+	min-height:3.5rem;
 	border-radius:8px;
 	border: 1px solid gainsboro;
 	z-index:99;
@@ -1663,7 +1663,7 @@ select{
 }
 .Choose_a_room_d_z{
 	overflow:hidden;
-	margin-top: 4rem;
+	margin-top:4.5rem;
 }
 .Choose_a_room_d_a{
 	width: 70%;

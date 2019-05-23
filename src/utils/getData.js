@@ -279,6 +279,12 @@ export const getHotelByCityUrl = (date,cityid,stars,oneNum,twoNum,threeNum,fourN
     fourNum:fourNum
 
 });
+//4-22获取酒店房间接口
+export const getHotelRoomUrl = (date,hotelid,page) => ajax( process.env.VUE_APP_PROXY_API +'/common/getHotelRoom',{
+    date:date,
+    hotelid:hotelid,
+    pageNo:page
+});
 //获取途径 景点                                                                            getCitySpot
 export const  getScenicByCity = (cityid) => ajax( process.env.VUE_APP_PROXY_API +'/common/getCitySpot',{
     cityid:cityid,//城市ID

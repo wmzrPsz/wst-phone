@@ -428,7 +428,7 @@ export default new Router({
     },
     //获取房间酒店
     {
-      path:'/B_room_details',
+      path:'/B_room_details/:date',
       name:'B_room_details',
       component:B_room_details,
       meta:{

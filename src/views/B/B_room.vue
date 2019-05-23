@@ -167,10 +167,10 @@
             <li class="font-12 color-b">
               <i class="jiud_ri_a float_left">
                 <img v-if="list.level==1" src="../../assets/img/B/bjyw_1xing_icon@2x.png">
-				<img v-if="list.level==2" src="../../assets/img/B/bjyw_2xing_icon@2x.png">
-				<img v-if="list.level==3" src="../../assets/img/B/bjyw_3xing_icon@2x.png">
-				<img v-if="list.level==4" src="../../assets/img/B/bjyw_4xing_icon@2x.png">
-				<img v-if="list.level==5" src="../../assets/img/B/bjyw_5xing_icon@2x.png">
+				      <img v-if="list.level==2" src="../../assets/img/B/bjyw_2xing_icon@2x.png">
+				    <img v-if="list.level==3" src="../../assets/img/B/bjyw_3xing_icon@2x.png">
+				    <img v-if="list.level==4" src="../../assets/img/B/bjyw_4xing_icon@2x.png">
+			    	<img v-if="list.level==5" src="../../assets/img/B/bjyw_5xing_icon@2x.png">
               </i>
               <i class="text_left jiud_ri_b">{{list.level | hotle}}</i>
             </li>
@@ -214,6 +214,7 @@
 import {getHotelByCityUrl} from "@/utils/getData";
 import MescrollVue from "mescroll.js/mescroll.vue";
 import { hotle} from "@/filters/custom";
+import {mapMutations} from "vuex";
 export default {
   name: "index",
   data() {
@@ -263,6 +264,7 @@ export default {
     mescrollInit(mescroll) {
       this.mescroll = mescroll; // 如果this.mescroll对象没有使用到,则mescrollInit可以不用配置
     },
+     ...mapMutations("route",["holetroom"]),
     //展示酒店类型或者房间类型
     chioeclick(index) {
       if (this.typst != index) {
@@ -311,8 +313,9 @@ export default {
 	//获取酒店房间
 	details:function(list){
     this.$router.push({
-		path:'/B_room_details',
-	})
+		path:'/B_room_details/'+this.$route.params.date,
+  })
+  this.holetroom(list);
 	},
   }
 };

@@ -10,6 +10,8 @@ const state = {
   spotlist:{},//景点
   pathlist:{},//包车租车index页填写的信息
   piaylist:[],//游玩类型列表
+  holetroom:{},//包车租车常规类型选择酒店
+  roomlist:[],//包车租车选中房间的列表
 }
 const getters = {
 }
@@ -47,7 +49,13 @@ const mutations = {
   },
   piaylist(state,piaylist){
     state.piaylist=piaylist
-    console.log(state.piaylist);
+  },
+  holetroom(state,holetroom){
+    state.holetroom=holetroom;
+  },
+  roomtyp(state,roomlist){
+    state.roomlist=roomlist;
+    console.log(state.roomlist);
   }
 }
 
