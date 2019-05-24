@@ -5,8 +5,11 @@ import store from './vuex/index'
 import {Toast,Popup,Picker,DatetimePicker,Swipe,SwipeItem,Rate,Stepper,Pagination } from 'vant'
 import "./style/inde.css";
 import VueLazyload from 'vue-lazyload'  
+import {copy} from './utils/common';
  //生产环境提示，这里设置成了false
 Vue.config.productionTip = false
+
+Vue.prototype.copy = copy
 
  Vue.use(Toast).use(Popup).use(Picker).use(DatetimePicker).use(Swipe).use(SwipeItem).use(Rate).use(Stepper).use(Pagination);
 

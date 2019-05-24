@@ -3,11 +3,16 @@
  * @Author: 彭善智
  * @LastEditors: 彭善智
  * @Date: 2019-03-12 22:51:19
- * @LastEditTime: 2019-03-29 15:58:32
+ * @LastEditTime: 2019-05-24 11:38:39
  */
 
 import store from '../vuex/index'
 import ajax from './fetch';
+
+//对象深拷贝  不可为{} 会调对象原生属性的toString()方法转换成"[object Object]"
+export const copy = (str) => {
+  return JSON.parse(JSON.stringify(str))
+}
 
 //判断是否登录
 export const fnIsLogin = () => {
