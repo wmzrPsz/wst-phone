@@ -399,8 +399,9 @@ export default {
      console.log(this.Generalroom);
     this.daytyp();
     this.business();
+    let piaylist_a = JSON.parse(JSON.stringify(this.piaylist_a));
     if(this.piaylist_a.length!=0){
-      this.daylist=this.piaylist_a;
+      this.daylist= piaylist_a;
     }
   },
   methods: {

@@ -189,7 +189,7 @@ export default {
       ziplu:1,//制订是否显示
       getLtyp: [], //自定标签
       routeType: 1, //自定标签1常规路线
-      cityid:'1',//出发城市id
+      cityid:'',//出发城市id
     };
   },
   created() {

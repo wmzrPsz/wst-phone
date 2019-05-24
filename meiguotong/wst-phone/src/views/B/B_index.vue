@@ -4,7 +4,7 @@
       <i class="her_a_left float_left">
         <img src="../../assets/img/A/head_fenlei_icon@2x.png">
       </i>
-      <i class="he_t_baoc color">详情页</i>
+      <i class="he_t_baoc color">详情页1</i>
       <i class="her_a_rigth float_right">
         <img src="../../assets/img/A/head_car_icon@2x.png">
       </i>
