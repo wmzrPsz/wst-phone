@@ -2,7 +2,7 @@
     <template>
   <div class="index">
     <div class="her_a font-20 background-a">
-      <i class="her_a_left float_left" onclick="window.history.go(-1)">
+      <i class="her_a_left float_left" @click="Previous ()">
         <img src="../../assets/img/A/back_icon@2x.png">
       </i>
       <i class="he_t_baoc color">包车/租车</i>
@@ -95,7 +95,7 @@
               </i>
               <span class="float_right xuanbao_d">
                 <button class="color-d youw" @click="typeclick(index)">选择游玩类型</button>
-                <button class="color-d" @click="roomclick(list)">选择酒店</button>
+                <button class="color-d" @click="roomclick(list,index)">选择酒店</button>
               </span>
             </div>
 
@@ -131,7 +131,7 @@
             </div>
             <!---->
           </li>
-          <li>
+          <li @click="vehicleclick()">
             <div class="youw_s_jia">
               <i class="float_left">选择车辆</i>
               <i class="zinan_b float_right">
@@ -355,6 +355,7 @@
 </style>
     <script>
 import { mapState } from "vuex";
+import { copy } from "@/utils/common";
 import {
   selectCarServiceUrl,
   getScenicByCity,
@@ -396,10 +397,10 @@ export default {
     }
   },
   mounted() {
-     console.log(this.Generalroom);
+    console.log(this.piaylist_a);
     this.daytyp();
     this.business();
-    let piaylist_a = JSON.parse(JSON.stringify(this.piaylist_a));
+    let piaylist_a = this.copy(this.piaylist_a);
     if(this.piaylist_a.length!=0){
       this.daylist= piaylist_a;
     }
@@ -438,7 +439,7 @@ export default {
       this.$set(this.daylist[0], "departure", this.pathlist.quecity), //第一天的出发城市
       this.$set(this.daylist[0], "cityid", this.pathlist.cityid); //第一天出发城市id
     },
-    //获取
+    //获取获取车辆业务类型成功
     async business() {
       selectCarServiceUrl({}).then(data => {
         this.businesslist = data;
@@ -488,6 +489,11 @@ export default {
           "destinationid",
           this.daylist[this.typelist].cityid
         );
+        this.$set(
+          this.daylist[this.typelist],
+          "serviceid",
+          this.businesslist[index].id
+        );
         if(this.typelist!=this.daylist.length-1){
           this.$set(
           this.daylist[this.typelist + 1],
@@ -501,6 +507,13 @@ export default {
         );
          }
       } 
+       if (this.businesslist[index].range == 3) {
+         this.$set(
+          this.daylist[this.typelist],
+          "serviceid",
+         this.businesslist[index].id
+        );
+       }
       console.log(this.daylist);
     },
     //获取路途景点
@@ -525,18 +538,38 @@ export default {
       }
     },
     //点击选择酒店
-    roomclick(list){
+    roomclick(list,index){
       if(list.destination!=null){
+       this.$set(this.daylist[index], "falg", false);
+       this.piaylist(JSON.parse(JSON.stringify(this.daylist)))
       let endtime_y = new Date(list.time).getFullYear(); //年
       let endtime_m = new Date(list.time).getMonth() + 1; //月
       let endtime_x = new Date(list.time).getDate(); //日
       let endtime = endtime_y + "-" + endtime_m + "-" + endtime_x;
+      for(let tesrt of this.Generalroom){
+        if(tesrt.date==endtime){
+          this.$toast("已经完成选择酒店");
+          return;
+        }
+      }
        this.$router.push({
         path:'/B_room/'+endtime+"/"+list.destinationid,
       })
       }else if(list.destination==null){
        this.$toast("完善游玩类型")
       }
+    },
+    //上一页
+    Previous:function(){
+    this.$router.push({
+        path:'/B_index',
+      })
+    },
+    //选择车辆
+    vehicleclick:function(){
+    this.$router.push({
+      path:'/B_vehicle',
+    })
     }
   }
 };

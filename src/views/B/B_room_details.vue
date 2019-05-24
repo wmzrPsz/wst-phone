@@ -283,7 +283,7 @@ export default {
     bookroom: function() {
       if(this.fanprice!=0){
 
-       this.roomtyp(JSON.parse(JSON.stringify(this.roomlist)));
+       this.roomtyp(this.roomlist);
        console.log(this.Generalroom);
        this.$router.push({
         path: "/B_rent"
