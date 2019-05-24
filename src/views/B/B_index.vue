@@ -631,7 +631,7 @@ export default {
     this.city();
   },
   methods: {
-    ...mapMutations("route", ["rebcar","piaylist"]),
+    ...mapMutations("route", ["rebcar","piaylist","roomtyp"]),
     onChange(picker, value, index) {
       this.quecity = value;
     },
@@ -729,7 +729,9 @@ export default {
       };
       this.rebcar(pathlist);
       let piaylist=[];
-      this.piaylist(piaylist);
+      this.piaylist(piaylist);//清空游玩类型
+      let roomlist=[];
+      this.roomtyp(JSON.parse(JSON.stringify(roomlist)))//清空选中的游玩房间
     }
   }
 };

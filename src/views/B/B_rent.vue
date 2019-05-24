@@ -383,6 +383,7 @@ export default {
     ...mapState({
       pathlist: state => state.route.pathlist,
       piaylist_a:state => state.route.piaylist,//游玩列表
+      Generalroom: state => state.route.roomlist,//获取总选择的房间列表
     })
   },
   filters: {
@@ -395,6 +396,7 @@ export default {
     }
   },
   mounted() {
+     console.log(this.Generalroom);
     this.daytyp();
     this.business();
     if(this.piaylist_a.length!=0){
