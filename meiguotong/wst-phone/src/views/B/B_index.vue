@@ -731,7 +731,7 @@ export default {
       let piaylist=[];
       this.piaylist(piaylist);//清空游玩类型
       let roomlist=[];
-      this.roomtyp(JSON.parse(JSON.stringify(roomlist)))//清空选中的游玩房间
+      this.roomtyp(roomlist)//清空选中的游玩房间
     }
   }
 };

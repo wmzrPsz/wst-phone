@@ -285,6 +285,14 @@ export const getHotelRoomUrl = (date,hotelid,page) => ajax( process.env.VUE_APP_
     hotelid:hotelid,
     pageNo:page
 });
+//15-2包车租车车辆列表
+export const getCarByRentUrl = (cityid,comfort,seatNum,serviceids,page) => ajax( process.env.VUE_APP_PROXY_API +'/common/getCarByRent',{
+    cityid:cityid,
+    comfort:comfort,
+    seatNum:seatNum,
+    serviceids:serviceids,
+    pageNo:page
+});
 //获取途径 景点                                                                            getCitySpot
 export const  getScenicByCity = (cityid) => ajax( process.env.VUE_APP_PROXY_API +'/common/getCitySpot',{
     cityid:cityid,//城市ID
