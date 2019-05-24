@@ -160,6 +160,7 @@ export default {
   name: "index",
   data() {
     return {
+      list:[],
       typlist: 1,
       styser: [], //房间列表
       mescroll: null, // mescroll实例对象
@@ -179,7 +180,8 @@ export default {
   },
   computed: {
     ...mapState({
-      holetroom: state => state.route.holetroom //酒店信息
+      holetroom: state => state.route.holetroom, //酒店信息
+      Generalroom: state => state.route.roomlist,//获取总选择的房间列表
     }),
     //计算一共选中多少房间
     roonumber() {
@@ -199,13 +201,19 @@ export default {
     },
     //计算房间选择列表
     roomlist(){
-      let list = [];
+      if(this.Generalroom.length==0){
+        //第一次选房间
+         this.list = [];
+      }else if(this.Generalroom.length!=0){
+        //不是第一次选要先等于前面选择的房间
+          this.list = JSON.parse(JSON.stringify(this.Generalroom));
+      }
       for (let room of this.styser) {
        if(room.Number!=0){
-         list.push(room);
+         this.list.push(room);
        }
       }
-      return list;
+      return this.list;
     }
   },
   components: {
@@ -224,7 +232,9 @@ export default {
     this.$refs.mescroll && this.$refs.mescroll.beforeRouteLeave(); // 退出路由时,记录列表滚动的位置,隐藏回到顶部按钮和isBounce的配置
     next();
   },
-  mounted() {},
+  mounted() {
+    console.log(this.Generalroom);
+  },
   methods: {
      ...mapMutations("route",["roomtyp"]),
     // mescroll组件初始化的回调,可获取到mescroll对象
@@ -272,7 +282,9 @@ export default {
     //点击预订
     bookroom: function() {
       if(this.fanprice!=0){
-       this.roomtyp(this.roomlist);
+
+       this.roomtyp(JSON.parse(JSON.stringify(this.roomlist)));
+       console.log(this.Generalroom);
        this.$router.push({
         path: "/B_rent"
       });
