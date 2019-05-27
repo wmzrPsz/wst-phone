@@ -83,8 +83,8 @@
     <!--已选择酒店-->
     <div class="brijtan" v-if="typlist==2" @click="roomclick()"></div>
     <div class="Choose_a_room_dibu_tan" v-if="typlist==2">
-      <div v-for="(list,index) in styser" :key="index">
-        <div class="kuandu Choose_a_room_dibu_tan_z" v-if="list.Number!=0">
+      <div v-for="(list,index) in roomlisttyp" :key="index">
+        <div class="kuandu Choose_a_room_dibu_tan_z" >
           <div class="Choose_a_room_d_z_z Choose_a_room_dibu_tan_c">
             <div class="Choose_a_room_d beijingtu float_left">
               <img :src="list.imgUrl">
@@ -183,10 +183,22 @@ export default {
       holetroom: state => state.route.holetroom, //酒店信息
       Generalroom: state => state.route.roomlist,//获取总选择的房间列表
     }),
+    //计算选中的房间
+    roomlisttyp(){
+      let roomlistdedt=[];
+     for(let list of this.styser){
+     let roomlist={};
+     if (list.Number!=0 ){
+     roomlist=list;
+     roomlistdedt.push(roomlist);
+     }
+     }
+     return roomlistdedt;
+    },
     //计算一共选中多少房间
     roonumber() {
       let number = 0;
-      for (let room of this.styser) {
+      for (let room of this.roomlisttyp) {
         number = number + room.Number;
       }
       return number;
@@ -194,7 +206,7 @@ export default {
     //计算房间一共多少价格
     fanprice() {
       let price = 0;
-      for (let room of this.styser) {
+      for (let room of this.roomlisttyp) {
         price = price + room.price * room.Number;
       }
       return price;

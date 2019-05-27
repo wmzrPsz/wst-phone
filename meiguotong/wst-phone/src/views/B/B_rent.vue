@@ -139,7 +139,7 @@
               </i>
             </div>
           </li>
-          <li>
+          <li @click="guide()">
             <div class="youw_s_jia">
               <i class="float_left">选择导游</i>
               <i class="zinan_b float_right">
@@ -385,6 +385,7 @@ export default {
       pathlist: state => state.route.pathlist,
       piaylist_a:state => state.route.piaylist,//游玩列表
       Generalroom: state => state.route.roomlist,//获取总选择的房间列表
+      vehicledata:state => state.route.vehicledata,//获取总选择的车辆列表
     })
   },
   filters: {
@@ -397,7 +398,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.piaylist_a);
+    console.log(this.vehicledata);
     this.daytyp();
     this.business();
     let piaylist_a = this.copy(this.piaylist_a);
@@ -570,7 +571,13 @@ export default {
     this.$router.push({
       path:'/B_vehicle',
     })
-    }
+    },
+    //选择导游
+    guide:function(){
+     this.$router.push({
+       path:'/B_game',
+     })
+    },
   }
 };
 </script>

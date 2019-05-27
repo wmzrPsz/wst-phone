@@ -9,7 +9,7 @@
       <div class="evaluate_wanjia_a" >
 				 <mescroll-vue ref="mescroll" :up="mescrollUp" @init="mescrollInit">
 				  <div class="sanxing_b ">
-					<div class="commpin"> <i><img src="../../assets/img/B/clsp_3_icon@2x.png"></i><i class="font-16">评价</i></div>
+					<div class="commpin"> <i><img src="../../assets/img/B/clsp_3_icon@2x.png"></i><span class="font-16">评价</span></div>
       		 <div class="font-14 float_right pingjia_a"><i class="color-h">4.9分</i><i class="color-b">{{pingluntyp.length}}条评论</i></div>
       	 </div>
         <div class="border_e evaluate_wanjia_z"  v-for="(pinlist,index) in pingluntyp" :key="index">
@@ -50,6 +50,15 @@
 }
 .commpin{
 	float: left;
+}
+.commpin i{
+  margin-top:-0.8rem;
+  display: block;
+  float: left
+}
+.commpin span{
+  float: left;
+  line-height: 1rem;
 }
 .evaluate_wanjia_z{
 	clear: both;
