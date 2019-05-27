@@ -12,6 +12,7 @@ const state = {
   piaylist:[],//游玩类型列表
   holetroom:{},//包车租车常规类型选择酒店
   roomlist:[],//包车租车选中房间的列表
+  vehicledata:[],//包车租车选中车辆的列表
 }
 const getters = {
 }
@@ -56,6 +57,9 @@ const mutations = {
   roomtyp(state,roomlist){
     state.roomlist=roomlist;
     console.log(state.roomlist);
+  },
+  vehicledata(state,vehicledata){
+    state.vehicledata=vehicledata;
   }
 }
 

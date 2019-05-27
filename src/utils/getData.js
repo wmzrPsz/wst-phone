@@ -293,6 +293,19 @@ export const getCarByRentUrl = (cityid,comfort,seatNum,serviceids,page) => ajax(
     serviceids:serviceids,
     pageNo:page
 });
+//4-24根据搜索条件获取导游列表接口
+export const  getGuideByCityUrl =(guideType,startDate,endDate,cityid,guideAge,guideSex,shuxin,minPrice,maxPrice,pageNo) => ajax( process.env.VUE_APP_PROXY_API +'/common/getGuideByCity',{
+    guideType:guideType,//导游类型
+    startDate:startDate,//开始时间
+    endDate:endDate,//结束时间
+    cityid:cityid,//城市id
+    guideAge:guideAge,//年龄
+    guideSex:guideSex,//性别
+    minPrice:minPrice,//低价
+    maxPrice:maxPrice,//高价
+    tagId:shuxin,//制订标签属性
+    pageNo: pageNo,
+});
 //获取途径 景点                                                                            getCitySpot
 export const  getScenicByCity = (cityid) => ajax( process.env.VUE_APP_PROXY_API +'/common/getCitySpot',{
     cityid:cityid,//城市ID
@@ -400,6 +413,16 @@ export const selectCommentUrl = (pageNo,routeid,proType) =>ajax(process.env.VUE_
     pageNo:pageNo,
     typeid:routeid,
     proType:proType,
+})
+//点赞接口
+export const digCommentUrl = (typeId,digType) =>ajax(process.env.VUE_APP_PROXY_API +'/common/digComment',{  
+    typeId:typeId,
+    digType:digType,
+})
+//4-18添加产品评论子评论接口
+export const addChildCommentUrl = (commentid,content) =>ajax(process.env.VUE_APP_PROXY_API +'/common/addChildComment',{  
+    commentid:commentid,
+    content:content,
 })
 //用户资讯
 export const getConsultUrl = (pageNo,routeid,proType) =>ajax( process.env.VUE_APP_PROXY_API +'/common/getConsult',{  

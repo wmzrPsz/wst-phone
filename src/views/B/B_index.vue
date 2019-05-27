@@ -631,7 +631,7 @@ export default {
     this.city();
   },
   methods: {
-    ...mapMutations("route", ["rebcar","piaylist","roomtyp"]),
+    ...mapMutations("route", ["rebcar","piaylist","roomtyp","vehicledata"]),
     onChange(picker, value, index) {
       this.quecity = value;
     },
@@ -732,6 +732,8 @@ export default {
       this.piaylist(piaylist);//清空游玩类型
       let roomlist=[];
       this.roomtyp(roomlist)//清空选中的游玩房间
+      let vehicledata=[];
+      this.vehicledata(vehicledata);
     }
   }
 };

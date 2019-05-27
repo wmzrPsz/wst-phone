@@ -86,6 +86,7 @@ const B_rent = r => require.ensure([], () => r(require('../views/B/B_rent')), 'B
 const B_room = r => require.ensure([], () => r(require('../views/B/B_room')), 'B_room')
 const B_room_details = r => require.ensure([], () => r(require('../views/B/B_room_details')), 'B_room_details')
 const B_vehicle = r => require.ensure([], () => r(require('../views/B/B_vehicle')), 'B_vehicle')
+const B_game = r => require.ensure([], () => r(require('../views/B/B_game')), 'B_game')//选择导游
 
 ///////////////////////////////////////////////F常规路线//////////////////////////////////////////////////////////////////////
 //
@@ -444,6 +445,15 @@ export default new Router({
       meta:{
         'titlie':'车辆'
       }
+    },
+    //选择导游
+    {
+   path:'/B_game',
+   name:'/B_game',
+   component:B_game,
+   meta:{
+     'titlie':'导游'
+   }
     },
     /////////////////////////常规路线///////////////////////////////
     //搜索常规路线
