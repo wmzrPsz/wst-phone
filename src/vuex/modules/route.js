@@ -13,6 +13,7 @@ const state = {
   holetroom:{},//包车租车常规类型选择酒店
   roomlist:[],//包车租车选中房间的列表
   vehicledata:[],//包车租车选中车辆的列表
+  guidetyplistyp:[],//包车租车选中的导游
 }
 const getters = {
 }
@@ -60,6 +61,9 @@ const mutations = {
   },
   vehicledata(state,vehicledata){
     state.vehicledata=vehicledata;
+  },
+  guidetyplistyp(state,guidetyplistyp){
+    state.guidetyplistyp=guidetyplistyp;
   }
 }
 

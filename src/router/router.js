@@ -87,6 +87,7 @@ const B_room = r => require.ensure([], () => r(require('../views/B/B_room')), 'B
 const B_room_details = r => require.ensure([], () => r(require('../views/B/B_room_details')), 'B_room_details')
 const B_vehicle = r => require.ensure([], () => r(require('../views/B/B_vehicle')), 'B_vehicle')
 const B_game = r => require.ensure([], () => r(require('../views/B/B_game')), 'B_game')//选择导游
+const B_orderlist_a = r => require.ensure([], () => r(require('../views/B/B_orderlist_a')), 'B_orderlist_a')//包车租车预订
 
 ///////////////////////////////////////////////F常规路线//////////////////////////////////////////////////////////////////////
 //
@@ -454,6 +455,14 @@ export default new Router({
    meta:{
      'titlie':'导游'
    }
+    },
+    {
+    path:'/B_orderlist_a',
+    name:'/B_orderlist_a',
+    component:B_orderlist_a,
+    meta:{
+      'title':'包车租车预订'
+    }
     },
     /////////////////////////常规路线///////////////////////////////
     //搜索常规路线
