@@ -84,14 +84,14 @@
           <li class="youw_s" v-for="(list,index) in daylist" :key="index">
             <div class="youw_s_jia">
               <i class="float_left">
-                第{{list.daty}}天
-                <i class="font-12 color-b">({{list.time | shijian}})</i>
+                第{{list.day}}天
+                <i class="font-12 color-b">({{list.date}})</i>
               </i>
               <i class="float_right color-b">
-                <i class="xuanbao_e" v-if="list.departure!=null">
+                <i class="xuanbao_e" v-if="list.cityName!=null">
                   <img src="../../assets/img/A/home_lydz_adres2_icon@2x.png">
                 </i>
-                <i v-if="list.departure!=null">{{list.departure}}>{{list.destination}}</i>
+                <i v-if="list.cityName!=null">{{list.cityName}}>{{list.endCityName}}</i>
               </i>
               <span class="float_right xuanbao_d">
                 <button class="color-d youw" @click="typeclick(index)">选择游玩类型</button>
@@ -105,8 +105,8 @@
                 <ul v-for="(list,index) in businesslist" :key="index" @click="flstclick(index)">
                   <li class="dianj_bao_z" v-if="list.range==1">
                     <span :class="[list.falg==true? 'dianj_bao_c dianj_bao_c_jia':'dianj_bao_c']"></span>
-                    <i>接机</i>
-                    <input class="dianj_bao_b color-b" type="text" placeholder="请输入航班号">
+                    <i class="text_left">接机</i>
+                    <input class="dianj_bao_b color-b" type="text" placeholder="请输入航班号" v-model="airNo">
                     <p class="color-g font-12 dianj_bao_d text_left">当地时间12:50降临在白云机场</p>
                   </li>
 
@@ -149,7 +149,7 @@
           </li>
         </ul>
 
-        <button class="color background-d font-14 xiayi">共￥4596.0预订</button>
+        <button class="color background-d font-14 xiayi" @click="bookclick()">共￥{{Generalroomprice+vehicledataprice+guidetyplistyprice}}预订</button>
       </div>
 
       <div class="xuanbao_f">
@@ -377,28 +377,57 @@ export default {
       citychen: [], //到达城市
       citychenclis: "", //选择到达的城市
       citychenclisid: "", //选择到达的城市id
-      typelist: ""
+      typelist: "",
+      airNo:''//航班号
     };
   },
   computed: {
     ...mapState({
-      pathlist: state => state.route.pathlist,
+      pathlist: state => state.route.pathlist,//包车租车index页填写的信息
       piaylist_a:state => state.route.piaylist,//游玩列表
       Generalroom: state => state.route.roomlist,//获取总选择的房间列表
       vehicledata:state => state.route.vehicledata,//获取总选择的车辆列表
-    })
-  },
-  filters: {
-    shijian: function(value) {
-      let endtime_y = new Date(value).getFullYear(); //年
-      let endtime_m = new Date(value).getMonth() + 1; //月
-      let endtime_x = new Date(value).getDate(); //日
-      let endtime = endtime_y + "-" + endtime_m + "-" + endtime_x;
-      return endtime;
+      guidetyplistyp:state => state.route.guidetyplistyp,//获取选择的导游
+    }),
+    //计算酒店房间的总价格
+    Generalroomprice(){
+      let pricezong=0;
+      if(this.Generalroom.length!=0){
+       for(let price of this.Generalroom){
+        pricezong=pricezong+(price.price*price.Number);
+       }
+       return pricezong
+      }else if(this.Generalroom.length==0){
+        return pricezong
+      }
+    },
+    //计算车辆的总价格
+     vehicledataprice(){
+      let pricezong=0;
+      if(this.vehicledata.length!=0){
+       for(let price of this.vehicledata){
+        pricezong=pricezong+price.price;
+       }
+       return pricezong
+      }else if(this.vehicledata.length==0){
+        return pricezong
+      }
+    },
+    //计算导游的价格
+    guidetyplistyprice(){
+      let pricezong=0;
+      if(this.guidetyplistyp.length!=0){
+       return this.guidetyplistyp.price
+      }else if(this.guidetyplistyp.length==0){
+        return pricezong
+      }
     }
   },
   mounted() {
+    console.log(this.Generalroom);
     console.log(this.vehicledata);
+    console.log(this.guidetyplistyp);
+    console.log(this.piaylist_a);
     this.daytyp();
     this.business();
     let piaylist_a = this.copy(this.piaylist_a);
@@ -420,10 +449,10 @@ export default {
           this.citychenclisid = test.id;
         }
       }
-      this.$set(this.daylist[this.typelist], "destination", this.citychenclis);
-      this.$set(this.daylist[this.typelist],"destinationid", this.citychenclisid );
+      this.$set(this.daylist[this.typelist], "endCityName", this.citychenclis);
+      this.$set(this.daylist[this.typelist],"endCityid", this.citychenclisid );
       if(this.typelist!=this.daylist.length-1){
-      this.$set(this.daylist[this.typelist + 1],"departure",this.citychenclis);
+      this.$set(this.daylist[this.typelist + 1],"cityName",this.citychenclis);
       this.$set(this.daylist[this.typelist + 1], "cityid", this.citychenclisid);
       }
     },
@@ -432,12 +461,16 @@ export default {
       for (let i = 1; i <= this.pathlist.datet; i++) {
         let img = {};
         this.time = this.time + 86400000;
-        this.$set(img, "daty", i);
-        this.$set(img, "time", this.time);
+         let endtime_y = new Date(this.time).getFullYear(); //年
+         let endtime_m = new Date(this.time).getMonth() + 1; //月
+         let endtime_x = new Date(this.time).getDate(); //日
+         let endtime = endtime_y + "-" + endtime_m + "-" + endtime_x;
+        this.$set(img, "day", i);
+        this.$set(img, "date", endtime);
         this.$set(img, "falg", false);
         this.daylist.push(img);
       }
-      this.$set(this.daylist[0], "departure", this.pathlist.quecity), //第一天的出发城市
+      this.$set(this.daylist[0], "cityName", this.pathlist.quecity), //第一天的出发城市
       this.$set(this.daylist[0], "cityid", this.pathlist.cityid); //第一天出发城市id
     },
     //获取获取车辆业务类型成功
@@ -452,9 +485,11 @@ export default {
     //点击游玩类型
     typeclick(index) {
       if (
-        this.daylist[index].cityid != null &&
-        this.daylist[index].destinationid == null
+        this.daylist[index].cityName != null &&
+        this.daylist[index].endCityName == null 
       ) {
+        this.airNo="";
+        this.citychenclis="";
         this.$set(this.daylist[index], "falg", true);
         if (index >= 1) {
           this.$set(this.daylist[index - 1], "falg", false);
@@ -465,11 +500,24 @@ export default {
         this.typelist = index;
       }
       if (
-        this.daylist[index].cityid != null &&
-        this.daylist[index].destinationid != null
+        this.daylist[index].cityName != null &&
+        this.daylist[index].endCityName != null
       ) {
-        this.$set(this.daylist[index], "falg", false);
-        this.piaylist(JSON.parse(JSON.stringify(this.daylist)))
+        if(this.daylist[index].range==1){
+          if( this.airNo==0){
+            this.$toast("请输入航班号");
+            return;
+          }
+          if( this.airNo!=0){
+             this.$set(this.daylist[index], "falg", false);
+             this.$set(this.daylist[index], "airNo", this.airNo);
+
+             this.piaylist(JSON.parse(JSON.stringify(this.daylist)))
+          }
+        }else if(this.daylist[index].range!=1){
+           this.$set(this.daylist[index], "falg", false);
+           this.piaylist(JSON.parse(JSON.stringify(this.daylist)))
+        }
       }
     },
     //点击选择
@@ -478,16 +526,16 @@ export default {
         elem.falg = false;
       });
       this.businesslist[index].falg = !this.businesslist[index].falg;
-      if (this.businesslist[index].range != 3) {
+      if (this.businesslist[index].range !=3) {
 
         this.$set(
           this.daylist[this.typelist],
-          "destination",
-          this.daylist[this.typelist].departure
+          "endCityName",
+          this.daylist[this.typelist].cityName
         );
         this.$set(
           this.daylist[this.typelist],
-          "destinationid",
+          "endCityid",
           this.daylist[this.typelist].cityid
         );
         this.$set(
@@ -495,11 +543,21 @@ export default {
           "serviceid",
           this.businesslist[index].id
         );
+        this.$set(
+          this.daylist[this.typelist],
+          "range",
+          this.businesslist[index].range
+        );
+        this.$set(
+          this.daylist[this.typelist],
+          "serviceTitle",
+          this.businesslist[index].title
+        );
         if(this.typelist!=this.daylist.length-1){
           this.$set(
           this.daylist[this.typelist + 1],
-          "departure",
-          this.daylist[this.typelist].departure
+          "cityName",
+          this.daylist[this.typelist].cityName
         );
         this.$set(
           this.daylist[this.typelist + 1],
@@ -509,13 +567,32 @@ export default {
          }
       } 
        if (this.businesslist[index].range == 3) {
+          this.$set(
+          this.daylist[this.typelist],
+          "endCityName",
+          null
+        );
+        this.$set(
+          this.daylist[this.typelist],
+          "endCityid",
+          null
+        );
          this.$set(
           this.daylist[this.typelist],
           "serviceid",
          this.businesslist[index].id
         );
+        this.$set(
+          this.daylist[this.typelist],
+          "range",
+          this.businesslist[index].range
+        );
+        this.$set(
+          this.daylist[this.typelist],
+          "serviceTitle",
+          this.businesslist[index].title
+        );
        }
-      console.log(this.daylist);
     },
     //获取路途景点
     async scenic(index) {
@@ -540,24 +617,16 @@ export default {
     },
     //点击选择酒店
     roomclick(list,index){
-      if(list.destination!=null){
-       this.$set(this.daylist[index], "falg", false);
-       this.piaylist(JSON.parse(JSON.stringify(this.daylist)))
-      let endtime_y = new Date(list.time).getFullYear(); //年
-      let endtime_m = new Date(list.time).getMonth() + 1; //月
-      let endtime_x = new Date(list.time).getDate(); //日
-      let endtime = endtime_y + "-" + endtime_m + "-" + endtime_x;
-      for(let tesrt of this.Generalroom){
-        if(tesrt.date==endtime){
-          this.$toast("已经完成选择酒店");
-          return;
-        }
-      }
-       this.$router.push({
-        path:'/B_room/'+endtime+"/"+list.destinationid,
+      if(list.endCityName!=null){
+        if(list.falg==false){
+           this.$router.push({
+        path:'/B_room/'+list.date+"/"+list.endCityid,
       })
-      }else if(list.destination==null){
-       this.$toast("完善游玩类型")
+        }else if(list.falg==true){
+           this.$toast("完善游玩类型");
+        }
+      }else if(list.endCityName==null){
+       this.$toast("完善游玩类型");
       }
     },
     //上一页
@@ -578,6 +647,13 @@ export default {
        path:'/B_game',
      })
     },
+    //点击预订
+    bookclick(){
+
+      this.$router.push({
+        path:'/B_orderlist_a',
+      })
+    }
   }
 };
 </script>

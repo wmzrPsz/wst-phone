@@ -557,7 +557,7 @@ export default {
         this.pathlist.cityid, //城市id
         this.comfort,
         this.seatNum,
-        JSON.stringify(this.serviceids.toString()),
+       this.serviceids.toString(),
         page.num
       );
       if (data) {
@@ -716,6 +716,10 @@ export default {
      commentid,
      this.content,
     )
+    if(data){
+       this.commentlist(this.vouchelist);
+       this.content="";
+    }
   }
   }
 };

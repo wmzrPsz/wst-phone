@@ -213,6 +213,9 @@ export default {
     },
     //计算房间选择列表
     roomlist(){
+      let holetroomlist={};
+      this.$set(holetroomlist,'hotelid',this.holetroom.id);
+      this.$set(holetroomlist,'hotelname',this.holetroom.name);
       if(this.Generalroom.length==0){
         //第一次选房间
          this.list = [];
@@ -222,10 +225,11 @@ export default {
       }
       for (let room of this.styser) {
        if(room.Number!=0){
-         this.list.push(room);
+        //  this.list.push(room);
        }
       }
-      return this.list;
+      this.$set(holetroomlist,'room',this.list)
+      return holetroomlist;
     }
   },
   components: {
@@ -246,6 +250,7 @@ export default {
   },
   mounted() {
     console.log(this.Generalroom);
+    console.log(this.holetroom);
   },
   methods: {
      ...mapMutations("route",["roomtyp"]),
@@ -293,17 +298,18 @@ export default {
     },
     //点击预订
     bookroom: function() {
-      if(this.fanprice!=0){
+      console.log(this.roomlist);
+      // if(this.fanprice!=0){
 
-       this.roomtyp(this.roomlist);
-       console.log(this.Generalroom);
-       this.$router.push({
-        path: "/B_rent"
-      });
-      } else  if(this.fanprice==0){
-        this.$toast("选择房间");
+      //  this.roomtyp(this.roomlist);
+      //  console.log(this.Generalroom);
+      //  this.$router.push({
+      //   path: "/B_rent"
+      // });
+      // } else  if(this.fanprice==0){
+      //   this.$toast("选择房间");
 
-      }
+      // }
     }
   }
 };
