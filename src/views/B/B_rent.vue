@@ -61,8 +61,7 @@
             </div>
             <li style="clear: both;">
               <i class="float_left">
-                人数
-                <i class="bao_her_e">{{pathlist.people}}</i>
+                <i class="bao_her_e">{{pathlist.adultNum}}/成年人,{{pathlist.childNum}}/儿童</i>
               </i>
               <i class="float_right">
                 行李箱
@@ -378,7 +377,8 @@ export default {
       citychenclis: "", //选择到达的城市
       citychenclisid: "", //选择到达的城市id
       typelist: "",
-      airNo:''//航班号
+      airNo:'',//航班号
+      hotelInforDetailsimg:{},
     };
   },
   computed: {
@@ -394,12 +394,15 @@ export default {
       let pricezong=0;
       if(this.Generalroom.length!=0){
        for(let price of this.Generalroom){
-        pricezong=pricezong+(price.price*price.Number);
+         for(let testpric of price.room){
+           pricezong=pricezong+(testpric.price*testpric.Number);
+         }
        }
        return pricezong
       }else if(this.Generalroom.length==0){
         return pricezong
       }
+       return pricezong
     },
     //计算车辆的总价格
      vehicledataprice(){
@@ -408,7 +411,7 @@ export default {
        for(let price of this.vehicledata){
         pricezong=pricezong+price.price;
        }
-       return pricezong
+       return pricezong*this.pathlist.datet
       }else if(this.vehicledata.length==0){
         return pricezong
       }
@@ -417,7 +420,7 @@ export default {
     guidetyplistyprice(){
       let pricezong=0;
       if(this.guidetyplistyp.length!=0){
-       return this.guidetyplistyp.price
+       return this.guidetyplistyp.price*this.pathlist.datet;
       }else if(this.guidetyplistyp.length==0){
         return pricezong
       }
@@ -428,12 +431,14 @@ export default {
     console.log(this.vehicledata);
     console.log(this.guidetyplistyp);
     console.log(this.piaylist_a);
+    console.log(this.pathlist);
     this.daytyp();
     this.business();
     let piaylist_a = this.copy(this.piaylist_a);
     if(this.piaylist_a.length!=0){
       this.daylist= piaylist_a;
     }
+    this.Splicing();
   },
   methods: {
     ...mapMutations("route", ["piaylist"]),
@@ -618,6 +623,12 @@ export default {
     //点击选择酒店
     roomclick(list,index){
       if(list.endCityName!=null){
+       if(this.Generalroom.length>index){
+         if(this.Generalroom[index].date!=null){
+             this.$toast("已选择好了酒店");
+              return;
+         }
+      }
         if(list.falg==false){
            this.$router.push({
         path:'/B_room/'+list.date+"/"+list.endCityid,
@@ -649,10 +660,34 @@ export default {
     },
     //点击预订
     bookclick(){
-
+      let manni=this.Generalroomprice+this.vehicledataprice+this.guidetyplistyprice
+      if(this.piaylist_a.length!=this.Generalroom.length){
+        this.$toast("完善游玩信息");
+        return;
+      }
+      if(this.vehicledataprice==0){
+        this.$toast("选择车辆");
+        return;
+      }
+      
       this.$router.push({
-        path:'/B_orderlist_a',
+        path:'/B_orderlist_a/'+manni,
       })
+    },
+    //拼接数据
+    Splicing(){
+     for(let i=0;i<this.Generalroom.length;i++){
+        let hotelInforDetails=[];
+       for(let list of this.Generalroom[i].room){
+        this.hotelInforDetailsimg={};
+         this.$set(this.hotelInforDetailsimg,"hotelid",list.hotelid);
+         this.$set(this.hotelInforDetailsimg,"roomid",list.id);
+         this.$set(this.hotelInforDetailsimg,"num",list.Number);
+       }
+       hotelInforDetails.push(this.hotelInforDetailsimg);
+       this.$set(this.daylist[i],'hotelInforDetails',JSON.stringify(hotelInforDetails));
+     }
+     this.piaylist(JSON.parse(JSON.stringify(this.daylist)))
     }
   }
 };

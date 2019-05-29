@@ -78,8 +78,12 @@
             </div>
             <li style="clear: both;">
               <i class="float_left" @click="show2 = true">
-                人数
-                <i class="bao_her_e">{{people}}</i>
+                大人
+                <i class="bao_her_e">{{adultNum}}</i>
+              </i>
+               <i class="float_left" @click="show5 = true">
+                儿童
+                <i class="bao_her_e">{{childNum}}</i>
               </i>
               <i class="float_right" @click="show3 = true">
                 行李箱
@@ -534,10 +538,19 @@
     <van-popup v-model="show2" position="bottom">
       <van-picker
         show-toolbar
-        title="选择人数"
+        title="选择成年人"
         :columns="columns"
         @cancel="quxiao"
         @confirm="onConfirm"
+      />
+    </van-popup>
+      <van-popup v-model="show5" position="bottom">
+      <van-picker
+        show-toolbar
+        title="选择儿童"
+        :columns="columns"
+        @cancel="quxiao"
+        @confirm="onConfirm_er"
       />
     </van-popup>
     <!--选择行李-->
@@ -595,8 +608,11 @@ export default {
       show2: false,
       show3: false,
       show4: false,
+      show5:false,
       currentDate: new Date(),
-      people: 1, //人数
+      adultNum: 0, //大人
+      childNum:0,//儿童
+      master:0,//总人数
       luggage: 0, //行李
       dantime: "",
       citylist: "", //城市列表
@@ -636,8 +652,12 @@ export default {
       this.quecity = value;
     },
     onConfirm(value, index) {
-      this.people = value;
+      this.adultNum = value;
       this.show2 = false;
+    },
+     onConfirm_er(value, index) {
+      this.childNum = value;
+      this.show5 = false;
     },
     onConfirm_a(value, index) {
       this.luggage = value;
@@ -687,7 +707,7 @@ export default {
     },
     //创建人数和行李数据
     chuanjian: function() {
-      for (let i = 1; i <= 100; i++) {
+      for (let i = 0; i <= 100; i++) {
         this.columns.push(i);
       }
     },
@@ -706,12 +726,17 @@ export default {
     },
     //下一步
     nepx: function() {
+      this.master=this.adultNum+this.childNum;
       if (this.quecity == 0) {
         this.$toast("选择出发城市");
         return;
       }
       if (this.startAddress == 0) {
         this.$toast("输入详细地址");
+        return;
+      }
+      if(this.master==0){
+        this.$toast("至少要一人");
         return;
       }
       this.$router.push({
@@ -722,7 +747,9 @@ export default {
         startAddress: this.startAddress,
         certValidDate: this.certValidDate,
         birthday: this.birthday,
-        people: this.people,
+        adultNum: this.adultNum,
+        childNum:this.childNum,
+        master:this.master,
         luggage: this.luggage,
         datet: this.datet,
         cityid:this.cityid,
