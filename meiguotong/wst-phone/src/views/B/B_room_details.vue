@@ -152,6 +152,7 @@
 </style>
 <script>
 import { mapState } from "vuex";
+import { copy } from "@/utils/common";
 import { getHotelRoomUrl } from "@/utils/getData";
 import MescrollVue from "mescroll.js/mescroll.vue";
 import { hotle } from "@/filters/custom";
@@ -214,18 +215,13 @@ export default {
     //计算房间选择列表
     roomlist(){
       let holetroomlist={};
+      this.$set(holetroomlist,'date',this.$route.params.date);
       this.$set(holetroomlist,'hotelid',this.holetroom.id);
       this.$set(holetroomlist,'hotelname',this.holetroom.name);
-      if(this.Generalroom.length==0){
-        //第一次选房间
-         this.list = [];
-      }else if(this.Generalroom.length!=0){
-        //不是第一次选要先等于前面选择的房间
-          this.list = JSON.parse(JSON.stringify(this.Generalroom));
-      }
       for (let room of this.styser) {
        if(room.Number!=0){
-        //  this.list.push(room);
+         this.$set(room,'hotelid',this.holetroom.id);
+         this.list.push(room);
        }
       }
       this.$set(holetroomlist,'room',this.list)
@@ -298,18 +294,24 @@ export default {
     },
     //点击预订
     bookroom: function() {
-      console.log(this.roomlist);
-      // if(this.fanprice!=0){
+      if(this.fanprice!=0){
+        let zongslist=[];
+       if(this.Generalroom.length==0){
+        //第一次选择酒店
+        zongslist.push(this.roomlist)
+      }else if(this.Generalroom.length!=0){
+        //不是第一次选要先等于前面选择的房间
+         zongslist = this.copy(this.Generalroom);
+         zongslist.push(this.roomlist)
+      }
+       this.roomtyp(zongslist);
+       this.$router.push({
+        path: "/B_rent"
+      });
+      } else  if(this.fanprice==0){
+        this.$toast("选择房间");
 
-      //  this.roomtyp(this.roomlist);
-      //  console.log(this.Generalroom);
-      //  this.$router.push({
-      //   path: "/B_rent"
-      // });
-      // } else  if(this.fanprice==0){
-      //   this.$toast("选择房间");
-
-      // }
+      }
     }
   }
 };

@@ -457,7 +457,7 @@ export default new Router({
    }
     },
     {
-    path:'/B_orderlist_a',
+    path:'/B_orderlist_a/:manni',
     name:'/B_orderlist_a',
     component:B_orderlist_a,
     meta:{

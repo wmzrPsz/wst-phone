@@ -306,6 +306,24 @@ export const  getGuideByCityUrl =(guideType,startDate,endDate,cityid,guideAge,gu
     tagId:shuxin,//制订标签属性
     pageNo: pageNo,
 });
+//15-3包车租车生成订单接口
+export const saveCarOrderUrl = (contactsName,contactsMobile,remark,startDate,endDate,dayNum,startCity,startAddress,adultNum,childNum,bagNum,carInfor,travelInfor,insuranceid,Selection) =>ajax( process.env.VUE_APP_PROXY_API +'/car/saveCarOrder',{
+    contactsName:contactsName,//联系人
+    contactsMobile:contactsMobile,//联系电话
+    remark:remark,//备注
+    startDate:startDate,//上车时间
+    endDate:endDate,//下车时间
+    dayNum:dayNum,//天数
+    startCity:startCity,//长车城市
+    startAddress:startAddress,//上车详细地址
+    adultNum:adultNum,//大人数量
+    childNum:childNum,//小孩数量
+    bagNum:bagNum,//包裹数量
+    carInfor:carInfor,//汽车信息
+    travelInfor:travelInfor,//行程信息
+    insuranceid:insuranceid,//保险id
+    orderMember:Selection,//出游人数组
+},'post')
 //获取途径 景点                                                                            getCitySpot
 export const  getScenicByCity = (cityid) => ajax( process.env.VUE_APP_PROXY_API +'/common/getCitySpot',{
     cityid:cityid,//城市ID
