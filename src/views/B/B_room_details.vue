@@ -250,7 +250,7 @@ export default {
     console.log(this.holetroom);
   },
   methods: {
-     ...mapMutations("route",["boorroom"]),
+     ...mapMutations("route",["boorroom","STATE_CHANGE"]),
     // mescroll组件初始化的回调,可获取到mescroll对象
     mescrollInit(mescroll) {
       this.mescroll = mescroll; // 如果this.mescroll对象没有使用到,则mescrollInit可以不用配置
@@ -293,7 +293,11 @@ export default {
     },
     //删除房间
     deleteclick(index) {
-      this.copy(this.boorroomlist.splice(index,1));
+       let boorroomlist = this.copy(this.boorroomlist);
+       boorroomlist.splice(index,1);
+       this.STATE_CHANGE({
+          boorroom: boorroomlist,
+       })
     },
     //点击房间数量改变出发器
      onChange (event) {

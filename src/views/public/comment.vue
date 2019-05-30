@@ -54,7 +54,7 @@
 .commpin i{
   margin-top:-0.8rem;
   display: block;
-  float: left
+  float: left;
 }
 .commpin span{
   float: left;
@@ -154,6 +154,6 @@ import MescrollVue from "mescroll.js/mescroll.vue";
         mescroll.endErr();
       }
   },
-	},
+	}
  }
 </script>
