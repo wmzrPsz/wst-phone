@@ -1,3 +1,5 @@
+import { Object } from "core-js";
+
 const state = {
   Routineroute: {},//常规路/参团线详情  
   Price: {},//订单房间价格
@@ -18,6 +20,16 @@ const state = {
 const getters = {
 }
 const mutations = {
+    //改变state的值
+    STATE_CHANGE(state, opt){
+      Object.keys({...state}).forEach(k1 => {
+        Object.keys({...opt}).forEach(k2 => {
+            if(k1 == k2){
+              state[k1] = opt[k2]
+            }
+        })
+      })
+  },
   passwtyp(state, slist) {
     state.Routineroute = slist;
   },
