@@ -385,23 +385,20 @@ export default {
     ...mapState({
       pathlist: state => state.route.pathlist,//包车租车index页填写的信息
       piaylist_a:state => state.route.piaylist,//游玩列表
-      Generalroom: state => state.route.roomlist,//获取总选择的房间列表
+      boorroomlist:state => state.route.boorroom,//选中房间酒店
       vehicledata:state => state.route.vehicledata,//获取总选择的车辆列表
       guidetyplistyp:state => state.route.guidetyplistyp,//获取选择的导游
     }),
     //计算酒店房间的总价格
     Generalroomprice(){
       let pricezong=0;
-      if(this.Generalroom.length!=0){
-       for(let price of this.Generalroom){
-         for(let testpric of price.room){
-           pricezong=pricezong+(testpric.price*testpric.Number);
+       for(let price of this.piaylist_a){
+         if(price.hotelInforDetails){
+         for(let testpric of price.hotelInforDetails){
+           pricezong=pricezong+(testpric.price*testpric.num);
+         }
          }
        }
-       return pricezong
-      }else if(this.Generalroom.length==0){
-        return pricezong
-      }
        return pricezong
     },
     //计算车辆的总价格
@@ -427,11 +424,8 @@ export default {
     }
   },
   mounted() {
-    console.log(this.Generalroom);
-    console.log(this.vehicledata);
-    console.log(this.guidetyplistyp);
-    console.log(this.piaylist_a);
     console.log(this.pathlist);
+    console.log(this.piaylist_a);
     this.daytyp();
     this.business();
     let piaylist_a = this.copy(this.piaylist_a);
@@ -441,7 +435,7 @@ export default {
     this.Splicing();
   },
   methods: {
-    ...mapMutations("route", ["piaylist"]),
+    ...mapMutations("route", ["piaylist","boorroom"]),
     exhibition(index) {
       this.type = index;
     },
@@ -468,6 +462,9 @@ export default {
         this.time = this.time + 86400000;
          let endtime_y = new Date(this.time).getFullYear(); //年
          let endtime_m = new Date(this.time).getMonth() + 1; //月
+         if(endtime_m<10){
+           endtime_m="0"+endtime_m;
+         }
          let endtime_x = new Date(this.time).getDate(); //日
          let endtime = endtime_y + "-" + endtime_m + "-" + endtime_x;
         this.$set(img, "day", i);
@@ -622,22 +619,15 @@ export default {
     },
     //点击选择酒店
     roomclick(list,index){
-      if(list.endCityName!=null){
-       if(this.Generalroom.length>index){
-         if(this.Generalroom[index].date!=null){
-             this.$toast("已选择好了酒店");
-              return;
-         }
-      }
-        if(list.falg==false){
-           this.$router.push({
+      //判断游玩类型有没有填好
+      if(list.endCityName!=null && list.falg==false){
+       let boorroom=[];
+      this.boorroom(boorroom)//清空选中的游玩房间
+      this.$router.push({
         path:'/B_room/'+list.date+"/"+list.endCityid,
       })
-        }else if(list.falg==true){
-           this.$toast("完善游玩类型");
-        }
-      }else if(list.endCityName==null){
-       this.$toast("完善游玩类型");
+      }else{
+        this.$toast("完善游玩类型")
       }
     },
     //上一页
@@ -660,34 +650,27 @@ export default {
     },
     //点击预订
     bookclick(){
-      let manni=this.Generalroomprice+this.vehicledataprice+this.guidetyplistyprice
-      if(this.piaylist_a.length!=this.Generalroom.length){
-        this.$toast("完善游玩信息");
-        return;
-      }
-      if(this.vehicledataprice==0){
+       if(this.vehicledataprice==0){
         this.$toast("选择车辆");
         return;
       }
-      
-      this.$router.push({
+      let manni=this.Generalroomprice+this.vehicledataprice+this.guidetyplistyprice
+      if(this.daylist[this.daylist.length-1].hotelInforDetails){
+        this.$router.push({
         path:'/B_orderlist_a/'+manni,
       })
+      }
     },
     //拼接数据
     Splicing(){
-     for(let i=0;i<this.Generalroom.length;i++){
-        let hotelInforDetails=[];
-       for(let list of this.Generalroom[i].room){
-        this.hotelInforDetailsimg={};
-         this.$set(this.hotelInforDetailsimg,"hotelid",list.hotelid);
-         this.$set(this.hotelInforDetailsimg,"roomid",list.id);
-         this.$set(this.hotelInforDetailsimg,"num",list.Number);
+     if(this.boorroomlist.length!=0){
+       for(let tylist of this.daylist){
+         if(tylist.date==this.boorroomlist.date){
+          this.$set(tylist,"hotelInforDetails",this.boorroomlist);
+         }
        }
-       hotelInforDetails.push(this.hotelInforDetailsimg);
-       this.$set(this.daylist[i],'hotelInforDetails',JSON.stringify(hotelInforDetails));
+        this.piaylist(JSON.parse(JSON.stringify(this.daylist)))
      }
-     this.piaylist(JSON.parse(JSON.stringify(this.daylist)))
     }
   }
 };

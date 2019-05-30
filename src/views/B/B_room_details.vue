@@ -46,7 +46,6 @@
               <Li class="font-16 texe_left">{{list.content}}</Li>
               <li class="font-12 color-b float_left">
                 <i class="float_left">{{list.content}}</i>
-                <!-- <i class="Choose_a_room_d_b background-f font-14">无早</i> -->
               </li>
               <li class="font-12 float_left">最大入住人数{{list.people}},剩余{{list.stockNum}}</li>
             </ul>
@@ -56,6 +55,7 @@
                 :min="0"
                 :max="list.stockNum"
                 class="float_left"
+                @change="onChange($event)"
                 style="margin-top:0.3rem;"
               />
               <div class="Choose_a_room_dibu_tan_a float_right" style="margin-right:1rem;">
@@ -83,7 +83,7 @@
     <!--已选择酒店-->
     <div class="brijtan" v-if="typlist==2" @click="roomclick()"></div>
     <div class="Choose_a_room_dibu_tan" v-if="typlist==2">
-      <div v-for="(list,index) in roomlisttyp" :key="index">
+      <div v-for="(list,index) in boorroomlist" :key="index">
         <div class="kuandu Choose_a_room_dibu_tan_z" >
           <div class="Choose_a_room_d_z_z Choose_a_room_dibu_tan_c">
             <div class="Choose_a_room_d beijingtu float_left">
@@ -93,11 +93,11 @@
               <div class="font-14 texe_left">{{list.roomName}}</div>
               <button
                 class="Choose_a_room_dibu_tan_b float_right font-14"
-                @click="deleteclick(list)"
+                @click="deleteclick(index)"
               >删除</button>
               <div class="Choose_a_room_dibu_tan_a texe_left">
                 <i class="font-12 color-h">￥</i>
-                <i class="font-16 color-h">{{list.price}}*{{list.Number}}</i>
+                <i class="font-16 color-h">{{list.price}}*{{list.num}}</i>
                 <i class="font-14">/起</i>
               </div>
             </div>
@@ -161,6 +161,8 @@ export default {
   name: "index",
   data() {
     return {
+      hotelInforDetails:[],
+      lsifaly:1,
       list:[],
       typlist: 1,
       styser: [], //房间列表
@@ -182,7 +184,7 @@ export default {
   computed: {
     ...mapState({
       holetroom: state => state.route.holetroom, //酒店信息
-      Generalroom: state => state.route.roomlist,//获取总选择的房间列表
+      boorroomlist:state => state.route.boorroom,//选中房间
     }),
     //计算选中的房间
     roomlisttyp(){
@@ -199,16 +201,16 @@ export default {
     //计算一共选中多少房间
     roonumber() {
       let number = 0;
-      for (let room of this.roomlisttyp) {
-        number = number + room.Number;
+      for (let room of this.boorroomlist) {
+        number = number + room.num;
       }
       return number;
     },
     //计算房间一共多少价格
     fanprice() {
       let price = 0;
-      for (let room of this.roomlisttyp) {
-        price = price + room.price * room.Number;
+      for (let room of this.boorroomlist) {
+        price = price + room.price * room.num;
       }
       return price;
     },
@@ -245,11 +247,10 @@ export default {
     next();
   },
   mounted() {
-    console.log(this.Generalroom);
     console.log(this.holetroom);
   },
   methods: {
-     ...mapMutations("route",["roomtyp"]),
+     ...mapMutations("route",["boorroom"]),
     // mescroll组件初始化的回调,可获取到mescroll对象
     mescrollInit(mescroll) {
       this.mescroll = mescroll; // 如果this.mescroll对象没有使用到,则mescrollInit可以不用配置
@@ -268,8 +269,10 @@ export default {
         this.styser = [...this.styser, ...data.list];
         //
         for (let telist of this.styser) {
-          this.$set(telist, "Number", 0);
-          this.$set(telist,"date",this.$route.params.date)
+          this.$set(telist, "Number", 0);//房间的数量
+          this.$set(telist,"date",this.$route.params.date);//时间
+          this.$set(telist,'hotelid',this.holetroom.id);//酒店id
+          this.$set(telist,'hotelname',this.holetroom.name);//酒店名称
         }
         // 数据渲染成功后,隐藏下拉刷新的状态
         this.$nextTick(() => {
@@ -289,29 +292,48 @@ export default {
       }
     },
     //删除房间
-    deleteclick(list) {
-      list.Number = 0;
+    deleteclick(index) {
+      this.copy(this.boorroomlist.splice(index,1));
+    },
+    //点击房间数量改变出发器
+     onChange (event) {
+       this.lsifaly=2;
+       this.hotelInforDetails=this.copy(this.boorroomlist);
+       this.$set(this.hotelInforDetails,"date",this.$route.params.date);
+       console.log(this.hotelInforDetails);
+       for(let list of this.styser){
+       if(list.Number!=0){
+       let img={};
+       this.$set(img,"num",list.Number);//房间数量
+       this.$set(img,'roomid',list.id);//房间id
+       this.$set(img,"hotelid",list.hotelid);//酒店id
+       this.$set(img,"hotelname",list.hotelname);//酒店名称
+       this.$set(img,"roomName",list.roomName);//房间名称
+       this.$set(img,"imgUrl",list.imgUrl);//房间图片
+       this.$set(img,"price",list.price);//房间价格；
+       console.log(img);
+       for(let tese of this.hotelInforDetails){
+         if(tese.roomid==img.roomid){
+           this.$set(tese,"num",img.num);
+           this.lsifaly=1;
+         }
+       }
+       if(this.lsifaly==2){
+        this.hotelInforDetails.push(img)
+       }
+       }
+       }
+       this.boorroom(this.hotelInforDetails);
     },
     //点击预订
     bookroom: function() {
-      if(this.fanprice!=0){
-        let zongslist=[];
-       if(this.Generalroom.length==0){
-        //第一次选择酒店
-        zongslist.push(this.roomlist)
-      }else if(this.Generalroom.length!=0){
-        //不是第一次选要先等于前面选择的房间
-         zongslist = this.copy(this.Generalroom);
-         zongslist.push(this.roomlist)
-      }
-       this.roomtyp(zongslist);
-       this.$router.push({
+     if(this.fanprice!=0){
+      this.$router.push({
         path: "/B_rent"
       });
-      } else  if(this.fanprice==0){
-        this.$toast("选择房间");
-
-      }
+     }else if(this.fanprice==0){
+       this.$toast("请选择房间");
+     }
     }
   }
 };
