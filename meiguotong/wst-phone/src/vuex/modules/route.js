@@ -11,7 +11,7 @@ const state = {
   pathlist:{},//包车租车index页填写的信息
   piaylist:[],//游玩类型列表
   holetroom:{},//包车租车常规类型选择酒店
-  roomlist:[],//包车租车选中房间的列表
+  boorroom:[],//酒店预选的房间
   vehicledata:[],//包车租车选中车辆的列表
   guidetyplistyp:[],//包车租车选中的导游
 }
@@ -55,15 +55,14 @@ const mutations = {
   holetroom(state,holetroom){
     state.holetroom=holetroom;
   },
-  roomtyp(state,roomlist){
-    state.roomlist=roomlist;
-    console.log(state.roomlist);
-  },
   vehicledata(state,vehicledata){
     state.vehicledata=vehicledata;
   },
   guidetyplistyp(state,guidetyplistyp){
     state.guidetyplistyp=guidetyplistyp;
+  },
+  boorroom(state,boorroom){
+    state.boorroom=boorroom;
   }
 }
 

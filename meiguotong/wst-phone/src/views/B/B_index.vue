@@ -637,7 +637,13 @@ export default {
   created() {
     this.year = this.currentDate.getFullYear(); //年
     this.month = this.currentDate.getMonth() + 1; //月
+    if(this.month<10){
+      this.month="0"+this.month;
+    }
     this.day = this.currentDate.getDate(); //日
+    if(this.day<10){
+      this.day="0"+this.day;
+    }
     this.dantime = this.year + "-" + this.month + "-" + this.day;
     this.certValidDate = this.year + "-" + this.month + "-" + this.day;
     this.birthday = this.year + "-" + this.month + "-" + this.day;
@@ -647,7 +653,7 @@ export default {
     this.city();
   },
   methods: {
-    ...mapMutations("route", ["rebcar","piaylist","roomtyp","vehicledata","guidetyplistyp"]),
+    ...mapMutations("route", ["rebcar","piaylist","boorroom","vehicledata","guidetyplistyp"]),
     onChange(picker, value, index) {
       this.quecity = value;
     },
@@ -683,7 +689,13 @@ export default {
     queding() {
       this.year = this.currentDate.getFullYear(); //年
       this.month = this.currentDate.getMonth() + 1; //月
+      if(this.month<10){
+        this.month="0"+this.month
+      }
       this.day = this.currentDate.getDate(); //日
+      if(this.day<10){
+      this.day="0"+this.day;
+    }
       let cer = this.year + "-" + this.month + "-" + this.day;
       if (new Date(this.dantime).getTime() <= new Date(cer).getTime()) {
         this.certValidDate = this.year + "-" + this.month + "-" + this.day;
@@ -696,7 +708,13 @@ export default {
     queding_a() {
       this.year = this.currentDate.getFullYear(); //年
       this.month = this.currentDate.getMonth() + 1; //月
+      if(this.month<10){
+        this.month="0"+this.month
+      }
       this.day = this.currentDate.getDate(); //日
+      if(this.day<10){
+      this.day="0"+this.day;
+    }
       let birslit = this.year + "-" + this.month + "-" + this.day;
       if (new Date(birslit).getTime() >= new Date(this.certValidDate)) {
         this.birthday = this.year + "-" + this.month + "-" + this.day;
@@ -757,12 +775,12 @@ export default {
       this.rebcar(pathlist);
       let piaylist=[];
       this.piaylist(piaylist);//清空游玩类型
-      let roomlist=[];
-      this.roomtyp(roomlist)//清空选中的游玩房间
+      let boorroom=[];
+      this.boorroom(boorroom)//清空选中的游玩房间
       let vehicledata=[];
       this.vehicledata(vehicledata);
       let guidetyplist=[]
-       this.guidetyplistyp(guidetyplist);//清空导游
+      this.guidetyplistyp(guidetyplist);//清空导游
     }
   }
 };

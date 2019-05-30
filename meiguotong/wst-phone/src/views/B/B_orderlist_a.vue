@@ -123,22 +123,22 @@
               <div class="font-16 Order_d_b">酒店信息</div>
               <div>
                 <ul class="Order_d_z">
-                  <li v-for="(list,index) in roomlist" :key="index">
+                  <li v-for="(list,index) in piaylist" :key="index">
                     <div class="float_left font-16">
                       <i class="ez-video_dian">
                         <img src="../../assets/img/B/clsp_3_icon@2x.png">
                       </i>
                       {{list.date}}
                     </div>
-                    <div class="float_right font-14 whi_ez">
-                      {{list.hotelname}}
-                      <i class="video_dian_a color-b">
-                        房间
-                        <i
-                          v-for="(test,index) in list.room"
-                          :key="index"
-                        >{{test.Number}}*{{test.roomName}}</i>
-                      </i>
+                    <div
+                      class="float_right font-14 whi_ez"
+                      v-for="(list,index) in list.hotelInforDetails"
+                      :key="index"
+                    >
+                      酒店:{{list.hotelname}}
+                      <i
+                        class="video_dian_a color-b"
+                      >房间:{{list.num}}*{{list.roomName}}</i>
                     </div>
                   </li>
                 </ul>
@@ -163,7 +163,7 @@
               </dl>
             </div>
             <!--导游信息-->
-            <div class="Orderjia border_e"  v-if="guidetyplistyp!=0">
+            <div class="Orderjia border_e" v-if="guidetyplistyp!=0">
               <div class="font-16 Order_d_b">导游信息</div>
               <dl class="font-14 video_dian_c">
                 <dd>{{guidetyplistyp.realName}}</dd>
@@ -216,76 +216,82 @@
         </div>
       </div>
       <div class="sanxing_b">
-          <i>
-            <img src="../../assets/img/B/clsp_3_icon@2x.png">
-          </i>
-          <span class="font-16 float_left">订单价格</span>
-        </div>
+        <i>
+          <img src="../../assets/img/B/clsp_3_icon@2x.png">
+        </i>
+        <span class="font-16 float_left">订单价格</span>
+      </div>
       <div class="Order_b" style="padding-top:0rem;  margin-bottom:3rem;">
-      <div class="">
-        <div class="Trip">
-              <div class="font-16 Order_d_b">行程</div>
-              <div>
-                <ul class="Order_d_z">
-                  <li class="font-14" style="text-align: left!important;">
-                    <i class="Order_d_e beijingtu">
-                      <img src="../../assets/img/C/cglxxq_date_icon@2x.png">
-                    </i>
-                    {{pathlist.certValidDate}} - {{pathlist.birthday}} ({{pathlist.datet}}天)
-                  </li>
-                </ul>
+        <div class>
+          <div class="Trip">
+            <div class="font-16 Order_d_b">行程</div>
+            <div>
+              <ul class="Order_d_z">
+                <li class="font-14" style="text-align: left!important;">
+                  <i class="Order_d_e beijingtu">
+                    <img src="../../assets/img/C/cglxxq_date_icon@2x.png">
+                  </i>
+                  {{pathlist.certValidDate}} - {{pathlist.birthday}} ({{pathlist.datet}}天)
+                </li>
+              </ul>
+            </div>
+            <div class="font-16 Order_d_b">旅游定制</div>
+            <div class="Trip_a border_e">
+              <dl class="font-14">
+                <dd
+                  class="float_left Trip_b"
+                  v-for="(list,index) in piaylist"
+                  :key="index"
+                >{{list.serviceTitle}}</dd>
+              </dl>
+            </div>
+            <div class="font-16 Order_d_b">酒店</div>
+            <div class="Trip_a border_e">
+              <div v-for="(list,index) in piaylist" :key="index">
+                <div v-for="(list,index) in list.hotelInforDetails" :key="index">
+                  <dl class="font-14">
+                    <dd class="float_left Trip_b">{{list.roomName}}</dd>
+                    <dd class="float_right color-b">￥{{list.price}}*{{list.num}}</dd>
+                  </dl>
+                </div>
               </div>
-          <div class="font-16 Order_d_b">旅游定制</div>
-          <div class="Trip_a border_e">
-            <dl class="font-14">
-              <dd class="float_left Trip_b " v-for="(list,index) in piaylist" :key="index">{{list.serviceTitle}}</dd>
-            </dl>
-          </div>
-          <div class="font-16 Order_d_b">酒店</div>
-          <div class="Trip_a border_e">
-            <div v-for="(list,index) in roomlist" :key="index">
-            <dl class="font-14" v-for="(test,index) in list.room" :key="index">
-              <dd class="float_left Trip_b">{{test.roomName}}</dd>
-              <dd class="float_right color-b">￥{{test.price}}*{{test.Number}}</dd>
-            </dl>
+            </div>
+            <div class="font-16 Order_d_b">导游</div>
+            <div class="Trip_a border_e" v-if="guidetyplistyp!=0">
+              <dl class="font-14">
+                <dd class="float_left Trip_b">导游</dd>
+                <dd class="float_right">{{guidetyplistyp.realName}}</dd>
+                <dd class="float_left Trip_b">价格</dd>
+                <dd class="float_right">{{pathlist.datet}}天*￥{{guidetyplistyp.price}}</dd>
+              </dl>
+            </div>
+
+            <div class="font-16 Order_d_b">用车</div>
+            <div class="Trip_a border_e">
+              <dl class="font-14" v-for="(list,index) in vehicledata" :key="index">
+                <dd class="float_left Trip_b">用车</dd>
+                <dd class="float_right">{{list.carName}}</dd>
+                <dd class="float_left Trip_b">价格</dd>
+                <dd class="float_right">{{pathlist.datet}}天*￥{{list.price}}</dd>
+              </dl>
+            </div>
+
+            <div class="font-16 Order_d_b">人数</div>
+            <div class="Trip_a border_e">
+              <dl class="font-14">
+                <dd class="float_left Trip_b">人数</dd>
+                <dd class="float_right">{{pathlist.adultNum}}/成年人,{{pathlist.childNum}}/儿童</dd>
+              </dl>
+            </div>
+            <div class="font-16 Order_d_b">保险</div>
+            <div class="Trip_a border_e" v-if="baomang!=0">
+              <dl class="font-14">
+                <dd class="float_left Trip_b">{{baomang.name}}</dd>
+                <dd class="float_right">￥{{baomang.price}}*{{pathlist.master}}/人</dd>
+              </dl>
             </div>
           </div>
-          <div class="font-16 Order_d_b">导游</div>
-          <div class="Trip_a border_e" v-if="guidetyplistyp!=0">
-            <dl class="font-14">
-              <dd class="float_left Trip_b">导游</dd>
-              <dd class="float_right">{{guidetyplistyp.realName}}</dd>
-              <dd class="float_left Trip_b">价格</dd>
-              <dd class="float_right">{{pathlist.datet}}天*￥{{guidetyplistyp.price}}</dd>
-            </dl>
-          </div>
-
-          <div class="font-16 Order_d_b">用车</div>
-          <div class="Trip_a border_e">
-            <dl class="font-14" v-for="(list,index) in vehicledata" :key="index">
-              <dd class="float_left Trip_b">用车</dd>
-              <dd class="float_right">{{list.carName}}</dd>
-              <dd class="float_left Trip_b">价格</dd>
-              <dd class="float_right">{{pathlist.datet}}天*￥{{list.price}}</dd>
-            </dl>
-          </div>
-
-          <div class="font-16 Order_d_b">人数</div>
-          <div class="Trip_a border_e">
-            <dl class="font-14">
-              <dd class="float_left Trip_b">人数</dd>
-              <dd class="float_right">{{pathlist.adultNum}}/成年人,{{pathlist.childNum}}/儿童</dd>
-            </dl>
-          </div>
-          <div class="font-16 Order_d_b">保险</div>
-          <div class="Trip_a border_e" v-if="baomang!=0">
-            <dl class="font-14">
-              <dd class="float_left Trip_b">{{baomang.name}}</dd>
-              <dd class="float_right">￥{{baomang.price}}*{{pathlist.master}}/人</dd>
-            </dl>
-          </div>
         </div>
-      </div>
       </div>
       <div class="Choose_a_room_dibu">
         <div class="Choose_a_room_dibu_c font-16 float_left">
@@ -312,7 +318,7 @@
 </template>
 <style lang="less">
 dd {
-  text-align: left; 
+  text-align: left;
 }
 .refund_jia {
   width: 80% !important;
@@ -361,7 +367,7 @@ export default {
       orderidlist: "", //生成订单的id
       insuranceid: "", //选中保险id
       tyslit: 3, //1常规路线2当地参团3当地玩家
-      manni:this.$route.params.manni,//
+      manni: this.$route.params.manni //
     };
   },
 
@@ -380,7 +386,6 @@ export default {
       Selection: state => state.route.Selection, //选择的出游人信息
       pathlist: state => state.route.pathlist, //包车租车index页填写的信息
       piaylist: state => state.route.piaylist, //游玩类型列表
-      roomlist: state => state.route.roomlist, //酒店列表
       vehicledata: state => state.route.vehicledata, //汽车信息
       guidetyplistyp: state => state.route.guidetyplistyp //导游信息
     })
@@ -400,7 +405,6 @@ export default {
     this.choiceperson = this.Selection.length;
     console.log(this.pathlist);
     console.log(this.piaylist);
-    console.log(this.roomlist);
     console.log(this.vehicledata);
     console.log(this.guidetyplistyp);
   },
@@ -451,22 +455,26 @@ export default {
         this.$toast("填写联系人电话");
         return;
       }
+      // for(let list of this.piaylist){
+      //   this.$set(list,"hotelInforDetails",JSON.stringify(list.hotelInforDetails));
+      // }
+      console.log(this.piaylist);
       let data = await saveCarOrderUrl(
-        this.contactsName,//联系人
-        this.contactsMobile,//联系电话
-        this.remark,//备注
-        this.pathlist.certValidDate,//上车时间
-        this.pathlist.birthday,//下车时间
-        this.pathlist.datet,//行程天数
-        this.pathlist.quecity,//上车城市
-        this.pathlist.startAddress,//上车详细地址
-        this.pathlist.adultNum,//大人数量
-        this.pathlist.childNum,//小人数量
-        this.pathlist.luggage,//包裹数量
-        JSON.stringify(this.vehicledata),//汽车信息
-        JSON.stringify(this.piaylist),//行程信息
-        this.insuranceid,//保险id
-        JSON.stringify(this.Selection),
+        this.contactsName, //联系人
+        this.contactsMobile, //联系电话
+        this.remark, //备注
+        this.pathlist.certValidDate, //上车时间
+        this.pathlist.birthday, //下车时间
+        this.pathlist.datet, //行程天数
+        this.pathlist.quecity, //上车城市
+        this.pathlist.startAddress, //上车详细地址
+        this.pathlist.adultNum, //大人数量
+        this.pathlist.childNum, //小人数量
+        this.pathlist.luggage, //包裹数量
+        JSON.stringify(this.vehicledata), //汽车信息
+        JSON.stringify(this.piaylist), //行程信息
+        this.insuranceid, //保险id
+        JSON.stringify(this.Selection)
       );
       if (data) {
         // let zonmni = Number(this.pricetyps) + Number(this.baomang);
