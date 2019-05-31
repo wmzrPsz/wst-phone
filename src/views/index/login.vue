@@ -99,8 +99,7 @@ export default {
   },
   created() {},
   mounted() {
-    console.log(process.env);
-    console.log(this.uid);
+    console.log(this.$route.query);
   },
   methods: {
     ...mapMutations(["addLogin", "removeLogin"]),
@@ -117,10 +116,7 @@ export default {
       let data = await login(this.phone, this.passWord);
       if (data) {
         this.addLogin(data);
-        // this.$router.go(-1);
-        console.log(this.$router.query);
-        // this.$router.push("/indexher");
-        // this.$router.push(this.$router.query.redirect)
+        this.$router.push(this.$route.query.redirect || "/")
       }
     }
   }
