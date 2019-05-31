@@ -116,7 +116,11 @@ export default {
       let data = await login(this.phone, this.passWord);
       if (data) {
         this.addLogin(data);
-        this.$router.push(this.$route.query.redirect || "/")
+        if(this.$route.query.redirect){
+            this.$router.replace(this.$route.query.redirect)
+        }else{
+            this.$router.push("/")
+        }
       }
     }
   }
