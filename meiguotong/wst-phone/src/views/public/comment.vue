@@ -80,7 +80,7 @@
 </style>
 
 <script>
-import { selectCommentUrl} from "@/utils/getData";
+import { selectCommentUrl,addCommentUrl} from "@/utils/getData";
 import MescrollVue from "mescroll.js/mescroll.vue";
  export default {
 	 name :'index',
@@ -132,6 +132,12 @@ import MescrollVue from "mescroll.js/mescroll.vue";
     if(ev.keyCode == 13){
     alert(this.content);
     }
+    },
+    //添加产品评论
+    async commlist(){
+    let data = await addCommentUrl(
+    
+    );
     },
     //评价
   async selectyp(page, mescroll){

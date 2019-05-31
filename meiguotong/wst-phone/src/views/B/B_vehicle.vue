@@ -339,6 +339,7 @@
               <span class="color-b">{{vouchelist.commentNum}}条评论</span>
             </div>
           </div>
+          <!-- <ezHeader></ezHeader> -->
             <div class="border_e evaluate_wanjia_z">
           <div class="evaluate_wanjia_z_a" v-for="(list,index) in commentlistyp" :key="index">
             <div class="evaluate_wanjia_c beijingtu float_left">
@@ -368,6 +369,7 @@
           </div>
             <button class="font-12 wanjiahuof_a color-b" @click="qinglunlist()">全部评价</button>
         </div>
+
         </div>
       </div>
     </van-popup>
@@ -441,6 +443,7 @@
 }
 </style>
 <script>
+// import ezHeader from '@/components/commont.vue';
 import { mapState } from "vuex";
 import { carLevelVc } from "@/filters/custom";
 import { getCarByRentUrl,refundInforUrl,selectCommentUrl,digCommentUrl,addChildCommentUrl} from "@/utils/getData";
@@ -517,7 +520,8 @@ export default {
     this.serviceidslist();
   },
   components: {
-    MescrollVue // 注册mescroll组件
+    MescrollVue, // 注册mescroll组件
+    // ezHeader,//评论
   },
   beforeRouteEnter(to, from, next) {
     // 如果没有配置回到顶部按钮或isBounce,则beforeRouteEnter不用写
