@@ -442,6 +442,9 @@ export const addChildCommentUrl = (commentid,content) =>ajax(process.env.VUE_APP
     commentid:commentid,
     content:content,
 })
+//4-18-1添加产品评论接口
+export const addCommentUrl = () =>ajax(process.env.VUE_APP_PROXY_API +'/common/addComment',{  
+})
 //用户资讯
 export const getConsultUrl = (pageNo,routeid,proType) =>ajax( process.env.VUE_APP_PROXY_API +'/common/getConsult',{  
     pageNo:pageNo,
