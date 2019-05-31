@@ -131,7 +131,7 @@
           >确定</button>
         </div>
         <!--全部筛选-->
-        <div class="qyuanb ong_z qythist" v-if="type==4">
+        <div class="qyuanb ong_z " v-if="type==4">
           <div class="b_xianm bus">
             <i class="b_xianm_a">
               <img src="../../assets/img/A/home_tanchu_circle_icon@2x.png">

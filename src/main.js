@@ -16,6 +16,7 @@ Vue.prototype.copy = copy
 router.beforeEach((to, from, next) => {
   console.log(to)
   console.log(from)
+  console.log(to.fullPath)
   if(to.meta.requireAuth){ // 判断该路由是否需要登录权限
     if(store.state.loginUid){ // 通过vuex state获取当前的loginUid是否存在
       next();

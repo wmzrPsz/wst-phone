@@ -410,7 +410,9 @@ export default new Router({
       path: '/B_index',
       name: 'B_index',
       component: B_index,
-      meta: { 'title': '包车租车' }
+      meta: {   
+        'title': '包车租车',
+       }
     },
     {
      path:'/B_rent',
@@ -461,6 +463,7 @@ export default new Router({
     name:'/B_orderlist_a',
     component:B_orderlist_a,
     meta:{
+      requireAuth: true,
       'title':'包车租车预订'
     }
     },
@@ -491,7 +494,10 @@ export default new Router({
       path: '/F_book/:routeid/:price',
       name: 'F_book',
       component: F_book,
-      meta: { 'title': '预订' }
+      meta: { 
+        requireAuth: true,
+        'title': '预订'
+       }
     },
     //////////////////////////////////////当地参团//////////////////////////////////////////////
     //当地参团
@@ -506,6 +512,7 @@ export default new Router({
       path: '/G_details',
       name: 'G_details',
       component: G_details,
+
       meta: { 'title': '当地参团' }
     },
     //参团详情
@@ -513,14 +520,19 @@ export default new Router({
       path: '/G_details_page/:routeid',
       name: 'G_details_page',
       component: G_details_page,
-      meta: { 'title': '当地参团' }
+      meta: { 
+        'title': '当地参团' 
+      }
     },
     // //预订
     {
       path: '/G_book/:routeid/:price',
       name: 'G_book',
       component: G_book,
-      meta: { 'title': '预订' }
+      meta: {
+         requireAuth: true,
+         'title': '预订'
+         }
     },
     /////////////////////////////////////H当地玩家//////////////////////////////////////
     {
@@ -547,7 +559,10 @@ export default new Router({
       path: '/H_book/:routeid/:sptyp',
       name: 'H_book',
       component: H_book,
-      meta: { 'title': '当地玩家预订' }
+      meta: { 
+        requireAuth: true,
+        'title': '当地玩家预订'
+       }
     },
     {
       path: '/H_orderlist_a/:adult/:child/:pricetyps/:date/:date_a/:routeid/:routeidslit',
@@ -581,7 +596,10 @@ export default new Router({
       path:'/K_orderlist/:lineid',
       name:'K_orderlist',
       component:K_orderlist,
-      meta:{'title':'预订'}
+      meta:{
+        requireAuth: true,
+        'title':'预订'
+      }
     },
     //油轮确定预订
     {
@@ -617,7 +635,10 @@ export default new Router({
       path:'/L_book/:scenicSpotTicketId',
       name:'L_book',
       component:L_book,
-      meta:{"title":'预订'}
+      meta:{
+        requireAuth: true,
+        "title":'预订'
+      }
     },
     {
       path:'/L_orderlist/:startDate/:adult/:child/:price/:scenicSpotTicketId',
