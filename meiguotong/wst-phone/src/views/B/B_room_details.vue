@@ -93,7 +93,7 @@
               <div class="font-14 texe_left">{{list.roomName}}</div>
               <button
                 class="Choose_a_room_dibu_tan_b float_right font-14"
-                @click="deleteclick(index)"
+                @click="deleteclick(list,index)"
               >删除</button>
               <div class="Choose_a_room_dibu_tan_a texe_left">
                 <i class="font-12 color-h">￥</i>
@@ -292,12 +292,17 @@ export default {
       }
     },
     //删除房间
-    deleteclick(index) {
+    deleteclick(list,index) {
        let boorroomlist = this.copy(this.boorroomlist);
        boorroomlist.splice(index,1);
        this.STATE_CHANGE({
           boorroom: boorroomlist,
        })
+       for(let telist of this.styser){
+         if(telist.id==list.roomid){
+           this.$set(telist,"Number",0);
+         }
+       }
     },
     //点击房间数量改变出发器
      onChange (event) {

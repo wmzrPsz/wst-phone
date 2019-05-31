@@ -524,6 +524,7 @@ export default {
     },
     //点击选择
     flstclick(index) {
+      this.citychenclis="";
       this.businesslist.map(elem => {
         elem.falg = false;
       });
