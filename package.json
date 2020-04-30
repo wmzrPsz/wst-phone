@@ -10,7 +10,7 @@
     "deploy:prod": "npm run build && cross-env NODE_ENV=prod node ./deploy"
   },
   "dependencies": {
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "scp2": "^0.5.0",
     "js-md5": "^0.7.3",
     "mescroll.js": "^1.4.1",
